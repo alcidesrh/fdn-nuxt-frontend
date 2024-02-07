@@ -1,0 +1,48 @@
+.cloud1,
+.cloud2,
+.cloud3,
+.cloud4 {
+    animation: move 6s ease infinite;
+    /* @include border-radius(50%); */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+    background: #ffffff;
+    height: 30px;
+    width: 30px;
+    box-shadow: #ffffff 35px -5px 0 -5px, #ffffff 15px -15px, #ffffff 20px 5px, #ffffff 40px 5px 0 -5px, #ffffff 55px 5px 0 -5px;
+    opacity: 0.8;
+}
+.cloud1{
+    left: 55%
+}
+
+.cloud2 {
+    top: 52%;
+    left: 31%;
+    animation-duration: 8s;
+}
+.cloud3 {
+    top: 82%;
+    left: 16%;
+    animation-duration: 8s;
+}
+.cloud4 {
+    top: 72%;
+    left: 71%;
+    animation-duration: 8s;
+}
+
+@keyframes move {
+    50% {
+        transform: translateY(-15px);
+    }
+}
+.layout-main-container::before {
+    width: 100%;
+    height: 100px;
+    background-color: $slate-400;
+}

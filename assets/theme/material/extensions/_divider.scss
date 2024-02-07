@@ -1,0 +1,8 @@
+.p-divider {
+    &.p-divider-horizontal {
+        &:before {
+            border-top: $dividerSize $dividerColor;
+            border-top-style: solid;
+        }
+    }
+}
