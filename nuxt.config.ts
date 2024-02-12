@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     'fdn': fileURLToPath(new URL('./types', import.meta.url)),
   },
   primevue: {
+    usePrimeVue: true,
     options: { ripple: true },
     components: {
       include: components,
@@ -38,9 +39,9 @@ export default defineNuxtConfig({
     // Experimental support for auto loading (see note):
     autoImport: true
   },
-  extends: [
-    'auth',
-  ],
+  // extends: [
+  //   'auth',
+  // ],
 
   experimental: {
     // when using generate, payload js assets included in sw precache manifest

@@ -179,24 +179,30 @@ export async function useDeleteItem(item: Item) {
     error,
   };
 }
-
 export async function useUserLogin<T>(user: User, resource: string = '/login') {
-  const response = await useFetch('/login', {
+  const data = {
+    username: user.username,
+    password: user.password
+  }
+  return await $fetch('/login', {
     baseURL: HOST,
-    // method: "POST",
-    mode: "no-cors",
-
+    method: "POST",
     headers: {
-      Accept: MIME_TYPE
+      Accept: MIME_TYPE,
+      'Content-Type': MIME_TYPE
     },
+    body: JSON.stringify(data),
+    // onResponseError({ response }) {
 
-    onResponseError({ response }) {
-      const data = response._data;
-      const error = data["hydra:description"] || response.statusText;
+    // return response
 
-      throw new Error(error);
-    },
+    // const data = response._data;
+    // console.log(data, response.status)
+    //   const error = data["hydra:description"] || response.statusText;
+    // throw new Error(error);
+    // },
 
     // ...options,
   })
+
 }

@@ -12,7 +12,7 @@ const allow_banner_amimation = computed(
 <template>
   <div class="layout-wrapper z-10">
     <div class="layout-topbar left-0 top-0 text-slate-800 shadow">
-      <HeaderAnimation v-if="allow_banner_amimation" class="z-10 sm:relative" />
+      <!-- <HeaderAnimation v-if="allow_banner_amimation" class="z-10 sm:relative" /> -->
     </div>
     <div class="layout-sidebar z-1 h-full">
       <Skeleton class="mb-2" />

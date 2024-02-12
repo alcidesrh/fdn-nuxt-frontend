@@ -1,19 +1,18 @@
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
-const router = useRouter();
-const main = ref()
+// const router = useRouter();
 
 
 const onTopBarMenuButton = () => {
   topbarMenuActive.value = !topbarMenuActive.value;
 };
 
-const onSettingsClick = () => {
-  topbarMenuActive.value = false;
-  router.push('/utilities/documentation');
-};
+// const onSettingsClick = () => {
+//   topbarMenuActive.value = false;
+//   router.push('/utilities/documentation');
+// };
 
 const topbarMenuClasses = computed(() => {
   return {
@@ -53,6 +52,6 @@ export function useSidebar() {
     bindOutsideClickListener,
     topbarMenuClasses,
     onTopBarMenuButton,
-    onSettingsClick,
+    // onSettingsClick,
   }
 }

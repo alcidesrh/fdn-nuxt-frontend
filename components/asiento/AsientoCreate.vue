@@ -3,7 +3,7 @@
     &lt; Back to list
   </nuxt-link>
 
-  <h1 class="text-3xl my-4">Create Asiento</h1>
+   <h1 class="text-3xl my-4">Create Asiento</h1>
 
   <div
     v-if="isLoading"
