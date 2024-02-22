@@ -1,5 +1,4 @@
 import { pwa } from './config/pwa'
-import { appDescription } from './constants/index'
 import { components } from './components/primevue/components'
 import { fileURLToPath } from 'url';
 
@@ -13,8 +12,13 @@ export default defineNuxtConfig({
     'nuxt-module-eslint-config',
     'nuxt-primevue',
     '@formkit/nuxt',
-    '@hypernym/nuxt-gsap'
+    '@hypernym/nuxt-gsap',
+    'nuxt3-localforage',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
+  piniaPersistedstate: {
+    storage: 'localStorage'
+  },
   imports: {
     dirs: [
       'types'
@@ -27,6 +31,7 @@ export default defineNuxtConfig({
   alias: {
     'schema': fileURLToPath(new URL('./components/form/schemas', import.meta.url)),
     'fdn': fileURLToPath(new URL('./types', import.meta.url)),
+    'nm': fileURLToPath(new URL('./node_modules', import.meta.url))
   },
   primevue: {
     usePrimeVue: true,
@@ -39,10 +44,14 @@ export default defineNuxtConfig({
     // Experimental support for auto loading (see note):
     autoImport: true
   },
-  // extends: [
-  //   'auth',
-  // ],
-
+  extends: [
+    'auth',
+  ],
+  vite: {
+    optimizeDeps: {
+      include: ['localforage'],
+    },
+  },
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
@@ -53,9 +62,23 @@ export default defineNuxtConfig({
 
   css: [
     // '@unocss/reset/tailwind.css',
-    'primevue/resources/primevue.min.css',
+    // 'primevue/resources/primevue.min.css',
     '@/assets/styles.scss',
   ],
+  // build: {
+  //   // transpile: [/vant.*?less/],
+  //   babel: {
+  //     plugins: [
+  //       [
+  //         'import', {
+  //           "libraryName": "@icon-park/vue-next",
+  //           "libraryDirectory": "es/icons",
+  //           "camel2DashComponentName": false
+  //         }
+  //       ]
+  //     ],
+  //   },
+  // },
 
   // nitro: {
   //   esbuild: {

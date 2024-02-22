@@ -51,8 +51,10 @@ function busDesarme(tl: gsap.core.Timeline) {
     .to(`#star-305`, { width: window.innerWidth, x: (window.innerWidth) / -2, height: 80, y: -40, duration: 0.5, borderRadius: '70%' }, '<')
   tl.to(`#luna`, { backgroundColor: '#fef9c3', zIndex: 99, width: 10, x: -5, height: 3, y: -1.5, duration: 0.2 }, '<.3')
 
-  tl.to(`#luna`, { width: window.innerWidth + 600, x: (window.innerWidth + 600) / -2, height: 80, y: -40, duration: 0.1, borderRadius: '0%' })
-    .to(['.overlay2', '.overlay'], { backgroundColor: 'white', duration: 1, ease: 'slow(0.7,0.7,false)' })
+  tl.to(`#luna`, { width: window.innerWidth + 600, x: (window.innerWidth + 600) / -2, height: 80, y: -40, duration: .1, borderRadius: '0%' })
+
+    .to(['.overlay2', '.overlay', '.telon'], { backgroundColor: 'white', opacity: 1, duration: 1 }, '<')
+
 }
 function getAxisY() {
   const random = Math.floor(Math.random() * 80)
@@ -88,10 +90,13 @@ function unlock(tl: gsap.core.Timeline) {
   tl.to(['#unlock', '#barra'], { opacity: 0, duration: 0 })
 }
 function starExplotion(tl: gsap.core.Timeline) {
-  tl.to(`#luna, #star-305`, { width: 10, height: '10px', x: -5, y: -5, duration: 0.1, borderRadius: '150%', backgroundColor: 'white' })
-  tl.to(['.overlay2', '.overlay'], { backgroundColor: '#38bdf8', duration: 1, ease: 'slow(0.7,0.7,false)' }, '<')
-  tl.to('#luna', { y: -60, top: '0%', x: 223, left: '50%', position: 'absolute', duration: 0, width: '46px', height: '46px', opacity: 0 }, '<1')
+  tl.to(`#luna, #star-305`, { delay: 1, width: 10, height: '10px', x: -5, y: -5, duration: 0.1, borderRadius: '150%', backgroundColor: 'white' })
+  // tl.to(['.overlay2', '.overlay'], { backgroundColor: '#147aa5', duration: 1, ease: 'slow(0.7,0.7,false)' }, '<')
+  tl.to(['.overlay2', '.overlay', '.telon'], { backgroundColor: '#0f172a', opacity: .8, duration: .5, ease: 'slow(0.7,0.7,false)' }, '<')
+  tl.to('#luna', { y: -60, top: '0%', x: 223, left: '50%', position: 'absolute', duration: 0, width: '46px', height: '46px', opacity: 0 }, '+=1')
   tl.to([`#star-205`, `#star-206`, `#star-208`, `#star-209`], { width: '0px', height: '0px', display: 'block', top: '50%', left: '50%', backgroundColor: '#e2e8f0', duration: 0, opacity: 1, borderRadius: '150%' })
+
+  tl.to(['.telon'], { opacity: 0, duration: 0 })
   for (let index = 0, temp = 45, position = '+=0', ids = [`#star-205`, `#star-206`, `#star-208`, `#star-209`]; index < 4; index++, temp += 90) {
     if (index === 2) {
       temp = 0
@@ -114,7 +119,8 @@ function starExplotion(tl: gsap.core.Timeline) {
   tl.to('#wheel-logo', { delay: 1, scale: 0, opacity: 1, zIndex: 99, fill: '#3f3f46', left: '50%', fontSize: '40px', duration: 0, x: -30 })
     .to('#wheel-logo', { rotate: 3600, duration: 5, scale: 1, fill: '#fefce8' })
     .to([`#star-205`, `#star-206`, `#star-208`, `#star-209`], data, '<')
-
+  tl.to('.telon', { opacity: 0, duration: 3 }, '<')
+  tl.to(['.overlay2', '.overlay'], { opacity: .3, backgroundColor: '#7dd3fc', duration: 3, ease: 'slow(0.7,0.7,false)' }, '<')
   // .to('#wheel-logo', { rotate: 3600, duration: 2 }, '<')
   let letters = Array.from(document.querySelectorAll('.char'))
   tl.to(letters, { left: '0%', top: '0%', x: -20, position: 'absolute', color: '#e2e8f0', duration: 0 }, '<')
@@ -131,27 +137,41 @@ function starExplotion(tl: gsap.core.Timeline) {
   const chars = Array.from(document.querySelectorAll('.char'))
   for (let i = 0; i < chars.length; i++) {
     const aux = 3 // getRamdon(2, 3)
-    tl.to(chars[i], { delay: getRamdon(0.05, 0.2), zIndex: 100, x: window.innerWidth - 50, duration: aux, rotate: getRamdon(0, 360), color: '#6ee7b7', ease: CustomEase.create('custom', 'M0,0 C0.14,0 0.242,0.438 0.272,0.561 0.313,0.728 0.354,0.963 0.362,1 0.37,0.985 0.411,0.983 0.472,0.94 0.567,0.871 0.639,0.929 0.652,0.938 0.728,0.988 0.892,0.994 0.911,0.998 0.922,1 1,1 1,1') }, !i ? '+=0' : `char${i - 1}-=${aux}`).addLabel(`char${i}`)
-    tl.to(chars[i], { top: '50%', y: 65, duration: getRamdon(0.5, 1.5), ease: 'bounce.out' }, `char${i - 1}-=1.4`)
+    tl.to(chars[i], { delay: getRamdon(0.05, 0.2), zIndex: 100, x: window.innerWidth - 50, duration: aux, rotate: getRamdon(0, 360), color: '#fef3c7', ease: CustomEase.create('custom', 'M0,0 C0.14,0 0.242,0.438 0.272,0.561 0.313,0.728 0.354,0.963 0.362,1 0.37,0.985 0.411,0.983 0.472,0.94 0.567,0.871 0.639,0.929 0.652,0.938 0.728,0.988 0.892,0.994 0.911,0.998 0.922,1 1,1 1,1') }, !i ? '+=0' : `char${i - 1}-=${aux}`).addLabel(`char${i}`)
+    tl.to(chars[i], { top: '50%', y: 50, duration: getRamdon(0.5, 1.5), ease: 'bounce.out' }, `char${i - 1}-=1.4`)
     tl.to(chars[i], { x: window.innerWidth - getRamdon(50, 400), duration: getRamdon(1.5, 3.5) }, `char${i - 1}-=1`)
   }
-  tl.to('#wheel-logo', { duration: 6, fill: '#020617' }, '<')
-  tl.to('#wheel-logo', { rotate: -3600, duration: 6, scale: 0.2 }, '<')
+  tl.to('#wheel-logo', { rotate: -3600, duration: 3, scale: 0 }, '<')
 
-  tl.to([`#star-0`, `#star-1`], { width: 0, height: 0, top: '50%', left: '50%', duration: 0.5, borderRadius: '150%', backgroundColor: '#fefce8' }, '<')
+
+  tl.to([`#star-0`, `#star-1`], { width: 0, height: 0, top: '50%', left: '50%', duration: 0.5, borderRadius: '150%', backgroundColor: '#fefce8' })
+
   for (let index = 351; index < 500; index++) {
+    if (index === 351) {
+      tl.to(['.overlay2', '.overlay', '.telon'], { backgroundColor: '#0f172a', opacity: .8, duration: 2.5 }, '<')
+      // .to('.telon', { opacity: .3, duration: 4 }, '<')
+    }
     if (![305, 306, 307].includes(index))
       tl.to(`#star-${index}`, { top: '50%', left: '50%', x: -((document.querySelector(`#star-${index}`)?.clientWidth || 0) / 2), y: -((document.querySelector(`#star-${index}`)?.clientHeight || 0) / 2), duration: getRamdon(0, 4) }, '<')
   }
-  tl.to(`#star-0`, { height: '3px', y: -1.5, width: window.innerWidth / 4, x: -((window.innerWidth) / 8), backgroundColor: '#fefce8', duration: 0.2 }, '<3')
+  tl.to(['.telon'], { opacity: 0, duration: 0 }, '<3')
+
+  tl.to(`#star-0`, { height: '3px', y: -1.5, width: window.innerWidth / 4, x: -((window.innerWidth) / 8), backgroundColor: '#fefce8', duration: 0.2 }, '<')
     .to(`#star-1`, { backgroundColor: '#fefce8', width: '3px', x: -1.5, height: 40, y: -20, duration: 0.2 }, '<')
     .to(`#star-0`, { width: window.innerWidth / 2, x: -((window.innerWidth) / 4), height: '1px', y: -0.4, duration: 0.1 }, '<.5')
     .to(`#star-1`, { height: 80, y: -40, width: '1px', x: -0.4, duration: 0.1 }, '<')
 
+
   tl.to([`#star-0`, `#star-1`], { width: 10, height: 10, y: -5, x: -5, duration: 0.7, ease: CustomEase.create('custom', 'M0,0 C0.031,0.061 0.599,-0.268 0.677,-0.138 0.859,0.165 0.644,1 1,1 ') })
 
-  for (let index = 0; index < 500; index++)
-    tl.to(`#star-${index}`, { top: `${getAxisY()}px`, left: `${Math.floor(Math.random() * window.innerWidth)}px`, duration: getRamdon(1, 7) }, !index ? '+=0' : '<')
+  for (let index = 0; index < 500; index++) {
+    if (index == 250) {
+      tl.to('.telon', { opacity: 0, duration: 3 }, '<')
+      tl.to(['.overlay2', '.overlay'], { opacity: .3, backgroundColor: '#7dd3fc', duration: 3, ease: CustomEase.create("custom", "M0,0 C0.012,0.03 0.219,0.488 0.271,0.484 0.35,0.477 0.71,0.422 0.838,0.499 0.965,0.577 0.974,0.737 0.974,0.822 0.971,1.164 0.784,1.531 1,1.531 ") }, '<')
+
+    }
+    tl.to(`#star-${index}`, { top: `${getAxisY()}px`, left: `${Math.floor(Math.random() * window.innerWidth)}px`, duration: getRamdon(2, 5), ease: CustomEase.create("custom", "M0,0 C0,0 -0.027,0.643 0.131,0.802 0.264,0.935 0.305,-0.034 0.473,-0.015 0.678,0.006 1,1 1,1 ") }, !index ? '+=0' : '<')
+  }
 
   letters = Array.from(document.querySelectorAll('.char'))
   const options = {
@@ -174,7 +194,7 @@ function starExplotion(tl: gsap.core.Timeline) {
   do {
     const temp = { ...options }
     if (cont === aux)
-      temp.delay = 2
+      temp.delay = 5
     const index = getRamdon(0, letters.length - 1, 'int')
     temp.x = axis[index]
     // temp.ease = ease[getRamdon(3, 10, 'int')]
@@ -185,8 +205,6 @@ function starExplotion(tl: gsap.core.Timeline) {
     axis.splice(index, 1)
   } while (cont--)
 
-  const hours = new Date().getHours()
-  const isDayTime = hours > 6 && hours < 20
   tl.to(['#luna'], { backgroundColor: 'white', duration: 2, opacity: 1, y: -10 }, '+=1')
   tl.to(Array.from(document.querySelectorAll('.char')), { duration: 2, y: 15 }, '<')
 

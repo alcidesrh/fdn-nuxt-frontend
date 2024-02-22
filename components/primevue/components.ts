@@ -8,6 +8,7 @@ const formComponentNamesToExport = [
   'InputSwitch',
   'Textarea',
   'Dropdown',
+  'CascadeSelect'
 ]
 const formComponentNames = [
   'AutoComplete',
@@ -82,6 +83,7 @@ const panelComponentNames = [
 
 const overlayComponentNamesToExport = [
   'Sidebar',
+  'Tooltip'
 ]
 const overlayComponentNames = [
   'ConfirmDialog',

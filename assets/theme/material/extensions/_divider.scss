@@ -1,8 +1,11 @@
 .p-divider {
-    &.p-divider-horizontal {
+
+    &.p-divider-horizontal,
+    &.p-divider-vertical {
         &:before {
-            border-top: $dividerSize $dividerColor;
+            border-top: $dividerSize $dividerColor !important;
             border-top-style: solid;
+            border-width: $dividerSize !important;
         }
     }
 }

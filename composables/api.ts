@@ -203,6 +203,22 @@ export async function useUserLogin<T>(user: User, resource: string = '/login') {
     // },
 
     // ...options,
-  })
+  }).then(async resp => await resp);
 
 }
+
+export async function logout<T>() {
+  return await $fetch('/logout', {
+    baseURL: HOST,
+    method: "POST",
+    headers: {
+      Accept: MIME_TYPE,
+      'Content-Type': MIME_TYPE
+    },
+  }).then(async resp => {
+
+    const localForage = useLocalForage()
+
+    await localForage.removeItem('user')
+
+  }

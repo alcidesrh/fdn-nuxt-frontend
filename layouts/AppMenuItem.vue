@@ -92,42 +92,35 @@ const { iconProps, isComponent } = useIcon()
 </script>
 
 <template>
-  <Divider v-if="item.type == 'divider'" type="dotted" class="mx-auto my-4 border-white bg-white" />
+  <Divider v-if="item.type == 'divider'" type="dashed" class="mx-auto my-4" />
   <li v-else class="cursor-pointer" :class="{ 'layout-root-menuitem ': root, 'active-menuitem': isActiveMenu }">
-    <div
-      v-if="root && item.visible !== false" class="layout-menuitem-root-text root-label w-full font-medium !pb-0 !pl-0"
-      @click="e => root && root_click(e)"
-    >
+    <div v-if="root && item.visible !== false"
+      class="layout-menuitem-root-text root-label w-full font-medium !py-1.5 !pl-0 " @click="e => root && root_click(e)">
       <Minus theme="outline" size="18" :stroke-width="2" stroke-linecap="square" />
       <Plus theme="outline" size="18" :stroke-width="2" stroke-linecap="square" />
-      <span class="ml-1">{{ item.label }}</span>
-      <DownIcon v-bind="iconProps" class="layout-submenu-toggler" />
+      <span class="ml-1 !py-0">{{ item.label }}</span>
+      <DownIcon v-bind="iconProps" class="layout-submenu-toggler text-slate-230" />
     </div>
-    <a
-      v-if="(!item.to || item.items) && item.visible !== false" :href="item.url"
-      :class="item.class" :target="item.target" tabindex="0" @click="itemClick($event, item, index)"
-    >
-      <div class="flex">
+    <a v-if="(!item.to || item.items) && item.visible !== false" :href="item.url" :class="item.class"
+      :target="item.target" tabindex="0" @click="itemClick($event, item, index)">
+      <div class="flex u-p-2xs">
         <component :is="item.icon" v-if="isComponent(item.icon)" v-bind="iconProps" />
         <i v-else :class="item.icon" class="layout-menuitem-icon" />
         <span class="layout-menuitem-text">{{ item.label }}</span>
         <DownIcon v-if="item.items" class="layout-submenu-toggler" v-bind="iconProps" />
       </div>
     </a>
-    <router-link
-      v-if="item.to && !item.items && item.visible !== false" :class="[item.class, { 'active-route': checkActiveRoute(item) }]"
-      tabindex="0" :to="item.to" @click="itemClick($event, item, index)"
-    >
+    <router-link v-if="item.to && !item.items && item.visible !== false"
+      :class="[item.class, { 'active-route': checkActiveRoute(item) }]" tabindex="0" :to="item.to"
+      @click="itemClick($event, item, index)">
       <i :class="item.icon" class="layout-menuitem-icon" />
       <span class="layout-menuitem-text">{{ item.label }}</span>
       <i v-if="item.items" class="layout-submenu-toggler pi pi-fw pi-angle-down" />
     </router-link>
     <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
       <ul v-show="is_submenu_open()" class="layout-submenu">
-        <app-menu-item
-          v-for="(child, i) in item.items " :key="child" :index="i" :item="child"
-          :parent-item-key="itemKey" :root="false"
-        />
+        <app-menu-item v-for="(child, i) in item.items " :key="child" :index="i" :item="child" :parent-item-key="itemKey"
+          :root="false" />
       </ul>
     </Transition>
   </li>

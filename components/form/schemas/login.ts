@@ -1,9 +1,10 @@
 export default [
   {
     $el: 'h1',
-    children: 'Iniciar Sessión',
+    children: 'Acceso Restringido',
     attrs: {
-      class: 'text-2xl font-bold mb-4 ',
+      class: 'text-xl font-semibold mb-4 text-slate-600 mb-8 text-center',
+      style: 'font-variation-settings: "slnt" 0, "GRAD" -3, "XTRA" 432, "YOPQ" 106, "YTAS" 771, "YTDE" -268, "YTFI" 560, "YTLC" 514, "YTUC" 722; font-weight: 500; font- style: normal; font- stretch: 147.4 %; font-size:30px'
     },
   },
   {
@@ -11,12 +12,16 @@ export default [
     name: 'username',
     label: 'Usuario',
     validation: 'required',
+    labelClass: 'text-slate-600',
+
   },
   {
     $formkit: 'password',
     name: 'password',
     label: 'Contraseña',
     validation: 'required',
+    labelClass: 'text-slate-600',
+
   },
   // {
   //   $cmp: 'FormKit',

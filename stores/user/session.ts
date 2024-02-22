@@ -4,23 +4,24 @@ import type { SubmissionErrors } from "~~/types/error";
 import type { CreateItemData } from "~~/types/api";
 
 interface State {
-  created?: User;
+  user?: User;
   isLoading: boolean;
   error?: string;
   violations?: SubmissionErrors;
 }
 
-export const useUserCreateStore = defineStore("userCreate", {
+export const useUserSessionStore = defineStore("userSession", {
+  persist: true,
   state: (): State => ({
-    created: undefined,
+    user: undefined,
     isLoading: false,
     error: undefined,
     violations: undefined,
   }),
 
   actions: {
-    setData({ created, isLoading, error, violations }: CreateItemData<User>) {
-      this.setCreated(created.value);
+    setData({ user: User, isLoading, error, violations }: CreateItemData<User>) {
+      this.setUser(user.value);
       this.setLoading(isLoading.value);
       this.setViolations(violations.value);
 
@@ -29,8 +30,8 @@ export const useUserCreateStore = defineStore("userCreate", {
       }
     },
 
-    setCreated(created?: User) {
-      this.created = created;
+    setUser(user?: User) {
+      this.user = user;
     },
 
     setLoading(isLoading: boolean) {

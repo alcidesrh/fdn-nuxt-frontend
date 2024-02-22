@@ -16,8 +16,6 @@
     height: 50px;
 }
 
-
-
 .active-menuitem .layout-submenu-toggler {
     transform: rotate(180deg);
 }
@@ -25,9 +23,10 @@
 /* .active-menuitem .submenu-toggler > svg {
     transform: rotate(180deg);
 } */
-.rounded{
+.rounded {
     border-radius: 4px;
 }
-.rounded-full{
+
+.rounded-full {
     border-radius: 9999px;
 }

@@ -1,8 +1,11 @@
-$scale: 14px; /* main font size */
-$borderRadius: 6px; /* border radius of layout element e.g. card, sidebar */
-$transitionDuration: 0.2s; /* transition duration of layout elements e.g. sidebar, overlay menus */
+$scale: 14px;
+/* main font size */
+$borderRadius: 6px;
+/* border radius of layout element e.g. card, sidebar */
+$transitionDuration: 0.2s;
+/* transition duration of layout elements e.g. sidebar, overlay menus */
 $backgroundColor: $slate-100; //$sky-200;
-$primaryColor: #3b82f6 !default;
+$primaryColor: #2563eb !default;
 $primaryTextColor: #ffffff !default;
 $accentColor: #0369a1 !default;
 $accentTextColor: #1e293b !default;
