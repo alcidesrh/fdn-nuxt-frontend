@@ -47,36 +47,16 @@ const data = { size: "29", strokeWidth: "2", theme: "two-tone", fill: ['#475569'
 
 const attr = Array.from({ length: 4 }, () => { const { cloned } = useCloned(ref(data)); return cloned; })
 
-
 async function handleLogout() {
-  // try {
-  await useUserLogin(credentials)
-    .then(async (resp) => {
-
-      if (resp.uri) {
-        const localForage = useLocalForage()
-        await localForage.setItem('user', resp)
-      }
-
-
-
-    })
-    .catch((resp) => {
-
-      console.log(resp, 222222222222222);
-      return
-
-
-      node.setErrors(
-        // Arg 1 is form-wide errors
-        [error],
-      )
-
-      shake('#login')
-    });
+  const response = await useFetch('/logout', {
+    ...API_DEFAULT_OPTIONS,
+    onResponseError({ response }) {
+      console.log(response);
+      throw new Error(error);
+    },
+  });
   return;
 }
-
 </script>
 
 <template>
@@ -116,7 +96,7 @@ async function handleLogout() {
       <Divider layout="vertical" type="dashed" class="u-mr-s ml-0" />
 
       <!-- <a href="/logout"> -->
-      <Button @click="logout" rounded class="bg-orange-600 flex justify-center p-button-icon-only u-p-s">
+      <Button @click="handleLogout" rounded class="bg-orange-600 flex justify-center p-button-icon-only u-p-s">
         <icon-error v-bind="{
           size: '27', strokeWidth: '3', theme: 'two-tone', fill: ['#fff', 'transparent'],
           strokeLinecap: 'square', class: 'rounded-full cursor-pointer drop-shadow'

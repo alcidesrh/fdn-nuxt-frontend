@@ -103,9 +103,6 @@ devDependencies:
   nuxt-primevue:
     specifier: ^0.2.2
     version: 0.2.2(rollup@2.79.1)(vue@3.4.19)
-  nuxt3-localforage:
-    specifier: ^0.1.2
-    version: 0.1.2(localforage@1.10.0)(rollup@2.79.1)
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(typescript@5.3.3)(vue@3.4.19)
@@ -7022,10 +7019,6 @@ packages:
     resolution: {integrity: sha512-ZBGjl0ZMEMeOC3Ns0wUF/5UdUmr3qQhBSCniT0LxOgGGIRHiNFOkMtIHB7EOznRU47V2AxPgiVP+s+0/UCU0Hg==}
     dev: true
 
-  /immediate@3.0.6:
-    resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
-    dev: true
-
   /immutable@4.3.5:
     resolution: {integrity: sha512-8eabxkth9gZatlwl5TBuJnCsoTADlL6ftEr7A4qgdaTsPyreilDSnUk57SO+jfKcNtxPa22U5KK6DSeAYhpBJw==}
 
@@ -7557,12 +7550,6 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /lie@3.1.1:
-    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
-    dependencies:
-      immediate: 3.0.6
-    dev: true
-
   /lilconfig@3.0.0:
     resolution: {integrity: sha512-K2U4W2Ff5ibV7j7ydLr+zLAkIg5JJ4lPn1Ltsdt+Tz/IjQ8buJ55pZAxoP34lqIiwtF9iAvtLv3JGv7CAyAg+g==}
     engines: {node: '>=14'}
@@ -7610,12 +7597,6 @@ packages:
     dependencies:
       mlly: 1.5.0
       pkg-types: 1.0.3
-
-  /localforage@1.10.0:
-    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
-    dependencies:
-      lie: 3.1.1
-    dev: true
 
   /locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -8376,19 +8357,6 @@ packages:
       - rollup
       - supports-color
       - vue
-    dev: true
-
-  /nuxt3-localforage@0.1.2(localforage@1.10.0)(rollup@2.79.1):
-    resolution: {integrity: sha512-+teoZWePwTx6pmPAK4kHbCUfXb6GfEYQ2HD1tKAd5t0d04c77ICBLF4X2Hw7sdy8PTVRFxeiXGQOzAbiv2mF9w==}
-    peerDependencies:
-      localforage: ^1.10.0
-    dependencies:
-      '@nuxt/kit': 3.10.2(rollup@2.79.1)
-      defu: 6.1.4
-      localforage: 1.10.0
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
     dev: true
 
   /nuxt@3.10.2(eslint-ts-patch@8.56.0-0)(rollup@2.79.1)(sass@1.70.0)(typescript@5.3.3)(vite@5.1.1)(vue-tsc@1.8.27):

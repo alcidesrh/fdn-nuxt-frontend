@@ -32,7 +32,6 @@
     "nuxt": "^3.10.2",
     "nuxt-module-eslint-config": "^0.0.2",
     "nuxt-primevue": "^0.2.2",
-    "nuxt3-localforage": "^0.1.2",
     "pinia": "^2.1.7",
     "primevue": "3.44.0",
     "typescript": "^5.3.3",

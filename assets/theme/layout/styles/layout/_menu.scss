@@ -90,8 +90,8 @@
                 >li {
                     >a {
                         border-left: thin solid; // $slate-400;
-                        border-left-style: dotted;
-                        @apply border-left border-slate-400 display: flex;
+                        // border-left-style: dotted;
+                        @apply border-left border-slate-300 flex;
                         align-items: center;
                         transition: all 0.2s;
 
@@ -101,8 +101,8 @@
                             width: 15px;
                             margin-right: 5px;
                             border-top: 1px solid;
-                            border-top-style: dotted;
-                            @apply border-top border-slate-400;
+                            // border-top-style: dotted;
+                            @apply border-top border-slate-300;
                         }
 
                         &>div {

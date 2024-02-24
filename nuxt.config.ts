@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     '@formkit/nuxt',
     '@hypernym/nuxt-gsap',
-    'nuxt3-localforage',
     '@pinia-plugin-persistedstate/nuxt',
   ],
   piniaPersistedstate: {
@@ -31,7 +30,7 @@ export default defineNuxtConfig({
   alias: {
     'schema': fileURLToPath(new URL('./components/form/schemas', import.meta.url)),
     'fdn': fileURLToPath(new URL('./types', import.meta.url)),
-    'nm': fileURLToPath(new URL('./node_modules', import.meta.url))
+    'nm': fileURLToPath(new URL('./node_modules', import.meta.url)),
   },
   primevue: {
     usePrimeVue: true,
@@ -45,13 +44,9 @@ export default defineNuxtConfig({
     autoImport: true
   },
   extends: [
-    'auth',
+    './layers/auth',
+    './layers/api',
   ],
-  vite: {
-    optimizeDeps: {
-      include: ['localforage'],
-    },
-  },
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
