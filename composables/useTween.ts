@@ -46,7 +46,7 @@ function busDesarme(tl: gsap.core.Timeline) {
 
   tl.to(`#luna`, { width: '80px', height: '15px', duration: 0.8, x: -40, y: -7.5, backgroundColor: '#fdba74' }, 'luna-=.3')
     .to(`#luna`, { zIndex: 5, width: '200px', height: '10px', x: -100, y: -10, duration: 0.3, backgroundColor: '#fef9c3' })
-    .to(`#star-305`, { backgroundColor: '#c2410c', height: '80px', y: -40 }, '<')
+    .to(`#star-305`, { backgroundColor: '#c2410c', height: '60px', y: -40 }, '<')
 
     .to(`#star-305`, { width: window.innerWidth, x: (window.innerWidth) / -2, height: 80, y: -40, duration: 0.5, borderRadius: '70%' }, '<')
   tl.to(`#luna`, { backgroundColor: '#fef9c3', zIndex: 99, width: 10, x: -5, height: 3, y: -1.5, duration: 0.2 }, '<.3')

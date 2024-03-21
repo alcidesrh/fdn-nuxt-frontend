@@ -1,32 +1,13 @@
-import AuthSession from '~/types/auth_session'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   // Skip plugin when rendering error page
   if (nuxtApp.payload.error)
     return {}
 
-  const store = useUserSessionStore()
 
-  const { user } = store
-
-  if (user) {
-
-    const { data: session, refresh: updateSession } = await useFetch<AuthSession>('/auth', {
-      onRequest({ request, options }) {
-        // Set the request headers
-        options.headers = {
-          ...(options.headers || {}), ...{
-            // 'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
-            Accept: 'application/json'
-          }
-        }
-      }
-    })
-  }
 
   // Create a ref to know where to redirect the user when logged in
-  const redirectTo = useState('authRedirect')
+  // const redirectTo = useState('authRedirect')
 
   /**
    * Add global route middleware to protect pages using:
@@ -39,10 +20,33 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   addRouteMiddleware(
     'auth',
-    (to) => {
+    async (to) => {
+
+      const store = useUserSessionStore()
+      const { user } = store
+
       if (to.meta.auth && !user) {
-        redirectTo.value = to.path
+        store.redirectTo = to.path
         return '/login'
+      }
+
+
+      if (user) {
+
+        (API_DEFAULT_OPTIONS.headers as Record<any, any>) = { Authorization: `Bearer ${user.token}` }
+        await useFetch('/auth', {
+          ...API_DEFAULT_OPTIONS,
+          // onResponseError({ response: { _data } }) {
+          //   alert(333)
+          //   throw new Error(error);
+          // },
+          onResponse({ response: { _data } }) {
+            console.log(_data);
+
+
+          }
+
+        })
       }
     },
     { global: true },
@@ -50,21 +54,21 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const currentRoute = useRoute()
 
-  watch(user, async (user) => {
-    if (!user && currentRoute.meta.auth) {
-      redirectTo.value = currentRoute.path
-      await navigateTo('/login')
-    }
-  })
+  // watch(user, async (user) => {
+  //   if (!user && currentRoute.meta.auth) {
+  //     redirectTo.value = currentRoute.path
+  //     await navigateTo('/login')
+  //   }
+  // })
 
-  if (user && currentRoute.path === '/login')
-    await navigateTo(redirectTo.value || '/')
+  // if (user && currentRoute.path === '/login')
+  //   await navigateTo(redirectTo.value || '/')
 
-  return {
-    provide: {
-      auth: {
-        redirectTo,
-      },
-    },
-  }
+  // return {
+  //   provide: {
+  //     auth: {
+  //       redirectTo,
+  //     },
+  //   },
+  // }
 })

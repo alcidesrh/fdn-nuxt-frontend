@@ -20,11 +20,14 @@ export default defineConfig({
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
         // include js/ts files
-        'components/form/schemas/*.{js,ts}',
       ],
       // exclude files
       // exclude: []
     },
+    filesystem: [
+      // 'layers/**/*.{js,ts.vue}',
+      'layers/auth/components/form/*.{ts,js,vue}',
+    ],
   },
   presets: [
     presetUno(),

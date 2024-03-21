@@ -1,128 +1,56 @@
-/* @link https://utopia.fyi/type/calculator?c=320,14,1.067,1240,18,1.125,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+/* @link https://utopia.fyi/type/calculator?c=320,10,1.067,1240,14,1.067,10,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
 :root {
-  --fluid-min-width: 320;
-  --fluid-max-width: 320;
-
-  --fluid-screen: 100vw;
-  --fluid-bp: calc((var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) / (var(--fluid-max-width) - var(--fluid-min-width)));
+  --step--5: clamp(0.4519rem, 0.389rem + 0.3144vi, 0.6327rem);
+  --step--4: clamp(0.4822rem, 0.4151rem + 0.3354vi, 0.6751rem);
+  --step--3: clamp(0.5145rem, 0.4429rem + 0.3579vi, 0.7203rem);
+  --step--2: clamp(0.549rem, 0.4726rem + 0.3819vi, 0.7686rem);
+  --step--1: clamp(0.5858rem, 0.5043rem + 0.4075vi, 0.8201rem);
+  --step-0: clamp(0.625rem, 0.538rem + 0.4348vi, 0.875rem);
+  --step-1: clamp(0.6669rem, 0.5741rem + 0.4639vi, 0.9336rem);
+  --step-2: clamp(0.7116rem, 0.6126rem + 0.495vi, 0.9962rem);
+  --step-3: clamp(0.7592rem, 0.6536rem + 0.5282vi, 1.0629rem);
+  --step-4: clamp(0.8101rem, 0.6974rem + 0.5635vi, 1.1341rem);
+  --step-5: clamp(0.8644rem, 0.7441rem + 0.6013vi, 1.2101rem);
+  --step-6: clamp(0.9223rem, 0.794rem + 0.6416vi, 1.2912rem);
+  --step-7: clamp(0.9841rem, 0.8472rem + 0.6846vi, 1.3777rem);
+  --step-8: clamp(1.05rem, 0.9039rem + 0.7304vi, 1.47rem);
+  --step-9: clamp(1.1204rem, 0.9645rem + 0.7794vi, 1.5685rem);
+  --step-10: clamp(1.1954rem, 1.0291rem + 0.8316vi, 1.6736rem);
 }
 
-@media screen and (min-width: 320px) {
-  :root {
-    --fluid-screen: calc(var(--fluid-max-width) * 1px);
-  }
-}
+/* @link https://utopia.fyi/space/calculator?c=320,10,1.067,1240,14,1.067,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
 :root {
-  --f--2-min: 12.30;
-  --f--2-max: 14.22;
-  --step--2: calc(((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) * var(--fluid-bp));
-
-  --f--1-min: 13.12;
-  --f--1-max: 16.00;
-  --step--1: calc(((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) * var(--fluid-bp));
-
-  --f-0-min: 14.00;
-  --f-0-max: 18.00;
-  --step-0: calc(((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) * var(--fluid-bp));
-
-  --f-1-min: 14.94;
-  --f-1-max: 20.25;
-  --step-1: calc(((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) * var(--fluid-bp));
-
-  --f-2-min: 15.94;
-  --f-2-max: 22.78;
-  --step-2: calc(((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) * var(--fluid-bp));
-
-  --f-3-min: 17.01;
-  --f-3-max: 25.63;
-  --step-3: calc(((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) * var(--fluid-bp));
-
-  --f-4-min: 18.15;
-  --f-4-max: 28.83;
-  --step-4: calc(((var(--f-4-min) / 16) * 1rem) + (var(--f-4-max) - var(--f-4-min)) * var(--fluid-bp));
-
-  --f-5-min: 19.36;
-  --f-5-max: 32.44;
-  --step-5: calc(((var(--f-5-min) / 16) * 1rem) + (var(--f-5-max) - var(--f-5-min)) * var(--fluid-bp));
-}
-
-/* @link https://utopia.fyi/space/calculator?c=320,14,1.067,1240,18,1.125,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
-
-:root {
-  --fluid-min-width: 320;
-  --fluid-max-width: 1240;
-
-  --fluid-screen: 100vw;
-  --fluid-bp: calc((var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) / (var(--fluid-max-width) - var(--fluid-min-width)));
-}
-
-@media screen and (min-width: 1240px) {
-  :root {
-    --fluid-screen: calc(var(--fluid-max-width) * 1px);
-  }
-}
-
-:root {
-  --fc-3xs-min: (var(--fc-s-min) * 0.25);
-  --fc-3xs-max: (var(--fc-s-max) * 0.25);
-
-  --fc-2xs-min: (var(--fc-s-min) * 0.5);
-  --fc-2xs-max: (var(--fc-s-max) * 0.5);
-
-  --fc-xs-min: (var(--fc-s-min) * 0.75);
-  --fc-xs-max: (var(--fc-s-max) * 0.75);
-
-  --fc-s-min: (var(--f-0-min, 14));
-  --fc-s-max: (var(--f-0-max, 18));
-
-  --fc-m-min: (var(--fc-s-min) * 1.5);
-  --fc-m-max: (var(--fc-s-max) * 1.5);
-
-  --fc-l-min: (var(--fc-s-min) * 2);
-  --fc-l-max: (var(--fc-s-max) * 2);
-
-  --fc-xl-min: (var(--fc-s-min) * 3);
-  --fc-xl-max: (var(--fc-s-max) * 3);
-
-  --fc-2xl-min: (var(--fc-s-min) * 4);
-  --fc-2xl-max: (var(--fc-s-max) * 4);
-
-  --fc-3xl-min: (var(--fc-s-min) * 6);
-  --fc-3xl-max: (var(--fc-s-max) * 6);
-
-  /* T-shirt sizes */
-  --space-3xs: calc(((var(--fc-3xs-min) / 16) * 1rem) + (var(--fc-3xs-max) - var(--fc-3xs-min)) * var(--fluid-bp));
-  --space-2xs: calc(((var(--fc-2xs-min) / 16) * 1rem) + (var(--fc-2xs-max) - var(--fc-2xs-min)) * var(--fluid-bp));
-  --space-xs: calc(((var(--fc-xs-min) / 16) * 1rem) + (var(--fc-xs-max) - var(--fc-xs-min)) * var(--fluid-bp));
-  --space-s: calc(((var(--fc-s-min) / 16) * 1rem) + (var(--fc-s-max) - var(--fc-s-min)) * var(--fluid-bp));
-  --space-m: calc(((var(--fc-m-min) / 16) * 1rem) + (var(--fc-m-max) - var(--fc-m-min)) * var(--fluid-bp));
-  --space-l: calc(((var(--fc-l-min) / 16) * 1rem) + (var(--fc-l-max) - var(--fc-l-min)) * var(--fluid-bp));
-  --space-xl: calc(((var(--fc-xl-min) / 16) * 1rem) + (var(--fc-xl-max) - var(--fc-xl-min)) * var(--fluid-bp));
-  --space-2xl: calc(((var(--fc-2xl-min) / 16) * 1rem) + (var(--fc-2xl-max) - var(--fc-2xl-min)) * var(--fluid-bp));
-  --space-3xl: calc(((var(--fc-3xl-min) / 16) * 1rem) + (var(--fc-3xl-max) - var(--fc-3xl-min)) * var(--fluid-bp));
+  --space-3xs: clamp(0.1875rem, 0.1658rem + 0.1087vi, 0.25rem);
+  --space-2xs: clamp(0.3125rem, 0.269rem + 0.2174vi, 0.4375rem);
+  --space-xs: clamp(0.5rem, 0.4348rem + 0.3261vi, 0.6875rem);
+  --space-s: clamp(0.625rem, 0.538rem + 0.4348vi, 0.875rem);
+  --space-m: clamp(0.9375rem, 0.8071rem + 0.6522vi, 1.3125rem);
+  --space-l: clamp(1.25rem, 1.0761rem + 0.8696vi, 1.75rem);
+  --space-xl: clamp(1.875rem, 1.6141rem + 1.3043vi, 2.625rem);
+  --space-2xl: clamp(2.5rem, 2.1522rem + 1.7391vi, 3.5rem);
+  --space-3xl: clamp(3.75rem, 3.2283rem + 2.6087vi, 5.25rem);
 
   /* One-up pairs */
-  --space-3xs-2xs: calc(((var(--fc-3xs-min) / 16) * 1rem) + (var(--fc-2xs-max) - var(--fc-3xs-min)) * var(--fluid-bp));
-  --space-2xs-xs: calc(((var(--fc-2xs-min) / 16) * 1rem) + (var(--fc-xs-max) - var(--fc-2xs-min)) * var(--fluid-bp));
-  --space-xs-s: calc(((var(--fc-xs-min) / 16) * 1rem) + (var(--fc-s-max) - var(--fc-xs-min)) * var(--fluid-bp));
-  --space-s-m: calc(((var(--fc-s-min) / 16) * 1rem) + (var(--fc-m-max) - var(--fc-s-min)) * var(--fluid-bp));
-  --space-m-l: calc(((var(--fc-m-min) / 16) * 1rem) + (var(--fc-l-max) - var(--fc-m-min)) * var(--fluid-bp));
-  --space-l-xl: calc(((var(--fc-l-min) / 16) * 1rem) + (var(--fc-xl-max) - var(--fc-l-min)) * var(--fluid-bp));
-  --space-xl-2xl: calc(((var(--fc-xl-min) / 16) * 1rem) + (var(--fc-2xl-max) - var(--fc-xl-min)) * var(--fluid-bp));
-  --space-2xl-3xl: calc(((var(--fc-2xl-min) / 16) * 1rem) + (var(--fc-3xl-max) - var(--fc-2xl-min)) * var(--fluid-bp));
+  --space-3xs-2xs: clamp(0.1875rem, 0.1005rem + 0.4348vi, 0.4375rem);
+  --space-2xs-xs: clamp(0.3125rem, 0.1821rem + 0.6522vi, 0.6875rem);
+  --space-xs-s: clamp(0.5rem, 0.3696rem + 0.6522vi, 0.875rem);
+  --space-s-m: clamp(0.625rem, 0.3859rem + 1.1957vi, 1.3125rem);
+  --space-m-l: clamp(0.9375rem, 0.6549rem + 1.413vi, 1.75rem);
+  --space-l-xl: clamp(1.25rem, 0.7717rem + 2.3913vi, 2.625rem);
+  --space-xl-2xl: clamp(1.875rem, 1.3098rem + 2.8261vi, 3.5rem);
+  --space-2xl-3xl: clamp(2.5rem, 1.5435rem + 4.7826vi, 5.25rem);
 
   /* Custom pairs */
-  --space-s-l: calc(((var(--fc-s-min) / 16) * 1rem) + (var(--fc-l-max) - var(--fc-s-min)) * var(--fluid-bp));
+  --space-s-l: clamp(0.625rem, 0.2337rem + 1.9565vi, 1.75rem);
 }
 
-
-/* @link https://utopia.fyi/grid/calculator?c=320,14,1.067,1240,18,1.125,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+/* @link https://utopia.fyi/grid/calculator?c=320,10,1.067,868,14,1.067,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=xs,l,xl,12 */
 
 :root {
-  --grid-max-width: 69.75rem;
-  --grid-gutter: var(--space-s-l, clamp(0.875rem, 0.3222rem + 2.7638vw, 2.25rem));
+  --grid-max-width: 54.25rem;
+  --grid-gutter: var(--space-xs-l, clamp(0.5rem, -0.2299rem + 3.6496vw, 1.75rem));
   --grid-columns: 12;
 }
 
@@ -138,6 +66,14 @@
 }
 
 /* Utopia Padding----------------------------------*/
+
+.u-p-5xs {
+  padding: var(--space-5xs);
+}
+
+.u-p-4xs {
+  padding: var(--space-4xs);
+}
 
 .u-p-3xs {
   padding: var(--space-3xs);
@@ -410,6 +346,14 @@
 
 
 /* Utopia Margin----------------------------------*/
+
+.u-m-5xs {
+  margin: var(--space-3xs);
+}
+
+.u-m-4xs {
+  margin: var(--space-3xs);
+}
 
 .u-m-3xs {
   margin: var(--space-3xs);

@@ -1,7 +1,10 @@
 .p-button {
     font-weight: 400;
-    min-width: 4rem;
+    min-width: auto;
     letter-spacing: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.p-button-icon-only {
         min-width: auto;
@@ -69,8 +72,8 @@
 }
 
 .p-button.p-button-secondary,
-.p-buttonset.p-button-secondary > .p-button,
-.p-splitbutton.p-button-secondary > .p-button {
+.p-buttonset.p-button-secondary>.p-button,
+.p-splitbutton.p-button-secondary>.p-button {
     &:enabled:focus {
         background: rgba($secondaryButtonBg, 0.76);
     }
@@ -96,8 +99,8 @@
 }
 
 .p-button.p-button-info,
-.p-buttonset.p-button-info > .p-button,
-.p-splitbutton.p-button-info > .p-button {
+.p-buttonset.p-button-info>.p-button,
+.p-splitbutton.p-button-info>.p-button {
     &:enabled:focus {
         background: rgba($infoButtonBg, 0.76);
     }
@@ -123,8 +126,8 @@
 }
 
 .p-button.p-button-success,
-.p-buttonset.p-button-success > .p-button,
-.p-splitbutton.p-button-success > .p-button {
+.p-buttonset.p-button-success>.p-button,
+.p-splitbutton.p-button-success>.p-button {
     &:enabled:focus {
         background: rgba($successButtonBg, 0.76);
     }
@@ -150,8 +153,8 @@
 }
 
 .p-button.p-button-warning,
-.p-buttonset.p-button-warning > .p-button,
-.p-splitbutton.p-button-warning > .p-button {
+.p-buttonset.p-button-warning>.p-button,
+.p-splitbutton.p-button-warning>.p-button {
     &:enabled:focus {
         background: rgba($warningButtonBg, 0.76);
     }
@@ -177,8 +180,8 @@
 }
 
 .p-button.p-button-help,
-.p-buttonset.p-button-help > .p-button,
-.p-splitbutton.p-button-help > .p-button {
+.p-buttonset.p-button-help>.p-button,
+.p-splitbutton.p-button-help>.p-button {
     &:enabled:focus {
         background: rgba($helpButtonBg, 0.76);
     }
@@ -204,8 +207,8 @@
 }
 
 .p-button.p-button-danger,
-.p-buttonset.p-button-danger > .p-button,
-.p-splitbutton.p-button-danger > .p-button {
+.p-buttonset.p-button-danger>.p-button,
+.p-splitbutton.p-button-danger>.p-button {
     &:enabled:focus {
         background: rgba($dangerButtonBg, 0.76);
     }

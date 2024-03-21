@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, watch, ref } from 'vue'
 
 const { getIcons } = useIcon()
 const headerIcon = getIcons('header-menu')
+const hover = ref(false)
 
 const {
   unbindOutsideClickListener,
@@ -57,18 +58,18 @@ const attr = Array.from({ length: 4 }, () => { const { cloned } = useCloned(ref(
 
     <div class="layout-topbar-menu flex items-center" :class="topbarMenuClasses">
       <!-- <button class="p-link layout-topbar-button z-0" @click="onTopBarMenuButton()">
-          <i class="pi pi-calendar text-slate-700" />
-          <span>Calendar</span>
-        </button>
-        <button class="p-link layout-topbar-button z-0" @click="onTopBarMenuButton()">
-          <UserIcon />
-          <span>Profile</span>
-        </button>
-        <button class="p-link layout-topbar-button z-0" @click="onSettingsClick()">
-          <i class="pi pi-cog text-slate-700" />
-          <span>Settings</span>
-        </button> -->
-      <icon v-for="(e, i) in headerIcon" :key="i" :name="e.name" v-bind="e.attr.value" />
+        <i class="pi pi-calendar text-slate-700" />
+        <span>Calendar</span>
+      </button>
+      <button class="p-link layout-topbar-button z-0" @click="onTopBarMenuButton()">
+        <UserIcon />
+        <span>Profile</span>
+      </button>
+      <button class="p-link layout-topbar-button z-0" @click="onSettingsClick()">
+        <i class="pi pi-cog text-slate-700" />
+        <span>Settings</span>
+      </button> -->
+      <icon v-for="(e, i) in headerIcon" :key="i" :name="e.name" :fill="['#475569', '#f1f5f9']" v-bind="e.attr.value" />
 
 
       <!-- <component v-for="(e, i) in headerIcon" :key="i" :is="`icon-${e.name}`" v-bind="e.attr.value"  @mouseover="hoverMenu(i, 'in')" @mouseleave="hoverMenu(i, 'leave')"></component> -->

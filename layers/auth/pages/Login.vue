@@ -32,12 +32,33 @@ const allow_banner_amimation = computed(
       </ul>
     </div>
 
-    <div class="layout-main-container h-full">
+    <div class="layout-main-container h-full ml-270px">
       <div class="layout-main">
         <div class="overlay left-0 z-2" />
         <div class="overlay2 right-0 z-0" />
+        <div class="absolute m-auto left-50% top-50% -ml-258px -mt-211px">
+          <FormLogin />
+        </div>
 
-        <FormLogin />
+
+        <div class="card">
+          <div class="border-round border-1 surface-border p-4 surface-card">
+            <div class="flex mb-3">
+              <Skeleton shape="circle" size="4rem" class="mr-2"></Skeleton>
+              <div>
+                <Skeleton width="10rem" class="mb-2"></Skeleton>
+                <Skeleton width="5rem" class="mb-2"></Skeleton>
+                <Skeleton height=".5rem"></Skeleton>
+              </div>
+            </div>
+            <Skeleton width="100%" height="150px"></Skeleton>
+            <div class="flex justify-content-between mt-3">
+              <Skeleton width="4rem" height="2rem"></Skeleton>
+              <Skeleton width="4rem" height="2rem"></Skeleton>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -47,6 +68,6 @@ const allow_banner_amimation = computed(
 .overlay,
 .overlay2 {
   opacity: .2;
-  @apply bg-sky-300 fixed h-full w-50% bottom-0 top-80px;
+  @apply bg-sky-300 fixed h-full w-50% bottom-0 top-60px;
 }
 </style>

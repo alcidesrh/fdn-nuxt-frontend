@@ -10,72 +10,34 @@ const { shake } = useAnimationGsap()
 
 async function handleSubmit(credentials: Record<string, string>, node: Record<any, any>) {
 
-  await useFetch('/login', {
-
+  await $fetch('/login', {
     ...API_DEFAULT_OPTIONS,
-    body: {
-      username: credentials.username,
-      password: credentials.email
-    },
-    onResponseError({ response: { _data: { error } } }) {
-      console.log(error);
-      node.setErrors(
-        [error]
-      )
-      throw new Error(error);
-    },
-    onResponse(response) {
-      console.log(response);
+    body: JSON.stringify(credentials),
+  }).then((resp) => {
 
-    }
+    const store = useUserSessionStore()
+    store.user = resp
+    navigateTo(store.redirectTo);
+  }).catch(({ response: { _data } }) => {
+
+    const error = _data.error || _data.detail || 'No se pudo iniciar la sesión'
+    node.setErrors(
+      [error]
+    )
+    shake('#login')
   })
-  // .then(async (resp) => {
-  //   alert(11)
-  //   if ((resp as Record<string, string>).uri) {
-  //     store.setUserSession(resp)
-  //     const { user } = store
-  //     console.log(resp, user);
-  //   }
-  // }).catch((resp) => {
-  //   console.log(resp._data.error);
-  //   // return
-  //   node.setErrors(
-  //     // Arg 1 is form-wide errors
-  //     [resp._data.error],
-  //   )
-
-  //   shake('#login')
-  // });
-  // await useUserLogin(credentials)
-  //   .then(async (resp) => {
-
-  //     if ((resp as Record<string, string>).uri) {
-  //       store.setUserSession(resp)
-  //       const { user } = store
-  //       console.log(resp, user);
-  //     }
-  //   })
-  //   .catch((resp) => {
-  //     console.log(resp, user);
-  //     // return
-  //     node.setErrors(
-  //       // Arg 1 is form-wide errors
-  //       [error],
-  //     )
-
-  //     shake('#login')
-  //   });
   return;
 }
-
+const form = ref(null)
 </script>
 
 <template>
-  <div class="relative top-80% z-999 py-5 m-auto max-w-fit ">
-    <div id="login" class="border border-slate-400 p-3 bg-white pt-8 rounded shadow-md">
+  <div class="relative z-999 m-auto max-w-fit ">
+    <div id="login" class="border border-zinc-950 p-3 bg-slate-800/90  pt-8 rounded-0 shadow-md">
       <div class="w-fit md:w-25em">
         <div class="m-auto max-w-20em">
-          <FormKit type="form" v-model="user" @submit-invalid="shake('#login')" @submit="handleSubmit" :actions="false">
+          <FormKit type="form" v-model="user" @submit-invalid="shake('#login')" @submit="handleSubmit" :actions="false"
+            ref="form" message-class="!text-orange-200">
             <FormKitSchema :schema="schema" :data="user" />
           </FormKit>
         </div>

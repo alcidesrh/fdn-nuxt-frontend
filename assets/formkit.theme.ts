@@ -978,7 +978,7 @@ const classes: Record<string, Record<string, boolean>> = {
     'selection:text-neutral-700': true,
     'group-data-[has-overlay]:selection:!text-transparent': true,
     'bg-blue-600': true,
-    '!text-white': true,
+    'text-white': true,
     'active:text-blue-100': true,
     'active:bg-blue-700': true,
     'hover:bg-blue-700': true,

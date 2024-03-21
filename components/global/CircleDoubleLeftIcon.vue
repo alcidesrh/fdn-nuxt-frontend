@@ -1,7 +1,11 @@
 <script setup>
-import { DoubleLeft } from '@icon-park/vue-next';
+// import { ToLeft, ToBottom, DoubleDown, DoubleLeft  } from '@icon-park/vue-next';
+import { SortThree } from '@icon-park/vue-next';
 
+defineProps({
+  direction: String
+})
 </script>
 <template>
-  <DoubleLeft />
+  <SortThree :class="{ 'rotate-90': direction == 'horizontal' }" />
 </template>

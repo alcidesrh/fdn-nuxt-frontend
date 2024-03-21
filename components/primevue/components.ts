@@ -8,7 +8,8 @@ const formComponentNamesToExport = [
   'InputSwitch',
   'Textarea',
   'Dropdown',
-  'CascadeSelect'
+  'CascadeSelect',
+  'Tree'
 ]
 const formComponentNames = [
   'AutoComplete',
@@ -37,7 +38,7 @@ const formComponentNames = [
   'TriStateCheckbox',
 ]
 
-const buttonComponentNamesToExport = ['Button']
+const buttonComponentNamesToExport = ['Button', 'ButtonGroup']
 const buttonComponentNames = [
   'Button',
   'SpeedDial',
@@ -116,6 +117,7 @@ const chartComponentNames = [
   'Chart',
 ]
 
+const messagesComponentNamesToExport = ['Toast']
 const messagesComponentNames = [
   'Message',
   'InlineMessage',
@@ -175,5 +177,6 @@ export const components = [
   ...panelComponentNamesToExport,
   ...overlayComponentNamesToExport,
   ...miscComponentNamesExport,
+  ...messagesComponentNamesToExport
 
 ]

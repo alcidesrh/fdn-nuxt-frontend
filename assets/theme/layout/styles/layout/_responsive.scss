@@ -34,21 +34,22 @@
 
     &.layout-static {
       .layout-main-container {
-        margin-left: 215px;
+        margin-left: 250px;
       }
 
       &.layout-static-inactive {
         .layout-sidebar {
           transform: translateX(-100%);
-          left: 60px;
+          // left: 60px;
           background: $slate-100;
         }
 
         .layout-main-container {
-          margin-left: 80px;
+          margin-left: 87px;
           padding-left: 2rem;
         }
       }
+
     }
 
     .layout-mask {
@@ -75,6 +76,34 @@
       height: 100vh;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+
+
+      .menu-btn>button {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 242px;
+        margin-top: 1.5rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+        // overflow: hidden;
+        // z-index: 999;
+        box-shadow: -0.25rem 0 1rem rgba(0, 0, 0, 0.15);
+        background-color: white;
+      }
+
+      .menu-btn {
+        z-index: -1;
+      }
+
+      .menu-btn>button>span {
+        margin-left: 3px
+      }
+
+      .menu-btn>button:first-child {
+        margin-top: -40px;
+      }
     }
 
     .layout-mask {

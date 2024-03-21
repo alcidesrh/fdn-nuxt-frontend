@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 // import { User } from "~~/api/types/user";
 import type { SubmissionErrors } from "~/api/types/error";
 import { UserItemData } from "~/api/types/api";
+import type { Config } from "./QuickTypes/";
 
 export interface setUserSession {
   username?: string;
@@ -11,8 +12,10 @@ export interface setUserSession {
 interface State {
   user?: User;
   isLoading: boolean;
+  redirectTo?: string;
   error?: string;
   violations?: SubmissionErrors;
+  config?: Config;
 }
 
 export const useUserSessionStore = defineStore("userSession", {
@@ -22,6 +25,12 @@ export const useUserSessionStore = defineStore("userSession", {
     isLoading: false,
     error: undefined,
     violations: undefined,
+    config: {
+      sidebar: {
+        h_opened: true,
+        v_opened: true,
+      }
+    }
   }),
 
   actions: {
