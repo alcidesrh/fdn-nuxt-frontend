@@ -8,7 +8,11 @@ import { Item } from "~~/types/item";
 
 const MIME_TYPE = "application/json";
 
-async function useApi<T>(path: string, options: UseFetchOptions<T> = {}, method: "POST") {
+async function useApi<T>(
+  path: string,
+  options: UseFetchOptions<T> = {},
+  method: "POST"
+) {
   const response = await useFetch(path, {
     baseURL: ENTRYPOINT,
     mode: "no-cors",
@@ -28,17 +32,20 @@ async function useApi<T>(path: string, options: UseFetchOptions<T> = {}, method:
   return response;
 }
 
-export async function useUserLogin<T>(user: Record<string, string>, resource: string = '/login') {
+export async function useUserLogin<T>(
+  user: Record<string, string>,
+  resource: string = "/login"
+) {
   const data = {
     username: user.username,
-    password: user.password
-  }
-  return await $fetch('/login', {
+    password: user.password,
+  };
+  return await $fetch("/login", {
     baseURL: ENTRYPOINT,
     method: "POST",
     headers: {
       Accept: MIME_TYPE,
-      'Content-Type': MIME_TYPE
+      "Content-Type": MIME_TYPE,
     },
     body: JSON.stringify(data),
     // onResponseError({ response }) {
@@ -46,12 +53,10 @@ export async function useUserLogin<T>(user: Record<string, string>, resource: st
     // return response
 
     // const data = response._data;
-    // console.log(data, response.status)
     //   const error = data["hydra:description"] || response.statusText;
     // throw new Error(error);
     // },
 
     // ...options,
-  })
-
+  });
 }

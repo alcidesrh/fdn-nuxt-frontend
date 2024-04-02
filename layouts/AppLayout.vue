@@ -68,11 +68,8 @@ const siderbar_toggle = (direction = 'horizontal') => {
         themeState.sidebar.h_opened = !themeState.sidebar.h_opened
         themeState.onMenuToggle()
     }
-    // const { menu } = useMenu();
-    // if (!equals(toRaw(themeState.sidebar.menu), menu)) {
-    //     themeState.sidebar.menu = menu
-    //     co
 }
+
 </script>
 
 <template>

@@ -23,16 +23,7 @@ export default {
        }
            `)
 
-    watch(result, value => {
-      console.log(value)
-    })
-    return {
-    }
   },
-
-  mounted() {
-    console.log(this.count) // 0
-  }
 }
 
 </script>

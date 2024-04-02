@@ -88,12 +88,11 @@ const { iconProps, isComponent } = useIcon()
     </router-link>
     <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
       <ul v-show="item.opened" class="layout-submenu" :class="{ hidden: !item.opened }">
-        <app-menu-item v-for=" (child, i) in item.items " :key="child" :index="i" :item="child" :parent-item-key="itemKey"
-          :root="false" />
+        <app-menu-item v-for=" (child, i) in item.items " :key="child" :index="i" :item="child"
+          :parent-item-key="itemKey" :root="false" />
       </ul>
     </Transition>
   </li>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -7,12 +7,19 @@ import {
   // presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss'
+} from "unocss";
 
 export default defineConfig({
+  // rules: [["t-1", { margin: "9.25rem" }]],
   shortcuts: [
-    ['btn', 'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
-    ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600'],
+    [
+      "btn",
+      "px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50",
+    ],
+    [
+      "icon-btn",
+      "inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600",
+    ],
   ],
   content: {
     pipeline: {
@@ -26,7 +33,7 @@ export default defineConfig({
     },
     filesystem: [
       // 'layers/**/*.{js,ts.vue}',
-      'layers/auth/components/form/*.{ts,js,vue}',
+      "layers/auth/components/form/*.{ts,js,vue}",
     ],
   },
   presets: [
@@ -44,8 +51,5 @@ export default defineConfig({
     //   },
     // }),
   ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
-})
+  transformers: [transformerDirectives(), transformerVariantGroup()],
+});

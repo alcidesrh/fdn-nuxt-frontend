@@ -21,7 +21,9 @@ interface State {
 export const useUserSessionStore = defineStore("userSession", {
   persist: true,
   state: (): State => ({
+    count: 0,
     user: undefined,
+    isLogin: false,
     isLoading: false,
     error: undefined,
     violations: undefined,
@@ -29,8 +31,8 @@ export const useUserSessionStore = defineStore("userSession", {
       sidebar: {
         h_opened: true,
         v_opened: true,
-      }
-    }
+      },
+    },
   }),
 
   actions: {
@@ -46,6 +48,7 @@ export const useUserSessionStore = defineStore("userSession", {
 
     setUserSession(user?: User) {
       this.user = user;
+      this.isLogin = true;
     },
 
     setLoading(isLoading: boolean) {

@@ -1,10 +1,6 @@
-
 export default defineNuxtPlugin(async (nuxtApp) => {
   // Skip plugin when rendering error page
-  if (nuxtApp.payload.error)
-    return {}
-
-
+  if (nuxtApp.payload.error) return {};
 
   // Create a ref to know where to redirect the user when logged in
   // const redirectTo = useState('authRedirect')
@@ -19,50 +15,41 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   //
 
   addRouteMiddleware(
-    'auth',
+    "auth",
     async (to) => {
-
-      const store = useUserSessionStore()
-      const { user } = store
-
+      const store = useUserSessionStore();
+      const { user } = store;
       if (to.meta.auth && !user) {
-        store.redirectTo = to.path
-        return '/login'
-      }
-
-
-      if (user) {
-
-        (API_DEFAULT_OPTIONS.headers as Record<any, any>) = { Authorization: `Bearer ${user.token}` }
-        await useFetch('/auth', {
+        store.redirectTo = to.path;
+        return "/login";
+      } else if (user) {
+        (API_DEFAULT_OPTIONS.headers as Record<any, any>) = {
+          Authorization: `Bearer ${user.token}`,
+        };
+        const resp = await useFetch("/auth", {
           ...API_DEFAULT_OPTIONS,
           // onResponseError({ response: { _data } }) {
           //   alert(333)
           //   throw new Error(error);
           // },
-          onResponse({ response: { _data } }) {
-            console.log(_data);
-
-
-          }
-
-        })
+          // onResponseError({ response: { _data } }) {
+          // if (_data.error) {
+          //   // store.redirectTo = to.path;
+          //   return "/login";
+          // }
+          // },
+        });
+        if (resp.error && resp.error.value) {
+          // store.$reset();
+          store.redirectTo = to.path;
+          return "/login";
+        } else if (to.name === "Login") {
+          return navigateTo("/", { redirectCode: 301 });
+        }
       }
     },
-    { global: true },
-  )
-
-  const currentRoute = useRoute()
-
-  // watch(user, async (user) => {
-  //   if (!user && currentRoute.meta.auth) {
-  //     redirectTo.value = currentRoute.path
-  //     await navigateTo('/login')
-  //   }
-  // })
-
-  // if (user && currentRoute.path === '/login')
-  //   await navigateTo(redirectTo.value || '/')
+    { global: true }
+  );
 
   // return {
   //   provide: {
@@ -71,4 +58,4 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   //     },
   //   },
   // }
-})
+});

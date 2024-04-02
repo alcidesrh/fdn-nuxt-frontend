@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed} from 'vue';
+import { computed } from "vue";
 
 export const useThemeStateStore = defineStore("useThemeState", {
   persist: true,
@@ -12,8 +12,8 @@ export const useThemeStateStore = defineStore("useThemeState", {
     },
     layout: {
       darkTheme: false,
-      menuMode: 'static',
-      theme: 'lara-light-indigo',
+      menuMode: "static",
+      theme: "lara-light-indigo",
       scale: 14,
       activeMenuItem: null,
       staticMenuDesktopInactive: false,
@@ -21,8 +21,8 @@ export const useThemeStateStore = defineStore("useThemeState", {
       profileSidebarVisible: false,
       configSidebarVisible: false,
       staticMenuMobileActive: false,
-      menuHoverActive: false
-    }
+      menuHoverActive: false,
+    },
   }),
 
   actions: {
@@ -47,40 +47,41 @@ export const useThemeStateStore = defineStore("useThemeState", {
     },
 
     onMenuToggle() {
-      if (this.layout.menuMode === 'overlay') {
+      if (this.layout.menuMode === "overlay") {
         this.layout.overlayMenuActive = !this.layout.overlayMenuActive;
       }
 
       if (window.innerWidth > 991) {
-        this.layout.staticMenuDesktopInactive = !this.layout.staticMenuDesktopInactive;
+        this.layout.staticMenuDesktopInactive =
+          !this.layout.staticMenuDesktopInactive;
       } else {
-        this.layout.staticMenuMobileActive = !this.layout.staticMenuMobileActive;
+        this.layout.staticMenuMobileActive =
+          !this.layout.staticMenuMobileActive;
       }
-
     },
     onMenuToggleVertical(menu: any = null): void {
-
       if (!menu) {
         menu = this.sidebar.menu;
       }
-      menu.forEach(menu => {
-        if (menu.hasOwnProperty('opened')) {
-          menu.opened = this.sidebar.v_opened
+      menu.forEach((menu) => {
+        if (menu.hasOwnProperty("opened")) {
+          menu.opened = this.sidebar.v_opened;
         }
-        if (menu.hasOwnProperty('items') && menu.items.length > 0) {
-          this.onMenuToggleVertical(menu.items)
+        if (menu.hasOwnProperty("items") && menu.items.length > 0) {
+          this.onMenuToggleVertical(menu.items);
         }
-      })
-    }
+      });
+    },
   },
   getters: {
-   // automatically infers the return type as a number
+    // automatically infers the return type as a number
     isSidebarActive(state) {
-      return state.layout.overlayMenuActive || state.layout.staticMenuMobileActive
+      return (
+        state.layout.overlayMenuActive || state.layout.staticMenuMobileActive
+      );
     },
     isDarkTheme(state) {
-      return state.layout.darkTheme
-    }
-
-  }
+      return state.layout.darkTheme;
+    },
+  },
 });

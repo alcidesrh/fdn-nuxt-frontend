@@ -33,11 +33,11 @@ const form = ref(null)
 
 <template>
   <div class="relative z-999 m-auto max-w-fit ">
-    <div id="login" class="border border-zinc-950 p-3 bg-slate-800/90  pt-8 rounded-0 shadow-md">
+    <div id="login" class="border border-slate-4 p-3 bg-white text-slate-700 pt-8 rounded-0 shadow-md">
       <div class="w-fit md:w-25em">
         <div class="m-auto max-w-20em">
           <FormKit type="form" v-model="user" @submit-invalid="shake('#login')" @submit="handleSubmit" :actions="false"
-            ref="form" message-class="!text-orange-200">
+            ref="form" message-class="">
             <FormKitSchema :schema="schema" :data="user" />
           </FormKit>
         </div>
@@ -45,4 +45,3 @@ const form = ref(null)
     </div>
   </div>
 </template>
-

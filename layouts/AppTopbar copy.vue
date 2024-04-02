@@ -23,7 +23,6 @@ onMounted(() => {
 })
 
 function hoverMenu(i, event) {
-  console.log(i, event);
   if (event == 'in') {
     attr[i].value.fill = ['#e2e8f0', '#94a3b8'];
   }
@@ -79,9 +78,9 @@ const attr = Array.from({ length: 4 }, () => { const { cloned } = useCloned(ref(
       <a href="/logout" rounded class="u-p-4xs flex justify-center items-center ">
 
         <icon-error v-bind="{
-          size: '23', strokeWidth: '0', theme: 'two-tone', fill: ['#e2e8f0', '#64748b'],
-          strokeLinecap: 'square', class: 'rounded-full cursor-pointer drop-shadow'
-        }" />
+      size: '23', strokeWidth: '0', theme: 'two-tone', fill: ['#e2e8f0', '#64748b'],
+      strokeLinecap: 'square', class: 'rounded-full cursor-pointer drop-shadow'
+    }" />
 
       </a>
     </div>

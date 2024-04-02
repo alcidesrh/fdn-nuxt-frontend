@@ -17,7 +17,6 @@ const temp: Record<string, any> = ref({ size: '29' })
 // let attr2 = { size: '29', strokeWidth: '2', theme: 'two-tone', fill: ['#475569', '#f1f5f9'], strokeLinecap: 'square', class: 'u-mx-xs cursor-pointer drop-shadow' }
 // const attr2 = ref(props.attrs.value)
 
-// console.log(props.attr.value, attr2, props.name);
 
 
 
@@ -37,7 +36,6 @@ const icon = ref(null)
 function hoverMenu(type: String, event: Event) {
 
   if (type == 'hover') {
-    console.log(icon.value)
 
     icon.value.$el.querySelector('path').setAttribute('fill', '#cbd5e1');
     // icon.value.$el.querySelector('svg').classList.add("stroke-cyan-500");

@@ -29,7 +29,6 @@ const siderbar_toggle = (direction = 'horizontal') => {
   // const { menu } = useMenu();
   // if (!equals(toRaw(themeState.sidebar.menu), menu)) {
   //     themeState.sidebar.menu = menu
-  //     console.log(themeState.sidebar.menu);
   // }
 }
 
@@ -88,7 +87,8 @@ function isOutsideClicked(event) {
             strokeWidth="none" class="stroke-4 !text-slate-500  text-25px" style="transition: transform 0.2s;" />
         </template>
       </Button>
-      <Button @click="siderbar_toggle('vertical')" severity="success" rounded class="border border-slate-500 bg-slate-50">
+      <Button @click="siderbar_toggle('vertical')" severity="success" rounded
+        class="border border-slate-500 bg-slate-50">
         <template #icon>
           <CircleDoubleLeftIcon direction="vertical" strokeWidth="none" class="stroke-4 !text-slate-500  text-25px"
             style="transition: transform 0.2s;" />
