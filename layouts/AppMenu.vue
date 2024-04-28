@@ -1,7 +1,13 @@
 <script setup>
 import AppMenuItem from './AppMenuItem.vue';
+import { equals } from 'ramda'
 
 const themeState = useThemeStateStore()
+
+const { menu } = useMenu();
+if (!equals(toRaw(themeState.sidebar.menu), menu)) {
+    themeState.sidebar.menu = menu
+}
 </script>
 
 <template>

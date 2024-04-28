@@ -1,9 +1,9 @@
-$fondo: #ffffff;
-$fondoRoot: $neutral-200;
-$fondoMenu: $neutral-50;
-$colorRoot: $slate-900; //'black';
-$colorMenu: $neutral-800;
-$border: $neutral-400;
+$fondo: $slate-100;
+$fondoRoot: $slate-200;
+$fondoMenu: $zinc-50 ;
+$colorRoot: $slate-600; //'black';
+$colorMenu: $slate-700;
+$border: $slate-400;
 $fontWeight: 400;
 
 
@@ -11,20 +11,12 @@ $fontWeight: 400;
     position: fixed;
     width: 250px;
     height: calc(100vh - 160px);
-    z-index: 999;
+    z-index: 99;
     user-select: none;
     top: 110px;
     transition: transform $transitionDuration, left $transitionDuration;
     font-weight: $fontWeight;
     background-color: $fondo; //$backgroundColor;
-    @apply: shadow-lg;
-    //  border-l-0 border border-neutral-300;
-    // overflow-y: hidden;
-
-
-    .menu-btn>button {
-        @apply: border border-neutral-400 bg-neutral-50 px-12px py-6px z-999 flex justify-center
-    }
 
     .layout-menu {
         direction: rtl;
@@ -47,7 +39,8 @@ $fontWeight: 400;
         .layout-root-menuitem {
             position: relative;
             color: $colorRoot;
-            @apply: border-neutral-400 border-b-1;
+            margin-bottom: 15px;
+            // @apply: border-neutral-400 border-b-1;
 
             >span {
                 font-style: oblique 12deg;
@@ -59,15 +52,17 @@ $fontWeight: 400;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                font-size: var(--step-4);
-                font-weight: $fontWeight;
+                // font-size: var(--step-3);
+                font-weight: 570;
+                @apply: hover:bg-slate-300/70 flex items-center gap-2;
                 background-color: $fondoRoot;
+                color: $colorRoot;
+
                 // padding: 13px 0px;
-                @apply: hover:bg-neutral-300/70 flex items-center gap-2;
 
                 span.i-icon>svg {
                     font-size: var(--step-8);
-                    color: $colorMenu;
+                    color: $colorRoot;
                 }
 
                 &>span {
@@ -91,9 +86,11 @@ $fontWeight: 400;
                 letter-spacing: 1px;
                 background-color: $fondoMenu;
                 color: $colorMenu;
+                width: 95%;
+                @apply border border-zinc-200 border-t-0;
 
                 >li:hover {
-                    @apply bg-neutral-200/50;
+                    @apply bg-zinc-100;
                 }
 
                 >li {
@@ -103,7 +100,7 @@ $fontWeight: 400;
                         display: flex;
 
                         &>div {
-                            font-size: var(--step-2);
+                            // font-size: var(--step-2);
                             font-weight: $fontWeight;
                             display: flex;
                             align-items: center;
@@ -126,6 +123,7 @@ $fontWeight: 400;
                 }
 
                 >li.active-menuitem {
+
                     &>a>div {
                         width: fit-content;
                         padding: 0.4rem 1rem;
@@ -134,6 +132,15 @@ $fontWeight: 400;
                     }
                 }
             }
+        }
+
+        .active-menuitem>.layout-menuitem-root-text {
+            // @apply rounded-tr-full
+            @apply rounded
+        }
+
+        .layout-root-menuitem {
+            @apply u-mb-s
         }
 
         // .layout-root-menuitem.active-menuitem {
@@ -172,20 +179,7 @@ $fontWeight: 400;
             left: 87px;
             width: 87px;
             padding: 0px;
-
-            .menu-btn {
-                z-index: 0;
-                right: -40px;
-
-            }
-
-            .menu-btn>button {
-                z-index: 0 !important;
-                background-color: $fondoMenu;
-                border-left: none !important;
-                border-top-left-radius: 0px;
-                border-bottom-left-radius: 0px;
-            }
+            // top: 70px;
 
             .layout-menu {
                 margin-top: 0px;
@@ -218,6 +212,7 @@ $fontWeight: 400;
                 .layout-root-menuitem {
                     // border-bottom: thin solid;
                     // border-color: $neutral-400;
+                    @apply mb-0 border-b border-slate-3;
 
                     >.layout-menuitem-root-text {
                         padding: 0px 5px;
@@ -234,7 +229,7 @@ $fontWeight: 400;
                         @apply: rounded-none;
 
                         &>span:first-child {
-                            display: none;
+                            margin: auto;
                         }
 
                         &>span {
@@ -265,6 +260,8 @@ $fontWeight: 400;
 
                     &>.layout-submenu {
                         padding: 0px;
+
+
 
                         &>li {
                             a {
@@ -333,6 +330,8 @@ $fontWeight: 400;
                                 margin-bottom: 0px;
                             }
                         }
+
+
                     }
                 }
 
@@ -373,6 +372,8 @@ $fontWeight: 400;
             margin: 15px 0px;
         }
     }
+
+
 }
 
 .layout-submenu-enter-from,
@@ -397,4 +398,12 @@ $fontWeight: 400;
 
 buttongroup svg {
     font-size: var(--step-8)
+}
+
+.layout-static-inactive {
+    .layout-sidebar .layout-menu .layout-root-menuitem>.layout-submenu {
+        width: 100%;
+    }
+
+    // .layout-root-menuitemlayout-menuitem-root-text
 }

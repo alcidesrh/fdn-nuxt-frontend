@@ -73,29 +73,35 @@ const siderbar_toggle = (direction = 'horizontal') => {
 </script>
 
 <template>
-    <div class="layout-wrapper" :class="containerClass">
-        <app-topbar></app-topbar>
-        <!-- <div> -->
+    <div class="layout-wrapper bg-slate-100 h-2000px" :class="containerClass">
 
-        <div class="layout-sidebar">
+        <app-topbar class="bg-slate-700 z-999"></app-topbar>
 
-            <app-sidebar class="z-2"></app-sidebar>
-            <div class="menu-btn absolute top-50% z-5 -mt-37px -right-18px grid gap-2 z-1">
-                <Button @click="siderbar_toggle">
-                    <CircleDoubleLeftIcon direction="horizontal" :class="{ 'rotate-180': !themeState.sidebar.h_opened }"
-                        strokeWidth="none" class="stroke-2 !text-neutral-800 text-22px"
-                        style="transition: transform 0.2s;" />
+        <div class="layout-sidebar z-998">
+            <div
+                class="bg-transparent sidebar-btn absolute top-50% -mt-44px z-999 grid w-full max-w-200px u-pl-s gap-6 left-100% -ml-46px">
+
+                <Button @click="siderbar_toggle('vertical')"
+                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:border-slate-400 rounded-full ">
+                    <CircleDoubleLeftIcon
+                        :class="{ '-rotate-90': !themeState.sidebar.v_opened, 'rotate-90': themeState.sidebar.v_opened }" />
                 </Button>
-                <Button @click="siderbar_toggle('vertical')">
-                    <CircleDoubleLeftIcon direction="vertical" strokeWidth="none"
-                        class="stroke-2 !text-neutral-800  text-21px" style="transition: transform 0.2s;" />
+
+                <Button @click="siderbar_toggle"
+                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:border-slate-400 rounded-full ">
+                    <CircleDoubleLeftIcon
+                        :class="{ 'rotate-0': !themeState.sidebar.h_opened, 'rotate-180': themeState.sidebar.h_opened }" />
                 </Button>
             </div>
+            <app-sidebar class="z-29 rounded-l"></app-sidebar>
+
         </div>
         <!-- </div> -->
-        <div class="layout-main-container">
-            <div class="layout-main">
-                <router-view></router-view>
+        <div class="layout-main-container z-10">
+            <div class="layout-main u-p-m pt-40px flex justify-center h-fit">
+                <div class="container u-p-m bg-white shadows-lg border border-slate-3">
+                    <router-view></router-view>
+                </div>
             </div>
         </div>
         <app-config></app-config>
@@ -103,5 +109,3 @@ const siderbar_toggle = (direction = 'horizontal') => {
     </div>
     <Toast />
 </template>
-
-<style lang="scss" scoped></style>

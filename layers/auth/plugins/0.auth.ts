@@ -16,34 +16,28 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   addRouteMiddleware(
     "auth",
-    async (to) => {
+    async (to, from) => {
       const store = useUserSessionStore();
       const { user } = store;
-      if (to.meta.auth && !user) {
+
+      if (to.meta.auth && !user && to.name != "Login") {
         store.redirectTo = to.path;
         return "/login";
-      } else if (user) {
+      } else if (user && !(to.name == "Login" && store.authErrorAttempts)) {
+        store.ch++;
         (API_DEFAULT_OPTIONS.headers as Record<any, any>) = {
           Authorization: `Bearer ${user.token}`,
         };
         const resp = await useFetch("/auth", {
           ...API_DEFAULT_OPTIONS,
-          // onResponseError({ response: { _data } }) {
-          //   alert(333)
-          //   throw new Error(error);
-          // },
-          // onResponseError({ response: { _data } }) {
-          // if (_data.error) {
-          //   // store.redirectTo = to.path;
-          //   return "/login";
-          // }
-          // },
         });
         if (resp.error && resp.error.value) {
-          // store.$reset();
-          store.redirectTo = to.path;
-          return "/login";
+          if (to.name != "Login") {
+            store.redirectTo = to.path;
+            return "/login";
+          }
         } else if (to.name === "Login") {
+          store.authErrorAttempts = 0;
           return navigateTo("/", { redirectCode: 301 });
         }
       }

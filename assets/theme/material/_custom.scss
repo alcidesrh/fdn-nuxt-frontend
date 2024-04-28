@@ -45,7 +45,7 @@ a {
 }
 
 .active-menuitem .layout-submenu-toggler {
-    transform: rotate(180deg);
+    // transform: rotate(180deg);
 }
 
 /* .active-menuitem .submenu-toggler > svg {
@@ -57,4 +57,28 @@ a {
 
 .rounded-full {
     border-radius: 9999px;
+}
+
+.logo {
+    @apply fill-slate-500
+}
+
+.bg-fdn {
+    @apply: bg-slate-100
+}
+
+.menu-icon>svg {
+    @apply text-slate-400 hover:text-slate-500 text-35px transition bg-transparent bg-transparent stroke-6
+}
+
+.menu-icon>svg>path {
+    @apply stroke-5
+}
+
+.layout-topbar-button:not(.logout-btn) svg path {
+    @apply stroke-slate-300 fill-none text-30;
+}
+
+.logout-btn svg path {
+    @apply stroke-slate-500;
 }

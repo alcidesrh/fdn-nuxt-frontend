@@ -11,27 +11,8 @@ export const menu = [
         icon: "PrinterOne",
       },
       {
-        label: "Chequearaaa",
+        label: "Chequear",
         icon: "TicketsCheckedIcon",
-        openedL: true,
-        items: [
-          {
-            label: "Emitir",
-            icon: "PrinterOne",
-          },
-          {
-            label: "Chequear",
-            icon: "TicketsCheckedIcon",
-          },
-          {
-            label: "Buscar",
-            icon: "SearchIcon",
-          },
-          {
-            label: "Estadísticas",
-            icon: "SearchIcon",
-          },
-        ],
       },
       {
         label: "Buscar",

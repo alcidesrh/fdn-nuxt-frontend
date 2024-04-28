@@ -7,10 +7,13 @@ import {
   // presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
+type Rule
 } from "unocss";
 
+import { utopiarules } from "./utils/unocss_rules";
+
 export default defineConfig({
-  // rules: [["t-1", { margin: "9.25rem" }]],
+  rules: [...(utopiarules as Rule<object>[])],
   shortcuts: [
     [
       "btn",

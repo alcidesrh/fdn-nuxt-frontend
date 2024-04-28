@@ -1,36 +1,36 @@
-import { pwa } from './config/pwa'
-import { components } from './components/primevue/components'
-import { fileURLToPath } from 'url';
+import { pwa } from "./config/pwa";
+import { components } from "./components/primevue/components";
+import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
   ssr: false,
   modules: [
-    '@vueuse/nuxt',
-    '@unocss/nuxt',
-    '@pinia/nuxt',
-    '@vite-pwa/nuxt',
-    'nuxt-module-eslint-config',
-    'nuxt-primevue',
-    '@formkit/nuxt',
-    '@hypernym/nuxt-gsap',
-    '@pinia-plugin-persistedstate/nuxt',
+    "@vueuse/nuxt",
+    "@unocss/nuxt",
+    "@pinia/nuxt",
+    "@vite-pwa/nuxt",
+    "nuxt-module-eslint-config",
+    "nuxt-primevue",
+    "@formkit/nuxt",
+    "@hypernym/nuxt-gsap",
+    "@pinia-plugin-persistedstate/nuxt",
   ],
   piniaPersistedstate: {
-    storage: 'localStorage'
+    storage: "localStorage",
   },
   imports: {
-    dirs: [
-      'types'
-    ]
+    dirs: ["types"],
   },
   gsap: {
     composables: true,
     provide: false,
   },
   alias: {
-    'schema': fileURLToPath(new URL('./components/form/schemas', import.meta.url)),
-    'fdn': fileURLToPath(new URL('./types', import.meta.url)),
-    'nm': fileURLToPath(new URL('./node_modules', import.meta.url)),
+    schema: fileURLToPath(
+      new URL("./components/form/schemas", import.meta.url)
+    ),
+    fdn: fileURLToPath(new URL("./types", import.meta.url)),
+    nm: fileURLToPath(new URL("./node_modules", import.meta.url)),
   },
   primevue: {
     usePrimeVue: true,
@@ -41,12 +41,9 @@ export default defineNuxtConfig({
   },
   formkit: {
     // Experimental support for auto loading (see note):
-    autoImport: true
+    autoImport: true,
   },
-  extends: [
-    './layers/auth',
-    './layers/api',
-  ],
+  extends: ["./layers/auth", "./layers/api"],
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
@@ -57,8 +54,8 @@ export default defineNuxtConfig({
 
   css: [
     // '@unocss/reset/tailwind.css',
-    // 'primevue/resources/primevue.min.css',
-    '@/assets/styles.scss',
+    "primevue/resources/primevue.min.css",
+    "@/assets/styles.scss",
   ],
   // build: {
   //   // transpile: [/vant.*?less/],
@@ -118,4 +115,4 @@ export default defineNuxtConfig({
   eslintConfig: {
     setup: false,
   },
-})
+});

@@ -29,51 +29,24 @@ function starSize(min = 1, max = 7) {
 <template>
   <div class="telon left-0 z-900 bg-black absolute w-full h-120px top-0 opacity-0 " />
 
-<div ref="main" class="absolute h-full w-full overflow-hidden" @click="toggle_animation()">
-  <div id="luna" class="to-remove absolute left-50% z-99 h-60px w-60px rounded-full bg-slate-300 brightness-125" />
-</div>
-
-<div class="star absolute left-0 h-full w-full" @click="toggle_animation()">
-  <div v-for="i, index in 500" :id="`star-${index}`" :key="i" to-remove absolute rounded-full bg-slate-3
-    class="star-item z-999"
-    :style="{ left: `${Math.floor(Math.random() * 1800)}px`, top: `${getAxisY()}px`, ...starSize(1, 3) }" />
-</div>
-
-<div class="cloud1" />
-<div class="cloud2" />
-<div class="cloud3" />
-<div class="cloud4" />
-
-<div class="street1 street left-0 z-10 h-40px w-1920px flex items-center justify-between bg-slate-700 shadow-2xl">
-  <span v-for="i in 10" :key="i" class="street-middle h-1.5px w-85px bg-white" />
+  <div ref="main" class="absolute h-full w-full overflow-hidden" @click="toggle_animation()">
+    <div id="luna" class="to-remove absolute left-50% z-99 h-60px w-60px rounded-full bg-slate-300 brightness-125" />
   </div>
 
-  <!-- <div class="fixed top-130px">
-            <div class="fixed left-50% top-180px top-50% z-40">
-              <div id="cerradura"
-                class="absolute w-262px flex scale-50 items-center justify-center border border-slate-400 border-solid bg-slate-200 px-5 py-3 -right-130px">
-                <div id="barra" class="h-20px w-220px flex items-center justify-around rounded bg-zinc-500" />
-                <div class="lock_support ml-150px" />
-                <div class="lock_support flex items-center" />
-                <div class="lock_support -ml-150px" />
+  <div class="star absolute left-0 h-full w-full" @click="toggle_animation()">
+    <div v-for="i, index in 500" :id="`star-${index}`" :key="i" to-remove absolute rounded-full bg-slate-3
+      class="star-item z-999"
+      :style="{ left: `${Math.floor(Math.random() * 1800)}px`, top: `${getAxisY()}px`, ...starSize(1, 3) }" />
+  </div>
 
-                <LockIcon id="lock" theme="filled" size="50" class="absolute z-2 mt-12" fill="#475569" :stroke-width="5"
-                  stroke-linecap="square" />
+  <div class="cloud1" />
+  <div class="cloud2" />
+  <div class="cloud3" />
+  <div class="cloud4" />
 
-                <UnLockIcon id="unlock" theme="filled" size="50" class="absolute z-1 mt-12" fill="#475569" :stroke-width="5"
-                  stroke-linecap="square" />
-
-                <div class="nail2 left-0 top-0 m-1" />
-                <div class="nail left-0 top-0 m-1" />
-                <div class="nail2 right-0 top-0 m-1" />
-                <div class="nail right-0 top-0 m-1" />
-                <div class="nail2 bottom-0 right-0 m-1" />
-                <div class="nail bottom-0 right-0 m-1" />
-                <div class="nail2 bottom-0 left-0 m-1" />
-                <div class="nail bottom-0 left-0 m-1" />
-              </div>
-            </div>
-          </div> -->
+  <div class="street1 street left-0 z-10 h-40px w-1920px flex items-center justify-between bg-slate-700 shadow-2xl">
+    <span v-for="i in 10" :key="i" class="street-middle h-1.5px w-85px bg-white" />
+  </div>
 
   <Logo />
 
