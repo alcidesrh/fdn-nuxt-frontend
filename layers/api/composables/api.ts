@@ -1,6 +1,6 @@
 import { PagedCollection } from "~~/types/collection";
 import { FetchAllData, FetchItemData } from "~~/types/api";
-import { Ref } from "vue";
+import { ref } from "vue";
 import { View } from "~~/types/view";
 import { UseFetchOptions } from "#app";
 import { SubmissionErrors } from "~~/types/error";

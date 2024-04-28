@@ -16,17 +16,17 @@ interface State {
   error?: string;
   violations?: SubmissionErrors;
   config?: Config;
+  authErrorAttempts: Number;
 }
 
 export const useUserSessionStore = defineStore("userSession", {
   persist: true,
   state: (): State => ({
-    count: 0,
     user: undefined,
-    isLogin: false,
     isLoading: false,
     error: undefined,
     violations: undefined,
+    authErrorAttempts: 0,
     config: {
       sidebar: {
         h_opened: true,
