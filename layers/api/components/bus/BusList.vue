@@ -45,13 +45,40 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            asientosClaseA
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            asientosClaseB
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             codigo
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            asientos
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            precioVariacionAsientoA
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            precioVariacionAsientoB
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            empresa
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            piloto
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            marca
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            placa
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            createdAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            updatedAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            legacyId
           </th>
           <th
             colspan="2"
@@ -73,13 +100,80 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.asientosClaseA }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.asientosClaseB }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
             {{ item.codigo }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <template v-if="router.hasRoute('api/asientos-id')">
+              <nuxt-link
+                v-for="asiento in item.api/asientos"
+                :key="asiento"
+                :to="{ name: 'asientos-id', params: { id: asiento } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ asiento }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="asiento in item.api/asientos"
+                :key="asiento"
+              >
+                {{ asiento }}
+              </p>
+            </template>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.precioVariacionAsientoA }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.precioVariacionAsientoB }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/empresas-id')"
+              :to="{ name: 'empresas-id', params: { id: item.empresa } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.empresa }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.empresa }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/pilotos-id')"
+              :to="{ name: 'pilotos-id', params: { id: item.piloto } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.piloto }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.piloto }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.marca }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.placa }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.legacyId }}
                     </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
@@ -187,6 +281,7 @@ import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { Bus } from "~~/types/bus";
 
+const router = useRouter();
 
 const busDeleteStore = useBusDeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
@@ -194,7 +289,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const busListStore = useBusListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Bus>(
-  "buses"
+  "api/buses"
 );
 busListStore.setData({ items, view, error, isLoading, hubUrl });
 

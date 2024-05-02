@@ -41,18 +41,16 @@ onMounted(() => {
       <Divider layout="vertical" type="dashed" class="before:border-slate-400 py-0" />
 
       <button
-        class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem bg-slate-100 u-mx-s !hover:bg-slate-200 border border-zinc-500 hover:bg-slate-500"
+        class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem bg-slate-200 u-mx-s !hover:bg-slate-300 hover:bg-slate-500"
         @click="onSettingsClick()">
 
         <icon name="close" v-bind='{
           strokeWidth: "6",
-          theme: "two-tone",
-          fill: ["#C2CCD8", "#f1f5f9"],
+          theme: "outline",
           strokeLinecap: "square",
-          class: "u-mx-s cursor-pointer drop-shadow text-30px",
+          class: "u-mx-s cursor-pointer drop-shadow text-30px logout-btn",
           size: "20",
         }' />
-
       </button>
 
     </div>

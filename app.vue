@@ -10,6 +10,7 @@ const online = useOnline()
 
 <template>
   <VitePwaManifest />
+  <NuxtLoadingIndicator />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

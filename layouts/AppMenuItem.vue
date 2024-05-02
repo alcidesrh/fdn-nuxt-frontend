@@ -59,7 +59,7 @@ const { iconProps, isComponent } = useIcon()
   <!-- <Divider v-if="item.type == 'divider'" type="dashed" class="mx-auto" /> -->
   <div v-if="item.type == 'divider'" type="dashed" class="mx-auto mb-1" />
   <li v-else class="cursor-pointer" :class="{ 'layout-root-menuitem ': root, 'active-menuitaem': item.opened }">
-    <div v-if="root && item.visible !== false" class="layout-menuitem-root-text u-p-4xs u-pl-s u-text-2"
+    <div v-if="root && item.visible !== false" class="layout-menuitem-root-text u-p-4xs u-pl-s u-text-1"
       @click="item.opened = !item.opened">
       <!-- <Minus theme="outline" size="18" :stroke-width="2" stroke-linecap="square" /> -->
       <component :is="item.icon" v-if="isComponent(item.icon)" v-bind="{ ...iconProps, strokeWidth: 3, size: 23 }" />
@@ -86,8 +86,8 @@ const { iconProps, isComponent } = useIcon()
       <span class="layout-menuitem-text">{{ item.label }}</span>
       <i v-if="item.items" class="layout-submenu-toggler pi pi-fw pi-angle-down" />
     </router-link>
-    <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
-      <ul v-show="item.opened" class="layout-submenu" :class="{ hidden: !item.opened }">
+    <Transition  v-if="item.items && item.visible !== false" name="layout-submenu">
+      <ul v-show="item.opened" class="layout-submenu" >
         <app-menu-item v-for=" (child, i) in item.items " :key="child" :index="i" :item="child" :parent-item-key="itemKey"
           :root="false" />
       </ul>

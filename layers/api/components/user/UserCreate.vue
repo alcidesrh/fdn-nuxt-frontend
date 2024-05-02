@@ -37,7 +37,7 @@ const userCreateStore = useUserCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(userCreateStore);
 
 async function create(item: User) {
-  const data = await useCreateItem<User>("users", item);
+  const data = await useCreateItem<User>("api/users", item);
   userCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

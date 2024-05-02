@@ -1,4 +1,4 @@
-import { reactive, ref, Ref } from "vue";
+import { reactive, ref, ref } from "vue";
 
 export const menu = [
   {

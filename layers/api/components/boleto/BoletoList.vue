@@ -45,19 +45,31 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            usuario
+            cliente
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            cliente
+            precio
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            boletoLogs
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            asiento
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             salida
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            asientos
+            estado
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            precio
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            createdAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            updatedAt
           </th>
           <th
             colspan="2"
@@ -79,100 +91,82 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('users-id')">
-              <nuxt-link
-                v-for="user in item.users"
-                :key="user"
-                :to="{ name: 'users-id', params: { id: user } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ user }}
+            <nuxt-link
+              v-if="router.hasRoute('api/clientes-id')"
+              :to="{ name: 'clientes-id', params: { id: item.cliente } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.cliente }}
+            </nuxt-link>
 
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="user in item.users"
-                :key="user"
-              >
-                {{ user }}
-              </p>
-            </template>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('clientes-id')">
-              <nuxt-link
-                v-for="cliente in item.clientes"
-                :key="cliente"
-                :to="{ name: 'clientes-id', params: { id: cliente } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ cliente }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="cliente in item.clientes"
-                :key="cliente"
-              >
-                {{ cliente }}
-              </p>
-            </template>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('salidas-id')">
-              <nuxt-link
-                v-for="salida in item.salidas"
-                :key="salida"
-                :to="{ name: 'salidas-id', params: { id: salida } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ salida }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="salida in item.salidas"
-                :key="salida"
-              >
-                {{ salida }}
-              </p>
-            </template>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('asientos-id')">
-              <nuxt-link
-                v-for="asiento in item.asientos"
-                :key="asiento"
-                :to="{ name: 'asientos-id', params: { id: asiento } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ asiento }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="asiento in item.asientos"
-                :key="asiento"
-              >
-                {{ asiento }}
-              </p>
-            </template>
+            <p v-else>
+              {{ item.cliente }}
+            </p>
           </td>
           <td class="px-6 py-4 text-sm">
             {{ item.precio }}
                     </td>
+          <td class="px-6 py-4 text-sm">
+            <template v-if="router.hasRoute('api/boleto_logs-id')">
+              <nuxt-link
+                v-for="boletolog in item.api/boleto_logs"
+                :key="boletolog"
+                :to="{ name: 'boletologs-id', params: { id: boletolog } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ boletolog }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="boletolog in item.api/boleto_logs"
+                :key="boletolog"
+              >
+                {{ boletolog }}
+              </p>
+            </template>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/asientos-id')"
+              :to="{ name: 'asientos-id', params: { id: item.asiento } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.asiento }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.asiento }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/salidas-id')"
+              :to="{ name: 'salidas-id', params: { id: item.salida } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.salida }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.salida }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.estado }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
               :to="{ name: 'boletos-id', params: { id: getIdFromIri(item['@id']) } }"
@@ -287,7 +281,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const boletoListStore = useBoletoListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Boleto>(
-  "boletos"
+  "api/boletos"
 );
 boletoListStore.setData({ items, view, error, isLoading, hubUrl });
 

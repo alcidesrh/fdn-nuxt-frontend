@@ -1,4 +1,4 @@
-import { Ref } from "vue";
+import { ref } from "vue";
 import { SubmissionErrors } from "./error";
 import { View } from "./view";
 

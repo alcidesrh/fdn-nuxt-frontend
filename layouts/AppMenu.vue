@@ -4,10 +4,14 @@ import { equals } from 'ramda'
 
 const themeState = useThemeStateStore()
 
-const { menu } = useMenu();
-if (!equals(toRaw(themeState.sidebar.menu), menu)) {
-    themeState.sidebar.menu = menu
-}
+// const { menu } = useMenu();
+// if (!equals(toRaw(themeState.sidebar.menu), menu)) {
+//     themeState.sidebar.menu = menu
+
+// }
+
+console.log(themeState.sidebar.menu, themeState.layout.staticMenuDesktopInactive);
+
 </script>
 
 <template>

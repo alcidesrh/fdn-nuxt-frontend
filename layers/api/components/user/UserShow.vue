@@ -93,44 +93,42 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
-            nombre
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.nombre }}
-                    </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
-            apellido
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.apellido }}
-                    </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
-            email
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.email }}
-                    </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
             apiTokens
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.apiTokens }}
                     </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            permisos
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <template v-if="router.hasRoute('api/permisos-id')">
+              <nuxt-link
+                v-for="permiso in item.api/permisos"
+                :key="permiso"
+                :to="{ name: 'permisos-id', params: { id: permiso } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ permiso }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="permiso in item.api/permisos"
+                :key="permiso"
+              >
+                {{ permiso }}
+              </p>
+            </template>
+          </td>
         </tr>
         <tr class="border-b">
           <th
@@ -152,6 +150,115 @@
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ formatDateTime(item.updatedAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            status
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.status }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            legacyId
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.legacyId }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            apellido
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.apellido }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            nombre
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.nombre }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            email
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.email }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            nit
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.nit }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            telefono
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.telefono }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            direccion
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.direccion }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            localidad
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
           </td>
         </tr>
         <tr class="border-b">
@@ -210,7 +317,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<User>(`users/${id}`);
+} = await useFetchItem<User>(`api/users/${id}`);
 userShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

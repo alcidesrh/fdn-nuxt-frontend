@@ -182,7 +182,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const paisListStore = usePaisListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Pais>(
-  "paiss"
+  "api/pais"
 );
 paisListStore.setData({ items, view, error, isLoading, hubUrl });
 

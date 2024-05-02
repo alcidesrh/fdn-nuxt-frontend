@@ -60,123 +60,20 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
-            usuario
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <template v-if="router.hasRoute('users-id')">
-              <nuxt-link
-                v-for="user in item.users"
-                :key="user"
-                :to="{ name: 'users-id', params: { id: user } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ user }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="user in item.users"
-                :key="user"
-              >
-                {{ user }}
-              </p>
-            </template>
-          </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
             cliente
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <template v-if="router.hasRoute('clientes-id')">
-              <nuxt-link
-                v-for="cliente in item.clientes"
-                :key="cliente"
-                :to="{ name: 'clientes-id', params: { id: cliente } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ cliente }}
+            <nuxt-link
+              v-if="router.hasRoute('api/clientes-id')"
+              :to="{ name: 'clientes-id', params: { id: item.cliente } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.cliente }}
+            </nuxt-link>
 
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="cliente in item.clientes"
-                :key="cliente"
-              >
-                {{ cliente }}
-              </p>
-            </template>
-          </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
-            salida
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <template v-if="router.hasRoute('salidas-id')">
-              <nuxt-link
-                v-for="salida in item.salidas"
-                :key="salida"
-                :to="{ name: 'salidas-id', params: { id: salida } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ salida }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="salida in item.salidas"
-                :key="salida"
-              >
-                {{ salida }}
-              </p>
-            </template>
-          </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
-            asientos
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <template v-if="router.hasRoute('asientos-id')">
-              <nuxt-link
-                v-for="asiento in item.asientos"
-                :key="asiento"
-                :to="{ name: 'asientos-id', params: { id: asiento } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ asiento }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="asiento in item.asientos"
-                :key="asiento"
-              >
-                {{ asiento }}
-              </p>
-            </template>
+            <p v-else>
+              {{ item.cliente }}
+            </p>
           </td>
         </tr>
         <tr class="border-b">
@@ -189,6 +86,123 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.precio }}
                     </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            boletoLogs
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <template v-if="router.hasRoute('api/boleto_logs-id')">
+              <nuxt-link
+                v-for="boletolog in item.api/boleto_logs"
+                :key="boletolog"
+                :to="{ name: 'boletologs-id', params: { id: boletolog } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ boletolog }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="boletolog in item.api/boleto_logs"
+                :key="boletolog"
+              >
+                {{ boletolog }}
+              </p>
+            </template>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            asiento
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/asientos-id')"
+              :to="{ name: 'asientos-id', params: { id: item.asiento } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.asiento }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.asiento }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            salida
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/salidas-id')"
+              :to="{ name: 'salidas-id', params: { id: item.salida } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.salida }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.salida }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            estado
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.estado }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            status
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.status }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            createdAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            updatedAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -224,7 +238,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Boleto>(`boletos/${id}`);
+} = await useFetchItem<Boleto>(`api/boletos/${id}`);
 boletoShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

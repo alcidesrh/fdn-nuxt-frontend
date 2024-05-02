@@ -45,13 +45,31 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            ruta
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             fecha
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             bus
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            recorrido
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            empresa
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            salidaLogs
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            boletos
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            createdAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            updatedAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
           </th>
           <th
             colspan="2"
@@ -73,40 +91,56 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('rutas-id')">
-              <nuxt-link
-                v-for="ruta in item.rutas"
-                :key="ruta"
-                :to="{ name: 'rutas-id', params: { id: ruta } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ ruta }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="ruta in item.rutas"
-                :key="ruta"
-              >
-                {{ ruta }}
-              </p>
-            </template>
-          </td>
-          <td class="px-6 py-4 text-sm">
             {{ formatDateTime(item.fecha) }}
           </td>
           <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('buses-id')">
+            <nuxt-link
+              v-if="router.hasRoute('api/buses-id')"
+              :to="{ name: 'buss-id', params: { id: item.bus } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.bus }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.bus }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/recorridos-id')"
+              :to="{ name: 'recorridos-id', params: { id: item.recorrido } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.recorrido }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.recorrido }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/empresas-id')"
+              :to="{ name: 'empresas-id', params: { id: item.empresa } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.empresa }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.empresa }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <template v-if="router.hasRoute('api/salida_logs-id')">
               <nuxt-link
-                v-for="bus in item.buses"
-                :key="bus"
-                :to="{ name: 'buss-id', params: { id: bus } }"
+                v-for="salidalog in item.api/salida_logs"
+                :key="salidalog"
+                :to="{ name: 'salidalogs-id', params: { id: salidalog } }"
                 class="text-blue-600 hover:text-blue-800"
               >
-                {{ bus }}
+                {{ salidalog }}
 
                 <br />
               </nuxt-link>
@@ -114,13 +148,45 @@
 
             <template v-else>
               <p
-                v-for="bus in item.buses"
-                :key="bus"
+                v-for="salidalog in item.api/salida_logs"
+                :key="salidalog"
               >
-                {{ bus }}
+                {{ salidalog }}
               </p>
             </template>
           </td>
+          <td class="px-6 py-4 text-sm">
+            <template v-if="router.hasRoute('api/boletos-id')">
+              <nuxt-link
+                v-for="boleto in item.api/boletos"
+                :key="boleto"
+                :to="{ name: 'boletos-id', params: { id: boleto } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ boleto }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="boleto in item.api/boletos"
+                :key="boleto"
+              >
+                {{ boleto }}
+              </p>
+            </template>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
               :to="{ name: 'salidas-id', params: { id: getIdFromIri(item['@id']) } }"
@@ -235,7 +301,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const salidaListStore = useSalidaListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Salida>(
-  "salidas"
+  "api/salidas"
 );
 salidaListStore.setData({ items, view, error, isLoading, hubUrl });
 

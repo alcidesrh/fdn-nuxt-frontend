@@ -37,7 +37,7 @@ const estacionCreateStore = useEstacionCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(estacionCreateStore);
 
 async function create(item: Estacion) {
-  const data = await useCreateItem<Estacion>("estacions", item);
+  const data = await useCreateItem<Estacion>("api/estacions", item);
   estacionCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

@@ -37,7 +37,7 @@ const asientoCreateStore = useAsientoCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(asientoCreateStore);
 
 async function create(item: Asiento) {
-  const data = await useCreateItem<Asiento>("asientos", item);
+  const data = await useCreateItem<Asiento>("api/asientos", item);
   asientoCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

@@ -100,7 +100,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Pais>(`paiss/${id}`);
+} = await useFetchItem<Pais>(`api/pais/${id}`);
 paisShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

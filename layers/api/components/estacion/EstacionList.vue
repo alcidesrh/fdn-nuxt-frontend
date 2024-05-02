@@ -45,13 +45,34 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            nombre
+            users
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            alias
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            email
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            telefono
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            direccion
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             localidad
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            direccion
+            nombre
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nota
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            legacyId
           </th>
           <th
             colspan="2"
@@ -73,17 +94,14 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.nombre }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('localidads-id')">
+            <template v-if="router.hasRoute('api/users-id')">
               <nuxt-link
-                v-for="localidad in item.localidads"
-                :key="localidad"
-                :to="{ name: 'localidads-id', params: { id: localidad } }"
+                v-for="user in item.api/users"
+                :key="user"
+                :to="{ name: 'users-id', params: { id: user } }"
                 class="text-blue-600 hover:text-blue-800"
               >
-                {{ localidad }}
+                {{ user }}
 
                 <br />
               </nuxt-link>
@@ -91,15 +109,49 @@
 
             <template v-else>
               <p
-                v-for="localidad in item.localidads"
-                :key="localidad"
+                v-for="user in item.api/users"
+                :key="user"
               >
-                {{ localidad }}
+                {{ user }}
               </p>
             </template>
           </td>
           <td class="px-6 py-4 text-sm">
+            {{ item.alias }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.email }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.telefono }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
             {{ item.direccion }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nombre }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nota }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.legacyId }}
                     </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
@@ -215,7 +267,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const estacionListStore = useEstacionListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Estacion>(
-  "estacions"
+  "api/estacions"
 );
 estacionListStore.setData({ items, view, error, isLoading, hubUrl });
 

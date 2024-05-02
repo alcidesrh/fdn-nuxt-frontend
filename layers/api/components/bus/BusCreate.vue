@@ -37,7 +37,7 @@ const busCreateStore = useBusCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(busCreateStore);
 
 async function create(item: Bus) {
-  const data = await useCreateItem<Bus>("buses", item);
+  const data = await useCreateItem<Bus>("api/buses", item);
   busCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

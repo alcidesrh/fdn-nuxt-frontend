@@ -47,6 +47,12 @@
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             numero
           </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            bus
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            clase
+          </th>
           <th
             colspan="2"
             class="text-sm font-medium px-6 py-4 text-left capitalize"
@@ -68,6 +74,22 @@
           </td>
           <td class="px-6 py-4 text-sm">
             {{ item.numero }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/buses-id')"
+              :to="{ name: 'buss-id', params: { id: item.bus } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.bus }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.bus }}
+            </p>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.clase }}
                     </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
@@ -175,6 +197,7 @@ import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { Asiento } from "~~/types/asiento";
 
+const router = useRouter();
 
 const asientoDeleteStore = useAsientoDeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
@@ -182,7 +205,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const asientoListStore = useAsientoListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Asiento>(
-  "asientos"
+  "api/asientos"
 );
 asientoListStore.setData({ items, view, error, isLoading, hubUrl });
 

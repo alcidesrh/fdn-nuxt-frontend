@@ -37,7 +37,7 @@ const salidaCreateStore = useSalidaCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(salidaCreateStore);
 
 async function create(item: Salida) {
-  const data = await useCreateItem<Salida>("salidas", item);
+  const data = await useCreateItem<Salida>("api/salidas", item);
   salidaCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

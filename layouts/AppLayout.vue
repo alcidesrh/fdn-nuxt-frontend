@@ -9,16 +9,16 @@ const outsideClickListener = ref(null);
 
 const themeState = useThemeStateStore()
 
-watch(themeState.isSidebarActive, (newVal) => {
-    alert(newVal)
+// watch(themeState.isSidebarActive, (newVal) => {
+//     alert(newVal)
 
-    if (newVal) {
+//     if (newVal) {
 
-        bindOutsideClickListener();
-    } else {
-        unbindOutsideClickListener();
-    }
-});
+//         bindOutsideClickListener();
+//     } else {
+//         unbindOutsideClickListener();
+//     }
+// });
 
 const containerClass = computed(() => {
     return {
@@ -67,6 +67,7 @@ const siderbar_toggle = (direction = 'horizontal') => {
     else {
         themeState.sidebar.h_opened = !themeState.sidebar.h_opened
         themeState.onMenuToggle()
+        
     }
 }
 
@@ -82,15 +83,15 @@ const siderbar_toggle = (direction = 'horizontal') => {
                 class="bg-transparent sidebar-btn absolute top-50% -mt-44px z-999 grid w-full max-w-200px u-pl-s gap-6 left-100% -ml-46px">
 
                 <Button @click="siderbar_toggle('vertical')"
-                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:border-slate-400 rounded-full ">
+                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:bg-slate-200/60   rounded-full ">
                     <CircleDoubleLeftIcon
                         :class="{ '-rotate-90': !themeState.sidebar.v_opened, 'rotate-90': themeState.sidebar.v_opened }" />
                 </Button>
 
                 <Button @click="siderbar_toggle"
-                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:border-slate-400 rounded-full ">
+                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:bg-slate-200/60 rounded-full ">
                     <CircleDoubleLeftIcon
-                        :class="{ 'rotate-0': !themeState.sidebar.h_opened, 'rotate-180': themeState.sidebar.h_opened }" />
+                        :class="{ 'rotate-0': !themeState.layout.staticMenuDesktopInactive, 'rotate-180': themeState.layout.staticMenuDesktopInactive }" />
                 </Button>
             </div>
             <app-sidebar class="z-29 rounded-l"></app-sidebar>
@@ -100,7 +101,8 @@ const siderbar_toggle = (direction = 'horizontal') => {
         <div class="layout-main-container z-10">
             <div class="layout-main u-p-m pt-40px flex justify-center h-fit">
                 <div class="container u-p-m bg-white shadows-lg border border-slate-3">
-                    <router-view></router-view>
+                    <NuxtPage />
+                    <!-- <router-view></router-view> -->
                 </div>
             </div>
         </div>

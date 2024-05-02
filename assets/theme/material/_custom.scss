@@ -60,7 +60,9 @@ a {
 }
 
 .logo {
-    @apply fill-slate-500
+    @apply fill-slate-500 font-bold;
+    font-family: 'Fast-Track';
+
 }
 
 .bg-fdn {
@@ -68,11 +70,11 @@ a {
 }
 
 .menu-icon>svg {
-    @apply text-slate-400 hover:text-slate-500 text-35px transition bg-transparent bg-transparent stroke-6
+    @apply text-slate-500 hover:text-slate-600 text-35px transition bg-transparent bg-transparent
 }
 
 .menu-icon>svg>path {
-    @apply stroke-5
+    @apply stroke-2
 }
 
 .layout-topbar-button:not(.logout-btn) svg path {

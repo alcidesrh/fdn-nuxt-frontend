@@ -1,7 +1,16 @@
 import type { Item } from "./item";
 
 export interface Bus extends Item {
-  asientosClaseA?: number;
-  asientosClaseB?: number;
   codigo?: string;
+  asientos?: any;
+  precioVariacionAsientoA?: decimal;
+  precioVariacionAsientoB?: decimal;
+  empresa?: any;
+  piloto?: any;
+  marca?: string;
+  placa?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: number;
+  legacyId?: number;
 }

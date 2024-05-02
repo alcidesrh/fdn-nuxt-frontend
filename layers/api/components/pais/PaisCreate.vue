@@ -37,7 +37,7 @@ const paisCreateStore = usePaisCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(paisCreateStore);
 
 async function create(item: Pais) {
-  const data = await useCreateItem<Pais>("paiss", item);
+  const data = await useCreateItem<Pais>("api/pais", item);
   paisCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

@@ -45,7 +45,43 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nombreComercial
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            denominacionSocial
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            alias
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            createdAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            updatedAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            legacyId
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             nombre
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            email
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nit
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            telefono
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            direccion
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            localidad
           </th>
           <th
             colspan="2"
@@ -67,8 +103,54 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
+            {{ item.nombreComercial }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.denominacionSocial }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.alias }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.legacyId }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
             {{ item.nombre }}
                     </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.email }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nit }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.telefono }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.direccion }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
+          </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
               :to="{ name: 'empresas-id', params: { id: getIdFromIri(item['@id']) } }"
@@ -175,6 +257,7 @@ import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { Empresa } from "~~/types/empresa";
 
+const router = useRouter();
 
 const empresaDeleteStore = useEmpresaDeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
@@ -182,7 +265,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const empresaListStore = useEmpresaListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Empresa>(
-  "empresas"
+  "api/empresas"
 );
 empresaListStore.setData({ items, view, error, isLoading, hubUrl });
 

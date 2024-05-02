@@ -1,43 +1,25 @@
 <template>
   <div class="flex items-center justify-between">
-    <nuxt-link
-      :to="{ name: 'fdns' }"
-      class="text-blue-600 hover:text-blue-800"
-    >
+    <nuxt-link :to="{ name: 'fdns' }" class="text-blue-600 hover:text-blue-800">
       &lt; Back to list
     </nuxt-link>
 
-    <button
-      class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700"
-      @click="deleteItem"
-    >
+    <button class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700" @click="deleteItem">
       Delete
     </button>
   </div>
 
   <h1 class="text-3xl my-4">Edit FDN {{ item?.["@id"] }}</h1>
 
-  <div
-    v-if="isLoading || deleteLoading"
-    class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
-    role="status"
-  >
+  <div v-if="isLoading || deleteLoading" class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm" role="status">
     Loading...
   </div>
 
-  <div
-    v-if="error || deleteError"
-    class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
-    role="alert"
-  >
+  <div v-if="error || deleteError" class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm" role="alert">
     {{ error || deleteError }}
   </div>
 
-  <div
-    v-if="created || updated"
-    class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
-    role="status"
-  >
+  <div v-if="created || updated" class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm" role="status">
     <template v-if="updated">{{ updated["@id"] }} updated.</template>
     <template v-else-if="created">{{ created["@id"] }} created.</template>
   </div>
@@ -46,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import Form from "~~/components/fdn/FDNForm.vue";
 import { useFDNUpdateStore } from "~~/stores/fdn/update";

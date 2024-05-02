@@ -60,6 +60,102 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
+            users
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <template v-if="router.hasRoute('api/users-id')">
+              <nuxt-link
+                v-for="user in item.api/users"
+                :key="user"
+                :to="{ name: 'users-id', params: { id: user } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ user }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="user in item.api/users"
+                :key="user"
+              >
+                {{ user }}
+              </p>
+            </template>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            alias
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.alias }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            email
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.email }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            telefono
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.telefono }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            direccion
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.direccion }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            localidad
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
             nombre
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -71,41 +167,32 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
-            localidad
+            nota
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <template v-if="router.hasRoute('localidads-id')">
-              <nuxt-link
-                v-for="localidad in item.localidads"
-                :key="localidad"
-                :to="{ name: 'localidads-id', params: { id: localidad } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ localidad }}
-
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="localidad in item.localidads"
-                :key="localidad"
-              >
-                {{ localidad }}
-              </p>
-            </template>
-          </td>
+            {{ item.nota }}
+                    </td>
         </tr>
         <tr class="border-b">
           <th
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
-            direccion
+            status
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.direccion }}
+            {{ item.status }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            legacyId
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.legacyId }}
                     </td>
         </tr>
       </tbody>
@@ -142,7 +229,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Estacion>(`estacions/${id}`);
+} = await useFetchItem<Estacion>(`api/estacions/${id}`);
 estacionShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

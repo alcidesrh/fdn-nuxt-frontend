@@ -1,7 +1,13 @@
 import type { Item } from "./item";
 
 export interface Salida extends Item {
-  ruta?: any;
   fecha?: string;
   bus?: any;
+  recorrido?: any;
+  empresa?: any;
+  salidaLogs?: any;
+  boletos?: any;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: number;
 }

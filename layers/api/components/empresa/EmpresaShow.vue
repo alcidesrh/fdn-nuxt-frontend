@@ -60,11 +60,153 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
+            nombreComercial
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.nombreComercial }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            denominacionSocial
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.denominacionSocial }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            alias
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.alias }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            createdAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            updatedAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            status
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.status }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            legacyId
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.legacyId }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
             nombre
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.nombre }}
                     </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            email
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.email }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            nit
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.nit }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            telefono
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.telefono }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            direccion
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.direccion }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            localidad
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -100,7 +242,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Empresa>(`empresas/${id}`);
+} = await useFetchItem<Empresa>(`api/empresas/${id}`);
 empresaShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

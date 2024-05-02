@@ -1,10 +1,16 @@
 import type { Item } from "./item";
 
 export interface Cliente extends Item {
-  nit?: string;
   dpi?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: number;
+  legacyId?: number;
   apellido?: string;
-  direccion?: string;
+  nombre?: string;
+  email?: string;
+  nit?: string;
   telefono?: string;
-  correo?: string;
+  direccion?: string;
+  localidad?: any;
 }

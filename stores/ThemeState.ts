@@ -58,19 +58,24 @@ export const useThemeStateStore = defineStore("useThemeState", {
         this.layout.staticMenuMobileActive =
           !this.layout.staticMenuMobileActive;
       }
+      console.log(this.layout.staticMenuMobileActive);
+
     },
     onMenuToggleVertical(menu: any = null): void {
+
       if (!menu) {
         menu = this.sidebar.menu;
       }
       menu.forEach((menu) => {
         if (menu.hasOwnProperty("opened")) {
           menu.opened = this.sidebar.v_opened;
+
         }
         if (menu.hasOwnProperty("items") && menu.items.length > 0) {
           this.onMenuToggleVertical(menu.items);
         }
       });
+
     },
   },
   getters: {

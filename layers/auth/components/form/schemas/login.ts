@@ -2,11 +2,10 @@
 export default [
   {
     $el: "div",
-    children: "Iniciar Sessión",
+    children: "Iniciar Session",
     attrs: {
-      class: "u-text-l font-semibold text-zinc-600  mb-8 text-center",
-      style:
-        'font-variation-settings: "slnt" 0, "GRAD" -3, "XTRA" 400, "YOPQ" 106, "YTAS" 771, "YTDE" -268, "YTFI" 560, "YTLC" 514, "YTUC" 722; font-weight: 500; font-style: normal; font-stretch: 147.4 %;',
+      class: "u-text-3  text-zinc-500  u-mb-7xs text-center",
+      style: "font-family: Fast-Track",
     },
   },
   {
@@ -14,22 +13,21 @@ export default [
     name: "username",
     label: "Usuario",
     validation: "required",
-    labelClass: "u-text-m text-slate-700",
+    labelClass: "u-text-1 font-semibold text-zinc-500 u-mt-s u-mb-5xs",
   },
   {
     $formkit: "password",
     name: "password",
     label: "Contraseña",
     validation: "required",
-    labelClass: "u-text-m text-slate-700",
+    labelClass: "u-text-1 font-semibold  text-zinc-500 u-mt-s u-mb-5xs",
   },
   {
     $formkit: "submit",
     name: "submit",
     label: "Aceptar",
     classes: {
-      wrapper: "flex justify-end mt-8",
-      input: "",
+      wrapper: "flex justify-end u-mt-xl u-text-2",
     },
   },
 ];

@@ -37,7 +37,7 @@ const clienteCreateStore = useClienteCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(clienteCreateStore);
 
 async function create(item: Cliente) {
-  const data = await useCreateItem<Cliente>("clientes", item);
+  const data = await useCreateItem<Cliente>("api/clientes", item);
   clienteCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

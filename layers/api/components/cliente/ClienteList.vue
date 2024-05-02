@@ -45,22 +45,40 @@
             id
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            nit
+            dpi
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            dpi
+            createdAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            updatedAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            legacyId
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             apellido
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            direccion
+            nombre
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            email
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nit
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             telefono
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            correo
+            direccion
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            localidad
           </th>
           <th
             colspan="2"
@@ -82,23 +100,51 @@
             </nuxt-link>
           </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.nit }}
+            {{ item.dpi }}
                     </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.dpi }}
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.legacyId }}
                     </td>
           <td class="px-6 py-4 text-sm">
             {{ item.apellido }}
                     </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.direccion }}
+            {{ item.nombre }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.email }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nit }}
                     </td>
           <td class="px-6 py-4 text-sm">
             {{ item.telefono }}
                     </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.correo }}
+            {{ item.direccion }}
                     </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
+          </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
               :to="{ name: 'clientes-id', params: { id: getIdFromIri(item['@id']) } }"
@@ -205,6 +251,7 @@ import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { Cliente } from "~~/types/cliente";
 
+const router = useRouter();
 
 const clienteDeleteStore = useClienteDeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
@@ -212,7 +259,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const clienteListStore = useClienteListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Cliente>(
-  "clientes"
+  "api/clientes"
 );
 clienteListStore.setData({ items, view, error, isLoading, hubUrl });
 

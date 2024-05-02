@@ -37,7 +37,7 @@ const boletoCreateStore = useBoletoCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(boletoCreateStore);
 
 async function create(item: Boleto) {
-  const data = await useCreateItem<Boleto>("boletos", item);
+  const data = await useCreateItem<Boleto>("api/boletos", item);
   boletoCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

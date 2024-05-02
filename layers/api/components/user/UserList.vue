@@ -54,22 +54,43 @@
             password
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            nombre
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            apellido
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            email
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             apiTokens
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            permisos
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             createdAt
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             updatedAt
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            status
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            legacyId
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            apellido
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nombre
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            email
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            nit
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            telefono
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            direccion
+          </th>
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
+            localidad
           </th>
           <th class="text-sm font-medium px-6 py-4 text-left capitalize">
             userIdentifier
@@ -106,22 +127,73 @@
             {{ item.password }}
                     </td>
           <td class="px-6 py-4 text-sm">
-            {{ item.nombre }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.apellido }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.email }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
             {{ item.apiTokens }}
                     </td>
+          <td class="px-6 py-4 text-sm">
+            <template v-if="router.hasRoute('api/permisos-id')">
+              <nuxt-link
+                v-for="permiso in item.api/permisos"
+                :key="permiso"
+                :to="{ name: 'permisos-id', params: { id: permiso } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ permiso }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="permiso in item.api/permisos"
+                :key="permiso"
+              >
+                {{ permiso }}
+              </p>
+            </template>
+          </td>
           <td class="px-6 py-4 text-sm">
             {{ formatDateTime(item.createdAt) }}
           </td>
           <td class="px-6 py-4 text-sm">
             {{ formatDateTime(item.updatedAt) }}
+          </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.status }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.legacyId }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.apellido }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nombre }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.email }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.nit }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.telefono }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            {{ item.direccion }}
+                    </td>
+          <td class="px-6 py-4 text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/localidads-id')"
+              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.localidad }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.localidad }}
+            </p>
           </td>
           <td class="px-6 py-4 text-sm">
             {{ item.userIdentifier }}
@@ -235,6 +307,7 @@ import { useFetchList } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { User } from "~~/types/user";
 
+const router = useRouter();
 
 const userDeleteStore = useUserDeleteStore();
 const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
@@ -242,7 +315,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const userListStore = useUserListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<User>(
-  "users"
+  "api/users"
 );
 userListStore.setData({ items, view, error, isLoading, hubUrl });
 

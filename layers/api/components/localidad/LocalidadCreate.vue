@@ -37,7 +37,7 @@ const localidadCreateStore = useLocalidadCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(localidadCreateStore);
 
 async function create(item: Localidad) {
-  const data = await useCreateItem<Localidad>("localidads", item);
+  const data = await useCreateItem<Localidad>("api/localidads", item);
   localidadCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

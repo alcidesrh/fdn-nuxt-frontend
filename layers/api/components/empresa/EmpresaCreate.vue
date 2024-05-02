@@ -37,7 +37,7 @@ const empresaCreateStore = useEmpresaCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(empresaCreateStore);
 
 async function create(item: Empresa) {
-  const data = await useCreateItem<Empresa>("empresas", item);
+  const data = await useCreateItem<Empresa>("api/empresas", item);
   empresaCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {

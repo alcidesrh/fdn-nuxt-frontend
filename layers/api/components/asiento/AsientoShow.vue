@@ -66,6 +66,38 @@
             {{ item.numero }}
                     </td>
         </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            bus
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/buses-id')"
+              :to="{ name: 'buss-id', params: { id: item.bus } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.bus }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.bus }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            clase
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.clase }}
+                    </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -100,7 +132,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Asiento>(`asientos/${id}`);
+} = await useFetchItem<Asiento>(`api/asientos/${id}`);
 asientoShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

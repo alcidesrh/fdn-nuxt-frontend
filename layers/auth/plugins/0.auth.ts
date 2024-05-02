@@ -28,7 +28,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         (API_DEFAULT_OPTIONS.headers as Record<any, any>) = {
           Authorization: `Bearer ${user.token}`,
         };
-        const resp = await useFetch("/auth", {
+        const resp = await $fetch("/auth", {
           ...API_DEFAULT_OPTIONS,
         });
         if (resp.error && resp.error.value) {

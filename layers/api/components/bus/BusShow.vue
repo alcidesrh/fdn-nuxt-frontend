@@ -60,32 +60,171 @@
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"
           >
-            asientosClaseA
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.asientosClaseA }}
-                    </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
-            asientosClaseB
-          </th>
-          <td class="px-6 py-4 whitespace-nowrap text-sm">
-            {{ item.asientosClaseB }}
-                    </td>
-        </tr>
-        <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
             codigo
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.codigo }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            asientos
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <template v-if="router.hasRoute('api/asientos-id')">
+              <nuxt-link
+                v-for="asiento in item.api/asientos"
+                :key="asiento"
+                :to="{ name: 'asientos-id', params: { id: asiento } }"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                {{ asiento }}
+
+                <br />
+              </nuxt-link>
+            </template>
+
+            <template v-else>
+              <p
+                v-for="asiento in item.api/asientos"
+                :key="asiento"
+              >
+                {{ asiento }}
+              </p>
+            </template>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            precioVariacionAsientoA
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.precioVariacionAsientoA }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            precioVariacionAsientoB
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.precioVariacionAsientoB }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            empresa
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/empresas-id')"
+              :to="{ name: 'empresas-id', params: { id: item.empresa } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.empresa }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.empresa }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            piloto
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <nuxt-link
+              v-if="router.hasRoute('api/pilotos-id')"
+              :to="{ name: 'pilotos-id', params: { id: item.piloto } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.piloto }}
+            </nuxt-link>
+
+            <p v-else>
+              {{ item.piloto }}
+            </p>
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            marca
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.marca }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            placa
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.placa }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            createdAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.createdAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            updatedAt
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ formatDateTime(item.updatedAt) }}
+          </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            status
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.status }}
+                    </td>
+        </tr>
+        <tr class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            legacyId
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ item.legacyId }}
                     </td>
         </tr>
       </tbody>
@@ -122,7 +261,7 @@ const {
   isLoading,
   error,
   hubUrl,
-} = await useFetchItem<Bus>(`buses/${id}`);
+} = await useFetchItem<Bus>(`api/buses/${id}`);
 busShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {

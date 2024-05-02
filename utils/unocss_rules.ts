@@ -22,10 +22,21 @@ export const utopiarules = [
     },
   ],
   [
-    /^u-(-)?text-(\d{1,2})$/,
-    (match: string[]) => [
-      { "font-size": `var(--step${match[1] == "-" ? "-" : ""}-${match[2]})` },
-    ],
+    /^u-(-)?([a-z]+)-(\d{1,2})$/,
+    (match: string[]) => {
+      let prop = match[2],
+        rule: Record<string, any> = {};
+      const val = `var(--step${match[1] == "-" ? "-" : ""}-${match[3]})`;
+
+      switch (prop) {
+        case "text":
+          rule["font-size"] = val;
+          return [rule];
+        default:
+          rule[prop] = val;
+          return [rule];
+      }
+    },
   ],
 ];
 

@@ -73,27 +73,17 @@
             {{ item.nombre }}
                     </td>
           <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('paiss-id')">
-              <nuxt-link
-                v-for="pais in item.paiss"
-                :key="pais"
-                :to="{ name: 'paiss-id', params: { id: pais } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ pais }}
+            <nuxt-link
+              v-if="router.hasRoute('api/pais-id')"
+              :to="{ name: 'paiss-id', params: { id: item.pais } }"
+              class="text-blue-600 hover:text-blue-800"
+            >
+              {{ item.pais }}
+            </nuxt-link>
 
-                <br />
-              </nuxt-link>
-            </template>
-
-            <template v-else>
-              <p
-                v-for="pais in item.paiss"
-                :key="pais"
-              >
-                {{ pais }}
-              </p>
-            </template>
+            <p v-else>
+              {{ item.pais }}
+            </p>
           </td>
           <td class="px-6 py-4 text-sm">
             <nuxt-link
@@ -209,7 +199,7 @@ const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
 
 const localidadListStore = useLocalidadListStore();
 const { items, view, error, isLoading, hubUrl } = await useFetchList<Localidad>(
-  "localidads"
+  "api/localidads"
 );
 localidadListStore.setData({ items, view, error, isLoading, hubUrl });
 

@@ -1,32 +1,24 @@
 <template>
-  <button
-    type="button"
+  <button type="button"
     class="my-2 px-6 py-2 border-2 border-green-500 text-green-500 text-xs rounded-full hover:text-white hover:bg-green-500"
-    @click="addField"
-  >
+    @click="addField">
     Add
   </button>
 
   <div v-for="(field, index) in fields" :key="index" class="flex gap-2 mb-3">
-    <input
-      v-model="fields[index]"
-      placeholder="Relation IRI"
-      class="grow px-3 py-1.5 border rounded"
-      @input="updateField(index, ($event?.target as HTMLInputElement)?.value)"
-    />
+    <input v-model="fields[index]" placeholder="Relation IRI" class="grow px-3 py-1.5 border rounded"
+      @input="updateField(index, ($event?.target as HTMLInputElement)?.value)" />
 
-    <button
-      type="button"
+    <button type="button"
       class="px-6 py-2 border-2 border-gray-800 font-medium text-xs uppercase rounded hover:text-white hover:bg-gray-800"
-      @click="removeField(index)"
-    >
+      @click="removeField(index)">
       Remove
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type Ref } from "vue";
+import { type ref } from "vue";
 
 const props = defineProps<{
   values?: string[];
