@@ -34,13 +34,13 @@ onMounted(() => {
 
     <div class="layout-topbar-menu flex items-center" :class="topbarMenuClasses">
 
-      <button v-for="(e, i) in headerIcon" :key="i" class="p-link layout-topbar-button z-0 !w-2.5rem !h-2.5rem u-mx-5xs"
-        @click="onSettingsClick()">
+      <Button severity="contrast" v-for="(e, i) in headerIcon" :key="i"
+        class="bg-transparent p-link layout-topbar-button z-0 !w-2.5rem !h-2.5rem u-mx-5xs" @click="onSettingsClick()">
         <icon :key="i" :name="e.name" v-bind="e.attr.value" />
-      </button>
+      </Button>
       <Divider layout="vertical" type="dashed" class="before:border-slate-400 py-0" />
 
-      <button
+      <a href="/logout"
         class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem bg-slate-200 u-mx-s !hover:bg-slate-300 hover:bg-slate-500"
         @click="onSettingsClick()">
 
@@ -51,7 +51,7 @@ onMounted(() => {
           class: "u-mx-s cursor-pointer drop-shadow text-30px logout-btn",
           size: "20",
         }' />
-      </button>
+      </a>
 
     </div>
   </div>

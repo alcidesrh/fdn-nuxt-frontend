@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { computed } from "vue";
 
 export const useThemeStateStore = defineStore("useThemeState", {
   persist: true,
@@ -58,7 +57,7 @@ export const useThemeStateStore = defineStore("useThemeState", {
         this.layout.staticMenuMobileActive =
           !this.layout.staticMenuMobileActive;
       }
-      console.log(this.layout.staticMenuMobileActive);
+      // console.log(this.layout.staticMenuMobileActive);
 
     },
     onMenuToggleVertical(menu: any = null): void {

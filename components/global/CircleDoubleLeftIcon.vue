@@ -7,5 +7,5 @@ defineProps({
 })
 </script>
 <template>
-  <DoubleLeft class="menu-icon bg-transparent " theme="outline" />
+  <DoubleLeft theme="outline" />
 </template>

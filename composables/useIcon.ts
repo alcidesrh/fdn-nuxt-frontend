@@ -29,10 +29,10 @@ icons["header-menu"] = Array.from(
 
 export function useIcon() {
   const iconProps = {
-    strokeWidth: "2",
+    strokeWidth: "4",
     theme: "outline",
     class: " flex",
-    size: 22,
+    size: 15,
   };
   const isComponent = (name: unknown) => {
     return typeof resolveDynamicComponent(name) !== "string";

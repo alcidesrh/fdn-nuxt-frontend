@@ -84,3 +84,7 @@ a {
 .logout-btn svg path {
     @apply stroke-slate-500;
 }
+
+.formkit-messages>.text-red-600 {
+    @apply u-text-0;
+}

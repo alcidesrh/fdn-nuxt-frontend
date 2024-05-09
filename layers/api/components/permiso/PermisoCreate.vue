@@ -84,6 +84,16 @@ async function getEntities() {
   return;
 
 }
+
+
+async function getResources() {
+
+  const data = await useFetchItem<Permiso>("resources")
+
+  const result = data.retrieved.value['hydra:member']
+  return;
+
+}
 async function getForm() {
 
   permisoCreateStore.setError("Missing item id. Please reload");
@@ -91,7 +101,7 @@ async function getForm() {
   reset('entityForm')
   schema.value = data.retrieved.value['hydra:member']
   dato = reactive(JSON.stringify(schema.value))
-  console.log((unref(await data.retrieved.value['hydra:member'])));
+  // console.log((unref(await data.retrieved.value['hydra:member'])));
 
 
   return;
@@ -112,5 +122,6 @@ onBeforeUnmount(() => {
 onMounted(() => {
   // getForm();
   getEntities();
+  getResources();
 });
 </script>
