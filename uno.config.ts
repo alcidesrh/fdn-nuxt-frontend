@@ -7,45 +7,37 @@ import {
   // presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
-type Rule
-} from "unocss";
+  type Rule,
+} from 'unocss'
 
-import { utopiarules } from "./utils/unocss_rules";
+import { utopiarules } from './utils/unocss_rules'
 
 export default defineConfig({
   rules: [...(utopiarules as Rule<object>[])],
-  shortcuts: [
-    [
-      "btn",
-      "px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50",
-    ],
-    [
-      "icon-btn",
-      "inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600",
-    ],
-  ],
+  shortcuts: [],
   content: {
     pipeline: {
       include: [
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
         // include js/ts files
+        // '*.{js,ts}',
       ],
       // exclude files
       // exclude: []
     },
     filesystem: [
       // 'layers/**/*.{js,ts.vue}',
-      "layers/auth/components/form/*.{ts,js,vue}",
+      'layers/auth/components/form/*.{ts,js,vue}',
     ],
   },
   presets: [
     presetUno(),
     presetAttributify(),
-    presetIcons({
-      scale: 1.2,
-    }),
-    presetTypography(),
+    // presetIcons({
+    //   scale: 1.2,
+    // }),
+    // presetTypography(),
     // presetWebFonts({
     //   fonts: {
     //     sans: 'DM Sans',
@@ -55,4 +47,9 @@ export default defineConfig({
     // }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
-});
+  layers: {
+    tailwindlayer: 1,
+    primevue: 2,
+    custom: 3,
+  },
+})

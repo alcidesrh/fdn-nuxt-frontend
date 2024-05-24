@@ -1,0 +1,53 @@
+{
+  "name": "fdn-theme",
+  "version": "1.0.3",
+  "author": "Alcides <alcidesrh@gmail.com>",
+  "license": "MIT",
+  "main": "dist/theme.js",
+  "module": "dist/theme.mjs",
+  "types": "dist/theme.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.mjs",
+      "require": "./dist/theme.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@formkit/theme-creator": "latest"
+  },
+  "devDependencies": {
+    "@formkit/addons": "latest",
+    "@formkit/barcode": "latest",
+    "@formkit/icons": "latest",
+    "@formkit/pro": "next",
+    "@formkit/theme-editor": "latest",
+    "@formkit/vue": "latest",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@vitejs/plugin-vue": "^4.6.2",
+    "bumpp": "^9.4.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "publint": "^0.2.8",
+    "tailwindcss": "^3.4.3",
+    "tsup": "^7.2.0",
+    "typescript": "^5.4.5",
+    "vite": "^4.5.3",
+    "vitest": "^0.34.6",
+    "vue": "^3.4.27",
+    "vue-tsc": "^1.8.27"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsup",
+    "build-web": "vite build",
+    "preview": "vite preview",
+    "release": "pnpm build && npx publint && npx bumpp && pnpm publish",
+    "test": "vitest",
+    "lint": "eslint"
+  }
+}

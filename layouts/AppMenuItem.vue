@@ -64,10 +64,10 @@ const { iconProps, isComponent } = useIcon()
 
   <li v-else class="cursor-pointer " :class="{ 'layout-root-menuitem ': root }">
 
-    <div v-if="root && item.visible !== false" class="rounded layout-menuitem-root-text u-p-4xs"
+    <div v-if="root && item.visible !== false" class="rounded layout-menuitem-root-text u-p-xs"
       @click="item.opened = !item.opened">
 
-      <component :is="item.icon" v-if="isComponent(item.icon)" v-bind="{ ...iconProps, strokeWidth: 3, size: 20 }" />
+      <component :is="item.icon" v-if="isComponent(item.icon)" v-bind="iconProps" />
 
       <span>{{ item.label }}</span>
 
@@ -76,7 +76,7 @@ const { iconProps, isComponent } = useIcon()
     </div>
     <a v-if="(!item.to || item.items) && item.visible !== false" :href="item.url" :class="item.class"
       :target="item.target" tabindex="0" @click="itemClick($event, item, index)">
-      <div class="flex u-p-3xs u-pl-m">
+      <div class="flex u-p-s u-pl-m">
         <component :is="item.icon" v-if="isComponent(item.icon)" v-bind="iconProps" />
         <i v-else :class="item.icon" class="layout-menuitem-icon" />
         <span class="layout-menuitem-text ">{{ item.label }}</span>

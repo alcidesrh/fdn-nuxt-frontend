@@ -32,11 +32,11 @@ const allow_banner_amimation = computed(
       </ul>
     </div>
 
-    <div class="layout-main-container h-full ml-270px">
+    <div class="layout-main-container h-full ">
       <div class="layout-main">
         <div class="overlay left-0 z-2" />
         <div class="overlay2 right-0 z-0" />
-        <div class="absolute m-auto left-50% top-50% -ml-213px -mt-211px">
+        <div class="absolute m-auto top-50% -mt-211px w-full">
           <FormLogin />
         </div>
 

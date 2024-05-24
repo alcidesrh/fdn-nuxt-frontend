@@ -1,7 +1,6 @@
-
 <template>
-  <div id="target" class=" absolute flex justify-center items-center  h-110px w-230px rounded-tr-full bg-fdn hidden">
-    <svg class="h-full font-bold  h-80px w-200px absolute left-10px" xmlns="http://www.w3.org/2000/svg"
+  <div id="target" class="z-999 fixed flex justify-center items-center  h-80px w-230px rounded-tr-full bg-fdn hidden ">
+    <svg class="top-0 font-bold  h-70px w-190px absolute left-15px" xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" 0 1 630 56" shape-rendering="geometricPrecision"
       text-rendering="geometricPrecision">
 

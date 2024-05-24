@@ -124,7 +124,8 @@ const onFocusRingColorChange = (value) => {
         <div class="p-2">
             <section class="pb-4 flex align-items-center justify-content-between border-bottom-1 surface-border">
                 <span class="text-xl font-semibold">Scale</span>
-                <div class="flex align-items-center gap-2 border-1 surface-border py-1 px-2" style="border-radius: 30px">
+                <div class="flex align-items-center gap-2 border-1 surface-border py-1 px-2"
+                    style="border-radius: 30px">
                     <Button icon="pi pi-minus" @click="decrementScale" text rounded
                         :disabled="layoutConfig.scale.value === scales[0]" />
                     <i v-for="s in scales" :key="s"
@@ -251,8 +252,8 @@ const onFocusRingColorChange = (value) => {
 
             <section class="py-4 border-bottom-1 surface-border">
                 <div class="flex align-items-center gap-2 mb-3">
-                    <img src="https://primefaces.org/cdn/primevue/images/themes/lara-light-teal.png" alt="Lara Light Teal"
-                        class="border-circle" style="width: 1.5rem" />
+                    <img src="https://primefaces.org/cdn/primevue/images/themes/lara-light-teal.png"
+                        alt="Lara Light Teal" class="border-circle" style="width: 1.5rem" />
                     <span class="font-medium">Lara</span>
                 </div>
                 <div class="flex align-items-center justify-content-between gap-3 mb-3">
@@ -319,8 +320,8 @@ const onFocusRingColorChange = (value) => {
 
             <section class="py-4 border-bottom-1 surface-border">
                 <div class="flex align-items-center gap-2 mb-3">
-                    <img src="https://primefaces.org/cdn/primevue/images/themes/md-light-indigo.svg" alt="Material Design"
-                        class="border-circle" style="width: 1.5rem" />
+                    <img src="https://primefaces.org/cdn/primevue/images/themes/md-light-indigo.svg"
+                        alt="Material Design" class="border-circle" style="width: 1.5rem" />
                     <span class="font-medium">Material Design</span>
                     <div class="ml-auto flex align-items-center gap-2">
                         <label for="material-condensed" class="text-sm">Condensed</label>
@@ -351,5 +352,4 @@ const onFocusRingColorChange = (value) => {
     </Sidebar>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

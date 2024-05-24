@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FormKitSchema } from "@formkit/vue";
+// import { FormKitSchema } from "@formkit/vue";
 import schema from 'login_schema/login'
 import type { Record } from "@icon-park/vue-next";
 
@@ -33,7 +33,7 @@ const form = ref(null)
 
 <template>
   <div class="relative z-999 m-auto max-w-fit ">
-    <div id="login" class="border border-slate-4 u-px-l u-pt-xl u-pb-m  bg-white text-slate-700 rounded shadow-md">
+    <div id="login" class="border border-slate-4 u-px-l u-pt-xl u-pb-m  bg-white text-slate-700 rounded-xl shadow-md">
       <div class="w-fit md:w-25em">
         <div class="m-auto max-w-20em">
           <FormKit type="form" v-model="user" @submit-invalid="shake('#login')" @submit="handleSubmit" :actions="false"

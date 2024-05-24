@@ -24,21 +24,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="layout-topbar overflow-hidden ">
-
-    <LogoSvg />
-
-    <button class="layout-topbar-menu-button layout-topbar-button p-link" @click="onTopBarMenuButton">
+  <LogoSvg />
+  <div class="layout-topbar overflow-hidden bg-slate-700 z-998 u-p-s">
+    <!-- <button class="layout-topbar-menu-button layout-topbar-button p-link" @click="onTopBarMenuButton">
       <i class="pi pi-ellipsis-v" />
-    </button>
+    </button> -->
 
-    <div class="layout-topbar-menu flex items-center" :class="topbarMenuClasses">
+    <div class="layout-topbar-menu flex items-center justify-end w-full" :class="topbarMenuClasses">
 
-      <Button severity="contrast" v-for="(e, i) in headerIcon" :key="i"
-        class="bg-transparent p-link layout-topbar-button z-0 !w-2.5rem !h-2.5rem u-mx-5xs" @click="onSettingsClick()">
+      <Button text v-for="(e, i) in headerIcon" :key="i" class="layout-topbar-button z-0 !w-2.5rem !h-2.5rem u-ml-m"
+        @click="onSettingsClick()">
         <icon :key="i" :name="e.name" v-bind="e.attr.value" />
       </Button>
-      <Divider layout="vertical" type="dashed" class="before:border-slate-400 py-0" />
+
+      <Divider layout="vertical" class="u-m-l !before:border-l-slate-400" />
 
       <a href="/logout"
         class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem bg-slate-200 u-mx-s !hover:bg-slate-300 hover:bg-slate-500"

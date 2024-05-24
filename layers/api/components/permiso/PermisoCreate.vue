@@ -18,13 +18,15 @@
     <div>
       <FormKit v-if="schemaEntities" type="form" v-model="entity" :actions="false" form-class="u-mt-m">
         <FormKitSchema :schema="schemaEntities" />
+
+        <FormKitSchema :schema="routes" />
       </FormKit>
 
       <divider class="u-my-l" />
 
-      <FormKit id="entityForm" v-if="schema.length" type="form" :actions="false">
+      <!-- <FormKit id="entityForm" v-if="schema.length" type="form" :actions="false">
         <FormKitSchema :schema="schema" :key="schema" :data="dato" />
-      </FormKit>
+      </FormKit> -->
 
 
 
@@ -45,14 +47,15 @@ import { usePermisoCreateStore } from "~~/stores/permiso/create";
 import { useCreateItem, useFetchItem } from "~~/composables/api";
 import { getIdFromIri } from "~~/utils/resource";
 import type { Permiso } from "~~/types/permiso";
-import { FormKitSchema } from "@formkit/vue";
-import { reset } from '@formkit/core'
+// import { FormKitSchema } from "@formkit/vue";
+// import { reset } from '@formkit/core'
 const permisoCreateStore = usePermisoCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(permisoCreateStore);
 
 
 let schema = ref([])
 const schemaEntities = ref()
+const routes = ref()
 const entity = ref()
 let dato = reactive([])
 
@@ -90,7 +93,7 @@ async function getResources() {
 
   const data = await useFetchItem<Permiso>("resources")
 
-  const result = data.retrieved.value['hydra:member']
+  routes.value = data.retrieved.value['hydra:member']
   return;
 
 }

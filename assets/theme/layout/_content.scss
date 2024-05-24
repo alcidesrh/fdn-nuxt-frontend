@@ -1,0 +1,18 @@
+.layout-main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: space-between;
+    // padding: 2rem;
+    padding-top: 70px;
+    // margin-top: 70px;
+    transition: margin-left $transitionDuration;
+
+}
+
+.layout-main {
+    flex: 1 1 auto;
+    // padding: 10px;
+    // padding: 1rem;
+    /* : white; */
+}

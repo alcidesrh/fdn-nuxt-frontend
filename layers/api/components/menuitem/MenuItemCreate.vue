@@ -5,19 +5,11 @@
 
   <h1 class="text-3xl my-4">Create MenuItem</h1>
 
-  <div
-    v-if="isLoading"
-    class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
-    role="status"
-  >
+  <div v-if="isLoading" class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm" role="status">
     Loading...
   </div>
 
-  <div
-    v-if="error"
-    class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
-    role="alert"
-  >
+  <div v-if="error" class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm" role="alert">
     {{ error }}
   </div>
 
@@ -37,7 +29,7 @@ const menuitemCreateStore = useMenuItemCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(menuitemCreateStore);
 
 async function create(item: MenuItem) {
-  const data = await useCreateItem<MenuItem>("api/menu_items", item);
+  const data = await useCreateItem<MenuItem>("menu_items", item);
   menuitemCreateStore.setData(data);
 
   if (!created?.value?.["@id"]) {
