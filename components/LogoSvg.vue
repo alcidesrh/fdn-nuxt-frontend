@@ -1,7 +1,7 @@
 <template>
   <div id="logo" class="z-998 fixed flex justify-center items-center  h-70px w-380px rounded-tr-full bg-fdn hidden ">
     <svg class="top-0 font-bold  h-70px w-250px absolute left-15px" xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" -20 1 1000 56" shape-rendering="geometricPrecision"
+      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" -80 1 1000 56" shape-rendering="geometricPrecision"
       text-rendering="geometricPrecision">
 
       <g transform="matrix(0.9 0 -0.20 1.2 80.487172 0)">

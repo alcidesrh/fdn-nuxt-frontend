@@ -1,10 +1,29 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { CustomerService } from '../utils/dataTest';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 
 import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
+import { computed } from 'vue'
+import { userCollection } from '../graphql/query/user'
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+
+
+// if (__DEV__) 
+//   // Adds messages only in a dev environment
+loadDevMessages();
+loadErrorMessages();
+// }
+const { result } = useQuery(
+  userCollection,
+  // variables are typed!
+  { first: 10 }
+)
+watch(() => {
+  console.log(result.value)
+})
+// `films` is typed!
+const films = computed(() => result.value?.users?.edges?.map(e => e?.node))
 
 // const { result, } = useQuery(gql`
 //       query getUsers{
@@ -100,78 +119,13 @@ const getSeverity = (status) => {
   }
 };
 </script>
-<script>
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-export default {
-  // Properties returned from data() become reactive state
-  // and will be exposed on `this`.
-  data() {
-    return {
-      users: [],
-      loading: 0
-    }
-  },
-  apollo: {
-
-
-    // Simple query that will update the 'hello' vue property
-    users: {
-      query: gql`
-      query getUsers{
-        users(first: 10, after: "cursor"){
-        totalCount
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-         edges{
-         cursor
-          node{
-        id 
-        nombre
-      }
-    }
-  }
-}
-`,
-      update({ users: { edges }, loading, networkStatus }) {
-        console.log(edges)
-        // The returned value will update
-        // the vue property 'pingMessage'
-        // return data.users
-      },
-      // result({ data, loading, networkStatus }) {
-      //   console.log(data, loading, networkStatus)
-      // },
-      // Error handling
-      error(error) {
-        console.error('We\'ve got an error!', error)
-      },
-      loadingKey: 'loading',
-
-    },
-  },
-
-  // Methods are functions that mutate state and trigger updates.
-  // They can be bound as event handlers in templates.
-  methods: {
-    increment() {
-      this.count++
-    }
-  },
-
-  // Lifecycle hooks are called at different stages
-  // of a component's lifecycle.
-  // This function will be called when the component is mounted.
-  mounted() {
-    loadDevMessages();
-    loadErrorMessages();
-  }
-}
-</script>
 <template>
   <div v-if="loading" v-text="'cargando'"></div>
-
+  <ul>
+    <li v-for="film of films">
+      <FilmItem :film="film" />
+    </li>
+  </ul>
   <Card>
     <template #title>Simple Card</template>
     <template #content>

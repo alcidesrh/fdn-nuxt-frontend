@@ -4,9 +4,9 @@ module.exports = {
     service: {
       name: 'FDN',
       // URL to the GraphQL API
-      url: 'https://localhost/graphql',
+      url: 'http://localhost/graphql',
     },
     // Files processed by the extension
-    includes: ['src/**/*.vue', 'src/**/*.js', 'src/**/*.ts'],
+    includes: ['./**/*.vue', './**/*.js', './**/*.ts'],
   },
 }

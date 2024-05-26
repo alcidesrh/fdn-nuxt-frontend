@@ -28,8 +28,8 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
-    // height: 5px;
+    width: 6px;
+    height: 8px;
 }
 
 /* Track */
@@ -42,7 +42,7 @@ a {
 ::-webkit-scrollbar-thumb {
     background-color: $slate-400;
     border-radius: 70px;
-    height: 10px;
+    height: 5px;
 }
 
 
