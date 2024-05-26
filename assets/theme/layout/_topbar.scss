@@ -65,12 +65,12 @@
 }
 
 .layout-topbar .layout-topbar-menu a {
-    @apply : bg-slate-2 border-2 border-slate-5 rounded-full;
+    @apply : bg-zinc-100 border border-zinc-400 rounded-full;
 }
 
 .layout-topbar .layout-topbar-menu a span:hover,
 .layout-topbar .layout-topbar-menu a:hover {
-    @apply bg-slate-3;
+    // @apply bg-slate-3;
 }
 
 @media (max-width: 991px) {

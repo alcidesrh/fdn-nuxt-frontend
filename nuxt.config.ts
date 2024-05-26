@@ -5,7 +5,7 @@ import { PrimeVueResolver } from 'unplugin-vue-components-primevue/resolvers'
 
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@vite-pwa/nuxt', 'nuxt-module-eslint-config', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon'],
+  modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon'], //'@vite-pwa/nuxt', 'nuxt-module-eslint-config',
   piniaPersistedstate: {
     storage: 'localStorage',
   },

@@ -9,10 +9,15 @@ const {
   bindOutsideClickListener,
   topbarMenuClasses,
   onTopBarMenuButton,
-  onSettingsClick,
+  // onSettingsClick,
 } = useSidebar()
 
+function onSettingsClick(e) {
+  alert(3)
+  e.preventDefault();
 
+  document.body.classList.toggle("my-app-dark");
+}
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
 })
@@ -25,7 +30,7 @@ onMounted(() => {
 
 <template>
   <LogoSvg />
-  <div class="layout-topbar overflow-hidden bg-slate-700 z-998 u-p-s">
+  <div class="layout-topbar overflow-hidden bg-white shadow-md z-997 u-p-s">
     <!-- <button class="layout-topbar-menu-button layout-topbar-button p-link" @click="onTopBarMenuButton">
       <i class="pi pi-ellipsis-v" />
     </button> -->
@@ -40,7 +45,7 @@ onMounted(() => {
       <Divider layout="vertical" class="u-m-l !before:border-l-slate-400" />
 
       <a href="/logout"
-        class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem bg-slate-200 u-mx-s !hover:bg-slate-300 hover:bg-slate-500"
+        class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem u-mx-s !hover:bg-zinc-300 hover:bg-zinc-500"
         @click="onSettingsClick()">
 
         <icon name="close" v-bind='{

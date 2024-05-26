@@ -81,7 +81,7 @@ const siderbar_toggle = (direction = 'horizontal') => {
 
         <app-topbar></app-topbar>
 
-        <div class="layout-sidebar z-998">
+        <div class="layout-sidebar">
 
             <div class="sidebar-btn">
 

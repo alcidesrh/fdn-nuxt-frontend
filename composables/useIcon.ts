@@ -7,7 +7,7 @@ const icons = {
 
 type IconType = keyof typeof icons
 const data = {
-  strokeWidth: '2',
+  strokeWidth: '3',
   theme: 'filled',
   // fill: ["#93c5fd", "#334155"],
   strokeLinecap: 'square',
@@ -27,10 +27,10 @@ icons['header-menu'] = Array.from({ length: iconsHeaderNames.length }, (e, i) =>
 
 export function useIcon() {
   const iconProps = {
-    strokeWidth: '3',
+    strokeWidth: '2',
     theme: 'outline',
     class: ' flex',
-    size: 23,
+    size: 20,
   }
   const isComponent = (name: unknown) => {
     return typeof resolveDynamicComponent(name) !== 'string'

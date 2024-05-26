@@ -29,7 +29,7 @@ a {
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
-    height: 5px;
+    // height: 5px;
 }
 
 /* Track */
@@ -54,27 +54,65 @@ a {
     border-radius: 9999px;
 }
 
-.logo {
-    @apply fill-slate-500 font-bold;
-    font-family: 'Fast-Track';
 
+
+.bg-fdn {
+    // background-color: $slate-00
+}
+
+#logo {
+
+    @apply fill-white font-bold;
+    letter-spacing: 2px;
+    font-family: 'Fast-Track';
+    font-weight: 700;
+    mix-blend-mode: darken;
+}
+
+
+.text2 {
+    letter-spacing: 5px;
+    text-shadow: 0px 0px 30px #09090b;
+    mix-blend-mode: darken;
+    animation-delay: 4s;
+    animation: fadeIn 1.5s linear forwards;
+}
+
+.text3 {
+    z-index: 1;
+    letter-spacing: 2px;
+    text-shadow: 0px 0px 35px #09090b;
+    animation-delay: 5s;
+    animation: fadeIn 1.5s linear forwards;
+}
+
+.text1 {
+    text-shadow: 1px 0px 8px #09090b;
+    animation-delay: 2s;
+    animation: fadeIn .5s linear forwards;
+    @apply fill-zinc-100
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .p-divider:be {
     border-left: 1px solid #000;
 }
 
-.bg-fdn {
-    @apply: bg-slate-100;
-}
-
-
 .layout-topbar-button:not(.logout-btn) svg path {
-    @apply stroke-slate-300 fill-none;
+    @apply stroke-zinc-500 fill-none;
 }
 
 .logout-btn svg path {
-    @apply stroke-slate-500;
+    @apply stroke-zinc-400;
 }
 
 .formkit-messages>.text-red-600 {

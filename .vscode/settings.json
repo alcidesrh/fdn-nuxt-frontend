@@ -17,5 +17,7 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#064e3b99",
     "titleBar.inactiveForeground": "#e7e7e799"
-  }
+  },
+  "files.autoSave": "onFocusChange",
+  "files.autoSaveDelay": 2000
 }
