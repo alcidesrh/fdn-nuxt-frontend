@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     // autoImport: true,
     // defaultConfig: false,
   },
-  extends: ['./layers/api', './layers/auth'],
+  extends: ['./layers/auth'],
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
