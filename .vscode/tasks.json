@@ -3,25 +3,17 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "dev",
-			"problemMatcher": [],
-			"label": "npm: dev",
-			"detail": "nuxi dev"
-		},
-		{
-			"type": "npm",
-			"script": "build",
-			"group": "build",
-			"problemMatcher": [],
-			"label": "npm: build",
-			"detail": "nuxi build"
-		},
-		{
-			"type": "npm",
 			"script": "codegen",
 			"problemMatcher": [],
-			"label": "npm: codegen",
-			"detail": "graphql-codegen --config codegen.ts"
-		}
+			"label": "Codegen",
+			"detail": "Generate types from ./graphql/schema.graphql"
+		},
+		{
+			"type": "npm",
+			"script": "codegen:watch",
+			"problemMatcher": [],
+			"label": "Codegen Watch",
+			"detail": "Look in *.{vue,ts,js} for graphql instructions and generate types"
+		},
 	]
 }

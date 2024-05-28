@@ -1,8 +1,8 @@
-import type { CodegenConfig } from '@graphql-codegen/cli'
+import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: './schema.graphql',
+  schema: './graphql/schema.graphql',
   documents: ['./pages/**/*.{vue,js,ts}', './components/**/*.{vue,js,ts}', './composab;es/**/*.{vue,js,ts}'],
   generates: {
     './graphql/': {
@@ -11,11 +11,12 @@ const config: CodegenConfig = {
         gqlTagName: 'gql',
       },
       config: {
-        useTypeImports: false,
+        useTypeImports: true,
       },
     },
   },
   ignoreNoDocuments: true,
+  hooks: { afterAllFileWrite: ['prettier --write'] },
 }
 
 export default config

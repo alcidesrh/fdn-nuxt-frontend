@@ -16,7 +16,6 @@ export default defineNuxtConfig({
       name: 'nuxt-session',
       password: process.env.NUXT_AUTH_PASSWORD || '',
     },
-
   },
   hooks: {
     'pages:extend': function (pages) {
@@ -27,11 +26,8 @@ export default defineNuxtConfig({
             // Note that this will override any middleware set in `definePageMeta` in the page
             page.meta.auth = true
           }
-          else {
 
-          }
-          if (page.children)
-            setMiddleware(page.children)
+          if (page.children) setMiddleware(page.children)
         }
       }
       setMiddleware(pages)
@@ -44,9 +40,6 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: [
-      'stores'
-    ]
+    dirs: ['stores'],
   },
-
 })

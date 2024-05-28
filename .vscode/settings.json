@@ -19,5 +19,8 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "files.autoSave": "onFocusChange",
-  "files.autoSaveDelay": 2000
+  "files.autoSaveDelay": 2000,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.experimental.useFlatConfig": true
 }

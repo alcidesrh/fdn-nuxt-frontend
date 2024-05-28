@@ -1,4 +1,4 @@
-import { gql } from '../index'
+import { gql } from '~/graphql/'
 
 export const userCollection = gql(`
   query getUsers($first: Int!) {

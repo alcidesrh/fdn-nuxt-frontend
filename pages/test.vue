@@ -5,18 +5,28 @@ import { FilterMatchMode, FilterOperator } from 'primevue/api';
 
 import { useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'
-import { userCollection } from '../graphql/query/user'
+import { GetUsersQuery } from '../graphql/graphql'
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-
-
+import { gql } from '../graphql/'
+// import gql from 'graphql-tag'
 // if (__DEV__) 
 //   // Adds messages only in a dev environment
 loadDevMessages();
 loadErrorMessages();
 // }
 const { result } = useQuery(
-  userCollection,
-  // variables are typed!
+  gql(`
+  query getUsers($first: Int!) {
+    users(first: $first) {
+      edges {
+        node {
+          id
+          nombre
+        }
+      }
+    }    
+  }
+`),
   { first: 10 }
 )
 watch(() => {

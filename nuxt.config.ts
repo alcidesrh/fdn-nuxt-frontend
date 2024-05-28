@@ -1,11 +1,11 @@
-import { pwa } from './config/pwa'
+// import { pwa } from './config/pwa'
 import { fileURLToPath } from 'url'
 import Components from 'unplugin-vue-components-primevue/vite'
 import { PrimeVueResolver } from 'unplugin-vue-components-primevue/resolvers'
 
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon'], //'@vite-pwa/nuxt', 'nuxt-module-eslint-config',
+  modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon', '@nuxt/eslint'], //'@vite-pwa/nuxt'
   piniaPersistedstate: {
     storage: 'localStorage',
   },
@@ -22,16 +22,17 @@ export default defineNuxtConfig({
     composables: true,
     provide: false,
   },
+
   alias: {
     schema: fileURLToPath(new URL('./components/form/schemas', import.meta.url)),
     nm: fileURLToPath(new URL('./node_modules', import.meta.url)),
   },
+
   formkit: {
     // autoImport: true,
     // defaultConfig: false,
-    // configFile: './formkit.config.ts',
   },
-  extends: ['./layers/auth', './layers/api'],
+  extends: ['./layers/api', './layers/auth'],
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
@@ -50,7 +51,7 @@ export default defineNuxtConfig({
   features: {
     inlineStyles: false,
   },
-  eslintConfig: {
-    setup: false,
-  },
+  // eslintConfig: {
+  //   setup: false,
+  // },
 })
