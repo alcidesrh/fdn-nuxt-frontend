@@ -26,5 +26,6 @@ declare module 'vue' {
     Skeleton: typeof import('primevue/skeleton')['default']
     Slider: typeof import('primevue/slider')['default']
     Tag: typeof import('primevue/tag')['default']
+    Tree: typeof import('primevue/tree')['default']
   }
 }

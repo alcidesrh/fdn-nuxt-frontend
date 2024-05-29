@@ -1,4 +1,4 @@
-$fondoRoot: $sky-100;
+$fondoRoot: #fff; //$zinc-200;
 $fondoMenu: #fff;
 $colorRoot: $neutral-600; //'black';
 $colorMenu: $neutral-600;
@@ -41,7 +41,7 @@ $fontWeight: 400;
         .layout-root-menuitem {
             position: relative;
             // color: $colorRoot;
-            margin-bottom: 15px;
+            // margin-bottom: 15px;
             // @apply: border-neutral-400 border-b-1;
 
             >span {
@@ -56,16 +56,13 @@ $fontWeight: 400;
                 align-items: center;
                 // font-size: var(--step-3);
                 font-weight: 570;
-                @apply: hover:bg-slate-300/70 flex items-center gap-2 border border-slate-200;
+                @apply: hover:bg-slate-300/70 flex items-center gap-2;
                 background-color: $fondoRoot;
                 // color: $colorRoot;
 
                 // padding: 13px 0px;
 
-                span.i-icon>svg {
-                    font-size: var(--step-8);
-                    // color: $colorRoot;
-                }
+
 
                 &>span {
                     letter-spacing: 1px;
@@ -89,7 +86,7 @@ $fontWeight: 400;
                 background-color: $fondoMenu;
                 // color: $colorMenu;
 
-                width: 95%;
+                // width: 95%;
                 // @apply border border-neutral-200 border-t-0;
 
                 >li:hover {
@@ -148,9 +145,9 @@ $fontWeight: 400;
             @apply rounded
         }
 
-        .layout-root-menuitem {
-            @apply u-mb-s
-        }
+        // .layout-root-menuitem {
+        //     @apply u-mb-s
+        // }
 
         // .layout-root-menuitem.active-menuitem {
         //     &>.layout-menuitem-root-text>.i-icon-plus {

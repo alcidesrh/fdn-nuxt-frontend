@@ -1,8 +1,7 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "../layers/api",
-    "moduleResolution": "node",
+    // "moduleResolution": "node",
     "verbatimModuleSyntax": false,
     "plugins": [
       {
@@ -10,14 +9,9 @@
         "schema": "./graphql/schema.graphql"
       }
     ],
-    "checkJs": true,
-    "paths": {
-      "nitropack": [
-        "../node_modules/.pnpm/nitropack@2.9.6_@opentelemetry+api@1.8.0/node_modules/nitropack"
-      ],
-    }
+    // "checkJs": true,
   },
-  "include": [
-    "./**/*.ts",
-  ],
+  // "include": [
+  // "./**/*.ts",
+  // ],
 }

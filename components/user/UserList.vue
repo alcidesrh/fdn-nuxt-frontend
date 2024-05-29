@@ -1,335 +1,256 @@
-<template>
-  <div class="flex items-center justify-between">
-    <h1 class="text-3xl my-4">User List</h1>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { NodeService } from '~~/utils/NodeService';
+import { FilterMatchMode, FilterOperator } from 'primevue/api';
 
-    <nuxt-link
-      :to="{ name: 'users-create' }"
-      class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
-    >
-      Create
-    </nuxt-link>
-  </div>
+import { useQuery } from '@vue/apollo-composable'
+import { computed } from 'vue'
+import { GetUsersQuery } from '~~/graphql/graphql'
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { gql } from '~~/graphql/'
+// import gql from 'graphql-tag'
+// if (__DEV__) 
+//   // Adds messages only in a dev environment
+loadDevMessages();
+loadErrorMessages();
+// }
+const { result } = useQuery(
+  gql(`
+  query getUsers($first: Int!) {
+    users(first: $first) {
+      edges {
+        node {
+          id
+          nombre
+        }
+      }
+    }    
+  }
+`),
+  { first: 10 }
+)
+watch(() => {
+  console.log(result.value)
+})
+// `films` is typed!
+const films = computed(() => result.value?.users?.edges?.map(e => e?.node))
 
-  <div
-    v-if="isLoading"
-    class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
-    role="status"
-  >
-    Loading...
-  </div>
+// const { result, } = useQuery(gql`
+//       query getUsers{
+//         users{
+//          edges{
+//           node{
+//             id
+//             nombre
+//           }
+//         }
+//         }
+//        }
+//            `)
 
-  <div
-    v-if="error"
-    class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
-    role="alert"
-  >
-    {{ error }}
-  </div>
+// console.log(result.value);
 
-  <div
-    v-if="deletedItem || mercureDeletedItem"
-    class="bg-green-100 rounded py-4 px-4 my-2 text-green-700 text-sm"
-    role="status"
-  >
-    <template v-if="deletedItem">{{ deletedItem["@id"] }} deleted.</template>
-    <template v-else-if="mercureDeletedItem">
-      {{ mercureDeletedItem["@id"] }} deleted by another user.
-    </template>
-  </div>
+const customers = ref();
+const selectedCustomers = ref();
+const filters = ref();
+const representatives = ref([
+  { name: 'Amy Elsner', image: 'amyelsner.png' },
+  { name: 'Anna Fali', image: 'annafali.png' },
+  { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
+  { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
+  { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
+  { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
+  { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
+  { name: 'Onyama Limba', image: 'onyamalimba.png' },
+  { name: 'Stephen Shaw', image: 'stephenshaw.png' },
+  { name: 'XuXue Feng', image: 'xuxuefeng.png' }
+]);
+const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
 
-  <div v-if="!isLoading" class="overflow-x-auto">
-    <table class="min-w-full">
-      <thead class="border-b">
-        <tr>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            id
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            username
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            roles
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            password
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            apiTokens
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            permisos
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            createdAt
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            updatedAt
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            status
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            legacyId
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            apellido
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            nombre
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            email
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            nit
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            telefono
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            direccion
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            localidad
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            userIdentifier
-          </th>
-          <th class="text-sm font-medium px-6 py-4 text-left capitalize">
-            validTokenStrings
-          </th>
-          <th
-            colspan="2"
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-          >
-            Actions
-          </th>
-        </tr>
-      </thead>
+onMounted(() => {
 
-      <tbody>
-        <tr v-for="item in items" :key="item['@id']" class="border-b">
-          <td class="px-6 py-4 text-sm">
-            <nuxt-link
-              :to="{ name: 'users-id', params: { id: getIdFromIri(item['@id']) } }"
-              class="text-blue-600 hover:text-blue-800"
-            >
-              {{ item["@id"] }}
-            </nuxt-link>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.username }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.roles }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.password }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.apiTokens }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            <template v-if="router.hasRoute('api/permisos-id')">
-              <nuxt-link
-                v-for="permiso in item.api/permisos"
-                :key="permiso"
-                :to="{ name: 'permisos-id', params: { id: permiso } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
-                {{ permiso }}
+  NodeService.getCustomersLarge().then((data) => (customers.value = getCustomers(data)));
+});
 
-                <br />
-              </nuxt-link>
-            </template>
 
-            <template v-else>
-              <p
-                v-for="permiso in item.api/permisos"
-                :key="permiso"
-              >
-                {{ permiso }}
-              </p>
-            </template>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            {{ formatDateTime(item.createdAt) }}
-          </td>
-          <td class="px-6 py-4 text-sm">
-            {{ formatDateTime(item.updatedAt) }}
-          </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.status }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.legacyId }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.apellido }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.nombre }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.email }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.nit }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.telefono }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.direccion }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            <nuxt-link
-              v-if="router.hasRoute('api/localidads-id')"
-              :to="{ name: 'localidads-id', params: { id: item.localidad } }"
-              class="text-blue-600 hover:text-blue-800"
-            >
-              {{ item.localidad }}
-            </nuxt-link>
-
-            <p v-else>
-              {{ item.localidad }}
-            </p>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.userIdentifier }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            {{ item.validTokenStrings }}
-                    </td>
-          <td class="px-6 py-4 text-sm">
-            <nuxt-link
-              :to="{ name: 'users-id', params: { id: getIdFromIri(item['@id']) } }"
-              class="px-6 py-2 bg-blue-600 text-white text-xs rounded shadow-md hover:bg-blue-700"
-            >
-              Show
-            </nuxt-link>
-          </td>
-          <td class="px-6 py-4 text-sm">
-            <nuxt-link
-              :to="{ name: 'users-id-edit', params: { id: getIdFromIri(item['@id']) } }"
-              class="px-6 py-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
-            >
-              Edit
-            </nuxt-link>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div v-if="view" class="flex justify-center">
-    <nav aria-label="Page navigation">
-      <ul class="flex list-style-none">
-        <li :class="{ disabled: !pagination.previous }">
-          <nuxt-link
-            :to="{
-              name: 'users-page-page',
-              params: { page: pagination.first },
-            }"
-            aria-label="First page"
-            :class="
-              !pagination.previous
-                ? 'text-gray-500 pointer-events-none'
-                : 'text-gray-800 hover:bg-gray-200'
-            "
-            class="block py-2 px-3 rounded"
-          >
-            <span aria-hidden="true">&lArr;</span> First
-          </nuxt-link>
-        </li>
-
-        <li :class="{ disabled: !pagination.previous }">
-          <nuxt-link
-            :to="{
-              name: 'users-page-page',
-              params: { page: pagination.previous ?? pagination.first },
-            }"
-            :class="
-              !pagination.previous
-                ? 'text-gray-500 pointer-events-none'
-                : 'text-gray-800 hover:bg-gray-200'
-            "
-            class="block py-2 px-3 rounded"
-            aria-label="Previous page"
-          >
-            <span aria-hidden="true">&larr;</span> Previous
-          </nuxt-link>
-        </li>
-
-        <li :class="{ disabled: !pagination.next }">
-          <nuxt-link
-            :to="{
-              name: 'users-page-page',
-              params: { page: pagination.next ?? pagination.last },
-            }"
-            :class="
-              !pagination.next
-                ? 'text-gray-500 pointer-events-none'
-                : 'text-gray-800 hover:bg-gray-200'
-            "
-            class="block py-2 px-3 rounded"
-            aria-label="Next page"
-          >
-            Next <span aria-hidden="true">&rarr;</span>
-          </nuxt-link>
-        </li>
-
-        <li :class="{ disabled: !pagination.next }">
-          <nuxt-link
-            :to="{ name: 'users-page-page', params: { page: pagination.last } }"
-            :class="
-              !pagination.next
-                ? 'text-gray-500 pointer-events-none'
-                : 'text-gray-800 hover:bg-gray-200'
-            "
-            class="block py-2 px-3 rounded"
-            aria-label="Last page"
-          >
-            Last <span aria-hidden="true">&rArr;</span>
-          </nuxt-link>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { storeToRefs } from "pinia";
-import { useMercureList } from "~~/composables/mercureList";
-import { useUserDeleteStore } from "~~/stores/user/delete";
-import { useUserListStore } from "~~/stores/user/list";
-import { useFetchList } from "~~/composables/api";
-import { getIdFromIri } from "~~/utils/resource";
-import type { User } from "~~/types/user";
-
-const router = useRouter();
-
-const userDeleteStore = useUserDeleteStore();
-const { deleted: deletedItem, mercureDeleted: mercureDeletedItem } =
-  storeToRefs(userDeleteStore);
-
-const userListStore = useUserListStore();
-const { items, view, error, isLoading, hubUrl } = await useFetchList<User>(
-  "api/users"
-);
-userListStore.setData({ items, view, error, isLoading, hubUrl });
-
-const pagination = {
-  first: view.value?.["hydra:first"]?.slice(-1),
-  previous: view.value?.["hydra:previous"]?.slice(-1),
-  next: view.value?.["hydra:next"]?.slice(-1),
-  last: view.value?.["hydra:last"]?.slice(-1),
+const initFilters = () => {
+  filters.value = {
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    'country.name': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    representative: { value: null, matchMode: FilterMatchMode.IN },
+    date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+    balance: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+    status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+    activity: { value: [0, 100], matchMode: FilterMatchMode.BETWEEN },
+    verified: { value: null, matchMode: FilterMatchMode.EQUALS }
+  };
 };
 
-useMercureList({ store: userListStore, deleteStore: userDeleteStore });
+initFilters();
 
-onBeforeUnmount(() => {
-  userListStore.$reset();
-  userDeleteStore.$reset();
-});
+const formatDate = (value) => {
+  return value.toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+};
+const formatCurrency = (value) => {
+  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+};
+const clearFilter = () => {
+  initFilters();
+};
+const getCustomers = (data) => {
+  return [...(data || [])].map((d) => {
+    d.date = new Date(d.date);
+
+    return d;
+  });
+};
+const getSeverity = (status) => {
+  switch (status) {
+    case 'unqualified':
+      return 'danger';
+
+    case 'qualified':
+      return 'success';
+
+    case 'new':
+      return 'info';
+
+    case 'negotiation':
+      return 'warn';
+
+    case 'renewal':
+      return null;
+  }
+};
 </script>
+<template>
+  <div v-if="loading" v-text="'cargando'"></div>
+  <ul>
+    <li v-for="film of films">
+      <FilmItem :film="film" />
+    </li>
+  </ul>
+  <Card>
+    <template #title>Simple Card</template>
+    <template #content>
+
+      <DataTable scrollable scrollHeight="400px" v-model:filters="filters" v-model:selection="selectedCustomers"
+        :value="customers" paginator :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" dataKey="id" filterDisplay="menu"
+        :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']"
+        stateStorage="session" stateKey="dt-state-demo-session">
+        <template #header>
+          <div class="flex justify-content-between">
+            <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
+            <IconField>
+              <InputIcon>
+                <i class="pi pi-search" />
+              </InputIcon>
+              <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+            </IconField>
+          </div>
+        </template>
+        <template #empty> No customers found. </template>
+        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <Column field="name" header="Name" sortable style="min-width: 14rem">
+          <template #body="{ data }">
+            {{ data.name }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+          </template>
+        </Column>
+        <Column header="Country" sortable sortField="country.name" filterField="country.name" style="min-width: 14rem">
+          <template #body="{ data }">
+            <div class="flex align-items-center gap-2">
+              <img alt="flag" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
+                :class="`flag flag-${data.country.code}`" style="width: 24px" />
+              <span>{{ data.country.name }}</span>
+            </div>
+          </template>
+          <template #filter="{ filterModel }">
+            <InputText v-model="filterModel.value" type="text" class="p-column-filter"
+              placeholder="Search by country" />
+          </template>
+        </Column>
+        <Column header="Agent" sortable sortField="representative.name" filterField="representative"
+          :showFilterMatchModes="false" :filterMenuStyle="{ width: '14rem' }" style="min-width: 14rem">
+          <template #body="{ data }">
+            <div class="flex align-items-center gap-2">
+              <img :alt="data.representative.name"
+                :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
+                style="width: 32px" />
+              <span>{{ data.representative.name }}</span>
+            </div>
+          </template>
+          <template #filter="{ filterModel }">
+            <MultiSelect v-model="filterModel.value" :options="representatives" optionLabel="name" placeholder="Any"
+              class="p-column-filter">
+              <template #option="slotProps">
+                <div class="flex align-items-center gap-2">
+                  <img :alt="slotProps.option.name"
+                    :src="`https://primefaces.org/cdn/primevue/images/avatar/${slotProps.option.image}`"
+                    style="width: 32px" />
+                  <span>{{ slotProps.option.name }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </template>
+        </Column>
+        <Column field="date" header="Date" sortable filterField="date" dataType="date" style="min-width: 10rem">
+          <template #body="{ data }">
+            {{ formatDate(data.date) }}
+          </template>
+          <template #filter="{ filterModel }">
+            <DatePicker v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
+          </template>
+        </Column>
+        <Column field="balance" header="Balance" sortable filterField="balance" dataType="numeric"
+          style="min-width: 10rem">
+          <template #body="{ data }">
+            {{ formatCurrency(data.balance) }}
+          </template>
+          <template #filter="{ filterModel }">
+            <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
+          </template>
+        </Column>
+        <Column header="Status" field="status" sortable :filterMenuStyle="{ width: '14rem' }" style="min-width: 12rem">
+          <template #body="{ data }">
+            <Tag :value="data.status" :severity="getSeverity(data.status)" />
+          </template>
+          <template #filter="{ filterModel }">
+            <Select v-model="filterModel.value" :options="statuses" placeholder="Select One" class="p-column-filter"
+              showClear>
+              <template #option="slotProps">
+                <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
+              </template>
+            </Select>
+          </template>
+        </Column>
+        <Column field="activity" header="Activity" sortable :showFilterMatchModes="false" style="min-width: 12rem">
+          <template #body="{ data }">
+            <ProgressBar :value="data.activity" :showValue="false" style="height: 6px"></ProgressBar>
+          </template>
+          <template #filter="{ filterModel }">
+            <Slider v-model="filterModel.value" range class="m-3"></Slider>
+            <div class="flex align-items-center justify-content-between px-2">
+              <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
+              <span>{{ filterModel.value ? filterModel.value[1] : 100 }}</span>
+            </div>
+          </template>
+        </Column>
+        <Column headerStyle="width: 5rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+          <template #body>
+            <Button type="button" icon="pi pi-cog" rounded />
+          </template>
+        </Column>
+      </DataTable>
+    </template>
+  </Card>
+
+
+</template>

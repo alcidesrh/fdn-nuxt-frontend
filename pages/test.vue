@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { CustomerService } from '../utils/dataTest';
+import { CustomerService } from '../utils/NodeService';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 
 import { useQuery } from '@vue/apollo-composable'

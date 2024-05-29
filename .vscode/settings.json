@@ -22,5 +22,6 @@
   "files.autoSaveDelay": 2000,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+  "editor.snippetSuggestions": "none"
 }

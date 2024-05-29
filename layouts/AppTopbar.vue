@@ -30,7 +30,7 @@ onMounted(() => {
 
 <template>
   <LogoSvg />
-  <div class="layout-topbar overflow-hidden bg-white shadow-md z-997 u-p-s">
+  <div class="layout-topbar overflow-hidden bg-white drop-shadow z-997 u-p-s">
     <!-- <button class="layout-topbar-menu-button layout-topbar-button p-link" @click="onTopBarMenuButton">
       <i class="pi pi-ellipsis-v" />
     </button> -->

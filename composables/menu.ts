@@ -1,11 +1,18 @@
 import { reactive, ref, ref } from 'vue'
 
-export const menu = [
+interface Menu {
+  label: string
+  key?: string | number
+  icon?: string
+  opened?: boolean
+  children?: Menu[]
+}
+const data: Menu[] = [
   {
     label: 'Boleto',
     icon: 'TicketsTwoIcon',
     opened: true,
-    items: [
+    children: [
       {
         label: 'Emitir',
         icon: 'PrinterOne',
@@ -29,7 +36,7 @@ export const menu = [
     label: 'Encomienda',
     icon: 'DropboxIcon',
     opened: true,
-    items: [
+    children: [
       {
         label: 'Registrar',
         icon: 'PrinterOne',
@@ -41,6 +48,24 @@ export const menu = [
       {
         label: 'Buscar',
         icon: 'SearchIcon',
+        children: [
+          {
+            label: 'Emitir',
+            icon: 'PrinterOne',
+          },
+          {
+            label: 'Chequear',
+            icon: 'TicketsCheckedIcon',
+          },
+          {
+            label: 'Buscar',
+            icon: 'SearchIcon',
+          },
+          {
+            label: 'Estadísticas',
+            icon: 'SearchIcon',
+          },
+        ],
       },
       {
         label: 'Procesar',
@@ -53,7 +78,7 @@ export const menu = [
     label: 'Salidas',
     opened: true,
     icon: 'TreeDiagramIcon',
-    items: [
+    children: [
       {
         label: 'Registrar',
         icon: 'PrinterOne',
@@ -73,8 +98,20 @@ export const menu = [
     ],
   },
 ]
+
+export const menu = menuSetKey(data)
+
 let menu_roots = ref<Array<Boolean>>([])
 
+function menuSetKey(menu: Menu[], key = 1): Menu[] {
+  for (let index = key; index < menu.length; index++) {
+    menu[index].key = key++
+    if (menu[index]?.children?.length) {
+      menu[index].children = menuSetKey(menu[index].children as Menu[], key)
+    }
+  }
+  return menu
+}
 export function useMenu() {
   const iniMenuRoots = (l) => {
     menu_roots = ref(Array.from({ length: l }, () => true))
