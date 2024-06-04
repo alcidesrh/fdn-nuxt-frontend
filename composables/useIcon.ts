@@ -7,7 +7,7 @@ const icons = {
 
 type IconType = keyof typeof icons
 const data = {
-  strokeWidth: '3',
+  strokeWidth: '2',
   theme: 'filled',
   // fill: ["#93c5fd", "#334155"],
   strokeLinecap: 'square',

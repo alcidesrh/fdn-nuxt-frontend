@@ -4,12 +4,19 @@
 //
 //   "Set quicktype target language"
 
-
 export interface Sidebar {
-  h_opened: boolean;
-  v_opened: boolean;
+  h_opened: boolean
+  v_opened: boolean
 }
 
 export interface State {
-  sidebar?: Sidebar;
+  sidebar?: Sidebar
+}
+
+export interface Menu {
+  label: string
+  key?: string | number
+  icon?: string
+  opened?: boolean
+  children?: Menu[]
 }

@@ -1,45 +1,74 @@
-<script setup>
-import AppMenuItem from './AppMenuItem.vue';
-import { equals } from 'ramda'
+<script setup lang="ts">
+import { isEmpty } from 'ramda'
 
 const themeState = useThemeStateStore()
-
-const { menu } = useMenu();
-const menuref = ref(menu)
-// if (!equals(toRaw(themeState.sidebar.menu), menu)) {
-//     themeState.sidebar.menu = menu
-
-// }
-import { NodeService } from '~~/utils/NodeService';
+const menuStore = useMenuStateStore()
 
 
-// console.log(themeState.sidebar.menu, themeState.layout.staticMenuDesktopInactive);
-const nodes = ref(null);
-NodeService.getTreeNodes().then((data) => (nodes.value = data));
 const { iconProps, isComponent } = useIcon()
 
-console.log(menu)
+const expandMenu = (node: [Record<any, any>]) => {
+    for (let i = 0; i < node.length; i++) {
+        menuStore.keys[node[i].key] = true
+        if (node[i].children && node[i].children.length) {
+            expandMenu(node[i].children);
+        }
+    }
+};
+
+const siderbar_toggle = (direction = 'horizontal') => {
+    if (direction == 'vertical') {
+        if (isEmpty(menuStore.keys)) {
+            expandMenu(menuStore.menu)
+
+
+            console.log(menuStore.keys)
+        }
+        else {
+            menuStore.keys = []
+        }
+        console.log(menuStore.keys)
+
+        themeState.sidebar.v_opened = !themeState.sidebar.v_opened;
+        themeState.onMenuToggleVertical()
+    }
+    else {
+        themeState.sidebar.h_opened = !themeState.sidebar.h_opened
+        themeState.onMenuToggle()
+    }
+}
+
 </script>
 
 <template>
-    <div class="card grid justify-content-center">
-        <Transition name="layout-submenu">
 
-            <Tree :value="menuref" class="w-full">
-                <template #nodeicon="{ node }">
-                    <div>
-                        <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
-                        <i v-else :class="node.icon" class="layout-menuitem-icon" />
-                    </div>
-                </template>
-            </Tree>
-        </Transition>
+    <div class="relative h-46px w-70px">
+        <div class="menu-control flex justify-end">
+            <!-- <Icon name="material-symbols-light:arrows-outward" @click="siderbar_toggle('vertical')" class="rotate-90" />
+        <Icon name="material-symbols-light:arrows-outward" @click="siderbar_toggle" /> -->
+            <!-- <i class="pi pi-arrow-right-arrow-left text-30px"></i>
+        <Button rounded outlined aria-label="Filter">
+            <template #icon>
+                <i class="pi pi-arrow-right-arrow-left"></i>
+            </template> </Button> -->
+            <!-- <Button icon="pi pi-arrow-right-arrow-left" text raised rounded aria-label="Filter" /> -->
+            <Button @click="siderbar_toggle('vertical')" icon="pi pi-sort-alt" severity="secondary" rounded outlined
+                aria-label="Bookmark" />
+            <Button @click="siderbar_toggle" icon="pi pi-arrow-right-arrow-left" severity="secondary" rounded outlined
+                aria-label="Bookmark" />
+        </div>
     </div>
-    <ul class="layout-menu">
-        <template v-for=" (item, i) in themeState.sidebar.menu" :key="item">
-            <app-menu-item v-if="!item.separator" :item="item" :index="i"
-                :array-length="themeState.sidebar.menu.length"></app-menu-item>
-            <li v-else-if="item.separator" class="menu-separator"></li>
+
+
+    <Tree v-model:expandedKeys="menuStore.keys" @nodeCollapse="onNodeCollapse" selectionMode="single"
+        :value="menuStore.menu" class="w-full " :pt="{ root: { class: '!bg-transparent' } }">
+        <template #nodeicon="{ node }">
+            <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
+            <i v-else :class="node.icon" class="layout-menuitem-icon" />
         </template>
-    </ul>
+        <template #nodetoggleicon="{ node }">
+            <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
+            <i v-else :class="node.icon" class="layout-menuitem-icon" />
+        </template>
+    </Tree>
 </template>

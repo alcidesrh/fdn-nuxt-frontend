@@ -135,11 +135,12 @@ const getSeverity = (status) => {
       <FilmItem :film="film" />
     </li>
   </ul>
+
   <Card>
     <template #title>Simple Card</template>
     <template #content>
 
-      <DataTable scrollable scrollHeight="400px" v-model:filters="filters" v-model:selection="selectedCustomers"
+      <DataTable scrollable scrollHeight="800px" v-model:filters="filters" v-model:selection="selectedCustomers"
         :value="customers" paginator :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" dataKey="id" filterDisplay="menu"
         :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']"
         stateStorage="session" stateKey="dt-state-demo-session">

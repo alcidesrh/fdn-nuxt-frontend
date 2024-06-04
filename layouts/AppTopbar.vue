@@ -30,26 +30,23 @@ onMounted(() => {
 
 <template>
   <LogoSvg />
-  <div class="layout-topbar overflow-hidden bg-white drop-shadow z-997 u-p-s">
-    <!-- <button class="layout-topbar-menu-button layout-topbar-button p-link" @click="onTopBarMenuButton">
-      <i class="pi pi-ellipsis-v" />
-    </button> -->
+  <div class="layout-topbar  u-p-s">
 
     <div class="layout-topbar-menu flex items-center justify-end w-full" :class="topbarMenuClasses">
 
       <Button text v-for="(e, i) in headerIcon" :key="i" class="layout-topbar-button z-0 !w-2.5rem !h-2.5rem u-ml-m"
         @click="onSettingsClick()">
-        <icon :key="i" :name="e.name" v-bind="e.attr.value" />
+        <CustomIcon :key="i" :name="e.name" v-bind="e.attr.value" />
       </Button>
 
       <Divider layout="vertical" class="u-m-l !before:border-l-slate-400" />
 
       <a href="/logout"
-        class="p-link layout-topbar-button logout-btn z-0 !w-2.2rem !h-2.2rem u-mx-s !hover:bg-zinc-300 hover:bg-zinc-500"
+        class="logout-btn z-0 !w-2rem !h-2rem u-mx-s hover:white bg-zinc-50 border border-slate-400 rounded-full flex items-center justify-center"
         @click="onSettingsClick()">
 
-        <icon name="close" v-bind='{
-          strokeWidth: "6",
+        <CustomIcon name="close" v-bind='{
+          strokeWidth: "3",
           theme: "outline",
           strokeLinecap: "square",
           class: "u-mx-s cursor-pointer drop-shadow text-30px logout-btn",

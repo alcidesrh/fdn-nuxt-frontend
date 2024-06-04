@@ -9,7 +9,9 @@ export default defineNuxtConfig({
   piniaPersistedstate: {
     storage: 'localStorage',
   },
-
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   vite: {
     plugins: [
       Components({

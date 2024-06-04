@@ -4,7 +4,6 @@ import AppTopbar from './AppTopbar.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppConfig from './AppConfig.vue';
 
-
 const outsideClickListener = ref(null);
 
 const themeState = useThemeStateStore()
@@ -60,61 +59,20 @@ const isOutsideClicked = (event) => {
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
 
-const siderbar_toggle = (direction = 'horizontal') => {
-    if (direction == 'vertical') {
-        themeState.sidebar.v_opened = !themeState.sidebar.v_opened;
-        themeState.onMenuToggleVertical()
-    }
-    else {
-        themeState.sidebar.h_opened = !themeState.sidebar.h_opened
-        themeState.onMenuToggle()
 
-    }
-
-}
 
 
 </script>
 
 <template>
-    <div class="layout-wrapper bg-slate-100 h-full" :class="containerClass">
-
+    <div class="layout-wrapper bg-slate-100 " :class="containerClass">
         <app-topbar></app-topbar>
-
         <div class="layout-sidebar">
-
-            <div class="sidebar-btn">
-
-                <Button text @click="siderbar_toggle('vertical')" class="w-fit" type="button">
-                    <CircleDoubleLeftIcon
-                        :class="{ '-rotate-90': !themeState.sidebar.v_opened, 'rotate-90': themeState.sidebar.v_opened }" />
-                </Button>
-
-                <Button text @click="siderbar_toggle" class="w-fit" type="button">
-                    <CircleDoubleLeftIcon
-                        :class="{ 'rotate-0': !themeState.layout.staticMenuDesktopInactive, 'rotate-180': themeState.layout.staticMenuDesktopInactive }" />
-                </Button>
-                <!-- 
-                <Button @click="siderbar_toggle('vertical')"
-                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:bg-slate-200/60   rounded-full ">
-                    <CircleDoubleLeftIcon
-                        :class="{ '-rotate-90': !themeState.sidebar.v_opened, 'rotate-90': themeState.sidebar.v_opened }" />
-                </Button>
-
-                <Button @click="siderbar_toggle"
-                    class="bg-slate-50/50 w-fit  border border-slate-300 hover:bg-slate-200/60 rounded-full ">
-                    <CircleDoubleLeftIcon
-                        :class="{ 'rotate-0': !themeState.layout.staticMenuDesktopInactive, 'rotate-180': themeState.layout.staticMenuDesktopInactive }" />
-                </Button> -->
-            </div>
             <app-sidebar class="z-29 rounded-l"></app-sidebar>
-
         </div>
-        <!-- </div> -->
-        <div class="layout-main-container z-10">
+        <div class="layout-main-container z-10 p-t-6xl">
             <div class="layout-main u-p-m u-pt-l h-fit">
                 <NuxtPage />
-                <!-- <router-view></router-view> -->
             </div>
         </div>
         <app-config></app-config>
