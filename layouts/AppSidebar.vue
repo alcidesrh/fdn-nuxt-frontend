@@ -5,5 +5,3 @@ import AppMenu from './AppMenu.vue';
 <template>
     <app-menu></app-menu>
 </template>
-
-<style lang="scss" scoped></style>

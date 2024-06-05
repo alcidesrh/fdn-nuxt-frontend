@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: var(--step-0);
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--surface-ground);
+}
+
+a {
+  text-decoration: none;
+}
+
+.layout-wrapper {
+  min-height: 10vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg-slate-400);
+  border-radius: 70px;
+  height: 5px;
+}
+
+.rounded {
+  border-radius: 4px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+#logo {
+  @apply fill-white font-bold;
+  letter-spacing: 2px;
+  font-family: 'Fast-Track';
+  mix-blend-mode: darken;
+}
+
+.text2 {
+  letter-spacing: 3px;
+  text-shadow: 0px 0px 15px #09090b;
+  mix-blend-mode: darken;
+  animation-delay: 4s;
+  animation: fadeIn 1.5s linear forwards;
+}
+
+.text3 {
+  z-index: 1;
+  letter-spacing: 2px;
+  text-shadow: 0px 0px 15px #09090b;
+  animation-delay: 5s;
+  animation: fadeIn 1.5s linear forwards;
+}
+
+.text1 {
+  text-shadow: 0px 0px 5px #3f3f46;
+  animation-delay: 2s;
+  animation: fadeIn 0.5s linear forwards;
+  @apply fill-zinc-100
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

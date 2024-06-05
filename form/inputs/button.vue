@@ -53,13 +53,13 @@ const buttonClasses = computed(() => {
 });
 </script>
 
-<style lang="scss">
+<style>
 .btn-default {
   border-color: #c2ccd6 !important;
+}
 
-  &:hover,
-  &:focus {
-    background-color: #f0f2f5 !important;
-  }
+btn-default:hover,
+btn-default:focus {
+  background-color: #f0f2f5 !important;
 }
 </style>

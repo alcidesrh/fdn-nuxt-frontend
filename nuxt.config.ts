@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     renderJsonPayloads: true,
     typedPages: true,
   },
-  css: ['@/assets/styles.scss'],
+  css: ['@/assets/styles.css'],
 
   // pwa,
 

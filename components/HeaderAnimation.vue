@@ -104,7 +104,7 @@ function starSize(min = 1, max = 7) {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .street {
   position: fixed;
   top: 60px;

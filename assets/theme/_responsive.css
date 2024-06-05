@@ -33,7 +33,7 @@
 
   .layout-wrapper.layout-static.layout-static-inactive .layout-sidebar {
     transform: translateX(-100%);
-    background: var(--slate-100);
+    /* background: var(--slate-100); */
   }
 
   .layout-wrapper.layout-static.layout-static-inactive .layout-main-container {

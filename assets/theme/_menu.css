@@ -41,7 +41,7 @@
     justify-content: center;
 }
 
-.p-tree-node {
+.layout-static-inactive .p-tree-node {
     background-color: var(--slate-200);
     @apply rounded;
 }

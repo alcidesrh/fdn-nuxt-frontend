@@ -129,6 +129,12 @@ const getSeverity = (status) => {
 };
 </script>
 <template>
+  <!-- A basic anchor icon from Phosphor icons -->
+  <div class="i-ph-anchor-simple-thin" />
+  <!-- An orange alarm from Material Design Icons -->
+  <div class="i-mdi-alarm text-orange-400 hover:text-teal-400" />
+  <!-- A large Vue logo -->
+  <div class="i-logos-vue text-3xl" />
   <div v-if="loading" v-text="'cargando'"></div>
   <ul>
     <li v-for="film of films">
@@ -138,6 +144,7 @@ const getSeverity = (status) => {
 
   <Card>
     <template #title>Simple Card</template>
+    <template #subtitle>Card subtitle</template>
     <template #content>
 
       <DataTable scrollable scrollHeight="800px" v-model:filters="filters" v-model:selection="selectedCustomers"

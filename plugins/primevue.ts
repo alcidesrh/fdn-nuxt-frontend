@@ -1,36 +1,56 @@
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
-// import Aura from 'primevue/themes/aura/'
-import Aura from '~/assets/theme/aura'
+import Aura from 'primevue/themes/aura/'
+// import Aura from '~/assets/theme/aura'
 
 import { definePreset } from 'primevue/themes'
 
-const bluePreset = definePreset(Aura, {
+const Preset = definePreset(Aura, {
   semantic: {
     primary: {
-      50: '{blue.50}',
-      100: '{blue.100}',
-      200: '{blue.200}',
-      300: '{blue.300}',
-      400: '{blue.400}',
-      500: '{blue.500}',
-      600: '{blue.600}',
-      700: '{blue.700}',
-      800: '{blue.800}',
-      900: '{blue.900}',
-      950: '{blue.950}',
+      50: '{sky.50}',
+      100: '{sky.100}',
+      200: '{sky.200}',
+      300: '{sky.300}',
+      400: '{sky.400}',
+      500: '{sky.500}',
+      600: '{sky.600}',
+      700: '{sky.700}',
+      800: '{sky.800}',
+      900: '{sky.900}',
+      950: '{sky.950}',
     },
   },
-  components: {},
+  components: {
+    card: {
+      colorScheme: {
+        light: {
+          root: {
+            borderRadius: '4px',
+          },
+        },
+      },
+    },
+    tree: {
+      colorScheme: {
+        light: {
+          root: {
+            background: '{surface.700}',
+            color: '{surface.700}',
+          },
+        },
+      },
+    },
+  },
 })
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(ToastService)
   nuxtApp.vueApp.use(PrimeVue, {
     theme: {
-      preset: bluePreset,
+      preset: Preset,
       options: {
-        darkModeSelector: '.my-app-dark',
+        // cssLayer: true,
       },
     },
     // importTheme: { from: '@plugins/primevue.ts' },

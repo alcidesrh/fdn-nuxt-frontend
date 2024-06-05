@@ -15,7 +15,6 @@ const expandMenu = (node: [Record<any, any>]) => {
         }
     }
 };
-
 const siderbar_toggle = (direction = 'horizontal') => {
     if (direction == 'vertical') {
         if (isEmpty(menuStore.keys)) {
@@ -37,21 +36,13 @@ const siderbar_toggle = (direction = 'horizontal') => {
         themeState.onMenuToggle()
     }
 }
-
 </script>
 
 <template>
 
     <div class="relative h-46px w-70px">
         <div class="menu-control flex justify-end">
-            <!-- <Icon name="material-symbols-light:arrows-outward" @click="siderbar_toggle('vertical')" class="rotate-90" />
-        <Icon name="material-symbols-light:arrows-outward" @click="siderbar_toggle" /> -->
-            <!-- <i class="pi pi-arrow-right-arrow-left text-30px"></i>
-        <Button rounded outlined aria-label="Filter">
-            <template #icon>
-                <i class="pi pi-arrow-right-arrow-left"></i>
-            </template> </Button> -->
-            <!-- <Button icon="pi pi-arrow-right-arrow-left" text raised rounded aria-label="Filter" /> -->
+
             <Button @click="siderbar_toggle('vertical')" icon="pi pi-sort-alt" severity="secondary" rounded outlined
                 aria-label="Bookmark" />
             <Button @click="siderbar_toggle" icon="pi pi-arrow-right-arrow-left" severity="secondary" rounded outlined
@@ -66,9 +57,9 @@ const siderbar_toggle = (direction = 'horizontal') => {
             <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
             <i v-else :class="node.icon" class="layout-menuitem-icon" />
         </template>
-        <template #nodetoggleicon="{ node }">
+        <!-- <template #nodetoggleicon="{ node }">
             <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
             <i v-else :class="node.icon" class="layout-menuitem-icon" />
-        </template>
+        </template> -->
     </Tree>
 </template>

@@ -101,5 +101,3 @@ const { iconProps, isComponent } = useIcon()
     </Transition>
   </li>
 </template>
-
-<style lang="scss" scoped></style>

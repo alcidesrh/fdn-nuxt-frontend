@@ -1,0 +1,22 @@
+.p-divider:be {
+    border-left: 1px solid #000;
+}
+
+.layout-topbar-button:not(.logout-btn) svg path {
+    @apply stroke-zinc-500 fill-none;
+
+}
+
+.logout-btn svg path {
+    @apply stroke-slate-500;
+
+}
+
+.formkit-messages>.text-red-600 {
+    @apply u-text-0;
+}
+
+.p-card.p-component {
+    @apply border box-shadow-none;
+    border-color: var(--surface-border);
+}
