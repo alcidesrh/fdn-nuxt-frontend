@@ -4,7 +4,7 @@
 
 html {
   height: 100%;
-  font-size: var(--step-0);
+  font-size: 16px;
 }
 
 body {
@@ -16,7 +16,28 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--surface-ground);
+  font-size: var(--step-0);
 }
+
+
+
+.layout-content {
+  /* padding: 6rem 4rem 0 4rem; */
+  padding-top: 6rem;
+  /* display: flex; */
+}
+
+.layout-content-slot {
+  /* flex: 1 1 auto; */
+  margin-left: 250px;
+  /* width: 100%; */
+  padding-top: .5rem;
+  transition: margin-left .2s;
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 a {
   text-decoration: none;
@@ -28,8 +49,10 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
+  /* background-color: var(--slate-200); */
+
 }
 
 /* Track */
@@ -39,8 +62,8 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--bg-slate-400);
-  border-radius: 70px;
+  background-color: var(--gray-200);
+  border-radius: 5px;
   height: 5px;
 }
 
@@ -50,44 +73,4 @@ a {
 
 .rounded-full {
   border-radius: 9999px;
-}
-
-#logo {
-  @apply fill-white font-bold;
-  letter-spacing: 2px;
-  font-family: 'Fast-Track';
-  mix-blend-mode: darken;
-}
-
-.text2 {
-  letter-spacing: 3px;
-  text-shadow: 0px 0px 15px #09090b;
-  mix-blend-mode: darken;
-  animation-delay: 4s;
-  animation: fadeIn 1.5s linear forwards;
-}
-
-.text3 {
-  z-index: 1;
-  letter-spacing: 2px;
-  text-shadow: 0px 0px 15px #09090b;
-  animation-delay: 5s;
-  animation: fadeIn 1.5s linear forwards;
-}
-
-.text1 {
-  text-shadow: 0px 0px 5px #3f3f46;
-  animation-delay: 2s;
-  animation: fadeIn 0.5s linear forwards;
-  @apply fill-zinc-100
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }

@@ -4,7 +4,8 @@
 @import "./theme/tailwind-compat.css";
 @import "./theme/layout.css";
 @import "./theme/_topbar.css";
-@import "./theme/_menu.css";
+/* @import "./theme/_menu.css"; */
+@import "./theme/_sidebar.css";
 @import "./theme/_responsive.css";
 @import "./theme/_custom.css";
 @import "./theme/_header.css";

@@ -1,123 +1,187 @@
 import { defineStore } from 'pinia'
-import { v4 as uuidv4 } from 'uuid'
+import DomHandler from '@/utils/primevueutils/DomHandler'
 
 export interface Menu {
-  label: string
+  name: string
   key?: string | number
   icon?: string
-  opened?: boolean
+  open?: boolean
   children?: Menu[]
 }
-
-export const useMenuStateStore = defineStore('useMenuState', {
-  persist: true,
-  state: () => ({
-    keys: ref([]),
-    menu: ref([
+export const useMenuStateStore = defineStore(
+  'useMenuState',
+  () => {
+    const active = ref(false)
+    const mode = ref('normal')
+    const collapse = ref(true)
+    const menu1 = ref([])
+    const menu = ref([
       {
-        label: 'Boleto',
+        name: 'Boleto',
         icon: 'TicketsTwoIcon',
-        opened: true,
+        open: true,
         children: [
           {
-            label: 'Emitir',
+            name: 'Emitir',
             icon: 'PrinterOne',
+            to: '/path',
           },
           {
-            label: 'Chequear',
+            name: 'Chequear',
             icon: 'TicketsCheckedIcon',
+            to: '/path',
           },
           {
-            label: 'Buscar',
+            name: 'Buscar',
             icon: 'SearchIcon',
+            to: '/path',
           },
           {
-            label: 'Estadísticas',
+            name: 'Estadísticas',
             icon: 'MarketAnalysis',
+            to: '/path',
           },
         ],
       },
 
       {
-        label: 'Encomienda',
+        name: 'Encomienda',
         icon: 'DropboxIcon',
-        opened: true,
+        open: true,
         children: [
           {
-            label: 'Registrar',
+            name: 'Registrar',
             icon: 'PrinterOne',
+            to: '/path',
           },
           {
-            label: 'Entregar',
+            name: 'Entregar',
             icon: 'DeliveryIcon',
+            to: '/path',
           },
           {
-            label: 'Buscar',
+            name: 'Buscar',
             icon: 'SearchIcon',
+            open: true,
             children: [
               {
-                label: 'Emitir',
+                name: 'Emitir',
                 icon: 'PrinterOne',
+                to: '/path',
               },
               {
-                label: 'Chequear',
+                name: 'Chequear',
                 icon: 'TicketsCheckedIcon',
+                to: '/path',
               },
               {
-                label: 'Buscar',
+                name: 'Buscar',
                 icon: 'SearchIcon',
+                to: '/path',
               },
               {
-                label: 'Estadísticas',
+                name: 'Estadísticas',
                 icon: 'SearchIcon',
+                to: '/path',
               },
             ],
           },
           {
-            label: 'Procesar',
+            name: 'Procesar',
             icon: 'RotatingForwardIcon',
+            to: '/path',
           },
         ],
       },
 
       {
-        label: 'Salidas',
-        opened: true,
+        name: 'Salidas',
+        open: true,
         icon: 'TreeDiagramIcon',
         children: [
           {
-            label: 'Registrar',
+            name: 'Registrar',
             icon: 'PrinterOne',
+            to: '/path',
           },
           {
-            label: 'Entregar',
+            name: 'Entregar',
             icon: 'DeliveryIcon',
+            to: '/path',
           },
           {
-            label: 'Buscar',
+            name: 'Buscar',
             icon: 'SearchIcon',
+            to: '/path',
           },
           {
-            label: 'Procesar',
+            name: 'Procesar',
             icon: 'RotatingForwardIcon',
+            to: '/path',
           },
         ],
       },
-    ]),
-  }),
+      {
+        name: 'Salidas',
+        open: true,
+        icon: 'TreeDiagramIcon',
+        children: [
+          {
+            name: 'Registrar',
+            icon: 'PrinterOne',
+            to: '/path',
+          },
+          {
+            name: 'Entregar',
+            icon: 'DeliveryIcon',
+            to: '/path',
+          },
+          {
+            name: 'Buscar',
+            icon: 'SearchIcon',
+            to: '/path',
+          },
+          {
+            name: 'Procesar',
+            icon: 'RotatingForwardIcon',
+            to: '/path',
+          },
+        ],
+      },
+    ])
 
-  getters: {
-    setKey: (state) => menuSetKey(state.menu),
-  },
-})
+    watch(
+      () => collapse.value,
+      (n, o) => {
+        for (let i = 0; i < menu.value.length; i++) {
+          if (menu.value[i].children?.length) {
+            menu.value[i].open = collapse.value
+          }
+        }
+      }
+    )
 
-function menuSetKey(menu: Menu[]): Menu[] {
-  for (let index = 0; index < menu.length; index++) {
-    menu[index].key = uuidv4()
-    if (menu[index]?.children?.length) {
-      menu[index].children = menuSetKey(menu[index].children as Menu[])
+    watch(
+      () => active.value,
+      (n, o) => {
+        if (n == 1) {
+          DomHandler.blockBodyScroll('blocked-scroll')
+        } else if (n == 0) {
+          DomHandler.unblockBodyScroll('blocked-scroll')
+        }
+      }
+    )
+    // function setMode(v: string) {
+    //   mode.value = mode.value != v ? v : 'normal'
+    // }
+    return {
+      active,
+      menu,
+      menu1,
+      collapse,
+      mode,
+      setMode: (v: string) => (mode.value = mode.value != v ? v : 'normal'),
     }
-  }
-  console.log(menu)
-  return menu
-}
+  },
+  { persist: true }
+)

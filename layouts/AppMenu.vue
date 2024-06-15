@@ -1,65 +1,37 @@
-<script setup lang="ts">
-import { isEmpty } from 'ramda'
+<script setup>
 
-const themeState = useThemeStateStore()
+import Sidebar from './Sidebar.vue';
+import SidebarMini from './SidebarMini.vue';
+import SidebarControl from './SidebarControl.vue';
+
 const menuStore = useMenuStateStore()
 
-
-const { iconProps, isComponent } = useIcon()
-
-const expandMenu = (node: [Record<any, any>]) => {
-    for (let i = 0; i < node.length; i++) {
-        menuStore.keys[node[i].key] = true
-        if (node[i].children && node[i].children.length) {
-            expandMenu(node[i].children);
-        }
-    }
-};
-const siderbar_toggle = (direction = 'horizontal') => {
-    if (direction == 'vertical') {
-        if (isEmpty(menuStore.keys)) {
-            expandMenu(menuStore.menu)
-
-
-            console.log(menuStore.keys)
-        }
-        else {
-            menuStore.keys = []
-        }
-        console.log(menuStore.keys)
-
-        themeState.sidebar.v_opened = !themeState.sidebar.v_opened;
-        themeState.onMenuToggleVertical()
-    }
-    else {
-        themeState.sidebar.h_opened = !themeState.sidebar.h_opened
-        themeState.onMenuToggle()
-    }
-}
 </script>
 
 <template>
+    <SidebarControl />
+    <SidebarMini v-if="menuStore.mode == 'mini'" />
+    <Sidebar v-else />
+    <!-- <aside class="layout-sidebar overflow-hidden u-mr-l  w-80px"
+        :class="[menuStore.active == 1 ? 'active' : '', menuStore.mode]">
 
-    <div class="relative h-46px w-70px">
-        <div class="menu-control flex justify-end">
+        <nav>
+            <ol v-if="menuStore.mode == 'mini'" class="layout-menu mini  u--text-2  u-py-m!  border! border-slate-200!">
+                <AppMiniMenuItem :menu="menuStore.menu" :root="true"></AppMiniMenuItem>
+            </ol>
+            <ol v-else class="layout-menu">
+                <AppMenuItem :menu="menuStore.menu"></AppMenuItem>
 
-            <Button @click="siderbar_toggle('vertical')" icon="pi pi-sort-alt" severity="secondary" rounded outlined
-                aria-label="Bookmark" />
-            <Button @click="siderbar_toggle" icon="pi pi-arrow-right-arrow-left" severity="secondary" rounded outlined
-                aria-label="Bookmark" />
-        </div>
-    </div>
-
-
-    <Tree v-model:expandedKeys="menuStore.keys" @nodeCollapse="onNodeCollapse" selectionMode="single"
-        :value="menuStore.menu" class="w-full " :pt="{ root: { class: '!bg-transparent' } }">
-        <template #nodeicon="{ node }">
-            <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
-            <i v-else :class="node.icon" class="layout-menuitem-icon" />
-        </template>
-        <!-- <template #nodetoggleicon="{ node }">
-            <component :is="node.icon" v-if="isComponent(node.icon)" v-bind="iconProps" />
-            <i v-else :class="node.icon" class="layout-menuitem-icon" />
-        </template> -->
-    </Tree>
+            </ol>
+        </nav>
+    </aside> -->
 </template>
+<style scoped>
+.sidebar-control>button {
+    @apply text-slate-400;
+
+    :hover {
+        @apply bg-slate-2
+    }
+}
+</style>

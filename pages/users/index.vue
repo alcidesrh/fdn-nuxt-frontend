@@ -1,7 +1,5 @@
 <template>
-  <div class="p-4">
-    <List />
-  </div>
+  <List />
 </template>
 
 <script lang="ts" setup>

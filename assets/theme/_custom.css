@@ -1,15 +1,13 @@
+.card {
+    background: var(--card-background);
+    border: var(--card-border);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
 .p-divider:be {
     border-left: 1px solid #000;
-}
-
-.layout-topbar-button:not(.logout-btn) svg path {
-    @apply stroke-zinc-500 fill-none;
-
-}
-
-.logout-btn svg path {
-    @apply stroke-slate-500;
-
 }
 
 .formkit-messages>.text-red-600 {
@@ -17,6 +15,35 @@
 }
 
 .p-card.p-component {
-    @apply border box-shadow-none;
-    border-color: var(--surface-border);
+    @apply border;
+    border-color: var(--surface-ground);
+    box-shadow: none;
+}
+
+.animate-slidedown {
+    animation: slidedown 0.45s ease-in-out
+}
+
+.animate-slideup {
+    animation: slideup 0.25s cubic-bezier(0, 1, 0, 1)
+}
+
+@keyframes slidedown {
+    0% {
+        max-height: 0;
+    }
+
+    100% {
+        max-height: auto;
+    }
+}
+
+@keyframes slideup {
+    0% {
+        max-height: 1000px;
+    }
+
+    100% {
+        max-height: 0;
+    }
 }

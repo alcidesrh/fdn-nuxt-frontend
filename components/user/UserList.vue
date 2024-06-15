@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { NodeService } from '~~/utils/NodeService';
-import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 
 import { useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'
@@ -29,9 +29,7 @@ const { result } = useQuery(
 `),
   { first: 10 }
 )
-watch(() => {
-  console.log(result.value)
-})
+
 // `films` is typed!
 const films = computed(() => result.value?.users?.edges?.map(e => e?.node))
 
@@ -129,30 +127,18 @@ const getSeverity = (status) => {
 };
 </script>
 <template>
-  <!-- A basic anchor icon from Phosphor icons -->
-  <div class="i-ph-anchor-simple-thin" />
-  <!-- An orange alarm from Material Design Icons -->
-  <div class="i-mdi-alarm text-orange-400 hover:text-teal-400" />
-  <!-- A large Vue logo -->
-  <div class="i-logos-vue text-3xl" />
-  <div v-if="loading" v-text="'cargando'"></div>
-  <ul>
-    <li v-for="film of films">
-      <FilmItem :film="film" />
-    </li>
-  </ul>
 
+  <!-- <div v-if="loading" v-text="'cargando'"></div> -->
   <Card>
-    <template #title>Simple Card</template>
-    <template #subtitle>Card subtitle</template>
+    <template #title>Usuarios</template>
+    <template #subtitle>Listado</template>
     <template #content>
 
-      <DataTable scrollable scrollHeight="800px" v-model:filters="filters" v-model:selection="selectedCustomers"
-        :value="customers" paginator :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" dataKey="id" filterDisplay="menu"
-        :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']"
-        stateStorage="session" stateKey="dt-state-demo-session">
+      <DataTable v-model:filters="filters" v-model:selection="selectedCustomers" :value="customers" paginator :rows="10"
+        dataKey="id" filterDisplay="menu"
+        :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']">
         <template #header>
-          <div class="flex justify-content-between">
+          <div class="flex justify-between">
             <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
             <IconField>
               <InputIcon>
@@ -169,26 +155,25 @@ const getSeverity = (status) => {
             {{ data.name }}
           </template>
           <template #filter="{ filterModel }">
-            <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+            <InputText v-model="filterModel.value" type="text" placeholder="Search by name" />
           </template>
         </Column>
         <Column header="Country" sortable sortField="country.name" filterField="country.name" style="min-width: 14rem">
           <template #body="{ data }">
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img alt="flag" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
                 :class="`flag flag-${data.country.code}`" style="width: 24px" />
               <span>{{ data.country.name }}</span>
             </div>
           </template>
           <template #filter="{ filterModel }">
-            <InputText v-model="filterModel.value" type="text" class="p-column-filter"
-              placeholder="Search by country" />
+            <InputText v-model="filterModel.value" type="text" placeholder="Search by country" />
           </template>
         </Column>
         <Column header="Agent" sortable sortField="representative.name" filterField="representative"
           :showFilterMatchModes="false" :filterMenuStyle="{ width: '14rem' }" style="min-width: 14rem">
           <template #body="{ data }">
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img :alt="data.representative.name"
                 :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
                 style="width: 32px" />
@@ -196,10 +181,9 @@ const getSeverity = (status) => {
             </div>
           </template>
           <template #filter="{ filterModel }">
-            <MultiSelect v-model="filterModel.value" :options="representatives" optionLabel="name" placeholder="Any"
-              class="p-column-filter">
+            <MultiSelect v-model="filterModel.value" :options="representatives" optionLabel="name" placeholder="Any">
               <template #option="slotProps">
-                <div class="flex align-items-center gap-2">
+                <div class="flex items-center gap-2">
                   <img :alt="slotProps.option.name"
                     :src="`https://primefaces.org/cdn/primevue/images/avatar/${slotProps.option.image}`"
                     style="width: 32px" />
@@ -231,8 +215,7 @@ const getSeverity = (status) => {
             <Tag :value="data.status" :severity="getSeverity(data.status)" />
           </template>
           <template #filter="{ filterModel }">
-            <Select v-model="filterModel.value" :options="statuses" placeholder="Select One" class="p-column-filter"
-              showClear>
+            <Select v-model="filterModel.value" :options="statuses" placeholder="Select One" showClear>
               <template #option="slotProps">
                 <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
               </template>
@@ -244,8 +227,8 @@ const getSeverity = (status) => {
             <ProgressBar :value="data.activity" :showValue="false" style="height: 6px"></ProgressBar>
           </template>
           <template #filter="{ filterModel }">
-            <Slider v-model="filterModel.value" range class="m-3"></Slider>
-            <div class="flex align-items-center justify-content-between px-2">
+            <Slider v-model="filterModel.value" range class="m-4"></Slider>
+            <div class="flex items-center justify-between px-2">
               <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
               <span>{{ filterModel.value ? filterModel.value[1] : 100 }}</span>
             </div>
@@ -259,6 +242,7 @@ const getSeverity = (status) => {
       </DataTable>
     </template>
   </Card>
+
 
 
 </template>

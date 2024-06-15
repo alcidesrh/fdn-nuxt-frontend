@@ -1,8 +1,8 @@
 .layout-sidebar {
     transition: transform .2s, left .2s;
     position: fixed;
-    width: 250px;
-    height: calc(100vh - 160px);
+    /* width: 250px; */
+    /* height: calc(100vh - 160px); */
     z-index: 999;
     user-select: none;
     top: 110px;
@@ -67,24 +67,4 @@
 
 .menu-control>svg {
     @apply stroke-slate-2 text-35px stroke-0 cursor-pointer
-}
-
-@media (min-width: 992px) {
-    .layout-static-inactive .layout-sidebar {
-        transition: transform .2s, left .2s;
-        left: 75px;
-        width: 75px;
-        padding: 0px;
-
-        /*.sidebar-btn {
-			 @apply -ml-27px;
-		}
-		*/
-    }
-
-    .layout-static-inactive .layout-sidebar .p-tree {
-        left: 500px;
-    }
-
-
 }

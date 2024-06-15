@@ -1,130 +1,220 @@
 .layout-topbar {
     position: fixed;
-    height: 70px;
-    z-index: 997;
-    left: 0;
     top: 0;
-    width: 100%;
-    color: white;
+    left: 0;
+    width: calc(100% - var(--p-scrollbar-width, 0px));
+    z-index: 1100;
+    transition: background-color 0.5s, border-color 0.5s;
+    border-bottom: 1px solid transparent;
+
+}
+
+.layout-topbar.layout-topbar-sticky {
+    border-bottom: 1px solid var(--border-color);
+    /* @apply bg-slate-7 */
+    background-color: var(--topbar-sticky-background);
+    backdrop-filter: blur(7px);
+}
+
+.layout-topbar-inner {
+    height: 70px;
+    /* padding: 0 4rem; */
     display: flex;
     align-items: center;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    transition: background-color .5s, border-color .5s;
+    justify-content: end
 }
 
-.layout-topbar .layout-topbar-logo {
-    display: flex;
-    align-items: center;
-    color: var(--surface-900);
-    font-size: 1rem;
-    font-weight: 500;
-    width: 300px;
-    border-radius: 12px;
+.layout-topbar-inner .layout-topbar-logo-container {
+    width: 250px;
+    margin-right: 4rem;
+    height: 70px;
+    background-color: var(--surface-ground);
+    position: fixed;
+    left: 0px;
+    @apply border-r-rounded-full
 }
 
-.layout-topbar .layout-topbar-logo img {
-    height: 2.5rem;
-    margin-right: 0.5rem;
+.layout-topbar-inner .layout-topbar-logo,
+.layout-topbar-inner .layout-topbar-icon {
+    transition: outline-color 0.2s;
+    outline-color: transparent;
 }
 
-.layout-topbar .layout-topbar-button {
+
+
+.layout-topbar-inner .layout-topbar-logo {
     display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
 }
 
-.layout-topbar .layout-topbar-button:hover {
-    color: var(--text-color);
-    background-color: var(--surface-hover);
-}
 
-.layout-topbar .layout-topbar-button i {
-    font-size: 1.5rem;
-}
-
-.layout-topbar .layout-menu-button {
-    margin-left: 2rem;
-}
-
-.layout-topbar .layout-topbar-menu-button {
+.layout-topbar-inner .layout-topbar-icon {
     display: none;
 }
 
-.layout-topbar .layout-topbar-menu-button i {
-    font-size: 1.25rem;
+.layout-topbar-inner .layout-topbar-icon svg {
+    width: 25px;
 }
 
-.layout-topbar .layout-topbar-menu {
-    padding: 0;
-    list-style: none;
+.layout-topbar-inner .menu-button {
+    display: none;
+}
+
+.layout-topbar-inner .topbar-items {
     display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+    align-items: center;
+    float: right;
 }
 
+.layout-topbar-inner .topbar-items li {
+    position: relative;
+}
 
-@media (max-width: 991px) {
-    .layout-topbar {
-        justify-content: space-between;
-    }
+.layout-topbar-inner .topbar-items .topbar-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+    width: 2rem;
+    height: 2rem;
+    transition: outline-color 0.2s, border-color 0.2s;
+    border-radius: 6px;
+    margin: 0;
+    padding: 0;
+    outline-color: transparent;
+    background-color: var(--card-background);
+    cursor: pointer;
+}
 
-    .layout-topbar .layout-topbar-logo {
-        width: auto;
-        order: 2;
-    }
+.layout-topbar-inner .topbar-items .topbar-item:hover {
+    border-color: var(--primary-color);
+}
 
-    .layout-topbar .layout-menu-button {
-        margin-left: 0;
-        order: 1;
-    }
+.layout-topbar-inner .topbar-items .topbar-item i,
+.layout-topbar-inner .topbar-items .topbar-item span {
+    color: var(--text-color);
+}
 
-    .layout-topbar .layout-topbar-menu-button {
-        display: inline-flex;
-        margin-left: 0;
-        order: 3;
-    }
+.layout-topbar-inner .topbar-items .config-item {
+    background-color: var(--primary-color);
+}
 
-    .layout-topbar .layout-topbar-menu {
-        margin-left: 0;
-        position: absolute;
-        flex-direction: column;
-        background-color: var(--surface-overlay);
-        box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
-        border-radius: 12px;
-        padding: 1rem;
-        right: 2rem;
-        top: 5rem;
-        min-width: 15rem;
-        display: none;
-        -webkit-animation: scalein 0.15s linear;
-        animation: scalein 0.15s linear;
-    }
+.layout-topbar-inner .topbar-items .config-item i {
+    color: var(--primary-contrast-color);
+}
 
-    .layout-topbar .layout-topbar-menu.layout-topbar-menu-mobile-active {
-        display: block;
-    }
+.layout-topbar-inner .topbar-items .config-panel {
+    position: absolute;
+    top: calc(100% + 2px);
+    right: 0;
+    width: 16rem;
+    padding: 0.75rem;
+    background-color: var(--overlay-background);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transform-origin: top;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
 
-    .layout-topbar .layout-topbar-menu .layout-topbar-button {
-        margin-left: 0;
-        display: flex;
-        width: 100%;
-        height: auto;
-        justify-content: flex-start;
-        border-radius: 12px;
-        padding: 1rem;
-    }
+.layout-topbar-inner .topbar-items .config-panel .config-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
-    .layout-topbar .layout-topbar-menu .layout-topbar-button i {
-        font-size: 1rem;
-        margin-right: 0.5rem;
-    }
+.layout-topbar-inner .topbar-items .config-panel .config-panel-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary-color);
+    font-weight: 600;
+    line-height: 1;
+}
 
-    .layout-topbar .layout-topbar-menu .layout-topbar-button span {
-        font-weight: medium;
-        display: block;
-    }
+.layout-topbar-inner .topbar-items .config-panel .config-panel-colors>div {
+    padding-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.layout-topbar-inner .topbar-items .config-panel .config-panel-colors>div button {
+    border: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 1px;
+}
+
+.layout-topbar-inner .topbar-items .config-panel .config-panel-colors>div button.active-color {
+    outline-color: var(--primary-color);
+}
+
+.layout-topbar-inner .topbar-items .config-panel .config-panel-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.layout-topbar-inner .topbar-items .version-item {
+    width: auto;
+    padding: 0.5rem;
+}
+
+.layout-topbar-inner .topbar-items .version-item .version-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.layout-topbar-inner .topbar-items .version-item .version-icon {
+    margin-left: 0.25rem;
+    color: var(--text-secondary-color);
+}
+
+.layout-topbar-inner .topbar-items .versions-panel {
+    padding: 0.25rem;
+    background-color: var(--overlay-background);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 2px);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    transform-origin: top;
+}
+
+.layout-topbar-inner .topbar-items .versions-panel ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.layout-topbar-inner .topbar-items .versions-panel ul li {
+    margin: 2px;
+}
+
+.layout-topbar-inner .topbar-items .versions-panel ul a {
+    display: inline-flex;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    width: 100%;
+    overflow: hidden;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.layout-topbar-inner .topbar-items .versions-panel ul a:hover {
+    background-color: var(--hover-background);
 }

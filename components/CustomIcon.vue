@@ -1,8 +1,9 @@
 <template>
-  <component ref="icon" :is="`icon-${name}`" :size="temp.size" @mouseover.stop="hoverMenu('hover', $event)"
-    @mouseleave="hoverMenu('leave', $event)">
+  <component ref="icon" :is="`icon-${name}`" :size="temp.size">
   </component>
-  <!-- {{ temp }} -->
+  <!-- <component ref="icon" :is="`icon-${name}`" :size="temp.size" @mouseover.stop="hoverMenu('hover', $event)"
+    @mouseleave="hoverMenu('leave', $event)">
+  </component> -->
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'

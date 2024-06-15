@@ -92,7 +92,7 @@
 
 /* */
 :root {
-  font-family: 'Roboto Flex Variable', sans-serif;
+  font-family: 'Roboto Flex Variable', sans-serif !important;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-variation-settings: normal;
   --font-family: 'Roboto Flex Variable', sans-serif;
@@ -414,14 +414,35 @@
   --maskbg: rgba(0, 0, 0, 0.4);
   --highlight-bg: #ecfdf5;
   --highlight-text-color: #047857;
-  --p-anchor-gutter: 2px;
   color-scheme: light;
 }
 
-:root {
-  --p-focus-ring-color: var(--primary-color);
-}
 
 :root {
-  --p-tree-node-hover-background: #000;
+  --primary-text-color: var(--primary-600);
+  --primary-color: var(--primary-color);
+  --primary-contrast-color: var(--primary-contrast-color);
+  --primary-hover-color: var(--primary-hover-color);
+  --text-color: var(--surface-700);
+  --text-secondary-color: var(--surface-500);
+  --glow-image: url(https://www.primefaces.org/cdn/primevue/images/layout/pattern.png);
+  --glow-blend: hard-light, multiply;
+  --topbar-sticky-background: rgba(255, 255, 255, 0);
+  --mobile-menu-background: #ffffff;
+  --card-border: 1px solid var(--surface-200);
+  --card-background: #ffffff;
+  --border-color: var(--surface-200);
+  --ground-background: var(--surface-50);
+  --overlay-background: #ffffff;
+  --hover-background: var(--surface-100);
+  --code-background: var(--surface-950);
+  --high-contrast-text-color: var(--surface-900);
+  --hover-border-color: var(--surface-500);
+  --mark-background: var(--surface-200);
+  --mark-text-color: var(--surface-700);
+  --selection-background: var(--surface-200);
+  --selection-text-color: var(--surface-950);
+  --code-button-text-color: var(--surface-300);
+  --docsearch-mask-background: var(--mask-background);
+  --logo-color: var(--text-secondary-color);
 }
