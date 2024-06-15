@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { NodeService } from '~~/utils/NodeService';
-import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 
 import { useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'

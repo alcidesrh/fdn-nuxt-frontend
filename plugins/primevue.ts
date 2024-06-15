@@ -1,9 +1,9 @@
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
-import Aura from 'primevue/themes/aura/'
+import Aura from '@primevue/themes/aura/'
 // import Aura from '~/assets/theme/aura'
 
-import { definePreset } from 'primevue/themes'
+import { definePreset } from '@primevue/themes'
 
 const Preset = definePreset(Aura, {
   semantic: {
