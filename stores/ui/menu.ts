@@ -12,10 +12,11 @@ export const useMenuStateStore = defineStore(
   'useMenuState',
   () => {
     const active = ref(false)
-    const mode = ref('normal')
+    const mode = ref('')
+    let modeaux = ''
     const collapse = ref(true)
-    const menu1 = ref([])
-    const menu = ref([
+    const menu = ref([])
+    const menu4 = ref([
       {
         name: 'Boleto',
         icon: 'TicketsTwoIcon',
@@ -122,9 +123,9 @@ export const useMenuStateStore = defineStore(
         ],
       },
       {
-        name: 'Salidas',
+        name: 'Clientes',
         open: true,
-        icon: 'TreeDiagramIcon',
+        icon: 'EveryUserIcon',
         children: [
           {
             name: 'Registrar',
@@ -162,12 +163,20 @@ export const useMenuStateStore = defineStore(
     )
 
     watch(
-      () => active.value,
+      () => mode.value,
       (n, o) => {
-        if (n == 1) {
-          DomHandler.blockBodyScroll('blocked-scroll')
-        } else if (n == 0) {
-          DomHandler.unblockBodyScroll('blocked-scroll')
+        return
+        const menuTween = useSideBarTween()
+        if (n != 'normal' && o != 'normal') {
+          menuTween.menuTimeLine.to(['.layout-topbar-logo-container', '.sidebar-control-btn', '.layout-sidebar', '.layout-content'], { opacity: 0, duration: 0 })
+          menuTween.menuTimeLine.revert()
+        }
+        if (n == 'mini') {
+          menuTween.mini()
+        } else if (n == 'close') {
+          menuTween.close()
+        } else if (n == 'normal') {
+          menuTween.menuTimeLine.reverse()
         }
       }
     )
@@ -177,11 +186,25 @@ export const useMenuStateStore = defineStore(
     return {
       active,
       menu,
-      menu1,
+      menu4,
       collapse,
       mode,
-      setMode: (v: string) => (mode.value = mode.value != v ? v : 'normal'),
+      setMode: (v: string) => {
+        if (!v) {
+          mode.value = ''
+          modeaux = ''
+        } else if (!modeaux) {
+          mode.value = v
+          modeaux = v
+        } else if (modeaux == v) {
+          mode.value = 'normal'
+          modeaux = ''
+        } else {
+          mode.value = modeaux + v
+          modeaux = v
+        }
+      },
     }
-  },
-  { persist: true }
+  }
+  // { persist: true }
 )

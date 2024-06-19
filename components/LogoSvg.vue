@@ -1,7 +1,10 @@
+<script setup>
+const menuStore = useMenuStateStore()
+</script>
 <template>
   <!-- <div id="logo" class="z-998 fixed flex justify-center items-center  h-70px w-380px rounded-tr-full bg-fdn hidden "> -->
-  <svg id="logo" class="m-auto font-bold  h-70px w-270px  " xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" -20 1 1000 56" shape-rendering="geometricPrecision"
+  <svg :class="['logo-svg', menuStore.mode]" id="logo" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox=" -20 1 780 56" shape-rendering="geometricPrecision"
     text-rendering="geometricPrecision">
 
     <g transform="matrix(0.8 0 -0.2 1.2 80.487172 0)">
@@ -29,7 +32,7 @@
 </template>
 <style scoped>
 #logo {
-  @apply fill-white font-bold;
+  @apply fill-white font-bold m-auto font-bold h-70px w-200px;
   letter-spacing: 2px;
   font-family: 'Fast-Track';
   background-color: var(--surface-color);
@@ -92,6 +95,5 @@
 
 .logout-btn svg path {
   @apply stroke-slate-500;
-
 }
 </style>

@@ -378,10 +378,17 @@ export default {
   },
   components: {
     card: {
+      border: {
+        color: '{surface.700}',
+      },
       colorScheme: {
         light: {
           root: {
+            background: '{surface.0}',
             borderRadius: '4px',
+          },
+          subtitle: {
+            color: '{surface.500}',
           },
         },
       },

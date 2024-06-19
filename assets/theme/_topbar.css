@@ -6,33 +6,35 @@
     z-index: 1100;
     transition: background-color 0.5s, border-color 0.5s;
     border-bottom: 1px solid transparent;
+    /* background-color: var(--surface-700); */
 
 }
 
 .layout-topbar.layout-topbar-sticky {
     border-bottom: 1px solid var(--border-color);
     /* @apply bg-slate-7 */
-    background-color: var(--topbar-sticky-background);
-    backdrop-filter: blur(7px);
+    /* background-color: var(--topbar-sticky-background); */
+    backdrop-filter: blur(29px);
 }
 
 .layout-topbar-inner {
     height: 70px;
+    position: relative;
     /* padding: 0 4rem; */
     display: flex;
     align-items: center;
-    justify-content: end
+    justify-content: space-between
 }
 
 .layout-topbar-inner .layout-topbar-logo-container {
+    transition: left .8s;
     width: 250px;
     margin-right: 4rem;
     height: 70px;
-    background-color: var(--surface-ground);
-    position: fixed;
     left: 0px;
     @apply border-r-rounded-full
 }
+
 
 .layout-topbar-inner .layout-topbar-logo,
 .layout-topbar-inner .layout-topbar-icon {
@@ -60,6 +62,8 @@
 }
 
 .layout-topbar-inner .topbar-items {
+    position: absolute;
+    right: 0px;
     display: flex;
     list-style-type: none;
     margin: 0;

@@ -1,6 +1,7 @@
 <template>
-  <div :ref="containerRef" class="layout-topbar u-px-m bg-slate-800">
+  <div :ref="containerRef" class="layout-topbar u-px-m ">
     <div class="layout-topbar-inner">
+      <SidebarControl />
       <div class="layout-topbar-logo-container">
         <NuxtLink to="/" class="layout-topbar-logo" aria-label="PrimeVue logo">
           <LogoSvg />
@@ -60,6 +61,9 @@
   </div>
 </template>
 
+<script setup>
+import SidebarControl from './SidebarControl.vue';
+</script>
 <script>
 //import docsearch from '@docsearch/js';
 
@@ -95,28 +99,6 @@ export default {
   mounted() {
     this.bindScrollListener();
 
-    /*docsearch({
-        container: '#docsearch',
-        appId: '01CMUF4W4R',
-        indexName: 'primevue',
-        apiKey: '9bb5939e36897b26ff7de5b7b64d6c43',
-        transformItems: (items) => {
-            const isLocalhost = process.env.NODE_ENV !== 'production';
-
-            return items.map((item) => {
-                if (isLocalhost) {
-                    const url = new URL(item.url);
-
-                    url.protocol = window.location.protocol;
-                    url.hostname = window.location.hostname;
-                    url.port = window.location.port;
-                    item.url = url.toString();
-                }
-
-                return item;
-            });
-        }
-    });*/
   },
   beforeUnmount() {
     if (this.scrollListener) {
