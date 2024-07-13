@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { NodeService } from '~~/utils/NodeService';
 import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 
 import { useQuery } from '@vue/apollo-composable'
-import { computed } from 'vue'
 import { GetUsersQuery } from '~~/graphql/graphql'
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { gql } from '~~/graphql/'
+import { useFetchList } from "~~/composables/api";
+
+
+
 // import gql from 'graphql-tag'
 // if (__DEV__) 
 //   // Adds messages only in a dev environment
 loadDevMessages();
 loadErrorMessages();
 // }
-const { result } = useQuery(
+const { result } = await useQuery(
   gql(`
   query getUsers($first: Int!) {
     users(first: $first) {
@@ -22,6 +24,8 @@ const { result } = useQuery(
         node {
           id
           nombre
+          username
+          telefono
         }
       }
     }    
@@ -29,28 +33,20 @@ const { result } = useQuery(
 `),
   { first: 10 }
 )
-
+console.log(result.value)
 // `films` is typed!
-const films = computed(() => result.value?.users?.edges?.map(e => e?.node))
+// const films = computed(() => result.value?.users?.edges?.map(e => e?.node))
+// watch(() => result.value, (n, o) => {
+//   console.log(n, o)
+// })
 
-// const { result, } = useQuery(gql`
-//       query getUsers{
-//         users{
-//          edges{
-//           node{
-//             id
-//             nombre
-//           }
-//         }
-//         }
-//        }
-//            `)
 
-// console.log(result.value);
+
 
 const customers = ref();
 const selectedCustomers = ref();
 const filters = ref();
+
 const representatives = ref([
   { name: 'Amy Elsner', image: 'amyelsner.png' },
   { name: 'Anna Fali', image: 'annafali.png' },
@@ -65,7 +61,11 @@ const representatives = ref([
 ]);
 const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
 
-onMounted(() => {
+let columns = []
+onMounted(async () => {
+  columns = await useFetchItem("api/column/fields/user");
+  columns = columns.retrieved.value['hydra:member']
+
 
   NodeService.getCustomersLarge().then((data) => (customers.value = getCustomers(data)));
 });
@@ -128,12 +128,9 @@ const getSeverity = (status) => {
 </script>
 <template>
 
-
-
-
   <Card>
     <template #title>
-      <a href="#test">
+      <a href="#test" class="u-pt-2xl">
         Usuarios
       </a>
     </template>
@@ -141,8 +138,8 @@ const getSeverity = (status) => {
     <template #content>
 
       <DataTable v-model:filters="filters" v-model:selection="selectedCustomers" :value="customers" paginator :rows="10"
-        dataKey="id" filterDisplay="menu"
-        :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']">
+        dataKey="id" filterDisplay="menu" scrollable scrollHeight="flex"
+        :globalFilterFields="['usuario', 'country.name', 'representative.name', 'balance', 'status']">
         <template #header>
           <div class="flex justify-between">
             <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
@@ -156,7 +153,7 @@ const getSeverity = (status) => {
         </template>
         <template #empty> No customers found. </template>
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column field="name" header="Name" sortable style="min-width: 14rem">
+        <Column v-for="c, i in columns" :key="i" :field="c" :header="c" sortable style="min-width: 14rem">
           <template #body="{ data }">
             {{ data.name }}
           </template>
@@ -164,7 +161,7 @@ const getSeverity = (status) => {
             <InputText v-model="filterModel.value" type="text" placeholder="Search by name" />
           </template>
         </Column>
-        <Column header="Country" sortable sortField="country.name" filterField="country.name" style="min-width: 14rem">
+        <!-- <Column header="Country" sortable sortField="country.name" filterField="country.name" style="min-width: 14rem">
           <template #body="{ data }">
             <div class="flex items-center gap-2">
               <img alt="flag" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
@@ -244,128 +241,11 @@ const getSeverity = (status) => {
           <template #body>
             <Button type="button" icon="pi pi-cog" rounded />
           </template>
-        </Column>
+        </Column> -->
       </DataTable>
     </template>
   </Card>
 
-  <Card>
-    <template #title>
-      <a href="#test">
-        Usuario
-      </a>
-    </template>
-    <template #subtitle>Listado</template>
-    <template #content>
-
-      <DataTable v-model:filters="filters" v-model:selection="selectedCustomers" :value="customers" paginator :rows="10"
-        dataKey="id" filterDisplay="menu"
-        :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']">
-        <template #header>
-          <div class="flex justify-between">
-            <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
-            <IconField>
-              <InputIcon>
-                <i class="pi pi-search" />
-              </InputIcon>
-              <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-            </IconField>
-          </div>
-        </template>
-        <template #empty> No customers found. </template>
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column field="name" header="Name" sortable style="min-width: 14rem">
-          <template #body="{ data }">
-            {{ data.name }}
-          </template>
-          <template #filter="{ filterModel }">
-            <InputText v-model="filterModel.value" type="text" placeholder="Search by name" />
-          </template>
-        </Column>
-        <Column header="Country" sortable sortField="country.name" filterField="country.name" style="min-width: 14rem">
-          <template #body="{ data }">
-            <div class="flex items-center gap-2">
-              <img alt="flag" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                :class="`flag flag-${data.country.code}`" style="width: 24px" />
-              <span>{{ data.country.name }}</span>
-            </div>
-          </template>
-          <template #filter="{ filterModel }">
-            <InputText v-model="filterModel.value" type="text" placeholder="Search by country" />
-          </template>
-        </Column>
-        <Column header="Agent" sortable sortField="representative.name" filterField="representative"
-          :showFilterMatchModes="false" :filterMenuStyle="{ width: '14rem' }" style="min-width: 14rem">
-          <template #body="{ data }">
-            <div class="flex items-center gap-2">
-              <img :alt="data.representative.name"
-                :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
-                style="width: 32px" />
-              <span>{{ data.representative.name }}</span>
-            </div>
-          </template>
-          <template #filter="{ filterModel }">
-            <MultiSelect v-model="filterModel.value" :options="representatives" optionLabel="name" placeholder="Any">
-              <template #option="slotProps">
-                <div class="flex items-center gap-2">
-                  <img :alt="slotProps.option.name"
-                    :src="`https://primefaces.org/cdn/primevue/images/avatar/${slotProps.option.image}`"
-                    style="width: 32px" />
-                  <span>{{ slotProps.option.name }}</span>
-                </div>
-              </template>
-            </MultiSelect>
-          </template>
-        </Column>
-        <Column field="date" header="Date" sortable filterField="date" dataType="date" style="min-width: 10rem">
-          <template #body="{ data }">
-            {{ formatDate(data.date) }}
-          </template>
-          <template #filter="{ filterModel }">
-            <DatePicker v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
-          </template>
-        </Column>
-        <Column field="balance" header="Balance" sortable filterField="balance" dataType="numeric"
-          style="min-width: 10rem">
-          <template #body="{ data }">
-            {{ formatCurrency(data.balance) }}
-          </template>
-          <template #filter="{ filterModel }">
-            <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
-          </template>
-        </Column>
-        <Column header="Status" field="status" sortable :filterMenuStyle="{ width: '14rem' }" style="min-width: 12rem">
-          <template #body="{ data }">
-            <Tag :value="data.status" :severity="getSeverity(data.status)" />
-          </template>
-          <template #filter="{ filterModel }">
-            <Select v-model="filterModel.value" :options="statuses" placeholder="Select One" showClear>
-              <template #option="slotProps">
-                <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
-              </template>
-            </Select>
-          </template>
-        </Column>
-        <Column field="activity" header="Activity" sortable :showFilterMatchModes="false" style="min-width: 12rem">
-          <template #body="{ data }">
-            <ProgressBar :value="data.activity" :showValue="false" style="height: 6px"></ProgressBar>
-          </template>
-          <template #filter="{ filterModel }">
-            <Slider v-model="filterModel.value" range class="m-4"></Slider>
-            <div class="flex items-center justify-between px-2">
-              <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
-              <span>{{ filterModel.value ? filterModel.value[1] : 100 }}</span>
-            </div>
-          </template>
-        </Column>
-        <Column headerStyle="width: 5rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
-          <template #body>
-            <Button type="button" icon="pi pi-cog" rounded />
-          </template>
-        </Column>
-      </DataTable>
-    </template>
-  </Card>
 
 
   <div id="test">test</div>

@@ -22,6 +22,7 @@ FROM base as dev
 EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME localhost
+# ENV HOSTNAME localhost
 
 CMD ["sh", "-c", "pnpm install; pnpm dev"]
 

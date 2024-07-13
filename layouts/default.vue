@@ -2,6 +2,8 @@
 import AppTopbar from './AppTopbar.vue'
 import Sidebar from './Sidebar.vue'
 import { DomHandler } from '@primevue/core/utils'
+import SidebarControl from './SidebarControl.vue';
+import AppConfig from './AppConfig.vue';
 
 const menuStore = useMenuStateStore()
 const route = useRoute()
@@ -25,12 +27,19 @@ function onMaskClick() {
   menuStore.setMode(false)
   DomHandler.unblockBodyScroll('blocked-scroll');
 }
+
+
 </script>
 <template>
+  <SidebarControl />
+
   <div class="layout-wrapper">
+
     <AppTopbar @menubutton-click="onMenuButtonClick" />
+
     <Sidebar />
-    <div class="layout-content  u-px-l" :class="menuStore.mode">
+
+    <div class="layout-content " :class="menuStore.mode">
       <div class="layout-content-slot">
         <NuxtPage />
       </div>
@@ -42,4 +51,5 @@ function onMaskClick() {
     <Toast position="bottom-left" group="bl" />
     <Toast position="bottom-right" group="br" /> -->
   </div>
+  <app-config></app-config>
 </template>

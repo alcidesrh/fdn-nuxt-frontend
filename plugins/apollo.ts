@@ -1,17 +1,14 @@
-
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import { createApolloProvider } from '@vue/apollo-option'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
-export default defineNuxtPlugin(nuxtApp => {
-
+export default defineNuxtPlugin((nuxtApp) => {
   const cache = new InMemoryCache()
 
   const apolloClient = new ApolloClient({
     cache,
-    uri: 'https://localhost/graphql',
+    uri: 'http://localhost/graphql',
   })
-
 
   const apolloProvider = createApolloProvider({
     defaultClient: apolloClient,
@@ -19,5 +16,4 @@ export default defineNuxtPlugin(nuxtApp => {
 
   nuxtApp.vueApp.use(apolloProvider)
   nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)
-
 })

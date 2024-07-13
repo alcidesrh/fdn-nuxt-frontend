@@ -29,6 +29,8 @@ async function handleSubmit(credentials: Record<string, string>, node: Record<an
   return;
 }
 const form = ref(null)
+const client = new WebSocket("ws://localhost/_nuxt");
+console.log(client)
 </script>
 
 <template>

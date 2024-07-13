@@ -8,7 +8,7 @@ import { generateClasses } from '@formkit/themes'
 
 const simpleInputClasses = {
   outer: 'mb-3  !border !border-slate-800',
-  label: 'form-label alcides',
+  label: 'form-label',
   input: 'form-control',
   help: 'text-muted',
   message: 'invalid-feedback',
@@ -21,9 +21,12 @@ export default defineFormKitConfig({
   config: {
     rootClasses,
     classes: generateClasses({
-      text: simpleInputClasses,
-      number: simpleInputClasses,
-      password: simpleInputClasses,
+      global: {
+        label: 'whitespace-nowrap',
+      },
+      // text: simpleInputClasses,
+      // number: simpleInputClasses,
+      // password: simpleInputClasses,
     }),
   },
   inputs: inputs,

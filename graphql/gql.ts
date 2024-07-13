@@ -13,7 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  "\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n        }\n      }\n    }    \n  }\n":
+  "\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n          username\n          telefono\n        }\n      }\n    }    \n  }\n":
     types.GetUsersDocument,
 };
 
@@ -35,8 +35,8 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: "\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n        }\n      }\n    }    \n  }\n",
-): (typeof documents)["\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n        }\n      }\n    }    \n  }\n"];
+  source: "\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n          username\n          telefono\n        }\n      }\n    }    \n  }\n",
+): (typeof documents)["\n  query getUsers($first: Int!) {\n    users(first: $first) {\n      edges {\n        node {\n          id\n          nombre\n          username\n          telefono\n        }\n      }\n    }    \n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

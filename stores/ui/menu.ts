@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import DomHandler from '@/utils/primevueutils/DomHandler'
+// import DomHandler from '@/utils/primevueutils/DomHandler'
 
 export interface Menu {
   name: string
@@ -8,15 +8,26 @@ export interface Menu {
   open?: boolean
   children?: Menu[]
 }
+
 export const useMenuStateStore = defineStore(
   'useMenuState',
   () => {
     const active = ref(false)
-    const mode = ref('')
-    let modeaux = ''
+    const ctrlBtnHorizontal = ref('horizontal')
+    const mode = ref('normal')
+    const modeaux = ref('')
     const collapse = ref(true)
-    const menu = ref([])
-    const menu4 = ref([
+    const colorBtn = ref({ label: '--surface-700', value: '#334155' })
+    const colorBorde = ref({ label: '--surface-400', value: '#94a3b8' })
+    const colorBtnBg = ref({ label: '--surface-0', value: '#fff' })
+    const btnH = ref(40)
+    const btnW = ref(40)
+    const iconSize = ref(15)
+    const rotate = ref(0)
+    const gap = ref(1)
+    const pinned = ref(true)
+    const menu4 = ref([])
+    const menu = ref([
       {
         name: 'Boleto',
         icon: 'TicketsTwoIcon',
@@ -161,50 +172,37 @@ export const useMenuStateStore = defineStore(
         }
       }
     )
-
-    watch(
-      () => mode.value,
-      (n, o) => {
-        return
-        const menuTween = useSideBarTween()
-        if (n != 'normal' && o != 'normal') {
-          menuTween.menuTimeLine.to(['.layout-topbar-logo-container', '.sidebar-control-btn', '.layout-sidebar', '.layout-content'], { opacity: 0, duration: 0 })
-          menuTween.menuTimeLine.revert()
-        }
-        if (n == 'mini') {
-          menuTween.mini()
-        } else if (n == 'close') {
-          menuTween.close()
-        } else if (n == 'normal') {
-          menuTween.menuTimeLine.reverse()
-        }
-      }
-    )
-    // function setMode(v: string) {
-    //   mode.value = mode.value != v ? v : 'normal'
-    // }
     return {
       active,
+      ctrlBtnHorizontal,
       menu,
       menu4,
       collapse,
       mode,
+      modeaux,
+      colorBtn,
+      colorBorde,
+      colorBtnBg,
+      btnW,
+      btnH,
+      pinned,
+      iconSize,
+      rotate,
+      gap,
       setMode: (v: string) => {
         if (!v) {
           mode.value = ''
-          modeaux = ''
-        } else if (!modeaux) {
-          mode.value = v
-          modeaux = v
-        } else if (modeaux == v) {
+          modeaux.value = ''
+        } else if (modeaux.value == v || (modeaux.value == 'mini' && v == 'close')) {
           mode.value = 'normal'
-          modeaux = ''
+          modeaux.value = 'normal'
         } else {
-          mode.value = modeaux + v
-          modeaux = v
+          mode.value = v
+          modeaux.value = v
         }
+        document.querySelector('.qq').innerHTML = document.querySelector('.qq').innerHTML + '<br>-mode=' + mode.value + '<br>-modeaux=' + modeaux.value + '<br>--------------------------'
       },
     }
-  }
-  // { persist: true }
+  },
+  { persist: true }
 )

@@ -47,9 +47,4 @@ export default defineConfig({
     // }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
-  layers: {
-    tailwindlayer: 1,
-    primevue: 2,
-    custom: 3,
-  },
 })

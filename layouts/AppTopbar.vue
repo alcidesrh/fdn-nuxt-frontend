@@ -1,9 +1,8 @@
 <template>
-  <div :ref="containerRef" class="layout-topbar u-px-m ">
+  <div :ref="containerRef" class="layout-topbar u-px-l">
     <div class="layout-topbar-inner">
-      <SidebarControl />
       <div class="layout-topbar-logo-container">
-        <NuxtLink to="/" class="layout-topbar-logo" aria-label="PrimeVue logo">
+        <NuxtLink to="/" class="layout-topbar-logo">
           <LogoSvg />
         </NuxtLink>
       </div>
@@ -61,11 +60,7 @@
   </div>
 </template>
 
-<script setup>
-import SidebarControl from './SidebarControl.vue';
-</script>
 <script>
-//import docsearch from '@docsearch/js';
 
 export default {
   emits: ['menubutton-click'],

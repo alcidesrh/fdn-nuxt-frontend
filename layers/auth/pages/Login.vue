@@ -11,7 +11,7 @@ const allow_banner_amimation = computed(
 
 
 </script>
-<template>
+<template>``
   <div class="layout-wrapper z-10">
     <div class="layout-topbar left-0 top-0 text-slate-800 shadow">
       <!-- <HeaderAnimation v-if="allow_banner_amimation" /> -->

@@ -1,4 +1,4 @@
-export const ENTRYPOINT = 'https://localhost'
+export const ENTRYPOINT = 'http://localhost'
 
 export const API_DEFAULT_OPTIONS: Record<any, unknown> = {
   baseURL: ENTRYPOINT,

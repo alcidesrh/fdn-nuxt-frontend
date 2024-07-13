@@ -1,11 +1,8 @@
-@import 'primeicons/primeicons.css';
-@import "./theme/_fonts.css";
-@import "./theme/_variable.css";
-@import "./theme/tailwind-compat.css";
-@import "./theme/layout.css";
-@import "./theme/_topbar.css";
-/* @import "./theme/_menu.css"; */
-@import "./theme/_sidebar.css";
-@import "./theme/_responsive.css";
-/* @import "./theme/_custom.css"; */
-/* @import "./theme/_header.css"; */
+@import 'primeicons/primeicons';
+@import "./theme/_fonts";
+@import "./theme/_variable";
+@import "./theme/tailwind-compat" layer(tailwind-compat);
+
+@import "./theme/layout";
+@import "./theme/_topbar";
+@import "./theme/_sidebar";

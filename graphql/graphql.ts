@@ -3279,7 +3279,13 @@ export type GetUsersQuery = {
     __typename?: "UserCursorConnection";
     edges?: Array<{
       __typename?: "UserEdge";
-      node?: { __typename?: "User"; id: string; nombre: string } | null;
+      node?: {
+        __typename?: "User";
+        id: string;
+        nombre: string;
+        username: string;
+        telefono?: string | null;
+      } | null;
     } | null> | null;
   } | null;
 };
@@ -3342,6 +3348,14 @@ export const GetUsersDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "nombre" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "username" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "telefono" },
                             },
                           ],
                         },
