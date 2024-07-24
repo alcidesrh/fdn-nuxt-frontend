@@ -1,24 +1,15 @@
 <template>
   <div class="flex items-center justify-between">
-    <nuxt-link
-      :to="{ name: 'taxons' }"
-      class="text-blue-600 hover:text-blue-800"
-    >
+    <nuxt-link :to="{ name: 'taxons' }" class="text-blue-600 hover:text-blue-800">
       &lt; Back to list
     </nuxt-link>
 
     <div>
-      <nuxt-link
-        v-if="item"
-        :to="{ name: 'taxons-id-edit', params: { id: getIdFromIri(item['@id']) } }"
-        class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700"
-      >
+      <nuxt-link v-if="item" :to="{ name: 'taxons-id-edit', params: { id: getIdFromIri(item['@id']) } }"
+        class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
         Edit
       </nuxt-link>
-      <button
-        class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700"
-        @click="deleteItem"
-      >
+      <button class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700" @click="deleteItem">
         Delete
       </button>
     </div>
@@ -26,19 +17,11 @@
 
   <h1 class="text-3xl my-4">Show Taxon {{ item?.["@id"] }}</h1>
 
-  <div
-    v-if="isLoading"
-    class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
-    role="status"
-  >
+  <div v-if="isLoading" class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm" role="status">
     Loading...
   </div>
 
-  <div
-    v-if="error || deleteError"
-    class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
-    role="alert"
-  >
+  <div v-if="error || deleteError" class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm" role="alert">
     {{ error || deleteError }}
   </div>
 
@@ -56,18 +39,12 @@
       </thead>
       <tbody>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             parent
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <nuxt-link
-              v-if="router.hasRoute('api/taxa-id')"
-              :to="{ name: 'taxons-id', params: { id: item.taxon } }"
-              class="text-blue-600 hover:text-blue-800"
-            >
+            <nuxt-link v-if="router.hasRoute('api/taxa-id')" :to="{ name: 'taxons-id', params: { id: item.taxon } }"
+              class="text-blue-600 hover:text-blue-800">
               {{ item.taxon }}
             </nuxt-link>
 
@@ -77,31 +54,21 @@
           </td>
         </tr>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             posicion
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.posicion }}
-                    </td>
+          </td>
         </tr>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             children
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <template v-if="router.hasRoute('api/taxa-id')">
-              <nuxt-link
-                v-for="taxon in item.api/taxa"
-                :key="taxon"
-                :to="{ name: 'taxons-id', params: { id: taxon } }"
-                class="text-blue-600 hover:text-blue-800"
-              >
+              <nuxt-link v-for="taxon in item.api / taxa" :key="taxon" :to="{ name: 'taxons-id', params: { id: taxon } }"
+                class="text-blue-600 hover:text-blue-800">
                 {{ taxon }}
 
                 <br />
@@ -109,47 +76,35 @@
             </template>
 
             <template v-else>
-              <p
-                v-for="taxon in item.api/taxa"
-                :key="taxon"
-              >
+              <p v-for="taxon in item.api / taxa" :key="taxon">
                 {{ taxon }}
               </p>
             </template>
           </td>
         </tr>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             nombre
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.nombre }}
-                    </td>
+          </td>
         </tr>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             nota
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.nota }}
-                    </td>
+          </td>
         </tr>
         <tr class="border-b">
-          <th
-            class="text-sm font-medium px-6 py-4 text-left capitalize"
-            scope="row"
-          >
+          <th class="text-sm font-medium px-6 py-4 text-left capitalize" scope="row">
             status
           </th>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             {{ item.status }}
-                    </td>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -180,13 +135,13 @@ useMercureItem({
 });
 
 const id = decodeURIComponent(route.params.id as string);
-const {
-  retrieved: item,
-  isLoading,
-  error,
-  hubUrl,
-} = await useFetchItem<Taxon>(`api/taxa/${id}`);
-taxonShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
+// const {
+//   retrieved: item,
+//   isLoading,
+//   error,
+//   hubUrl,
+// } = await useFetchItem<Taxon>(`api/taxa/${id}`);
+// taxonShowStore.setData({ retrieved: item, isLoading, error, hubUrl });
 
 async function deleteItem() {
   if (!item?.value) {

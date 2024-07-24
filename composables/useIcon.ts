@@ -27,7 +27,7 @@ icons['header-menu'] = Array.from({ length: iconsHeaderNames.length }, (e, i) =>
 
 export function useIcon() {
   const iconProps = {
-    strokeWidth: '3',
+    strokeWidth: '2',
     theme: 'outline',
     class: ' flex',
     size: 18,

@@ -15,8 +15,11 @@ declare module 'vue' {
     Column: typeof import('primevue/column')['default']
     DataTable: typeof import('primevue/datatable')['default']
     DatePicker: typeof import('primevue/datepicker')['default']
+    Dialog: typeof import('primevue/dialog')['default']
+    Divider: typeof import('primevue/divider')['default']
     Drawer: typeof import('primevue/drawer')['default']
     Fieldset: typeof import('primevue/fieldset')['default']
+    FileUpload: typeof import('primevue/fileupload')['default']
     IconField: typeof import('primevue/iconfield')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
     InputIcon: typeof import('primevue/inputicon')['default']
@@ -27,6 +30,7 @@ declare module 'vue' {
     Popover: typeof import('primevue/popover')['default']
     ProgressBar: typeof import('primevue/progressbar')['default']
     RadioButton: typeof import('primevue/radiobutton')['default']
+    Rating: typeof import('primevue/rating')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']
@@ -34,5 +38,7 @@ declare module 'vue' {
     Skeleton: typeof import('primevue/skeleton')['default']
     Slider: typeof import('primevue/slider')['default']
     Tag: typeof import('primevue/tag')['default']
+    Textarea: typeof import('primevue/textarea')['default']
+    Toolbar: typeof import('primevue/toolbar')['default']
   }
 }

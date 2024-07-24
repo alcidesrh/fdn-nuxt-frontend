@@ -11,7 +11,11 @@
   --primary-color-text: #fff;
 
   --sidebar-width: 220px;
-  --sidebar-mini-width: 70px;
+  --sidebar-width-js: 220;
+  --sidebar-mini-width-js: 80;
+  --sidebar-mini-width: 5rem;
+  --background: var(--surface-ground);
+  --topbar: 70px;
 }
 
 

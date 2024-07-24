@@ -2,7 +2,6 @@
 import AppTopbar from './AppTopbar.vue'
 import Sidebar from './Sidebar.vue'
 import { DomHandler } from '@primevue/core/utils'
-import SidebarControl from './SidebarControl.vue';
 import AppConfig from './AppConfig.vue';
 
 const menuStore = useMenuStateStore()
@@ -31,7 +30,6 @@ function onMaskClick() {
 
 </script>
 <template>
-  <SidebarControl />
 
   <div class="layout-wrapper">
 
@@ -39,7 +37,7 @@ function onMaskClick() {
 
     <Sidebar />
 
-    <div class="layout-content " :class="menuStore.mode">
+    <div id="layout-content" class="layout-content" :class="[menuStore.mode]">
       <div class="layout-content-slot">
         <NuxtPage />
       </div>

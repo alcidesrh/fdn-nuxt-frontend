@@ -16,9 +16,9 @@ const onConfigButtonClick = () => {
 </script>
 
 <template>
-    <Button size="small" @click="onConfigButtonClick()" class="btn-float border-r-0 border-rounded-r-0"
+    <Button size="small" @click="onConfigButtonClick()" class="btn-float border-r-0 border-rounded-r-0 bg-slate-700"
         :class="{ active: !visible }" raised>
-        <setting-two theme="outline" size="24" :strokeWidth="3" />
+        <setting-two theme="outline" size="24" :strokeWidth="3" fill="#fff" />
     </Button>
     <Drawer v-model:visible="visible" position="right" class="layout-config-sidebar w-26rem" pt:closeButton="ml-auto">
         <div class="p-2">

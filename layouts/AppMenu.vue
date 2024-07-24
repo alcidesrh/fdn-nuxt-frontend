@@ -1,4 +1,6 @@
 <script setup>
+import { Down } from '@icon-park/vue-next';
+
 const props = defineProps({
 
     menu: {
@@ -36,7 +38,7 @@ function menuRootClick(e, $event) {
                 <component :is="menuitem.icon" v-if="isComponent(menuitem.icon)" v-bind="iconProps" />
             </span>
             <span class="truncate">{{ menuitem.name }}</span>
-            <i class="menu-toggle-icon pi pi-angle-down"></i>
+            <down class="menu-toggle-icon" theme="outline" size="24" fill="#334155" :strokeWidth="2" />
         </div>
 
         <a v-if="menuitem.href" :href="menuitem.href" target="_blank" rel="noopener noreferrer">
@@ -44,7 +46,7 @@ function menuRootClick(e, $event) {
                 <i :class="menuitem.icon"></i>
             </span>
             <span>{{ menuitem.name }}</span>
-            <Tag v-if="menuitem.badge" :value="menuitem.badge"></Tag>
+            <Tag v-if="menuitem.name" :value="menuitem.name"></Tag>
         </a>
 
         <NuxtLink v-if="menuitem.to" :to="menuitem.to"
@@ -68,24 +70,3 @@ function menuRootClick(e, $event) {
     </li>
 
 </template>
-<style scoped>
-.layout-submenu-enter-from,
-.layout-submenu-leave-to {
-    max-height: 0;
-}
-
-.layout-submenu-enter-to,
-.layout-submenu-leave-from {
-    max-height: 1000px;
-}
-
-.layout-submenu-leave-active {
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
-}
-
-.layout-submenu-enter-active {
-    overflow: hidden;
-    transition: max-height 1s ease-in-out;
-}
-</style>

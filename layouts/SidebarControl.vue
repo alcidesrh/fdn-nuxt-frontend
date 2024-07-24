@@ -111,21 +111,8 @@ watch(() => centrar.value, (n, o) => {
 <style scoped>
 .sidebar-control-btn {
   transition: all .3s;
-  /* width: fit-content;
-  height: fit-content; */
   align-items: center;
   justify-content: center;
   z-index: 999;
-
-  &.close,
-  &.mini {
-    /* display: grid; */
-    /* transform: translate(-85px, 70px); */
-  }
-
-  &.mini {
-    /* transform: translate(-40px, 70px); */
-  }
-
 }
 </style>

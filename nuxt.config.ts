@@ -54,7 +54,8 @@ export default defineNuxtConfig({
   features: {
     inlineStyles: false,
   },
-  // eslintConfig: {
-  //   setup: false,
-  // },
+  app: {
+    // pageTransition: { name: 'page', mode: 'out-in' },
+    // layoutTransition: { name: 'layout', mode: 'out-in' },
+  },
 })

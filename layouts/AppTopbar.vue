@@ -1,10 +1,12 @@
 <template>
   <div :ref="containerRef" class="layout-topbar u-px-l">
     <div class="layout-topbar-inner">
-      <div class="layout-topbar-logo-container">
-        <NuxtLink to="/" class="layout-topbar-logo">
+      <div class="layout-topbar-logo-container relative w-200px h-70px">
+
+        <NuxtLink to="/" class="layout-topbar-logo w-full h-full z-10">
           <LogoSvg />
         </NuxtLink>
+
       </div>
       <ul class="topbar-items">
         <li>

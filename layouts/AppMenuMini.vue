@@ -1,4 +1,6 @@
 <script setup>
+import { Down } from '@icon-park/vue-next';
+
 const props = defineProps({
 
     menu: {
@@ -31,12 +33,14 @@ function menuRootClick(e, $event) {
 <template>
     <li v-for="(menuitem, index) in menu" :key="`_root${index}`">
 
-        <div v-if="menuitem.children" @click="menuRootClick(menuitem, $event)" class="menu-root">
-            <span class="menu-icon">
+        <div v-if="menuitem.children" @click="menuRootClick(menuitem, $event)"
+            class="grid items-center justify-center gap-2   overflow-hidden cursor-pointer">
+            <span class="menu-icon m-auto">
                 <component :is="menuitem.icon" v-if="isComponent(menuitem.icon)" v-bind="iconProps" />
             </span>
-            <span class="truncate">{{ menuitem.name }}</span>
-            <i class="menu-toggle-icon pi pi-angle-down"></i>
+            <div class="truncate  m-auto max-w-full">{{ menuitem.name }}</div>
+            <down class="menu-toggle-icon" theme="outline" size="24" fill="#334155" :strokeWidth="2" />
+
         </div>
 
         <a v-if="menuitem.href" :href="menuitem.href" target="_blank" rel="noopener noreferrer">
@@ -47,13 +51,12 @@ function menuRootClick(e, $event) {
             <Tag v-if="menuitem.badge" :value="menuitem.badge"></Tag>
         </a>
 
-        <NuxtLink v-if="menuitem.to" :to="menuitem.to"
-            :class="{ 'router-link-active': menuitem.to === route.fullPath }">
-            <span v-if="menuitem.icon" class="menu-icon">
+        <NuxtLink v-if="menuitem.to" :to="menuitem.to" :class="{ 'router-link-active': menuitem.to === route.fullPath }"
+            class="flex justify-center">
+            <span v-if="menuitem.icon" class="menu-icon m-auto" v-tooltip="menuitem.name">
                 <component :is="menuitem.icon" v-if="isComponent(menuitem.icon)" v-bind="iconProps" />
             </span>
-            <span>{{ menuitem.name }}</span>
-            <Tag v-if="menuitem.badge" :value="menuitem.badge"></Tag>
+            <!-- <span>{{ menuitem.name }}</span> -->
         </NuxtLink>
 
         <span v-if="menuitem.subcategory" class="menu-child-category">{{ menuitem.name }}</span>
@@ -61,31 +64,10 @@ function menuRootClick(e, $event) {
             <div v-show="menuitem.children && (isActiveRootmenuItem(menuitem) || menuitem.open)"
                 :class="{ 'open': menuitem.open }">
                 <ol>
-                    <AppMenu :mode="mode" :menu="menuitem.children"></AppMenu>
+                    <AppMenuMini :mode="mode" :menu="menuitem.children"></AppMenuMini>
                 </ol>
             </div>
         </Transition>
     </li>
 
 </template>
-<style scoped>
-.layout-submenu-enter-from,
-.layout-submenu-leave-to {
-    max-height: 0;
-}
-
-.layout-submenu-enter-to,
-.layout-submenu-leave-from {
-    max-height: 1000px;
-}
-
-.layout-submenu-leave-active {
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
-}
-
-.layout-submenu-enter-active {
-    overflow: hidden;
-    transition: max-height 1s ease-in-out;
-}
-</style>
