@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ['./stores/**'],
   },
+
   plugins: ['~/plugins/primevue/primevue.ts'],
   vite: {
     plugins: [
@@ -48,7 +49,7 @@ export default defineNuxtConfig({
   // pwa,
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 
   features: {

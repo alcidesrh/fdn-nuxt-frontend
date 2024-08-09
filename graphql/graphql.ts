@@ -1,5 +1,4 @@
 /* eslint-disable */
-import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -38,20 +37,19 @@ export type Agencia = Node & {
   direccion?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
   status?: Maybe<StatusEnum>;
   telefono?: Maybe<Scalars["String"]["output"]>;
-  users?: Maybe<UserCursorConnection>;
+  users?: Maybe<UserPageConnection>;
 };
 
 export type AgenciaUsersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
+  _page?: InputMaybe<Scalars["Int"]["input"]>;
+  itemsPerPage?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 /** Cursor connection for Agencia. */
@@ -84,6 +82,7 @@ export type Asiento = Node & {
   bus: Bus;
   clase?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   numero: Scalars["Int"]["output"];
 };
 
@@ -119,6 +118,7 @@ export type Boleto = Node & {
   cliente: Cliente;
   createdAt: Scalars["String"]["output"];
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   precio?: Maybe<Scalars["Float"]["output"]>;
   salida: Salida;
   status?: Maybe<StatusEnum>;
@@ -154,6 +154,7 @@ export type BoletoLog = Node & {
   createdAt: Scalars["String"]["output"];
   descripcion?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   tipo?: Maybe<Scalars["Int"]["output"]>;
   updatedAt: Scalars["String"]["output"];
   user?: Maybe<User>;
@@ -200,6 +201,7 @@ export type Bus = Node & {
   createdAt: Scalars["String"]["output"];
   empresa?: Maybe<Empresa>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   marca?: Maybe<Scalars["String"]["output"]>;
   piloto?: Maybe<Piloto>;
@@ -250,6 +252,7 @@ export type Cliente = Node & {
   dpi?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nit?: Maybe<Scalars["String"]["output"]>;
@@ -283,6 +286,35 @@ export type ClientePageInfo = {
   startCursor?: Maybe<Scalars["String"]["output"]>;
 };
 
+export type ColumnFieldsResource = Node & {
+  __typename?: "ColumnFieldsResource";
+  id: Scalars["ID"]["output"];
+};
+
+/** Cursor connection for ColumnFieldsResource. */
+export type ColumnFieldsResourceCursorConnection = {
+  __typename?: "ColumnFieldsResourceCursorConnection";
+  edges?: Maybe<Array<Maybe<ColumnFieldsResourceEdge>>>;
+  pageInfo: ColumnFieldsResourcePageInfo;
+  totalCount: Scalars["Int"]["output"];
+};
+
+/** Edge of ColumnFieldsResource. */
+export type ColumnFieldsResourceEdge = {
+  __typename?: "ColumnFieldsResourceEdge";
+  cursor: Scalars["String"]["output"];
+  node?: Maybe<ColumnFieldsResource>;
+};
+
+/** Information about the current page. */
+export type ColumnFieldsResourcePageInfo = {
+  __typename?: "ColumnFieldsResourcePageInfo";
+  endCursor?: Maybe<Scalars["String"]["output"]>;
+  hasNextPage: Scalars["Boolean"]["output"];
+  hasPreviousPage: Scalars["Boolean"]["output"];
+  startCursor?: Maybe<Scalars["String"]["output"]>;
+};
+
 export type Empresa = Node & {
   __typename?: "Empresa";
   _id: Scalars["Int"]["output"];
@@ -292,6 +324,7 @@ export type Empresa = Node & {
   direccion?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nit?: Maybe<Scalars["String"]["output"]>;
@@ -332,6 +365,7 @@ export type Enclave = Node & {
   direccion?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
@@ -370,20 +404,19 @@ export type Estacion = Node & {
   direccion?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
   status?: Maybe<StatusEnum>;
   telefono?: Maybe<Scalars["String"]["output"]>;
-  users?: Maybe<UserCursorConnection>;
+  users?: Maybe<UserPageConnection>;
 };
 
 export type EstacionUsersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
+  _page?: InputMaybe<Scalars["Int"]["input"]>;
+  itemsPerPage?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 /** Cursor connection for Estacion. */
@@ -414,6 +447,7 @@ export type Fdn = Node & {
   __typename?: "FDN";
   _id: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
 };
 
 /** Cursor connection for FDN. */
@@ -447,6 +481,7 @@ export type Factura = Node & {
   dte?: Maybe<Scalars["String"]["output"]>;
   fecha?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   serie?: Maybe<Scalars["String"]["output"]>;
   status?: Maybe<StatusEnum>;
   updatedAt: Scalars["String"]["output"];
@@ -482,6 +517,7 @@ export type Localidad = Node & {
   __typename?: "Localidad";
   _id: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   nombre: Scalars["String"]["output"];
   pais?: Maybe<Pais>;
 };
@@ -515,6 +551,7 @@ export type Menu = Node & {
   _id: Scalars["Int"]["output"];
   children?: Maybe<TaxonCursorConnection>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   link?: Maybe<Scalars["String"]["output"]>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
@@ -569,6 +606,8 @@ export type Mutation = {
   createBus?: Maybe<CreateBusPayload>;
   /** Creates a Cliente. */
   createCliente?: Maybe<CreateClientePayload>;
+  /** Creates a ColumnFieldsResource. */
+  createColumnFieldsResource?: Maybe<CreateColumnFieldsResourcePayload>;
   /** Creates a Empresa. */
   createEmpresa?: Maybe<CreateEmpresaPayload>;
   /** Creates a Enclave. */
@@ -601,8 +640,6 @@ export type Mutation = {
   createSalidaLog?: Maybe<CreateSalidaLogPayload>;
   /** Creates a Taxon. */
   createTaxon?: Maybe<CreateTaxonPayload>;
-  /** Creates a User. */
-  createUser?: Maybe<CreateUserPayload>;
   /** Creates a Venta. */
   createVenta?: Maybe<CreateVentaPayload>;
   /** Creates a create_form. */
@@ -621,6 +658,8 @@ export type Mutation = {
   deleteBus?: Maybe<DeleteBusPayload>;
   /** Deletes a Cliente. */
   deleteCliente?: Maybe<DeleteClientePayload>;
+  /** Deletes a ColumnFieldsResource. */
+  deleteColumnFieldsResource?: Maybe<DeleteColumnFieldsResourcePayload>;
   /** Deletes a Empresa. */
   deleteEmpresa?: Maybe<DeleteEmpresaPayload>;
   /** Deletes a Enclave. */
@@ -653,8 +692,6 @@ export type Mutation = {
   deleteSalidaLog?: Maybe<DeleteSalidaLogPayload>;
   /** Deletes a Taxon. */
   deleteTaxon?: Maybe<DeleteTaxonPayload>;
-  /** Deletes a User. */
-  deleteUser?: Maybe<DeleteUserPayload>;
   /** Deletes a Venta. */
   deleteVenta?: Maybe<DeleteVentaPayload>;
   /** Deletes a create_form. */
@@ -673,6 +710,8 @@ export type Mutation = {
   updateBus?: Maybe<UpdateBusPayload>;
   /** Updates a Cliente. */
   updateCliente?: Maybe<UpdateClientePayload>;
+  /** Updates a ColumnFieldsResource. */
+  updateColumnFieldsResource?: Maybe<UpdateColumnFieldsResourcePayload>;
   /** Updates a Empresa. */
   updateEmpresa?: Maybe<UpdateEmpresaPayload>;
   /** Updates a Enclave. */
@@ -705,8 +744,6 @@ export type Mutation = {
   updateSalidaLog?: Maybe<UpdateSalidaLogPayload>;
   /** Updates a Taxon. */
   updateTaxon?: Maybe<UpdateTaxonPayload>;
-  /** Updates a User. */
-  updateUser?: Maybe<UpdateUserPayload>;
   /** Updates a Venta. */
   updateVenta?: Maybe<UpdateVentaPayload>;
   /** Updates a create_form. */
@@ -737,6 +774,10 @@ export type MutationCreateBusArgs = {
 
 export type MutationCreateClienteArgs = {
   input: CreateClienteInput;
+};
+
+export type MutationCreateColumnFieldsResourceArgs = {
+  input: CreateColumnFieldsResourceInput;
 };
 
 export type MutationCreateEmpresaArgs = {
@@ -803,10 +844,6 @@ export type MutationCreateTaxonArgs = {
   input: CreateTaxonInput;
 };
 
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
 export type MutationCreateVentaArgs = {
   input: CreateVentaInput;
 };
@@ -841,6 +878,10 @@ export type MutationDeleteBusArgs = {
 
 export type MutationDeleteClienteArgs = {
   input: DeleteClienteInput;
+};
+
+export type MutationDeleteColumnFieldsResourceArgs = {
+  input: DeleteColumnFieldsResourceInput;
 };
 
 export type MutationDeleteEmpresaArgs = {
@@ -907,10 +948,6 @@ export type MutationDeleteTaxonArgs = {
   input: DeleteTaxonInput;
 };
 
-export type MutationDeleteUserArgs = {
-  input: DeleteUserInput;
-};
-
 export type MutationDeleteVentaArgs = {
   input: DeleteVentaInput;
 };
@@ -945,6 +982,10 @@ export type MutationUpdateBusArgs = {
 
 export type MutationUpdateClienteArgs = {
   input: UpdateClienteInput;
+};
+
+export type MutationUpdateColumnFieldsResourceArgs = {
+  input: UpdateColumnFieldsResourceInput;
 };
 
 export type MutationUpdateEmpresaArgs = {
@@ -1011,10 +1052,6 @@ export type MutationUpdateTaxonArgs = {
   input: UpdateTaxonInput;
 };
 
-export type MutationUpdateUserArgs = {
-  input: UpdateUserInput;
-};
-
 export type MutationUpdateVentaArgs = {
   input: UpdateVentaInput;
 };
@@ -1037,6 +1074,7 @@ export type Pais = Node & {
   __typename?: "Pais";
   _id: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   nombre: Scalars["String"]["output"];
 };
 
@@ -1069,6 +1107,7 @@ export type Parada = Node & {
   _id: Scalars["Int"]["output"];
   enclave?: Maybe<Enclave>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
   recorridos?: Maybe<RecorridoCursorConnection>;
@@ -1111,11 +1150,12 @@ export type Permiso = Node & {
   _id: Scalars["Int"]["output"];
   hijos?: Maybe<PermisoCursorConnection>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
   padre?: Maybe<Permiso>;
   status?: Maybe<StatusEnum>;
-  usuarios?: Maybe<UserCursorConnection>;
+  usuarios?: Maybe<UserPageConnection>;
 };
 
 export type PermisoHijosArgs = {
@@ -1126,10 +1166,8 @@ export type PermisoHijosArgs = {
 };
 
 export type PermisoUsuariosArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
+  _page?: InputMaybe<Scalars["Int"]["input"]>;
+  itemsPerPage?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 /** Cursor connection for Permiso. */
@@ -1166,6 +1204,7 @@ export type Piloto = Node & {
   email?: Maybe<Scalars["String"]["output"]>;
   fechaNacimiento?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   licencia?: Maybe<Scalars["String"]["output"]>;
   licenciaVencimiento?: Maybe<Scalars["String"]["output"]>;
@@ -1218,6 +1257,8 @@ export type Query = {
   buses?: Maybe<BusCursorConnection>;
   cliente?: Maybe<Cliente>;
   clientes?: Maybe<ClienteCursorConnection>;
+  columnFieldsResource?: Maybe<ColumnFieldsResource>;
+  columnFieldsResources?: Maybe<ColumnFieldsResourceCursorConnection>;
   create_form?: Maybe<Create_Form>;
   create_forms?: Maybe<Create_FormCursorConnection>;
   empresa?: Maybe<Empresa>;
@@ -1254,8 +1295,7 @@ export type Query = {
   salidas?: Maybe<SalidaCursorConnection>;
   taxa?: Maybe<TaxonCursorConnection>;
   taxon?: Maybe<Taxon>;
-  user?: Maybe<User>;
-  users?: Maybe<UserCursorConnection>;
+  users?: Maybe<UserPageConnection>;
   venta?: Maybe<Venta>;
   ventas?: Maybe<VentaCursorConnection>;
 };
@@ -1320,6 +1360,17 @@ export type QueryClienteArgs = {
 };
 
 export type QueryClientesArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  before?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  last?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+export type QueryColumnFieldsResourceArgs = {
+  id: Scalars["ID"]["input"];
+};
+
+export type QueryColumnFieldsResourcesArgs = {
   after?: InputMaybe<Scalars["String"]["input"]>;
   before?: InputMaybe<Scalars["String"]["input"]>;
   first?: InputMaybe<Scalars["Int"]["input"]>;
@@ -1524,15 +1575,9 @@ export type QueryTaxonArgs = {
   id: Scalars["ID"]["input"];
 };
 
-export type QueryUserArgs = {
-  id: Scalars["ID"]["input"];
-};
-
 export type QueryUsersArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  before?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
-  last?: InputMaybe<Scalars["Int"]["input"]>;
+  _page?: InputMaybe<Scalars["Int"]["input"]>;
+  itemsPerPage?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type QueryVentaArgs = {
@@ -1552,6 +1597,7 @@ export type Recorrido = Node & {
   distancia?: Maybe<Scalars["Float"]["output"]>;
   final?: Maybe<Parada>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   inicio?: Maybe<Parada>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   nombre?: Maybe<Scalars["String"]["output"]>;
@@ -1626,6 +1672,7 @@ export type Salida = Node & {
   empresa?: Maybe<Empresa>;
   fecha?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   recorrido: Recorrido;
   salidaLogs?: Maybe<SalidaLogCursorConnection>;
   status?: Maybe<StatusEnum>;
@@ -1667,6 +1714,7 @@ export type SalidaLog = Node & {
   createdAt: Scalars["String"]["output"];
   descripcion?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   salida: Salida;
   tipo?: Maybe<Scalars["String"]["output"]>;
   updatedAt: Scalars["String"]["output"];
@@ -1725,6 +1773,7 @@ export type Taxon = Node & {
   _id: Scalars["Int"]["output"];
   children?: Maybe<TaxonCursorConnection>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   nombre?: Maybe<Scalars["String"]["output"]>;
   nota?: Maybe<Scalars["String"]["output"]>;
   parent?: Maybe<Taxon>;
@@ -1771,6 +1820,7 @@ export type User = Node & {
   direccion?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   legacyId?: Maybe<Scalars["Int"]["output"]>;
   localidad?: Maybe<Localidad>;
   nit?: Maybe<Scalars["String"]["output"]>;
@@ -1793,28 +1843,19 @@ export type UserPermisosArgs = {
   last?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
-/** Cursor connection for User. */
-export type UserCursorConnection = {
-  __typename?: "UserCursorConnection";
-  edges?: Maybe<Array<Maybe<UserEdge>>>;
-  pageInfo: UserPageInfo;
+/** Page connection for User. */
+export type UserPageConnection = {
+  __typename?: "UserPageConnection";
+  collection?: Maybe<Array<Maybe<User>>>;
+  paginationInfo: UserPaginationInfo;
+};
+
+/** Information about the pagination. */
+export type UserPaginationInfo = {
+  __typename?: "UserPaginationInfo";
+  itemsPerPage: Scalars["Int"]["output"];
+  lastPage: Scalars["Int"]["output"];
   totalCount: Scalars["Int"]["output"];
-};
-
-/** Edge of User. */
-export type UserEdge = {
-  __typename?: "UserEdge";
-  cursor: Scalars["String"]["output"];
-  node?: Maybe<User>;
-};
-
-/** Information about the current page. */
-export type UserPageInfo = {
-  __typename?: "UserPageInfo";
-  endCursor?: Maybe<Scalars["String"]["output"]>;
-  hasNextPage: Scalars["Boolean"]["output"];
-  hasPreviousPage: Scalars["Boolean"]["output"];
-  startCursor?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Venta = Node & {
@@ -1823,6 +1864,7 @@ export type Venta = Node & {
   createdAt: Scalars["String"]["output"];
   factura?: Maybe<Factura>;
   id: Scalars["ID"]["output"];
+  idNumber?: Maybe<Scalars["Int"]["output"]>;
   ida: Salida;
   precio?: Maybe<Scalars["Float"]["output"]>;
   regreso: Salida;
@@ -1976,6 +2018,19 @@ export type CreateClientePayload = {
   __typename?: "createClientePayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   cliente?: Maybe<Cliente>;
+};
+
+/** Creates a ColumnFieldsResource. */
+export type CreateColumnFieldsResourceInput = {
+  className: Scalars["String"]["input"];
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+/** Creates a ColumnFieldsResource. */
+export type CreateColumnFieldsResourcePayload = {
+  __typename?: "createColumnFieldsResourcePayload";
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  columnFieldsResource?: Maybe<ColumnFieldsResource>;
 };
 
 /** Creates a create_form. */
@@ -2304,33 +2359,6 @@ export type CreateTaxonPayload = {
   taxon?: Maybe<Taxon>;
 };
 
-/** Creates a User. */
-export type CreateUserInput = {
-  apellido?: InputMaybe<Scalars["String"]["input"]>;
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  createdAt: Scalars["String"]["input"];
-  direccion?: InputMaybe<Scalars["String"]["input"]>;
-  email?: InputMaybe<Scalars["String"]["input"]>;
-  legacyId?: InputMaybe<Scalars["Int"]["input"]>;
-  localidad?: InputMaybe<Scalars["String"]["input"]>;
-  nit?: InputMaybe<Scalars["String"]["input"]>;
-  nombre: Scalars["String"]["input"];
-  password?: InputMaybe<Scalars["String"]["input"]>;
-  permisos?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
-  roles: Scalars["Iterable"]["input"];
-  status?: InputMaybe<StatusEnum>;
-  telefono?: InputMaybe<Scalars["String"]["input"]>;
-  updatedAt: Scalars["String"]["input"];
-  username: Scalars["String"]["input"];
-};
-
-/** Creates a User. */
-export type CreateUserPayload = {
-  __typename?: "createUserPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  user?: Maybe<User>;
-};
-
 /** Creates a Venta. */
 export type CreateVentaInput = {
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
@@ -2456,6 +2484,19 @@ export type DeleteClientePayload = {
   __typename?: "deleteClientePayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   cliente?: Maybe<Cliente>;
+};
+
+/** Deletes a ColumnFieldsResource. */
+export type DeleteColumnFieldsResourceInput = {
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  id: Scalars["ID"]["input"];
+};
+
+/** Deletes a ColumnFieldsResource. */
+export type DeleteColumnFieldsResourcePayload = {
+  __typename?: "deleteColumnFieldsResourcePayload";
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  columnFieldsResource?: Maybe<ColumnFieldsResource>;
 };
 
 /** Deletes a create_form. */
@@ -2692,19 +2733,6 @@ export type DeleteTaxonPayload = {
   taxon?: Maybe<Taxon>;
 };
 
-/** Deletes a User. */
-export type DeleteUserInput = {
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  id: Scalars["ID"]["input"];
-};
-
-/** Deletes a User. */
-export type DeleteUserPayload = {
-  __typename?: "deleteUserPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  user?: Maybe<User>;
-};
-
 /** Deletes a Venta. */
 export type DeleteVentaInput = {
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
@@ -2874,6 +2902,20 @@ export type UpdateClientePayload = {
   __typename?: "updateClientePayload";
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   cliente?: Maybe<Cliente>;
+};
+
+/** Updates a ColumnFieldsResource. */
+export type UpdateColumnFieldsResourceInput = {
+  className?: InputMaybe<Scalars["String"]["input"]>;
+  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
+  id: Scalars["ID"]["input"];
+};
+
+/** Updates a ColumnFieldsResource. */
+export type UpdateColumnFieldsResourcePayload = {
+  __typename?: "updateColumnFieldsResourcePayload";
+  clientMutationId?: Maybe<Scalars["String"]["output"]>;
+  columnFieldsResource?: Maybe<ColumnFieldsResource>;
 };
 
 /** Updates a create_form. */
@@ -3220,34 +3262,6 @@ export type UpdateTaxonPayload = {
   taxon?: Maybe<Taxon>;
 };
 
-/** Updates a User. */
-export type UpdateUserInput = {
-  apellido?: InputMaybe<Scalars["String"]["input"]>;
-  clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
-  createdAt?: InputMaybe<Scalars["String"]["input"]>;
-  direccion?: InputMaybe<Scalars["String"]["input"]>;
-  email?: InputMaybe<Scalars["String"]["input"]>;
-  id: Scalars["ID"]["input"];
-  legacyId?: InputMaybe<Scalars["Int"]["input"]>;
-  localidad?: InputMaybe<Scalars["String"]["input"]>;
-  nit?: InputMaybe<Scalars["String"]["input"]>;
-  nombre?: InputMaybe<Scalars["String"]["input"]>;
-  password?: InputMaybe<Scalars["String"]["input"]>;
-  permisos?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
-  roles?: InputMaybe<Scalars["Iterable"]["input"]>;
-  status?: InputMaybe<StatusEnum>;
-  telefono?: InputMaybe<Scalars["String"]["input"]>;
-  updatedAt?: InputMaybe<Scalars["String"]["input"]>;
-  username?: InputMaybe<Scalars["String"]["input"]>;
-};
-
-/** Updates a User. */
-export type UpdateUserPayload = {
-  __typename?: "updateUserPayload";
-  clientMutationId?: Maybe<Scalars["String"]["output"]>;
-  user?: Maybe<User>;
-};
-
 /** Updates a Venta. */
 export type UpdateVentaInput = {
   clientMutationId?: InputMaybe<Scalars["String"]["input"]>;
@@ -3268,106 +3282,3 @@ export type UpdateVentaPayload = {
   clientMutationId?: Maybe<Scalars["String"]["output"]>;
   venta?: Maybe<Venta>;
 };
-
-export type GetUsersQueryVariables = Exact<{
-  first: Scalars["Int"]["input"];
-}>;
-
-export type GetUsersQuery = {
-  __typename?: "Query";
-  users?: {
-    __typename?: "UserCursorConnection";
-    edges?: Array<{
-      __typename?: "UserEdge";
-      node?: {
-        __typename?: "User";
-        id: string;
-        nombre: string;
-        username: string;
-        telefono?: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-};
-
-export const GetUsersDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "getUsers" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "first" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "users" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "first" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "first" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "edges" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "node" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "nombre" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "username" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "telefono" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;

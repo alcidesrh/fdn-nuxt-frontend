@@ -3,7 +3,7 @@ import { FormKitKitchenSink } from "@formkit/vue";
 </script>
 
 <template>
-  <Suspense>
-    <FormKitKitchenSink />
+  <!-- <Suspense> -->
+  <FormKitKitchenSink />
   </Suspense>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div :ref="containerRef" class="layout-topbar u-px-l">
+  <div class="layout-topbar u-px-l">
     <div class="layout-topbar-inner">
       <div class="layout-topbar-logo-container relative w-200px h-70px">
 
@@ -88,65 +88,106 @@ export default {
           name: 'v2',
           url: 'https://www.primefaces.org/primevue-v2'
         }
-      ]
+      ],
+      containerw: null
     };
   },
   scrollListener: null,
-  container: null,
+  containerw: null,
   mounted() {
-    this.bindScrollListener();
+
+    const el = document.querySelector("#intersectionObservertarget")
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        const container = document.querySelector('.layout-topbar')
+        if (e.intersectionRatio < 1) container.classList.add('layout-topbar-sticky');
+        else container.classList.remove('layout-topbar-sticky');
+      },
+      {
+        threshold: 1
+      }
+    );
+    observer.observe(el);
+
+    //this.bindScrollListener();
+    // const el = document.querySelector("#intersectionObservertarget")
+    // const $this = this
+    // const observer = new IntersectionObserver(
+    // ([e]) => {
+    // console.log(e.intersectionRatio, this.containerw);
+    // const el = document.querySelector('.layout-topbar')
+    // if (e.intersectionRatio == 0) el.classList.add('layout-topbar-sticky');
+    // else el.classList.remove('layout-topbar-sticky');
+
+    // if (e.intersectionRatio == 0) this.containerw.classList.add('layout-topbar-sticky');
+    // else this.containerw.classList.remove('layout-topbar-sticky');
+
+    // },
+    // {
+    // root: document.querySelector(".layout-wrapper"),
+    // threshold: 0.8
+    // }
+    // );
+
+    // observer.observe(el);
 
   },
-  beforeUnmount() {
-    if (this.scrollListener) {
-      this.unbindScrollListener();
-    }
-  },
+  // beforeUnmount() {
+  //   if (this.scrollListener) {
+  //     this.unbindScrollListener();
+  //   }
+  // },
   methods: {
     onMenuButtonClick(event) {
       this.$emit('menubutton-click', event);
     },
-    bindScrollListener() {
-      if (!this.scrollListener) {
-        if (this.container) {
-          this.scrollListener = () => {
-            if (window.scrollY > 0) this.container.classList.add('layout-topbar-sticky');
-            else this.container.classList.remove('layout-topbar-sticky');
-          };
-        }
-      }
+    // bindScrollListener() {
+    //   if (!this.scrollListener) {
+    //     if (this.container) {
+    //       this.scrollListener = () => {
+    //         if (window.scrollY > 0) this.container.classList.add('layout-topbar-sticky');
+    //         else this.container.classList.remove('layout-topbar-sticky');
+    //       };
+    //     }
+    //   }
 
-      window.addEventListener('scroll', this.scrollListener);
-    },
-    unbindScrollListener() {
-      if (this.scrollListener) {
-        window.removeEventListener('scroll', this.scrollListener);
-        this.scrollListener = null;
-      }
-    },
-    bindOutsideClickListener() {
-      if (!this.outsideClickListener) {
-        this.outsideClickListener = (event) => {
-          if (this.isOutsideTopbarMenuClicked(event)) {
-            this.unbindOutsideClickListener();
-          }
-        };
+    //   window.addEventListener('scroll', this.scrollListener);
+    // },
+    // unbindScrollListener() {
+    //   if (this.scrollListener) {
+    //     window.removeEventListener('scroll', this.scrollListener);
+    //     this.scrollListener = null;
+    //   }
+    // },
+    // bindOutsideClickListener() {
+    //   if (!this.outsideClickListener) {
+    //     this.outsideClickListener = (event) => {
+    //       if (this.isOutsideTopbarMenuClicked(event)) {
+    //         this.unbindOutsideClickListener();
+    //       }
+    //     };
 
-        document.addEventListener('click', this.outsideClickListener);
-      }
-    },
-    unbindOutsideClickListener() {
-      if (this.outsideClickListener) {
-        document.removeEventListener('click', this.outsideClickListener);
-        this.outsideClickListener = null;
-      }
-    },
-    isOutsideTopbarMenuClicked(event) {
-      return !(this.$refs.topbarMenu.isSameNode(event.target) || this.$refs.topbarMenu.contains(event.target));
-    },
+    //     document.addEventListener('click', this.outsideClickListener);
+    //   }
+    // },
+    // unbindOutsideClickListener() {
+    //   if (this.outsideClickListener) {
+    //     document.removeEventListener('click', this.outsideClickListener);
+    //     this.outsideClickListener = null;
+    //   }
+    // },
+    // isOutsideTopbarMenuClicked(event) {
+    //   return !(this.$refs.topbarMenu.isSameNode(event.target) || this.$refs.topbarMenu.contains(event.target));
+    // },
     containerRef(el) {
-      this.container = el;
+      this.containerw = el;
     }
   },
 };
+</script>
+<script setup>
+onMounted(() => { })
+
+
+
 </script>

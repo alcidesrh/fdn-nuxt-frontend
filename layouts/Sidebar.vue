@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import AppMenu from './AppMenu.vue';
 import AppMenuMini from './AppMenuMini.vue';
-import { SortThree, Pushpin, DoubleDown } from '@icon-park/vue-next';
+import { SortThree, Pushpin } from '@icon-park/vue-next';
+import { replace } from 'ramda'
+
 const menuStore = useMenuStateStore()
 const hover = ref(false)
 const hoverMode = ref(menuStore.mode == 'mini hover')
-let prevMode = menuStore.mode == 'close' ? 'normal' : menuStore.mode
-
+let prevMode = menuStore.mode
+if (menuStore.mode.match('close')) {
+    prevMode = replace(/close| close/, '', menuStore.mode)
+}
 watch(() => hover.value, (n) => {
     if (!hoverMode.value)
         return;
@@ -21,8 +25,8 @@ watch(() => menuStore.mode, (n, p) => {
 <template>
 
     <Button size="small" @click="menuStore.mode = prevMode"
-        class="btn-float border-rounded-l-0 menu-sidebar bg-slate-700 " :class="{ 'close': menuStore.mode == 'close' }"
-        raised>
+        class="btn-float border-rounded-l-0 btn-float-sidebar bg-slate-700 "
+        :class="{ 'close': menuStore.mode.match('close') }" raised>
         <icon name="ph:arrow-fat-lines-right-thin" size="34" />
     </Button>
     <div class="sidebar-control" :class="[menuStore.mode]">
@@ -52,7 +56,7 @@ watch(() => menuStore.mode, (n, p) => {
         </div>
         <div id="controlVisibilityTl">
             <span>
-                <icon name="ph:arrow-fat-lines-left-thin" @click="menuStore.mode = 'close'" />
+                <icon name="ph:arrow-fat-lines-left-thin" @click="menuStore.mode = menuStore.mode + ' close'" />
             </span>
             <span>
                 <icon name="ph:arrow-fat-lines-down-thin" @click="menuStore.collapse = !menuStore.collapse" :class="{
@@ -66,7 +70,7 @@ watch(() => menuStore.mode, (n, p) => {
 
 
     </div>
-    <aside class="layout-sidebar" id="layout-sidebar" :class="[menuStore.mode, hover ? 'hover' : '']"
+    <aside class="layout-sidebar" id="layout-sidebar" :class="[menuStore.mode, hoverMode ? 'hover' : '']"
         @mouseover="hover = true" @mouseleave="hover = false">
 
         <nav class="menu-large">

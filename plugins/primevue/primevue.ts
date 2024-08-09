@@ -1,12 +1,18 @@
 import PrimeVue from 'primevue/config'
 import Tooltip from 'primevue/tooltip'
 import ToastService from 'primevue/toastservice'
-import Aura from '@primevue/themes/aura/'
 import StyleClass from 'primevue/styleclass'
 import { definePreset } from '@primevue/themes'
-import CustomAura from './aura'
+// import preset from '@primevue/themes/aura/'
+// import custom from './aura'
+// import preset from '@primevue/themes/lara/'
+// import custom from './lara'
+// import preset from '@primevue/themes/nora/'
+import preset from '@primevue/themes/nora/'
+import custom from './nora'
 
-const Preset = definePreset(Aura, CustomAura)
+// const Preset = definePreset(preset, custom)
+const Preset = definePreset(preset, custom)
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('tooltip', Tooltip)

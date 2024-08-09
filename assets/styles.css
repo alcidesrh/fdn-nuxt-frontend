@@ -1,7 +1,13 @@
 @import 'primeicons/primeicons';
+@import "transition-style";
 @import "./theme/_fonts";
+@import "./theme/hint.min";
+@import "./theme/colors";
+@import "./theme/utopia";
+@import "./theme/_dom-elements";
+@import "./theme/toast";
 @import "./theme/_variable";
-@import "./theme/tailwind-compat" layer(tailwind-compat);
+@import "./theme/_reset" layer(tailwind-compat);
 
 @import "./theme/layout";
 @import "./theme/_topbar";

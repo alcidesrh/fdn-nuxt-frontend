@@ -19,7 +19,7 @@ const route = useRoute()
 
 function isActiveRootmenuItem(menuitem) {
     return (
-        menuitem.children.some((item) => item.to === `/${router.currentRoute.value?.name?.replaceAll('-', '/')}` || (item.children && item.children.some((it) => it.to === `/${router.currentRoute.value.name}`))))
+        menuitem.children.some((item) => item.to === `[/${router.currentRoute.value?.name?.replaceAll('-', '/')}]` || (item.children && item.children.some((it) => it.to === `/${router.currentRoute.value.name}`))))
 
 }
 function menuRootClick(e, $event) {

@@ -3,6 +3,7 @@ import AppTopbar from './AppTopbar.vue'
 import Sidebar from './Sidebar.vue'
 import { DomHandler } from '@primevue/core/utils'
 import AppConfig from './AppConfig.vue';
+import EventBus from './EventBus.vue';
 
 const menuStore = useMenuStateStore()
 const route = useRoute()
@@ -27,11 +28,14 @@ function onMaskClick() {
   DomHandler.unblockBodyScroll('blocked-scroll');
 }
 
-
 </script>
 <template>
 
   <div class="layout-wrapper">
+    <div>
+      <EventBus />
+    </div>
+    <div id="intersectionObservertarget" class="absolute top-2rem"></div>
 
     <AppTopbar @menubutton-click="onMenuButtonClick" />
 
@@ -44,10 +48,6 @@ function onMaskClick() {
     </div>
     <div :class="['layout-mask', { 'layout-mask-active': menuStore.mode == 'active' }]" @click="onMaskClick"></div>
 
-    <!-- <Toast />
-    <Toast position="top-left" group="tl" />
-    <Toast position="bottom-left" group="bl" />
-    <Toast position="bottom-right" group="br" /> -->
   </div>
   <app-config></app-config>
 </template>

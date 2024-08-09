@@ -32,7 +32,7 @@
   letter-spacing: 2px;
   font-family: 'Fast-Track';
   overflow: visible;
-  scale: .8;
+  scale: 1.2;
 }
 
 #logo-text-transporte3>.text2,

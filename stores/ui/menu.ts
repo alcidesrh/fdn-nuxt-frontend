@@ -193,7 +193,7 @@ export const useMenuStateStore = defineStore(
         if (!v) {
           mode.value = ''
           modeaux.value = ''
-        } else if (modeaux.value == v || (modeaux.value == 'mini' && v == 'close')) {
+        } else if (modeaux.value == v || (modeaux.value == 'mini' && v.match('close'))) {
           mode.value = 'normal'
           modeaux.value = 'normal'
         } else {
