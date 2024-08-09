@@ -1,5 +1,18 @@
 // ... imports of other component tokens
-
+const primary = {
+  '0': '#ffffff',
+  '50': '#f2f9f9',
+  '100': '#ddeff0',
+  '200': '#bfe0e2',
+  '300': '#92cace',
+  '400': '#5faab1',
+  '500': '#438e96',
+  '600': '#3b757f',
+  '700': '#356169',
+  '800': '#325158',
+  '900': '#2d464c',
+  '950': '#1a2c32',
+}
 export default {
   semantic: {
     transitionDuration: '0.2s',
@@ -13,20 +26,8 @@ export default {
     disabledOpacity: '0.6',
     iconSize: '1rem',
     anchorGutter: '2px',
-    primary: {
-      0: '#ffffff',
-      50: '{slate.50}',
-      100: '{slate.100}',
-      200: '{slate.200}',
-      300: '{slate.300}',
-      400: '{slate.400}',
-      500: '{slate.500}',
-      600: '{slate.600}',
-      700: '{slate.700}',
-      800: '{slate.800}',
-      900: '{slate.900}',
-      950: '{slate.950}',
-    },
+    primary: { ...primary },
+
     formField: {
       paddingX: '0.75rem',
       paddingY: '0.5rem',
@@ -116,9 +117,10 @@ export default {
         },
         primary: {
           color: '{primary.700}',
-          contrastColor: '#ffffff',
-          hoverColor: '{primary.300}',
-          activeColor: '{primary.500}',
+          contrastColor: '{primary.0}',
+          hoverColor: '{primary.500}',
+          activeColor: '{primary.800}',
+          background: { ...primary },
         },
         highlight: {
           background: '{primary.500}',
@@ -237,7 +239,7 @@ export default {
           950: '{zinc.950}',
         },
         primary: {
-          color: '{primary.500}',
+          color: '{primary.200}',
           contrastColor: '{surface.900}',
           hoverColor: '{primary.300}',
           activeColor: '{primary.200}',
