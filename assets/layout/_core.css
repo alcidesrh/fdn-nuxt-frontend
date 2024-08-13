@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-size: 14px;
+
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: .5rem;
+    height: .5rem;
+    /* display: none; */
+    background-color: var(--p-surface-0);
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: var(--p-slate-400);
+    height: 5px;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* @apply: bg-slate-150; */
+    background-color: var(--p-surface-ground);
+    color: var(--text-color);
+    font-size: var(--step-0);
+}
+
+a {
+    text-decoration: none;
+}
+
+.layout-wrapper {
+    padding-bottom: 2rem;
+}
+
+.layout-content {
+    /* height: calc(100vh - 5rem); */
+    padding: 0 1rem;
+    margin-top: calc(var(--topbar) + 1rem);
+    z-index: 800;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.layout-enter-active,
+.layout-leave-active,
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.4s;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    filter: blur(1rem);
+}
+
+.layout-enter-from,
+.layout-leave-to {
+    filter: grayscale(1);
+}
+
+.layout-submenu-enter-from,
+.layout-submenu-leave-to {
+    max-height: 0;
+}
+
+.layout-submenu-enter-to,
+.layout-submenu-leave-from {
+    max-height: 1000px;
+}
+
+.layout-submenu-leave-active {
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+}
+
+.layout-submenu-enter-active {
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+}
+
+.btn-float {
+    transition: translate 1s;
+    position: fixed;
+    top: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    border-color: var(--p-slate-400);
+    z-index: 999;
+
+    background-color: var(--p-surface-contrast-700);
+
+    &>span {
+        color: var(--p-surface-contrast-color)
+    }
+}
+
+
+
+.toast-grid>div {
+    color: white;
+    /* min-height: 30px;
+  margin: 1px; */
+
+    &:nth-child(odd) {
+        &>div {
+
+            background: var(--sky-700)
+        }
+    }
+
+    &:nth-child(even) {
+        &>div {
+            background: var(--orange-600)
+        }
+    }
+}

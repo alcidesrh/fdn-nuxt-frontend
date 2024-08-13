@@ -1,14 +1,18 @@
-import withNuxt from './.nuxt/eslint.config.mjs'
-import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginVue from 'eslint-plugin-vue'
-import unocss from '@unocss/eslint-config/flat'
-export default withNuxt()
-// [{ languageOptions: { globals: globals.browser } }, pluginJs.configs.recommended, ...tseslint.configs.recommended, ...pluginVue.configs['flat/essential'], unocss]
-// your custom flat configs go here, for example:
+// @ts-check
+import withNuxt from './.nuxt/eslint.config.mjs';
+require('@rushstack/eslint-patch/modern-module-resolution');
+export default withNuxt({
+    files: ['**/*.ts', '**/*.vue'],
+    rules: {
+        'no-console': 'off' // allow console.log in TypeScript files
 
-// },
-// {
-//   ...
-// }
+        // 'vue/multi-word-component-names': 'off',
+        // 'vue/no-reserved-component-names': 'off',
+        // 'vue/component-tags-order': [
+        //     'error',
+        //     {
+        //         order: ['script', 'template', 'style']
+        //     }
+        // ]
+    }
+});

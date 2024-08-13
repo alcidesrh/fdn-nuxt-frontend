@@ -224,7 +224,7 @@ type Query {
     after: String
   ): MenuCursorConnection
   menu(id: ID!): Menu
-  paiss(
+  pais(
     "Returns the first n elements from the list."
     first: Int
 
@@ -237,7 +237,6 @@ type Query {
     "Returns the elements in the list that come after the specified cursor."
     after: String
   ): PaisCursorConnection
-  pais(id: ID!): Pais
   paradas(
     "Returns the first n elements from the list."
     first: Int

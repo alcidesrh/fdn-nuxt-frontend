@@ -1,14 +1,3 @@
-@import 'primeicons/primeicons';
-@import "transition-style";
-@import "./theme/_fonts";
-@import "./theme/hint.min";
-@import "./theme/colors";
-@import "./theme/utopia";
-@import "./theme/_dom-elements";
-@import "./theme/toast";
-@import "./theme/_variable";
-@import "./theme/_reset" layer(tailwind-compat);
-
-@import "./theme/layout";
-@import "./theme/_topbar";
-@import "./theme/_sidebar";
+/* @import "./theme/_reset" layer(tailwind-compat); */
+/* You can add global styles to this file, and also import other style files */
+@import '@/assets/layout/layout.css';

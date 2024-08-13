@@ -1,0 +1,28 @@
+/* Utils */
+.clearfix:after {
+    content: ' ';
+    display: block;
+    clear: both;
+}
+
+
+.p-toast {
+
+    &.p-toast-top-right,
+    &.p-toast-top-left,
+    &.p-toast-top-center {
+        top: 100px;
+    }
+}
+
+.fdn-icon,
+.pi {
+    color: var(--p-icon-color);
+
+    &:is(svg) {
+        &>*>* {
+            stroke-width: 3px;
+        }
+    }
+
+}

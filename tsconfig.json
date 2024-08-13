@@ -3,12 +3,12 @@
   "compilerOptions": {
     // "moduleResolution": "node",
     "verbatimModuleSyntax": false,
-    "plugins": [
-      {
-        "name": "@0no-co/graphqlsp",
-        "schema": "./graphql/schema.graphql"
-      }
-    ],
+    // "plugins": [
+    //   {
+    //     "name": "@0no-co/graphqlsp",
+    //     "schema": "./graphql/schema.graphql"
+    //   }
+    // ],
     // "checkJs": true,
   },
   // "include": [

@@ -1,4 +1,18 @@
 {
+  "files.autoSave": "onFocusChange",
+  "files.autoSaveDelay": 2000,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.snippetSuggestions": "none",
+  "css.hover.documentation": true,
+  "css.hover.references": true,
+  "html.hover.documentation": true,
+  "html.hover.references": true,
+  "less.hover.documentation": false,
+  "less.hover.references": false,
+  "scss.hover.documentation": false,
+  "scss.hover.references": false,
+  "editor.inlineSuggest.showToolbar": "onHover",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#0a7d5f",
     "activityBar.background": "#0a7d5f",
@@ -18,19 +32,4 @@
     "titleBar.inactiveBackground": "#064e3b99",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "files.autoSave": "onFocusChange",
-  "files.autoSaveDelay": 2000,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "eslint.experimental.useFlatConfig": true,
-  "editor.snippetSuggestions": "none",
-  "css.hover.documentation": true,
-  "css.hover.references": true,
-  "html.hover.documentation": true,
-  "html.hover.references": true,
-  "less.hover.documentation": false,
-  "less.hover.references": false,
-  "scss.hover.documentation": false,
-  "scss.hover.references": false,
-  "editor.inlineSuggest.showToolbar": "onHover"
 }

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
-import { Pencil, Delete } from '@icon-park/vue-next';
+// import { Pencil, Delete } from '@icon-park/vue-next';
 
 import { useQuery } from '@vue/apollo-composable'
 import { Maybe, User, UserPaginationInfo } from '~/graphql/graphql';
@@ -200,7 +200,7 @@ function onCellEditComplete(data) {
 }
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  nombre: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   'country.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   representative: { value: null, matchMode: FilterMatchMode.IN },
   status: { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -209,57 +209,39 @@ const filters = ref({
 </script>
 <template>
   <div>
-    <Button label="Submit" />
 
     <Card v-if="!loading && collection.items">
       <template #content>
-        <DataTable filterDisplay="row" :globalFilterFields="['username', 'nombre', 'apellido', 'telefono', 'createdAt']"
-          :rows="collection.itemsPerPage" :totalRecords="collection.totalCount" size="small" stateStorage="local"
-          stateKey="dt-state-demo-session" v-model:selection="selectedProducts" :value="collection.items" dataKey="id"
-          :filters="filters">
+
+
+
+        <DataTable v-model:filters="filters" :value="collection.items" paginator :rows="10" dataKey="id"
+          filterDisplay="row" :loading="loading"
+          :globalFilterFields="['nombre', 'country.name', 'representative.name', 'status']">
+          <template #header>
+            <div class="flex justify-end">
+              <IconField>
+                <InputIcon>
+                  <i class="pi pi-search" />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+              </IconField>
+            </div>
+          </template>
           <template #empty> No customers found. </template>
-          <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-          <Column v-for="c, i in getColummns(Object.keys(collection.items[0]))" :key="i" :field="c"
-            :header="columnsAlias(c)" sortable class="capitalize" :class="{ 'w-3rem!': c == 'idNumber' }"
-            pt:datatable.column.title.font.weight>
+          <template #loading> Loading customers data. Please wait. </template>
+          <Column field="nombre" header="Nombre" style="min-width: 12rem">
             <template #body="{ data }">
-              <div class="normal-case">
-                <span v-if="['createdAt'].includes(c)">
-                  {{ $dateFormat(data.createdAt) }}
-                </span>
-                <div class="flex justify-around gap-1" v-else-if="c == 'roles'">
-                  <Chip v-for="r, i in data[c]" :key="i" :label="r"
-                    pt:root:class="bg-slate-200 u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" />
-                </div>
-                <span v-else>
-                  {{ data[c] }}
-                </span>
-              </div>
+              {{ data.nombre }}
             </template>
-            <template #filter="{ filterModel }">
-              <InputText v-model="filterModel.value" type="text" placeholder="Search by name" />
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
+                placeholder="Search by name" />
             </template>
           </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #body="slotProps">
-              <Button text rounded class="mr-2" @click="editProduct(slotProps.data)">
-                <pencil theme="outline" size="20" fill="#333" :strokeWidth="2" />
-              </Button>
-              <Button text rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)">
-                <delete theme="outline" size="20" fill="#333" :strokeWidth="2" />
-              </Button>
-            </template>
-          </Column>
+
         </DataTable>
-        <Paginator class="u-mt-m" :first="collection.offset" :rows="collection.itemsPerPage"
-          :totalRecords="collection.totalCount" :rowsPerPageOptions="[10, 20, 30, 50, 100]" @page="onChangePage"
-          :template="{
-            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-            '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-            '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-            default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown '
-          }">
-        </Paginator>
+
       </template>
     </Card>
     <skeleton-list v-else :columns="7" />

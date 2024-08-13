@@ -1,62 +1,64 @@
-// import { pwa } from './config/pwa'
-import { fileURLToPath } from 'url'
-import Components from 'unplugin-vue-components-primevue/vite'
-import { PrimeVueResolver } from 'unplugin-vue-components-primevue/resolvers'
-
+// https://nuxt.com/docs/api/configuration/nuxt-config
+import { PrimeVueResolver } from '@primevue/auto-import-resolver';
+import Components from 'unplugin-vue-components/vite';
+import { icons } from './constants';
 export default defineNuxtConfig({
-  ssr: false,
-  modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon', '@nuxt/eslint'], //'@vite-pwa/nuxt'
-  piniaPersistedstate: {
-    storage: 'localStorage',
-  },
-  pinia: {
-    storesDirs: ['./stores/**'],
-  },
-
-  plugins: ['~/plugins/primevue/primevue.ts'],
-  vite: {
-    plugins: [
-      Components({
-        resolvers: [PrimeVueResolver()],
-      }),
+    // modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon', '@nuxt/eslint'],
+    modules: [
+        '@vueuse/nuxt',
+        '@nuxt/eslint',
+        // '@nuxtjs/tailwindcss',
+        '@pinia/nuxt',
+        '@pinia-plugin-persistedstate/nuxt',
+        '@unocss/nuxt',
+        '@nuxt/icon'
     ],
-  },
+    icon: {
+        clientBundle: {
+            // list of icons to include in the client bundle
+            icons: icons,
+            // include all custom collections in the client bundle
+            includeCustomCollections: true
+        },
+        provider: 'server',
+        customCollections: [
+            {
+                prefix: 'fdn',
+                dir: './assets/icons'
+            }
+        ]
+    },
 
-  gsap: {
-    composables: true,
-    provide: false,
-  },
+    plugins: ['~/plugins/primevue/primevue.ts'],
+    css: ['@/assets/tailwind.css', '@/assets/styles.css'],
+    pinia: {
+        storesDirs: ['./stores/**']
+    },
 
-  alias: {
-    schema: fileURLToPath(new URL('./components/form/schemas', import.meta.url)),
-    nm: fileURLToPath(new URL('./node_modules', import.meta.url)),
-  },
+    piniaPersistedstate: {
+        storage: 'localStorage'
+    },
+    unocss: {
+        nuxtLayers: true
+    },
+    vite: {
+        optimizeDeps: {
+            noDiscovery: true
+        },
+        plugins: [
+            Components({
+                resolvers: [PrimeVueResolver()]
+            })
+        ]
+    },
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {}
+        }
+    },
 
-  formkit: {
-    // autoImport: true,
-    // defaultConfig: false,
-  },
-  extends: ['./layers/auth'],
-  experimental: {
-    // when using generate, payload js assets included in sw precache manifest
-    // but missing on offline, disabling extraction it until fixed
-    payloadExtraction: false,
-    renderJsonPayloads: true,
-    typedPages: true,
-  },
-  css: ['@/assets/styles.css'],
-
-  // pwa,
-
-  devtools: {
-    enabled: false,
-  },
-
-  features: {
-    inlineStyles: false,
-  },
-  app: {
-    // pageTransition: { name: 'page', mode: 'out-in' },
-    // layoutTransition: { name: 'layout', mode: 'out-in' },
-  },
-})
+    compatibilityDate: '2024-04-03',
+    devtools: { enabled: false },
+    ssr: false
+});
