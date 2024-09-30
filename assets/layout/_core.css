@@ -4,12 +4,13 @@
 
 html {
     height: 100%;
-    font-size: 14px;
+    font-size: 16px;
 
 }
 
 :root {
     scroll-behavior: smooth;
+    ;
 }
 
 /* width */
@@ -27,6 +28,8 @@ html {
     height: 5px;
 }
 
+
+
 body {
     font-family: var(--font-family);
     margin: 0;
@@ -34,10 +37,14 @@ body {
     min-height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* @apply: bg-slate-150; */
     background-color: var(--p-surface-ground);
+    /* background-color: var(--p-slate-50); */
     color: var(--text-color);
     font-size: var(--step-0);
+    line-height: normal;
+    font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712;
+
+
 }
 
 a {
@@ -49,7 +56,6 @@ a {
 }
 
 .layout-content {
-    /* height: calc(100vh - 5rem); */
     padding: 0 1rem;
     margin-top: calc(var(--topbar) + 1rem);
     z-index: 800;
@@ -97,6 +103,22 @@ a {
     transition: max-height 1s ease-in-out;
 }
 
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+.load-opacity {
+    transition: opacity .2s;
+    opacity: .3;
+}
+
 .btn-float {
     transition: translate 1s;
     position: fixed;
@@ -111,26 +133,5 @@ a {
 
     &>span {
         color: var(--p-surface-contrast-color)
-    }
-}
-
-
-
-.toast-grid>div {
-    color: white;
-    /* min-height: 30px;
-  margin: 1px; */
-
-    &:nth-child(odd) {
-        &>div {
-
-            background: var(--sky-700)
-        }
-    }
-
-    &:nth-child(even) {
-        &>div {
-            background: var(--orange-600)
-        }
     }
 }

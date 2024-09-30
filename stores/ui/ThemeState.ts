@@ -1,10 +1,9 @@
-import { primary } from './../../plugins/primevue/preset';
 import { defineStore } from 'pinia';
 import Aura from '@primevue/themes/aura';
 import Lara from '@primevue/themes/lara';
 import { $t, updatePreset, updateSurfacePalette } from '@primevue/themes';
-import { colorPalette, revertColors } from '~/plugins/primevue/preset';
-import preset from '~/plugins/primevue/preset';
+import { colorPalette, revertColors } from '~/plugins/primevue/presetSlate';
+import preset from '~/plugins/primevue/presetSlate';
 
 const primaryColors = ref(colorPalette);
 
@@ -68,7 +67,7 @@ export const useThemeStateStore = defineStore('useThemeState', {
                 this.darkTheme = !this.darkTheme;
             }
         },
-        updateColors(type, color = false) {
+        updateColors(type: string, color = '') {
             if (type === 'primary') {
                 if (color) {
                     this.color = color;
@@ -83,9 +82,9 @@ export const useThemeStateStore = defineStore('useThemeState', {
         setPreset() {
             const surfacePalette = surfaces.value.find((s) => s.name === this.surface)?.palette;
             const surfacePaletteContrast = revertColors(surfacePalette);
-            preset.semantic.colorScheme.light.surface = surfacePalette;
-            preset.semantic.colorScheme.light.surfaceContrast = surfacePalette;
-            preset.semantic.colorScheme.dark.surface = surfacePalette;
+            preset.semantic.colorScheme.light.surface = surfacePalette as any;
+            preset.semantic.colorScheme.light.surfaceContrast = surfacePalette as any;
+            preset.semantic.colorScheme.dark.surface = surfacePalette as any;
             preset.semantic.colorScheme.dark.surfaceContrast = surfacePaletteContrast;
             // console.log(s);
             const primaryPalette = primaryColors.value.find((c) => c.name === this.color)?.palette;

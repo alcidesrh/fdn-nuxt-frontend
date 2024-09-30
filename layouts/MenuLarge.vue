@@ -13,7 +13,6 @@ const props = defineProps({
     },
 
 })
-const { iconProps, isComponent } = useIcon()
 const router = useRouter()
 const route = useRoute()
 

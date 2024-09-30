@@ -1,5 +1,6 @@
 /* @import './lib/hint.min'; */
 @import './lib/toast';
+
 @import 'primeicons/primeicons.css';
 
 @import "./_fonts";
@@ -10,6 +11,7 @@
 @import './variables/_light';
 @import './variables/_dark';
 @import './_typography';
+@import './components/index';
 
 /* @import './_reset' layer(reset); */
 @import './_preloading';

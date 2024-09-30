@@ -44,17 +44,6 @@
 .toast-grid {
   list-style: none;
   margin-left: -20px;
-
-  &>div {
-
-    &>div {
-      display: flex;
-      width: 100%;
-      min-height: 30px;
-      margin: 3px;
-      line-height: 30px;
-    }
-  }
 }
 
 .grid__col--2-of-2,

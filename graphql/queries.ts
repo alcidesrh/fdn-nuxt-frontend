@@ -1,23 +1,25 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-export const userList = gql`
-  query userList($page: Int, $itemsPerPage: Int) {
-    users(_page: $page, itemsPerPage: $itemsPerPage) {
-      collection {
-        id
-        idNumber
-        username
-        nombre
-        apellido
-        telefono
-        roles
-        createdAt
-      }
-      paginationInfo {
-        itemsPerPage
-        lastPage
-        totalCount
-      }
+export const users = gql`
+    query users($page: Int, $id: Int, $itemsPerPage: Int, $nombre: String, $username: String, $createdAt: [UserFilter_createdAt]) {
+        users(_page: $page, id: $id, itemsPerPage: $itemsPerPage, nombre: $nombre, username: $username, createdAt: $createdAt) {
+            collection {
+                _id
+                id
+                username
+                fullName
+                apellido
+                telefono
+                roles
+                createdAt
+                status
+            }
+            paginationInfo {
+                itemsPerPage
+                lastPage
+                totalCount
+                hasNextPage
+            }
+        }
     }
-  }
 `;

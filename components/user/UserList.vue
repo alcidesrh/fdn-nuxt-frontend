@@ -1,36 +1,88 @@
+<template>
+  <Card>
+    <template #content>
+      <div class="flex justify-end u-mb-l">
+
+        <!-- <nav> -->
+        <!-- <Panel toggleable @update:collapsed="v => toggle = v" :class="{ 'toggle': toggle }">
+
+            <template #footer>
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                  <Button icon="pi pi-filter" rounded text></Button>
+                  <Button icon="pi pi-bookmark" severity="secondary" rounded text></Button>
+                </div>
+                <span class="text-surface-500 dark:text-surface-400">Updated 2 hours ago</span>
+              </div>
+            </template>
+<template #icons> -->
+        <Button icon="pi pi-cog" severity="secondary" rounded text @click="toggle = !toggle" />
+        <Menu ref="menu" id="config_menu" popup />
+        <!-- </template> -->
+        <UserFilter v-model="filter" :loading="loading" />
+        {{ filter }}
+        <!-- </Panel>  -->
+        <!-- </nav> -->
+      </div>
+      <collection-list :loading="loading">
+        <template v-slot:cell="{ column, value }">
+          <div class="normal-case">
+            <span v-if="column.field == 'createdAt'">
+              {{ dformat(value) }}
+            </span>
+            <div class="flex justify-around gap-1" v-else-if="column.field == 'roles'">
+              <Chip v-for="r, i in value" :key="i" :label="r"
+                pt:root:class=" u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" />
+            </div>
+            <span v-else :class="isHighlighted(column)" :data-property="column.field">
+              {{ value }}
+            </span>
+          </div>
+        </template>
+      </collection-list>
+    </template>
+  </Card>
+</template>
+<style>
+.p-panel {
+  transition: width .5s;
+  width: 100%;
+
+  &.toggle {
+    width: 120px;
+  }
+
+  &>.p-panel-header {
+    justify-content: end;
+  }
+}
+</style>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { FilterMatchMode } from '@primevue/core/api';
-import { useToast } from 'primevue/usetoast';
-// import { Pencil, Delete } from '@icon-park/vue-next';
-
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useLazyQuery } from '@vue/apollo-composable'
 import { Maybe, User, UserPaginationInfo } from '~/graphql/graphql';
-
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-import { useFetchList } from "~~/composables/api";
-import { FragmentType, gql, useFragment } from '~/graphql'
-import { userList } from '~~/graphql/queries'
+import { users } from '~~/graphql/queries'
 import { ApolloError } from '@apollo/client/errors';
+
+const metadataUser = useUserMetadataStore()
+const metadata = useMetadataStore()
+const { dformat } = useDate()
+
+// onBeforeMount(async () => {
+await metadataUser.ini()
+metadata.ini('user')
+// })
+
+const toggle = ref(false)
 const bus = useEventBus('msg')
-const { getColummns, columnsAlias, rowPerPage } = useTable()
-
-type UserCollection = UserPaginationInfo & { page: number, items?: Maybe<Array<Maybe<User>>>, offset: number }
-
-const collection: UserCollection = reactive({
-  page: 1,
-  itemsPerPage: rowPerPage,
-  lastPage: 0,
-  totalCount: 0,
-  items: [],
-  offset: computed(() => (collection.page - 1) * collection.itemsPerPage)
-});
 const { y } = useWindowScroll()
 
-const { onResult, loading, onError, fetchMore } = useQuery(
-  userList,
-  { page: collection.page, itemsPerPage: collection.itemsPerPage },
+const { params, stopLoading } = useCollection()
+
+const { onResult, loading, onError, load } = useLazyQuery(
+  users,
+  params,
 )
+const { collection, filter, getProperty } = useCollection()
 
 onResult(
   (result: {
@@ -42,209 +94,54 @@ onResult(
 
     }
   }) => {
+    if (result.networkStatus == 7) {
+      stopLoading.value = !stopLoading.value
+    }
+
+    if (!result.data) return
+
     collection.items = result.data?.users?.collection
-    collection.itemsPerPage = result.data?.users?.paginationInfo.itemsPerPage
-    collection.lastPage = result.data?.users?.paginationInfo.lastPage
-    collection.totalCount = result.data?.users?.paginationInfo.totalCount
+    collection.pagination.itemsPerPage = result.data?.users?.paginationInfo.itemsPerPage
+    collection.pagination.lastPage = result.data?.users?.paginationInfo.lastPage
     y.value = 0
+
   }
 );
 onError(
   (error: ApolloError) => {
-    bus.emit({ detail: error.message })
+    bus.emit({ msg: error.message, type: 'error' })
   }
 );
 
+onMounted(() => {
+  load()
+})
+onUnmounted(() => {
+  CSS.highlights.clear()
+})
 
-function onChangePage(e) {
-  if (collection.itemsPerPage != e.rows) {
-    collection.page = 1
-    collection.itemsPerPage = e.rows
+const isHighlighted = (i: any) => {
+  if (i.search) {
+    const property = getProperty(i.field)
+    return `highlight ${property}`
   }
-  else {
-    collection.page = e.page + 1;
-  }
-  fetchMore({
-    variables: {
-      page: collection.page, itemsPerPage: collection.itemsPerPage
-    },
-    updateQuery: (previousResult, { fetchMoreResult }) => {
-      if (!fetchMoreResult) return previousResult
-      return {
-        ...previousResult,
-        ...fetchMoreResult
-      }
-    },
-  })
+  return null
 }
-const show = () => {
-  bus.emit({ severity: 'warn', detail: 'msg' })
-}
-onMounted(() => { });
 
-const toast = useToast();
-const dt = ref();
-const products = ref();
-const productDialog = ref(false);
-const deleteProductDialog = ref(false);
-const deleteProductsDialog = ref(false);
-const product = ref({});
-const selectedProducts = ref();
-
-const submitted = ref(false);
-const statuses = ref([
-  { label: 'INSTOCK', value: 'instock' },
-  { label: 'LOWSTOCK', value: 'lowstock' },
-  { label: 'OUTOFSTOCK', value: 'outofstock' }
-]);
-
-const formatCurrency = (value) => {
-  if (value)
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  return;
-};
-const openNew = () => {
-  product.value = {};
-  submitted.value = false;
-  productDialog.value = true;
-};
-const hideDialog = () => {
-  productDialog.value = false;
-  submitted.value = false;
-};
-const saveProduct = () => {
-  submitted.value = true;
-
-  if (product?.value.name?.trim()) {
-    if (product.value.id) {
-      product.value.inventoryStatus = product.value.inventoryStatus.value ? product.value.inventoryStatus.value : product.value.inventoryStatus;
-      products.value[findIndexById(product.value.id)] = product.value;
-      toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-    }
-    else {
-      product.value.id = createId();
-      product.value.code = createId();
-      product.value.image = 'product-placeholder.svg';
-      product.value.inventoryStatus = product.value.inventoryStatus ? product.value.inventoryStatus.value : 'INSTOCK';
-      products.value.push(product.value);
-      toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    }
-
-    productDialog.value = false;
-    product.value = {};
-  }
-};
-const editProduct = (prod) => {
-  product.value = { ...prod };
-  productDialog.value = true;
-};
-const confirmDeleteProduct = (prod) => {
-  product.value = prod;
-  deleteProductDialog.value = true;
-};
-const deleteProduct = () => {
-  products.value = products.value.filter(val => val.id !== product.value.id);
-  deleteProductDialog.value = false;
-  product.value = {};
-  toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-};
-const findIndexById = (id) => {
-  let index = -1;
-  for (let i = 0; i < products.value.length; i++) {
-    if (products.value[i].id === id) {
-      index = i;
-      break;
-    }
-  }
-
-  return index;
-};
-const createId = () => {
-  let id = '';
-  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < 5; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return id;
-}
-const exportCSV = () => {
-  dt.value.exportCSV();
-};
-const confirmDeleteSelected = () => {
-  deleteProductsDialog.value = true;
-};
-const deleteSelectedProducts = () => {
-  products.value = products.value.filter(val => !selectedProducts.value.includes(val));
-  deleteProductsDialog.value = false;
-  selectedProducts.value = null;
-  toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-};
-
-const getStatusLabel = (status) => {
-  switch (status) {
-    case 'INSTOCK':
-      return 'success';
-
-    case 'LOWSTOCK':
-      return 'warn';
-
-    case 'OUTOFSTOCK':
-      return 'danger';
-
-    default:
-      return null;
-  }
-};
-function onCellEditComplete(data) {
-  console.log(data)
-}
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  nombre: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  'country.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  representative: { value: null, matchMode: FilterMatchMode.IN },
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
-  verified: { value: null, matchMode: FilterMatchMode.EQUALS }
-});
 </script>
-<template>
-  <div>
 
-    <Card v-if="!loading && collection.items">
-      <template #content>
+<style scoped>
+::highlight(highlight-nombre),
+::highlight(highlight-username) {
+  background-color: #fde047;
+  color: black;
+}
 
+::highlight(highlight-nombre) {
+  background-color: #6ee7b7;
+}
 
-
-        <DataTable v-model:filters="filters" :value="collection.items" paginator :rows="10" dataKey="id"
-          filterDisplay="row" :loading="loading"
-          :globalFilterFields="['nombre', 'country.name', 'representative.name', 'status']">
-          <template #header>
-            <div class="flex justify-end">
-              <IconField>
-                <InputIcon>
-                  <i class="pi pi-search" />
-                </InputIcon>
-                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-              </IconField>
-            </div>
-          </template>
-          <template #empty> No customers found. </template>
-          <template #loading> Loading customers data. Please wait. </template>
-          <Column field="nombre" header="Nombre" style="min-width: 12rem">
-            <template #body="{ data }">
-              {{ data.nombre }}
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
-                placeholder="Search by name" />
-            </template>
-          </Column>
-
-        </DataTable>
-
-      </template>
-    </Card>
-    <skeleton-list v-else :columns="7" />
-
-  </div>
-</template>
+::highlight(highlight-id) {
+  background-color: #67e8f9;
+}
+</style>

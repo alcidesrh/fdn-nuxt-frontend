@@ -91,15 +91,14 @@ onMounted(async () => {
     if (ui.darkTheme) {
         ui.toggleDarkMode(true)
     }
-    if (ui.color) {
-        ui.updateColors('primary')
-    }
-    if (ui.surface) {
-        ui.updateColors('surface')
-    }
-    if (ui.preset != 'Aura') {
-        ui.setPreset()
-
-    }
+    // if (ui.color) {
+    //     ui.updateColors('primary')
+    // }
+    // else if (ui.surface) {
+    //     ui.updateColors('surface')
+    // }
+    // if (ui.preset != 'Aura') {
+    ui.setPreset()
+    // }
 })
 </script>

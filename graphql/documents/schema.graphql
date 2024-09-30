@@ -28,6 +28,8 @@ type Query {
     after: String
   ): create_formCursorConnection
   create_form(id: ID!): create_form
+  getMetadataResource(status: Boolean): MetadataResource
+  columnsMetadataResource(className: String): MetadataResource
   resources(
     "Returns the first n elements from the list."
     first: Int
@@ -349,12 +351,24 @@ type Query {
     after: String
   ): TaxonCursorConnection
   taxon(id: ID!): Taxon
+  user(id: ID!): User
   users(
     "Returns the current page."
     _page: Int
 
     "Returns the number of items per page."
     itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    nombre: String
+    nombre_list: [String]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
   ): UserPageConnection
   ventas(
     "Returns the first n elements from the list."
@@ -428,6 +442,16 @@ type create_formPageInfo {
   hasPreviousPage: Boolean!
 }
 
+type MetadataResource implements Node {
+  id: ID!
+  status: Iterable
+  columns: Iterable
+  _id: String!
+}
+
+"The `Iterable` scalar type represents an array or a Traversable with any kind of data."
+scalar Iterable
+
 "Cursor connection for resource."
 type resourceCursorConnection {
   edges: [resourceEdge]
@@ -474,6 +498,17 @@ type Agencia implements Node {
 
     "Returns the number of items per page."
     itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    nombre: String
+    nombre_list: [String]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
   ): UserPageConnection
   alias: String!
   email: String
@@ -483,9 +518,23 @@ type Agencia implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
   legacyId: Int
+}
+
+input UserFilter_createdAt {
+  before: String
+  strictly_before: String
+  after: String
+  strictly_after: String
+}
+
+input UserFilter_order {
+  id: String
+  nombre: String
+  username: String
+  createdAt: String
+  status: String
 }
 
 "Page connection for User."
@@ -499,6 +548,7 @@ type User implements Node {
   username: String!
   roles: Iterable!
   password: String
+  fullName: String
   permisos(
     "Returns the first n elements from the list."
     first: Int
@@ -513,10 +563,9 @@ type User implements Node {
     after: String
   ): PermisoCursorConnection
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String!
@@ -528,9 +577,6 @@ type User implements Node {
   userIdentifier: String!
   validTokenStrings: Iterable!
 }
-
-"The `Iterable` scalar type represents an array or a Traversable with any kind of data."
-scalar Iterable
 
 "Cursor connection for Permiso."
 type PermisoCursorConnection {
@@ -567,15 +613,25 @@ type Permiso implements Node {
 
     "Returns the number of items per page."
     itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    nombre: String
+    nombre_list: [String]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
   ): UserPageConnection
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
 }
 
-enum StatusEnum {
+enum Status {
   creado
   progreso
   finalizado
@@ -602,14 +658,12 @@ type Localidad implements Node {
   nombre: String!
   pais: Pais
   _id: Int!
-  idNumber: Int
 }
 
 type Pais implements Node {
   id: ID!
   nombre: String!
   _id: Int!
-  idNumber: Int
 }
 
 "Information about the pagination."
@@ -617,6 +671,7 @@ type UserPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+  hasNextPage: Boolean!
 }
 
 "Information about the current page."
@@ -646,7 +701,6 @@ type Asiento implements Node {
   bus: Bus!
   clase: String
   _id: Int!
-  idNumber: Int
 }
 
 type Bus implements Node {
@@ -672,10 +726,9 @@ type Bus implements Node {
   marca: String
   placa: String
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
 }
 
@@ -685,10 +738,9 @@ type Empresa implements Node {
   denominacionSocial: String
   alias: String
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   nombre: String!
   email: String
@@ -708,10 +760,9 @@ type Piloto implements Node {
   seguroSocial: String
   nacionalidad: String
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String!
@@ -763,8 +814,7 @@ type Boleto implements Node {
   asiento: Asiento!
   salida: Salida!
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
   createdAt: String!
   updatedAt: String!
 }
@@ -773,10 +823,9 @@ type Cliente implements Node {
   id: ID!
   dpi: String
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String!
@@ -805,7 +854,6 @@ type BoletoLog implements Node {
   boleto: Boleto!
   tipo: Int
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
   descripcion: String
@@ -853,10 +901,9 @@ type Salida implements Node {
     after: String
   ): BoletoCursorConnection
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
 }
 
 type Recorrido implements Node {
@@ -868,8 +915,7 @@ type Recorrido implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
   legacyId: Int
 }
 
@@ -892,8 +938,7 @@ type Parada implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
 }
 
 type Enclave implements Node {
@@ -905,8 +950,7 @@ type Enclave implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
 }
 
 "Cursor connection for Recorrido."
@@ -948,7 +992,6 @@ type SalidaLog implements Node {
   tipo: String
   salida: Salida!
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
   descripcion: String
@@ -1076,6 +1119,17 @@ type Estacion implements Node {
 
     "Returns the number of items per page."
     itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    nombre: String
+    nombre_list: [String]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
   ): UserPageConnection
   alias: String!
   email: String
@@ -1085,8 +1139,7 @@ type Estacion implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
   legacyId: Int
 }
 
@@ -1114,7 +1167,6 @@ type FDNEdge {
 type FDN implements Node {
   id: ID!
   _id: Int!
-  idNumber: Int
 }
 
 "Information about the current page."
@@ -1146,10 +1198,9 @@ type Factura implements Node {
   serie: String
   venta: Venta
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
 }
 
 type Venta implements Node {
@@ -1160,10 +1211,9 @@ type Venta implements Node {
   precio: Float
   factura: Factura
   _id: Int!
-  idNumber: Int
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
 }
 
 "Information about the current page."
@@ -1230,8 +1280,7 @@ type Menu implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
 }
 
 type Taxon implements Node {
@@ -1254,8 +1303,7 @@ type Taxon implements Node {
   nombre: String
   nota: String
   _id: Int!
-  idNumber: Int
-  status: StatusEnum
+  status: Status
 }
 
 "Cursor connection for Taxon."
@@ -1775,7 +1823,7 @@ input updateAgenciaInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -1808,7 +1856,7 @@ input createAgenciaInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -1868,7 +1916,7 @@ input updateBoletoInput {
   boletoLogs: [String]
   asiento: String
   salida: String
-  status: StatusEnum
+  status: Status
   createdAt: String
   updatedAt: String
   clientMutationId: String
@@ -1899,7 +1947,7 @@ input createBoletoInput {
   boletoLogs: [String]
   asiento: String!
   salida: String!
-  status: StatusEnum
+  status: Status
   createdAt: String!
   updatedAt: String!
   clientMutationId: String
@@ -1971,7 +2019,7 @@ input updateBusInput {
   placa: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2006,7 +2054,7 @@ input createBusInput {
   placa: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2023,7 +2071,7 @@ input updateClienteInput {
   dpi: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String
@@ -2058,7 +2106,7 @@ input createClienteInput {
   dpi: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String!
@@ -2084,7 +2132,7 @@ input updateEmpresaInput {
   alias: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   nombre: String
   email: String
@@ -2120,7 +2168,7 @@ input createEmpresaInput {
   alias: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   nombre: String!
   email: String
@@ -2146,7 +2194,7 @@ input updateEnclaveInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2176,7 +2224,7 @@ input createEnclaveInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2197,7 +2245,7 @@ input updateEstacionInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2230,7 +2278,7 @@ input createEstacionInput {
   localidad: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2286,7 +2334,7 @@ input updateFacturaInput {
   venta: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2317,7 +2365,7 @@ input createFacturaInput {
   venta: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2376,7 +2424,7 @@ input updateMenuInput {
   children: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2407,7 +2455,7 @@ input createMenuInput {
   children: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2461,7 +2509,7 @@ input updateParadaInput {
   recorridos: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2489,7 +2537,7 @@ input createParadaInput {
   recorridos: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2507,7 +2555,7 @@ input updatePermisoInput {
   usuarios: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2536,7 +2584,7 @@ input createPermisoInput {
   usuarios: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2558,7 +2606,7 @@ input updatePilotoInput {
   nacionalidad: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String
@@ -2599,7 +2647,7 @@ input createPilotoInput {
   nacionalidad: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   legacyId: Int
   apellido: String
   nombre: String!
@@ -2626,7 +2674,7 @@ input updateRecorridoInput {
   final: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2657,7 +2705,7 @@ input createRecorridoInput {
   final: String
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   legacyId: Int
   clientMutationId: String
 }
@@ -2720,7 +2768,7 @@ input updateSalidaInput {
   boletos: [String]
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2752,7 +2800,7 @@ input createSalidaInput {
   boletos: [String]
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2817,7 +2865,7 @@ input updateTaxonInput {
   children: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2846,7 +2894,7 @@ input createTaxonInput {
   children: [String]
   nombre: String
   nota: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2866,7 +2914,7 @@ input updateVentaInput {
   factura: String
   createdAt: String
   updatedAt: String
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 
@@ -2897,7 +2945,7 @@ input createVentaInput {
   factura: String
   createdAt: String!
   updatedAt: String!
-  status: StatusEnum
+  status: Status
   clientMutationId: String
 }
 

@@ -19,7 +19,7 @@ watch(() => hover.value, (n) => {
 watch(() => menuStore.mode, (n, p) => {
     prevMode = p
 })
-console.log(menuStore.menu)
+// console.log(menuStore.menu)
 </script>
 
 <template>

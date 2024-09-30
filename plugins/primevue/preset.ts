@@ -1,5 +1,5 @@
 // ... imports of other component tokens
-export const revertColors = (i: object) => {
+export const revertColors = (i: any) => {
     const temp = structuredClone(toRaw(i));
     const val = Object.values(i).reverse();
     for (let i = 0, k = Object.keys(temp); i < val.length; i++) {
@@ -7,19 +7,33 @@ export const revertColors = (i: object) => {
     }
     return temp;
 };
-export const primary = {
-    '0': '#ffffff',
-    '50': '#f2f9f9',
-    '100': '#ddeff0',
-    '200': '#bfe0e2',
-    '300': '#92cace',
-    '400': '#5faab1',
-    '500': '#438e96',
-    '600': '#3b757f',
-    '700': '#356169',
-    '800': '#325158',
-    '900': '#2d464c',
-    '950': '#1a2c32'
+// export const primary = {
+//     '0': '#ffffff',
+//     '50': '#f2f9f9',
+//     '100': '#ddeff0',
+//     '200': '#bfe0e2',
+//     '300': '#92cace',
+//     '400': '#5faab1',
+//     '500': '#438e96',
+//     '600': '#3b757f',
+//     '700': '#356169',
+//     '800': '#325158',
+//     '900': '#2d464c',
+//     '950': '#1a2c32'
+
+// };
+const primary = {
+    50: '#ecfdf5',
+    100: '#d1fae5',
+    200: '#a7f3d0',
+    300: '#6ee7b7',
+    400: '#34d399',
+    500: '#10b981',
+    600: '#059669',
+    700: '#047857',
+    800: '#065f46',
+    900: '#064e3b',
+    950: '#022c22'
 };
 export const surface = {
     0: '#ffffff',
@@ -51,19 +65,32 @@ const surfaceDark = {
 };
 
 const colors = {
+    // primary: {
+    //     '0': '#ffffff',
+    //     '50': '#f2f9f9',
+    //     '100': '#ddeff0',
+    //     '200': '#bfe0e2',
+    //     '300': '#92cace',
+    //     '400': '#5faab1',
+    //     '500': '#438e96',
+    //     '600': '#3b757f',
+    //     '700': '#356169',
+    //     '800': '#325158',
+    //     '900': '#2d464c',
+    //     '950': '#1a2c32'
+    // },
     primary: {
-        '0': '#ffffff',
-        '50': '#f2f9f9',
-        '100': '#ddeff0',
-        '200': '#bfe0e2',
-        '300': '#92cace',
-        '400': '#5faab1',
-        '500': '#438e96',
-        '600': '#3b757f',
-        '700': '#356169',
-        '800': '#325158',
-        '900': '#2d464c',
-        '950': '#1a2c32'
+        50: '#ecfdf5',
+        100: '#d1fae5',
+        200: '#a7f3d0',
+        300: '#6ee7b7',
+        400: '#34d399',
+        500: '#10b981',
+        600: '#059669',
+        700: '#047857',
+        800: '#065f46',
+        900: '#064e3b',
+        950: '#022c22'
     },
     emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
     green: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d', 950: '#052e16' },
@@ -96,6 +123,7 @@ export const colorPalette = [
 ];
 const surfaceContrast = revertColors(surface);
 const primaryContrast = revertColors(primary);
+
 export default {
     semantic: {
         transitionDuration: '0.2s',
@@ -213,13 +241,13 @@ export default {
                     disabledBackground: '{surface.200}',
                     filledBackground: '{surface.50}',
                     filledFocusBackground: '{surface.50}',
-                    borderColor: '{surface.300}',
-                    hoverBorderColor: '{surface.400}',
+                    borderColor: '{surface.400}',
+                    hoverBorderColor: '{surface.500}',
                     focusBorderColor: '{primary.color}',
                     invalidBorderColor: '{red.400}',
                     color: '{surface.700}',
-                    disabledColor: '{surface.500}',
-                    placeholderColor: '{surface.500}',
+                    disabledColor: '{surface.600}',
+                    placeholderColor: '{slate.400}',
                     floatLabelColor: '{surface.500}',
                     floatLabelFocusColor: '{surface.500}',
                     floatLabelInvalidColor: '{red.400}',
@@ -303,7 +331,7 @@ export default {
                 surface: { ...surfaceDark },
                 surfaceContrast: { ...surfaceContrast },
                 primary: {
-                    color: '{primary.400}',
+                    color: '{primary.600}',
                     contrastColor: '{surface.900}',
                     hoverColor: '{primary.300}',
                     activeColor: '{primary.200}',
@@ -412,31 +440,7 @@ export default {
             light: '{surface-contrast-200}'
         }
     },
-    components: {
-        card: {
-            colorScheme: {
-                light: {
-                    root: {
-                        borderRadius: '4px',
-                        shadow: 'none'
-                    },
-                    subtitle: {
-                        color: '{surface.500}'
-                    }
-                }
-            }
-        },
-        tree: {
-            colorScheme: {
-                light: {
-                    root: {
-                        background: '{surface.700}',
-                        color: '{surface.700}'
-                    }
-                }
-            }
-        }
-    },
+
     primitive: {
         borderRadius: {
             none: '0',
@@ -461,5 +465,85 @@ export default {
             '950': '#1a2c32'
         },
         ...colors
+    },
+    components: {
+        // card: {
+        //     colorScheme: {
+        //         light: {
+        //             root: {
+        //                 borderRadius: '4px',
+        //                 shadow: 'none'
+        //             },
+        //             subtitle: {
+        //                 color: '{surface.500}'
+        //             }
+        //         }
+        //     }
+        // },
+        tree: {
+            colorScheme: {
+                light: {
+                    root: {
+                        background: '{surface.700}',
+                        color: '{surface.700}'
+                    }
+                }
+            }
+        },
+        paginator: {
+            nav: {
+                button: {
+                    selected: {
+                        background: '{surface.contrast.200}'
+                    }
+                }
+            }
+        },
+        datatable: {
+            header: {
+                background: '{surface.contrast.300}',
+                color: '{surface.contrast.300}',
+                cell: {
+                    background: '{surface.contrast.300}',
+                    selected: {
+                        background: '{surface.contrast.300}'
+                    }
+                }
+            }
+        },
+        datepicker: {
+            colorScheme: {
+                light: {
+                    date: {
+                        range: {
+                            selected: {
+                                background: '{primary.200}'
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        button: {
+            colorScheme: {
+                light: {
+                    outlined: {
+                        primary: {
+                            border: {
+                                color: '{primary.400}'
+                            }
+                        },
+                        secondary: {
+                            hover: {
+                                background: '{surface.100}'
+                            },
+                            border: {
+                                color: '{surface.400}'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 };

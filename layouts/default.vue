@@ -1,5 +1,6 @@
 <template>
     <div class="layout-wrapper">
+
         <!-- <div class=" preloader-content z-999 fixed top-50% left-50%"></div> -->
         <div id="intersectionObservertarget" class="absolute top-2rem"></div>
         <Topbar />
@@ -11,15 +12,16 @@
         </div>
 
         <div class="layout-mask animate-fadein" />
+        <div>
+            <toast-messages />
+        </div>
     </div>
-    <Toast />
+    <!-- <Toast /> -->
 </template>
 <script setup>
 import Topbar from './Topbar.vue'
 import Sidebar from './Sidebar.vue'
 import { DomHandler } from '../utils/primevueutils/Utils.js'
-import Config from './Config.vue';
-import EventBus from './EventBus.vue';
 
 const menuStore = useMenuStateStore()
 const route = useRoute()

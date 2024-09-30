@@ -20,7 +20,9 @@
     color: var(--p-icon-color);
 
     &:is(svg) {
-        &>*>* {
+
+        &>*>*,
+        &>* {
             stroke-width: 3px;
         }
     }

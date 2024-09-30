@@ -7,10 +7,14 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "codegen:watch": "yarn graphql-codegen --watch"
     },
     "dependencies": {
         "@apollo/client": "^3.11.4",
+        "@formkit/addons": "^1.6.5",
+        "@formkit/i18n": "^1.6.5",
+        "@formkit/nuxt": "^1.6.5",
         "@graphql-typed-document-node/core": "^3.2.0",
         "@iconify/json": "^2.2.235",
         "@nuxt/icon": "^1.4.5",

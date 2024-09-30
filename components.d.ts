@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Avatar: typeof import('primevue/avatar')['default']
     Button: typeof import('primevue/button')['default']
     ButtonGroup: typeof import('primevue/buttongroup')['default']
     Card: typeof import('primevue/card')['default']
@@ -15,14 +16,18 @@ declare module 'vue' {
     Chip: typeof import('primevue/chip')['default']
     Column: typeof import('primevue/column')['default']
     DataTable: typeof import('primevue/datatable')['default']
+    DatePicker: typeof import('primevue/datepicker')['default']
+    Divider: typeof import('primevue/divider')['default']
     Drawer: typeof import('primevue/drawer')['default']
     IconField: typeof import('primevue/iconfield')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
+    InputGroupAddon: typeof import('primevue/inputgroupaddon')['default']
     InputIcon: typeof import('primevue/inputicon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
     MultiSelect: typeof import('primevue/multiselect')['default']
     Paginator: typeof import('primevue/paginator')['default']
+    Panel: typeof import('primevue/panel')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('primevue/select')['default']

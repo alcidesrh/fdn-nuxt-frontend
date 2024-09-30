@@ -3,10 +3,17 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "dev",
+			"script": "codegen",
 			"problemMatcher": [],
-			"label": "npm: dev",
-			"detail": "nuxt dev"
-		}
+			"label": "Codegen",
+			"detail": "Generate types from ./graphql/schema.graphql"
+		},
+		{
+			"type": "npm",
+			"script": "codegen:watch",
+			"problemMatcher": [],
+			"label": "Codegen Watch",
+			"detail": "Look in *.{vue,ts,js} for graphql instructions and generate types"
+		},
 	]
 }

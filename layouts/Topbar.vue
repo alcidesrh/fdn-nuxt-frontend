@@ -7,7 +7,7 @@
         </NuxtLink>
       </div>
 
-      <div class="layout-topbar-actions">
+      <div class="layout-topbar-actions contrast">
         <div class="layout-config-menu">
           <button type="button" class="layout-topbar-action" @click="ui.toggleDarkMode()">
             <i :class="['pi', { 'pi-moon': ui.darkTheme, 'pi-sun': !ui.darkTheme }]"></i>

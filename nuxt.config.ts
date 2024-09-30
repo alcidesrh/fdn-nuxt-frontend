@@ -11,8 +11,13 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
         '@unocss/nuxt',
-        '@nuxt/icon'
+        '@nuxt/icon',
+        '@formkit/nuxt'
     ],
+    formkit: {
+        // Experimental support for auto loading (see note):
+        // autoImport: truerender
+    },
     icon: {
         clientBundle: {
             // list of icons to include in the client bundle
@@ -21,6 +26,7 @@ export default defineNuxtConfig({
             includeCustomCollections: true
         },
         provider: 'server',
+        localApiEndpoint: '/api_icon/_nuxt_icon',
         customCollections: [
             {
                 prefix: 'fdn',
@@ -38,9 +44,9 @@ export default defineNuxtConfig({
     piniaPersistedstate: {
         storage: 'localStorage'
     },
-    unocss: {
-        nuxtLayers: true
-    },
+    // unocss: {
+    //     nuxtLayers: true
+    // },
     vite: {
         optimizeDeps: {
             noDiscovery: true
@@ -57,7 +63,6 @@ export default defineNuxtConfig({
             autoprefixer: {}
         }
     },
-
     compatibilityDate: '2024-04-03',
     devtools: { enabled: false },
     ssr: false
