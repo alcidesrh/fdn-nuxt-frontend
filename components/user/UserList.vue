@@ -1,89 +1,57 @@
 <template>
-  <Card>
-    <template #content>
-      <div class="flex justify-end u-mb-l">
 
-        <!-- <nav> -->
-        <!-- <Panel toggleable @update:collapsed="v => toggle = v" :class="{ 'toggle': toggle }">
+  {{ params }}
+  <collection-list :collectionStore="{ columns: columns, params: params, collection: collection, data: data }"
+    :loading="loading" @sort="userCollectionStore.sort">
 
-            <template #footer>
-              <div class="flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-2">
-                  <Button icon="pi pi-filter" rounded text></Button>
-                  <Button icon="pi pi-bookmark" severity="secondary" rounded text></Button>
-                </div>
-                <span class="text-surface-500 dark:text-surface-400">Updated 2 hours ago</span>
-              </div>
-            </template>
-<template #icons> -->
-        <Button icon="pi pi-cog" severity="secondary" rounded text @click="toggle = !toggle" />
-        <Menu ref="menu" id="config_menu" popup />
-        <!-- </template> -->
-        <UserFilter v-model="filter" :loading="loading" />
-        {{ filter }}
-        <!-- </Panel>  -->
-        <!-- </nav> -->
-      </div>
-      <collection-list :loading="loading">
-        <template v-slot:cell="{ column, value }">
-          <div class="normal-case">
-            <span v-if="column.field == 'createdAt'">
-              {{ dformat(value) }}
-            </span>
-            <div class="flex justify-around gap-1" v-else-if="column.field == 'roles'">
-              <Chip v-for="r, i in value" :key="i" :label="r"
-                pt:root:class=" u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" />
-            </div>
-            <span v-else :class="isHighlighted(column)" :data-property="column.field">
-              {{ value }}
-            </span>
+    <template #header>
+      <div class="flex flex-wrap justify-between u-mb-l">
+        <div>
+          <span class="u-text-2">Usuarios</span>
+        </div>
+
+        <div>
+          <div class="flex flex-wrap gap-5">
+            <Button label="Importar" icon="pi pi-download" severity="secondary" outlined /><Button label="Exportar"
+              icon="pi pi-upload" severity="secondary" outlined />
+            <Button label="Nuevo" icon="pi pi-plus" outlined />
+            <Button label="Eliminar" icon="pi pi-trash" severity="danger" outlined />
           </div>
-        </template>
-      </collection-list>
+        </div>
+      </div>
     </template>
-  </Card>
+    <template #action="{ _id, id }">
+      <div class="flex gap-5 items-center justify-center w-full">
+        <Icon name="icon-park-outline:delete"
+          class="[&>g>path]:stroke-2px  text-orange-500 cursor-pointer u-text-1! action" mode="svg" />
+        <NuxtLink :to="{ name: 'users-id-edit', params: { id: _id, aa: id } }">
+          <Icon name="icon-park-outline:pencil" class=" primary-contrast-500 cursor-pointer  u-text-1! action"
+            mode="svg" />
+        </NuxtLink>
+      </div>
+    </template>
+  </collection-list>
 </template>
-<style>
-.p-panel {
-  transition: width .5s;
-  width: 100%;
-
-  &.toggle {
-    width: 120px;
-  }
-
-  &>.p-panel-header {
-    justify-content: end;
-  }
-}
-</style>
+<!-- //////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////// -->
 <script setup lang="ts">
-import { useQuery, useLazyQuery } from '@vue/apollo-composable'
-import { Maybe, User, UserPaginationInfo } from '~/graphql/graphql';
+
+import { Maybe, MetadataResource, User, UserPaginationInfo } from '~/graphql/graphql';
 import { users } from '~~/graphql/queries'
-import { ApolloError } from '@apollo/client/errors';
+import pipe from 'ramda/es/pipe'
 
-const metadataUser = useUserMetadataStore()
+const { filterInputClasses } = useCollection()
+
+const userCollectionStore = useUserCollectionStore()
+const { columns, collection, params, data } = storeToRefs(userCollectionStore)
+
 const metadata = useMetadataStore()
-const { dformat } = useDate()
 
-// onBeforeMount(async () => {
-await metadataUser.ini()
-metadata.ini('user')
-// })
-
-const toggle = ref(false)
-const bus = useEventBus('msg')
-const { y } = useWindowScroll()
-
-const { params, stopLoading } = useCollection()
-
-const { onResult, loading, onError, load } = useLazyQuery(
+const { onResult, loading, onError } = useQuery(
   users,
-  params,
-)
-const { collection, filter, getProperty } = useCollection()
+  () => params.value
 
+)
 onResult(
   (result: {
     data: {
@@ -91,57 +59,83 @@ onResult(
         collection: Maybe<Array<Maybe<User>>>;
         paginationInfo: UserPaginationInfo;
       }
-
     }
   }) => {
     if (result.networkStatus == 7) {
-      stopLoading.value = !stopLoading.value
+      data.value.loading = false
     }
-
     if (!result.data) return
-
-    collection.items = result.data?.users?.collection
-    collection.pagination.itemsPerPage = result.data?.users?.paginationInfo.itemsPerPage
-    collection.pagination.lastPage = result.data?.users?.paginationInfo.lastPage
+    collection.value.items = result.data?.users?.collection
+    collection.value.pagination.itemsPerPage = result.data?.users?.paginationInfo.itemsPerPage
+    collection.value.pagination.lastPage = result.data?.users?.paginationInfo.lastPage
+    collection.value.pagination.totalCount = result.data?.users?.paginationInfo.totalCount
     y.value = 0
 
   }
 );
-onError(
-  (error: ApolloError) => {
-    bus.emit({ msg: error.message, type: 'error' })
-  }
-);
+onError(merror as any);
 
-onMounted(() => {
-  load()
+watch(() => loading.value, (v) => {
+  data.value.loading = v
 })
-onUnmounted(() => {
-  CSS.highlights.clear()
-})
+const getColumns = (a: any) => {
 
-const isHighlighted = (i: any) => {
-  if (i.search) {
-    const property = getProperty(i.field)
-    return `highlight ${property}`
-  }
-  return null
+  const { onResult, onError } = a
+  onResult(
+    (result: {
+      networkStatus: Number;
+      data: {
+        columnsMetadataResource: Maybe<MetadataResource>;
+      };
+    }) => {
+      if (result.networkStatus != 7) {
+        return;
+      }
+      columns.value = [{ action: true }, ...result.data.columnsMetadataResource?.columns.collection.map((i: any) => {
+        let temp: any = useCloned(i).cloned.value;
+        let temp2: any = {};
+        if (temp.schema && filterInputClasses[temp.schema.$formkit]) {
+          temp2 = filterInputClasses[temp.schema.$formkit];
+          if (temp2[temp.name]) {
+            temp.schema = { ...temp.schema, ...temp2[temp.name], 'eventbus': 'collection' };
+          }
+        }
+        return temp;
+      })];
+
+    }
+  )
+  onError(merror)
 }
+const c = pipe(metadata.ini, getColumns)
+c('user')
+const { y } = useWindowScroll()
+
+
+userCollectionStore.$subscribe((mutation, state) => {
+  // import { MutationType } from 'pinia'
+  mutation.type // 'direct' | 'patch object' | 'patch function'
+  // same as cartStore.$id
+  // only available with mutation.type === 'patch object'
+  mutation.payload // patch object passed to cartStore.$patch()
+
+  console.log(mutation)
+  // persist the whole state to the local storage whenever it changes
+  // localStorage.setItem('cart', JSON.stringify(state))
+})
+
 
 </script>
+<style scope>
+.action {
+  transition: all .2s;
 
-<style scoped>
-::highlight(highlight-nombre),
-::highlight(highlight-username) {
-  background-color: #fde047;
-  color: black;
-}
-
-::highlight(highlight-nombre) {
-  background-color: #6ee7b7;
-}
-
-::highlight(highlight-id) {
-  background-color: #67e8f9;
+  &:hover {
+    scale: 2;
+    background-color: var(--p-primary-contrast-700);
+    border-radius: 999px;
+    color: var(--p-primary-contrast-100);
+    padding: 3px;
+  }
 }
 </style>

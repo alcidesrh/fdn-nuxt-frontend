@@ -1,6 +1,6 @@
 // @ts-check
 import withNuxt from './.nuxt/eslint.config.mjs';
-require('@rushstack/eslint-patch/modern-module-resolution');
+// require('@rushstack/eslint-patch/modern-module-resolution');
 export default withNuxt({
     files: ['**/*.ts', '**/*.vue'],
     rules: {

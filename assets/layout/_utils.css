@@ -17,7 +17,7 @@
 
 .fdn-icon,
 .pi {
-    color: var(--p-icon-color);
+    /* color: var(--p-icon-color); */
 
     &:is(svg) {
 

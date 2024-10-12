@@ -49,8 +49,7 @@ function menuRootClick(e, $event) {
             <Tag v-if="menuitem.name" :value="menuitem.name" />
         </a>
 
-        <NuxtLink v-if="menuitem.to" :to="menuitem.to"
-            :class="{ 'router-link-active': menuitem.to === route.fullPath }">
+        <NuxtLink v-if="menuitem.to" to="/" :class="{ 'router-link-active': menuitem.to === route.fullPath }">
             <span v-if="menuitem.icon" class="menu-icon">
                 <Icon :name="menuitem.icon" mode="svg" class="" />
             </span>
@@ -68,5 +67,4 @@ function menuRootClick(e, $event) {
             </div>
         </Transition>
     </li>
-
 </template>

@@ -5,19 +5,11 @@
 
   <h1 class="text-3xl my-4">Create User</h1>
 
-  <div
-    v-if="isLoading"
-    class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm"
-    role="status"
-  >
+  <div v-if="isLoading" class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm" role="status">
     Loading...
   </div>
 
-  <div
-    v-if="error"
-    class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm"
-    role="alert"
-  >
+  <div v-if="error" class="bg-red-100 rounded py-4 px-4 my-2 text-red-700 text-sm" role="alert">
     {{ error }}
   </div>
 
@@ -37,6 +29,7 @@ const userCreateStore = useUserCreateStore();
 const { created, isLoading, violations, error } = storeToRefs(userCreateStore);
 
 async function create(item: User) {
+  alert('await')
   const data = await useCreateItem<User>("api/users", item);
   userCreateStore.setData(data);
 

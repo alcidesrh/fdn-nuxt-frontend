@@ -6,13 +6,17 @@ useHead({
   title: appName,
 })
 
-const online = useOnline()
+// const online = useOnline()
+
 </script>
 
 <template>
   <!-- <VitePwaManifest /> -->
   <NuxtLoadingIndicator />
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage :transition="{
+      name: 'bounce',
+      mode: 'out-in'
+    }" />
   </NuxtLayout>
 </template>

@@ -1,6 +1,7 @@
 <template>
-  <Paginator :rows="collection.pagination.itemsPerPage" :totalRecords="collection.pagination.totalCount"
-    :pageLinkSize="3" :rowsPerPageOptions="[10, 15, 20, 30, 50, 100]" @page="onChangePage" :template="{
+  <Paginator v-show="collection.pagination.totalCount > collection.pagination.itemsPerPage"
+    :rows="collection.pagination.itemsPerPage" :totalRecords="collection.pagination.totalCount" :pageLinkSize="3"
+    :rowsPerPageOptions="[10, 15, 20, 30, 50, 100]" @page="onChangePage" :template="{
       '640px': 'PrevPageLink NextPageLink',
       '960px': 'FirstPageLink PrevPageLink NextPageLink LastPageLink',
       '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown',
@@ -9,20 +10,29 @@
 
   </Paginator>
 </template>
-
 <script lang="ts" setup>
-const { collection, params } = useCollection()
+import { Collection, CollectionParameters } from '~/composables/useCollection';
+
+
+const props = defineProps<{
+  collection: Collection
+  params: CollectionParameters
+}>()
+
+// const props = defineProps<{
+//   collectionStore: CollectionStore
+// }>()
 
 function onChangePage(e: any) {
-  if (collection.pagination.itemsPerPage != e.rows) {
-    collection.pagination.page = 1
-    collection.pagination.itemsPerPage = e.rows
+  if (props.collection.pagination.itemsPerPage != e.rows) {
+    props.collection.pagination.page = 1
+    props.collection.pagination.itemsPerPage = e.rows
   }
   else {
-    collection.pagination.page = e.page + 1;
+    props.collection.pagination.page = e.page + 1;
   }
-  params.value.page = collection.pagination.page
-  params.value.itemsPerPage = collection.pagination.itemsPerPage
+  props.params.page = props.collection.pagination.page
+  props.params.itemsPerPage = props.collection.pagination.itemsPerPage
 
 }
 </script>

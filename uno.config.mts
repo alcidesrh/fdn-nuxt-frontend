@@ -19,9 +19,9 @@ export default defineConfig({
         pipeline: {
             include: [
                 // the default
-                /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/
+                /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
                 // include js/ts files
-                // '*.{js,ts}',
+                'composables/**/*.{ts,js,vue}'
             ]
             // exclude files
             // exclude: []
@@ -29,6 +29,7 @@ export default defineConfig({
         filesystem: [
             // 'layers/**/*.{js,ts.vue}',
             'layers/auth/components/form/*.{ts,js,vue}',
+            'composables/**/*.{ts,js,vue}',
             './node_modules/@primevue/**/*.{vue,js,ts,jsx,tsx}'
         ]
     },

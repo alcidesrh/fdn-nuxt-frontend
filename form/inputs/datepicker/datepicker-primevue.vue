@@ -1,8 +1,9 @@
 <template>
   <InputGroup>
-    <DatePicker ref="d" v-model="date" dateFormat="dd/mm/yy" :selectionMode="context.selectionMode || 'single'" fluid
-      :showTime="context.showTime" :hourFormat="context.hourFormat" :numberOfMonths="context.numberOfMonths"
-      :hideOnRangeSelection="context.hideOnRangeSelection" :placeholder="context.placeholder" class="min-w-290px">
+
+    <DatePicker ref="d" v-model="date" dateFormat="dd/mm" :selectionMode="context.selectionMode || 'single'" fluid
+      :showTime="context.showTime" :hourFormat="String(context.hourFormat)" :numberOfMonths="context.numberOfMonths"
+      :hideOnRangeSelection="context.hideOnRangeSelection" class="min-w-200px" :class="[context.inputClass]">
 
       <template #footer>
         <div class="flex justify-between u-my-1">
@@ -10,36 +11,32 @@
           <Button label="Aceptar" outlined @click="save" severity="contrast" />
         </div>
       </template>
+
     </DatePicker>
-    <InputGroupAddon v-if="date">
-      <i class="pi pi-times cursor-pointer" @click="cancel"></i>
-    </InputGroupAddon>
-    <InputGroupAddon>
-      <i class="pi pi-calendar cursor-pointer" @click="d.overlayVisible = true"></i>
-    </InputGroupAddon>
 
+    <InputGroupAddon v-if="date" @click="cancel">
+      <i class="pi pi-times cursor-pointer"></i>
+    </InputGroupAddon>
+    <InputGroupAddon v-else @click="d.overlayVisible = true" pt:root:class="py-6px">
+      <li class="text-slate-500 pi pi-calendar cursor-pointer" />
+    </InputGroupAddon>
   </InputGroup>
-
 </template>
 <script setup>
-const { dformat } = useDate()
 
 const props = defineProps({
   context: Object,
-  testing: String,
-  $dateFormat: String
 })
 const date = ref();
 const d = ref();
-const bus = useEventBus('msg')
 const save = () => {
   if (date.value == undefined) {
-    bus.emit({ msg: 'Debe escoger la fecha', type: 'error' })
+    merror('Debe escoger la fecha')
     return
   }
   if (props.context.selectionMode == 'range') {
     if (!date.value[1]) {
-      bus.emit({ msg: 'Debe escoger un rango de días', type: 'error' })
+      merror('Debe escoger un rango de días')
       return
     }
     props.context.node.input([{ after: dformat(date.value[0]), before: dformat(date.value[1]) }])

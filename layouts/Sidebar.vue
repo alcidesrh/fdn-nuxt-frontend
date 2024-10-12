@@ -1,32 +1,9 @@
-<script setup lang="ts">
-import MenuLarge from './MenuLarge.vue';
-import MenuMini from './MenuMini.vue';
-import replace from 'ramda/es/replace'
-
-
-const menuStore = useMenuStateStore()
-const hover = ref(false)
-const hoverMode = ref(menuStore.mode == 'mini hover')
-let prevMode = menuStore.mode
-if (menuStore.mode.match('close')) {
-    prevMode = replace(/close| close/, '', menuStore.mode)
-}
-watch(() => hover.value, (n) => {
-    if (!hoverMode.value)
-        return;
-    menuStore.mode = n ? 'normal hovermode' : 'mini hover'
-})
-watch(() => menuStore.mode, (n, p) => {
-    prevMode = p
-})
-// console.log(menuStore.menu)
-</script>
-
 <template>
 
-    <Button size="small" class="btn-float border-rounded-l-0 btn-float-sidebar flex justify-center items-center  "
-        :class="{ 'close': menuStore.mode.match('close') }" raised @click="menuStore.mode = prevMode">
-        <icon name="ph:arrow-fat-lines-right-thin" size="34" class />
+    <Button primary size="small"
+        class="btn-float border-rounded-l-0 btn-float-sidebar flex justify-center items-center  "
+        :class="{ 'close': menuStore.mode.match('close') }" raised outlined @click="menuStore.mode = prevMode">
+        <icon name="icon-park-outline:right-two" size="40" mode="svg" />
     </Button>
     <div class="sidebar-control" :class="[menuStore.mode]">
         <div id="controlBtnSidebar">
@@ -68,3 +45,26 @@ watch(() => menuStore.mode, (n, p) => {
     </aside>
 </template>
 ``````
+<script setup lang="ts">
+import MenuLarge from './MenuLarge.vue';
+import MenuMini from './MenuMini.vue';
+import replace from 'ramda/es/replace'
+
+
+const menuStore = useMenuStateStore()
+const hover = ref(false)
+const hoverMode = ref(menuStore.mode == 'mini hover')
+let prevMode = menuStore.mode
+if (menuStore.mode.match('close')) {
+    prevMode = replace(/close| close/, '', menuStore.mode)
+}
+watch(() => hover.value, (n) => {
+    if (!hoverMode.value)
+        return;
+    menuStore.mode = n ? 'normal hovermode' : 'mini hover'
+})
+watch(() => menuStore.mode, (n, p) => {
+    prevMode = p
+})
+// console.log(menuStore.menu)
+</script>

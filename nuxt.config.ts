@@ -3,10 +3,9 @@ import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 import Components from 'unplugin-vue-components/vite';
 import { icons } from './constants';
 export default defineNuxtConfig({
-    // modules: ['@vueuse/nuxt', '@unocss/nuxt', '@pinia/nuxt', '@formkit/nuxt', '@hypernym/nuxt-gsap', '@pinia-plugin-persistedstate/nuxt', 'nuxt-icon', '@nuxt/eslint'],
     modules: [
         '@vueuse/nuxt',
-        '@nuxt/eslint',
+        // '@nuxt/eslint',
         // '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
@@ -14,10 +13,7 @@ export default defineNuxtConfig({
         '@nuxt/icon',
         '@formkit/nuxt'
     ],
-    formkit: {
-        // Experimental support for auto loading (see note):
-        // autoImport: truerender
-    },
+
     icon: {
         clientBundle: {
             // list of icons to include in the client bundle
@@ -44,9 +40,6 @@ export default defineNuxtConfig({
     piniaPersistedstate: {
         storage: 'localStorage'
     },
-    // unocss: {
-    //     nuxtLayers: true
-    // },
     vite: {
         optimizeDeps: {
             noDiscovery: true
@@ -65,5 +58,24 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2024-04-03',
     devtools: { enabled: false },
-    ssr: false
+    ssr: false,
+    // pages: true,
+    app: {
+        pageTransition: {
+            name: 'page',
+            mode: 'out-in'
+            // duration: {
+            //     enter: 0.2,
+            //     leave: 0.2
+            // }
+        }
+        // layoutTransition: {
+        //     name: 'layout',
+        //     mode: 'out-in'
+        //     // duration: {
+        //     //     enter: 0.2,
+        //     //     leave: 0.2
+        //     // }
+        // }
+    }
 });

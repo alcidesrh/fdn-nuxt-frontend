@@ -1,9 +1,12 @@
 <template>
-    <div
-        class="config-panel hidden absolute top-[3.25rem] right-0 w-64 p-4 bg-surface-0 dark:bg-surface-900 border border-surface rounded-border origin-top shadow-[0px_3px_5px_rgba(0,0,0,0.02),0px_0px_2px_rgba(0,0,0,0.05),0px_1px_4px_rgba(0,0,0,0.08)]">
+    <div :class="[firstLoad ? 'hidden' : 'block', hiddenLocal ? 'hide-animation ' : 'show-animation']"
+        class="config-panel  absolute top-[3.25rem] right-0 w-64 p-4 bg-surface-contrast-100 dark:bg-surface-900 border border-surface-contrast-300 origin-top hidden-transition">
+
+        <i class="pi pi-times absolute right-0 top-0 m-3 cursor-pointer surface-contrast-600"
+            @click="hiddenLocal = true" />
         <div class="flex flex-col gap-4">
             <div>
-                <span class="text-sm text-muted-color font-semibold ">Color de Botones</span>
+                <div class="text-sm  font-semibold mb-2">Color de Botones</div>
                 <div class="pt-2 flex gap-2 flex-wrap justify-between items-center u-mt-3xs">
                     <div v-for="primaryColor of colorPalette" :key="primaryColor.name" class="rounded-full">
                         <button type="button" :title="primaryColor.name"
@@ -15,7 +18,7 @@
                 </div>
             </div>
             <div class=" u-my-xs">
-                <span class="text-sm text-muted-color font-semibold">Color de Fondo</span>
+                <div class="text-sm text-muted-color font-semibold mb-2">Color de Fondo</div>
                 <div class="pt-2 flex gap-2 flex-wrap justify-between u-mt-3xs">
                     <button v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
                         @click="ui.updateColors('surface', surface.name)" :class="[
@@ -24,25 +27,35 @@
                         ]" :style="{ backgroundColor: `${surface.palette['500']}` }"></button>
                 </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <span class="text-sm text-muted-color font-semibold">Estilo</span>
-                <SelectButton class="u-mt-3xs" v-model="ui.preset" @change="ui.setPreset()" :options="presetOptions"
+            <!-- <div class="flex flex-col gap-2">
+                <div class="text-sm text-muted-color font-semibold">Estilo</div>
+                <SelectButton v-model="ui.preset" @change="ui.setPreset()" :options="presetOptions"
                     :allowEmpty="false" />
-            </div>
+            </div> -->
 
 
-            <div class="relative flex justify-end">
-                <Button size="small" label="Reiniciar" @click="ui.reset()" />
-
+            <div class="relative flex justify-between mt-3 mb-1">
+                <Button size="small" label="Reiniciar" @click="ui.reset();" />
+                <Button size="small" label="Aceptar" outlined @click="hiddenLocal = true" />
             </div>
         </div>
     </div>
 </template>
-<script setup>
-import Aura from '@primevue/themes/aura';
-import Lara from '@primevue/themes/lara';
+<script setup lang="ts">
+// import Aura from '@primevue/themes/aura';
+// import Lara from '@primevue/themes/lara';
 import { ref } from 'vue';
-import { colorPalette } from '~/plugins/primevue/preset'
+import { colorPalette } from '~/plugins/primevue/presetSlate'
+
+const props = defineProps<{
+    hidden: boolean
+}>()
+
+const hiddenLocal = ref(true)
+
+watch(() => props.hidden, (v) => {
+    hiddenLocal.value = !hiddenLocal.value
+})
 
 const surfaces = ref([
     {
@@ -80,17 +93,18 @@ const surfaces = ref([
 ]);
 
 const ui = useThemeStateStore()
-const presets = {
-    Aura,
-    Lara
-};
-const presetOptions = ref(Object.keys(presets));
-
+// const presets = {
+//     Aura,
+//     Lara
+// };
+// const presetOptions = ref(Object.keys(presets));
+let firstLoad = true
 onMounted(async () => {
     await nextTick()
     if (ui.darkTheme) {
         ui.toggleDarkMode(true)
     }
+    firstLoad = false;
     // if (ui.color) {
     //     ui.updateColors('primary')
     // }
@@ -102,3 +116,43 @@ onMounted(async () => {
     // }
 })
 </script>
+<style>
+.hide-animation {
+    animation: .3s linear 0s normal forwards hide-animation;
+}
+
+.show-animation {
+    animation: .3s linear 0s normal backwards show-animation;
+}
+
+@keyframes hide-animation {
+    0% {
+        /* pushes the sun down past the viewport */
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes show-animation {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+</style>

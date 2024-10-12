@@ -9,5 +9,6 @@
         "schema": "./graphql/schema.graphql"
       }
     ],
+    "noImplicitAny": false
   },
 }

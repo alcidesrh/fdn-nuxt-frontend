@@ -52,7 +52,7 @@ function menuRootClick(e, $event) {
             <Tag v-if="menuitem.badge" :value="menuitem.badge"></Tag>
         </a>
 
-        <NuxtLink v-if="menuitem.to" :to="menuitem.to" :class="{ 'router-link-active': menuitem.to === route.fullPath }"
+        <NuxtLink v-if="menuitem.to" to="/" :class="{ 'router-link-active': menuitem.to === route.fullPath }"
             class="flex justify-center">
             <span v-if="menuitem.icon" class="menu-icon m-auto" v-tooltip="menuitem.name">
                 <Icon :name="menuitem.icon" mode="svg" />

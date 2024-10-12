@@ -1,15 +1,17 @@
-query users($page: Int, $id: Int, $itemsPerPage: Int, $nombre: String, $username: String, $createdAt: [UserFilter_createdAt]) {
-    users(_page: $page, id: $id, itemsPerPage: $itemsPerPage, nombre: $nombre, username: $username, createdAt: $createdAt) {
+fragment DataUser on User {
+    _id
+    id
+    username
+    telefono
+    roles
+    createdAt
+    status
+}
+query users($page: Int, $id: Int, $itemsPerPage: Int, $fullName: String, $username: String, $createdAt: [UserFilter_createdAt], $order: [UserFilter_order]) {
+    users(_page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, username: $username, createdAt: $createdAt, order: $order) {
         collection {
-            _id
-            id
-            username
+            ...DataUser
             fullName
-            apellido
-            telefono
-            roles
-            createdAt
-            status
         }
         paginationInfo {
             itemsPerPage
@@ -17,5 +19,11 @@ query users($page: Int, $id: Int, $itemsPerPage: Int, $nombre: String, $username
             totalCount
             hasNextPage
         }
+    }
+}
+
+query user($id: ID!) {
+    user(id: $id) {
+        ...DataUser
     }
 }

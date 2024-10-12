@@ -39,8 +39,6 @@ export type AgenciaUsersArgs = {
     id?: InputMaybe<Scalars['Int']['input']>;
     id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
     itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
-    nombre?: InputMaybe<Scalars['String']['input']>;
-    nombre_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
     order?: InputMaybe<Array<InputMaybe<UserFilter_Order>>>;
     status?: InputMaybe<Scalars['String']['input']>;
     status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -211,28 +209,35 @@ export type BusAsientosArgs = {
     last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** Cursor connection for Bus. */
-export type BusCursorConnection = {
-    __typename?: 'BusCursorConnection';
-    edges?: Maybe<Array<Maybe<BusEdge>>>;
-    pageInfo: BusPageInfo;
-    totalCount: Scalars['Int']['output'];
+export type BusFilter_CreatedAt = {
+    after?: InputMaybe<Scalars['String']['input']>;
+    before?: InputMaybe<Scalars['String']['input']>;
+    strictly_after?: InputMaybe<Scalars['String']['input']>;
+    strictly_before?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Edge of Bus. */
-export type BusEdge = {
-    __typename?: 'BusEdge';
-    cursor: Scalars['String']['output'];
-    node?: Maybe<Bus>;
+export type BusFilter_Order = {
+    createdAt?: InputMaybe<Scalars['String']['input']>;
+    id?: InputMaybe<Scalars['String']['input']>;
+    marca?: InputMaybe<Scalars['String']['input']>;
+    placa?: InputMaybe<Scalars['String']['input']>;
+    status?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Information about the current page. */
-export type BusPageInfo = {
-    __typename?: 'BusPageInfo';
-    endCursor?: Maybe<Scalars['String']['output']>;
+/** Page connection for Bus. */
+export type BusPageConnection = {
+    __typename?: 'BusPageConnection';
+    collection?: Maybe<Array<Maybe<Bus>>>;
+    paginationInfo: BusPaginationInfo;
+};
+
+/** Information about the pagination. */
+export type BusPaginationInfo = {
+    __typename?: 'BusPaginationInfo';
     hasNextPage: Scalars['Boolean']['output'];
-    hasPreviousPage: Scalars['Boolean']['output'];
-    startCursor?: Maybe<Scalars['String']['output']>;
+    itemsPerPage: Scalars['Int']['output'];
+    lastPage: Scalars['Int']['output'];
+    totalCount: Scalars['Int']['output'];
 };
 
 export type Cliente = Node & {
@@ -408,8 +413,6 @@ export type EstacionUsersArgs = {
     id?: InputMaybe<Scalars['Int']['input']>;
     id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
     itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
-    nombre?: InputMaybe<Scalars['String']['input']>;
-    nombre_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
     order?: InputMaybe<Array<InputMaybe<UserFilter_Order>>>;
     status?: InputMaybe<Scalars['String']['input']>;
     status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -604,8 +607,6 @@ export type Mutation = {
     createBoleto?: Maybe<CreateBoletoPayload>;
     /** Creates a BoletoLog. */
     createBoletoLog?: Maybe<CreateBoletoLogPayload>;
-    /** Creates a Bus. */
-    createBus?: Maybe<CreateBusPayload>;
     /** Creates a Cliente. */
     createCliente?: Maybe<CreateClientePayload>;
     /** Creates a ColumnFieldsResource. */
@@ -656,8 +657,6 @@ export type Mutation = {
     deleteBoleto?: Maybe<DeleteBoletoPayload>;
     /** Deletes a BoletoLog. */
     deleteBoletoLog?: Maybe<DeleteBoletoLogPayload>;
-    /** Deletes a Bus. */
-    deleteBus?: Maybe<DeleteBusPayload>;
     /** Deletes a Cliente. */
     deleteCliente?: Maybe<DeleteClientePayload>;
     /** Deletes a ColumnFieldsResource. */
@@ -708,8 +707,6 @@ export type Mutation = {
     updateBoleto?: Maybe<UpdateBoletoPayload>;
     /** Updates a BoletoLog. */
     updateBoletoLog?: Maybe<UpdateBoletoLogPayload>;
-    /** Updates a Bus. */
-    updateBus?: Maybe<UpdateBusPayload>;
     /** Updates a Cliente. */
     updateCliente?: Maybe<UpdateClientePayload>;
     /** Updates a ColumnFieldsResource. */
@@ -768,10 +765,6 @@ export type MutationCreateBoletoArgs = {
 
 export type MutationCreateBoletoLogArgs = {
     input: CreateBoletoLogInput;
-};
-
-export type MutationCreateBusArgs = {
-    input: CreateBusInput;
 };
 
 export type MutationCreateClienteArgs = {
@@ -874,10 +867,6 @@ export type MutationDeleteBoletoLogArgs = {
     input: DeleteBoletoLogInput;
 };
 
-export type MutationDeleteBusArgs = {
-    input: DeleteBusInput;
-};
-
 export type MutationDeleteClienteArgs = {
     input: DeleteClienteInput;
 };
@@ -976,10 +965,6 @@ export type MutationUpdateBoletoArgs = {
 
 export type MutationUpdateBoletoLogArgs = {
     input: UpdateBoletoLogInput;
-};
-
-export type MutationUpdateBusArgs = {
-    input: UpdateBusInput;
 };
 
 export type MutationUpdateClienteArgs = {
@@ -1170,8 +1155,6 @@ export type PermisoUsuariosArgs = {
     id?: InputMaybe<Scalars['Int']['input']>;
     id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
     itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
-    nombre?: InputMaybe<Scalars['String']['input']>;
-    nombre_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
     order?: InputMaybe<Array<InputMaybe<UserFilter_Order>>>;
     status?: InputMaybe<Scalars['String']['input']>;
     status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1262,7 +1245,7 @@ export type Query = {
     boletoLogs?: Maybe<BoletoLogCursorConnection>;
     boletos?: Maybe<BoletoCursorConnection>;
     bus?: Maybe<Bus>;
-    buses?: Maybe<BusCursorConnection>;
+    buses?: Maybe<BusPageConnection>;
     cliente?: Maybe<Cliente>;
     clientes?: Maybe<ClienteCursorConnection>;
     columnFieldsResource?: Maybe<ColumnFieldsResource>;
@@ -1286,7 +1269,8 @@ export type Query = {
     menu?: Maybe<Menu>;
     menus?: Maybe<MenuCursorConnection>;
     node?: Maybe<Node>;
-    pais?: Maybe<PaisCursorConnection>;
+    pais?: Maybe<Pais>;
+    paiss?: Maybe<PaisCursorConnection>;
     parada?: Maybe<Parada>;
     paradas?: Maybe<ParadaCursorConnection>;
     permiso?: Maybe<Permiso>;
@@ -1303,8 +1287,8 @@ export type Query = {
     salidaLog?: Maybe<SalidaLog>;
     salidaLogs?: Maybe<SalidaLogCursorConnection>;
     salidas?: Maybe<SalidaCursorConnection>;
-    taxa?: Maybe<TaxonCursorConnection>;
     taxon?: Maybe<Taxon>;
+    taxons?: Maybe<TaxonCursorConnection>;
     user?: Maybe<User>;
     users?: Maybe<UserPageConnection>;
     venta?: Maybe<Venta>;
@@ -1360,10 +1344,18 @@ export type QueryBusArgs = {
 };
 
 export type QueryBusesArgs = {
-    after?: InputMaybe<Scalars['String']['input']>;
-    before?: InputMaybe<Scalars['String']['input']>;
-    first?: InputMaybe<Scalars['Int']['input']>;
-    last?: InputMaybe<Scalars['Int']['input']>;
+    _page?: InputMaybe<Scalars['Int']['input']>;
+    createdAt?: InputMaybe<Array<InputMaybe<BusFilter_CreatedAt>>>;
+    id?: InputMaybe<Scalars['Int']['input']>;
+    id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+    itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
+    marca?: InputMaybe<Scalars['String']['input']>;
+    marca_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    order?: InputMaybe<Array<InputMaybe<BusFilter_Order>>>;
+    placa?: InputMaybe<Scalars['String']['input']>;
+    placa_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    status?: InputMaybe<Scalars['String']['input']>;
+    status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type QueryClienteArgs = {
@@ -1489,6 +1481,10 @@ export type QueryNodeArgs = {
 };
 
 export type QueryPaisArgs = {
+    id: Scalars['ID']['input'];
+};
+
+export type QueryPaissArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
@@ -1583,15 +1579,15 @@ export type QuerySalidasArgs = {
     last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QueryTaxaArgs = {
+export type QueryTaxonArgs = {
+    id: Scalars['ID']['input'];
+};
+
+export type QueryTaxonsArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
     last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type QueryTaxonArgs = {
-    id: Scalars['ID']['input'];
 };
 
 export type QueryUserArgs = {
@@ -1601,11 +1597,10 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
     _page?: InputMaybe<Scalars['Int']['input']>;
     createdAt?: InputMaybe<Array<InputMaybe<UserFilter_CreatedAt>>>;
+    fullName?: InputMaybe<Scalars['String']['input']>;
     id?: InputMaybe<Scalars['Int']['input']>;
     id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
     itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
-    nombre?: InputMaybe<Scalars['String']['input']>;
-    nombre_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
     order?: InputMaybe<Array<InputMaybe<UserFilter_Order>>>;
     status?: InputMaybe<Scalars['String']['input']>;
     status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -2013,30 +2008,6 @@ export type CreateBoletoLogPayload = {
 export type CreateBoletoPayload = {
     __typename?: 'createBoletoPayload';
     boleto?: Maybe<Boleto>;
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-};
-
-/** Creates a Bus. */
-export type CreateBusInput = {
-    asientos?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    codigo?: InputMaybe<Scalars['String']['input']>;
-    createdAt: Scalars['String']['input'];
-    empresa?: InputMaybe<Scalars['String']['input']>;
-    legacyId?: InputMaybe<Scalars['Int']['input']>;
-    marca?: InputMaybe<Scalars['String']['input']>;
-    piloto?: InputMaybe<Scalars['String']['input']>;
-    placa?: InputMaybe<Scalars['String']['input']>;
-    precioVariacionAsientoA?: InputMaybe<Scalars['Float']['input']>;
-    precioVariacionAsientoB?: InputMaybe<Scalars['Float']['input']>;
-    status?: InputMaybe<Status>;
-    updatedAt: Scalars['String']['input'];
-};
-
-/** Creates a Bus. */
-export type CreateBusPayload = {
-    __typename?: 'createBusPayload';
-    bus?: Maybe<Bus>;
     clientMutationId?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2504,19 +2475,6 @@ export type DeleteBoletoPayload = {
     clientMutationId?: Maybe<Scalars['String']['output']>;
 };
 
-/** Deletes a Bus. */
-export type DeleteBusInput = {
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    id: Scalars['ID']['input'];
-};
-
-/** Deletes a Bus. */
-export type DeleteBusPayload = {
-    __typename?: 'deleteBusPayload';
-    bus?: Maybe<Bus>;
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-};
-
 /** Deletes a Cliente. */
 export type DeleteClienteInput = {
     clientMutationId?: InputMaybe<Scalars['String']['input']>;
@@ -2895,31 +2853,6 @@ export type UpdateBoletoLogPayload = {
 export type UpdateBoletoPayload = {
     __typename?: 'updateBoletoPayload';
     boleto?: Maybe<Boleto>;
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-};
-
-/** Updates a Bus. */
-export type UpdateBusInput = {
-    asientos?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    codigo?: InputMaybe<Scalars['String']['input']>;
-    createdAt?: InputMaybe<Scalars['String']['input']>;
-    empresa?: InputMaybe<Scalars['String']['input']>;
-    id: Scalars['ID']['input'];
-    legacyId?: InputMaybe<Scalars['Int']['input']>;
-    marca?: InputMaybe<Scalars['String']['input']>;
-    piloto?: InputMaybe<Scalars['String']['input']>;
-    placa?: InputMaybe<Scalars['String']['input']>;
-    precioVariacionAsientoA?: InputMaybe<Scalars['Float']['input']>;
-    precioVariacionAsientoB?: InputMaybe<Scalars['Float']['input']>;
-    status?: InputMaybe<Status>;
-    updatedAt?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Updates a Bus. */
-export type UpdateBusPayload = {
-    __typename?: 'updateBusPayload';
-    bus?: Maybe<Bus>;
     clientMutationId?: Maybe<Scalars['String']['output']>;
 };
 

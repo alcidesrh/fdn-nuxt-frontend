@@ -43,7 +43,8 @@ body {
     font-size: var(--step-0);
     line-height: normal;
     font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712;
-
+    overflow-x: hidden;
+    overflow-y: auto;
 
 }
 
@@ -65,23 +66,27 @@ a {
     border-radius: 9999px;
 }
 
-.layout-enter-active,
-.layout-leave-active,
+
+/* .layout-enter-active, */
+/* .layout-leave-active, */
 .page-enter-active,
 .page-leave-active {
-    transition: all 0.4s;
+    transition: all 0.3s;
 }
 
 .page-enter-from,
 .page-leave-to {
+    transition: all 0.3s;
     opacity: 0;
     filter: blur(1rem);
+    /* filter: grayscale(1); */
 }
 
-.layout-enter-from,
+/* .layout-enter-from,
 .layout-leave-to {
+    transition: all 0.3s;
     filter: grayscale(1);
-}
+} */
 
 .layout-submenu-enter-from,
 .layout-submenu-leave-to {
@@ -103,35 +108,25 @@ a {
     transition: max-height 1s ease-in-out;
 }
 
-/* we will explain what these classes do next! */
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.2s ease;
+
+
+/* .layout-enter-active,
+.layout-leave-active,
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.4s;
 }
 
-.v-enter-from,
-.v-leave-to {
+
+
+.layout-enter-from,
+.layout-leave-to,
+.page-enter-from,
+.page-leave-to {
     opacity: 0;
-}
+} */
 
 .load-opacity {
     transition: opacity .2s;
     opacity: .3;
-}
-
-.btn-float {
-    transition: translate 1s;
-    position: fixed;
-    top: 50%;
-    width: 3rem;
-    height: 3rem;
-    display: block;
-    border-color: var(--p-slate-400);
-    z-index: 999;
-
-    background-color: var(--p-surface-contrast-700);
-
-    &>span {
-        color: var(--p-surface-contrast-color)
-    }
 }

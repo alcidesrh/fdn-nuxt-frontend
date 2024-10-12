@@ -1,6 +1,5 @@
-import { Maybe, Scalars } from '~/graphql/graphql';
-
-type Variables = Ref<{ page: number; itemsPerPage: number; nombre: string; username: string } | undefined>;
+import { Maybe, Scalars, UserFilter_CreatedAt, UserFilter_Order } from '~/graphql/graphql';
+import type { Ref } from 'vue';
 
 type Pagination = {
     hasNextPage: Scalars['Boolean']['output'];
@@ -8,164 +7,126 @@ type Pagination = {
     totalCount: Scalars['Int']['output'];
     page: number;
     offset: number;
+    lastPage: number;
+    // isPaginate: any;
 };
-type Collection = {
-    items?: Maybe<Array<Maybe<{}>>>;
+
+export type CollectionState = {
+    columns: Ref<Column>;
+    collection: Collection;
+    params: CollectionParameters;
+};
+
+export type Column = Array<{
+    name: string;
+    label: string;
+    sort: string;
+    filter: boolean;
+    schema: Record<string, string>;
+}>; // name: "createdAt", label: "Fecha creación", sort: "fecha", filter: true
+export type CollectionParameters = {
+    page: number;
+    itemsPerPage: number;
+    orderField: string;
+    orderType: string;
+    order: [UserFilter_Order];
+    createdAt: UserFilter_CreatedAt;
+    nombre: string;
+    username: string;
+    id: number | null;
+    loading: boolean;
+    get: (property: string) => any;
+};
+
+export type Collection = {
+    items: Maybe<Array<Maybe<{}>>>;
     pagination: Pagination;
 };
-// type FilterCollection = Record<string, Ref<boolean>>;
-type Filter = Record<string, Record<string, Ref<boolean>> | Number | string | any>;
-// let variables: Variables;
 
-const stopLoading = ref(true);
-const columns: Ref<Array<Record<string, string>>> = ref([]);
-const filter: Ref<Filter> = ref({
-    loading: {},
-    loadingReset: () => {
-        for (const property in filter.value) {
-            filter.value.loading[property] = false;
-        }
-    }
-});
-
-const collection: Collection = reactive({
-    pagination: {
-        page: 0,
-        itemsPerPage: 15,
-        hasNextPage: false,
-        totalCount: 0,
-        offset: 15
+const filterInputClasses: any = {
+    texticon_fdn: {
+        id: { inputClass: ' text-14px', outerClass: 'max-w-130px mb-0! ' },
+        username: { inputClass: ' text-14px', outerClass: 'max-w-200px! mb-0! ' },
+        fullName: { inputClass: 'text-14px', outerClass: 'max-w-200px mb-0! ' },
+        default: { inputClass: 'text-14px', outerClass: 'max-w-200px mb-0! ' }
     },
-    items: []
-});
-let params = ref({
-    page: 1,
-    itemsPerPage: collection.pagination.itemsPerPage,
-    orderField: 'id',
-    orderType: 'ASC',
-    order: computed(() => {
-        if (!params.value.orderField) return [{}];
-        const order = {} as any;
-        order[params.value.orderField] = params.value.orderType;
-        return order;
-    }),
-    createdAt: {},
-    nombre: '',
-    username: '',
-    id: null,
-    get: () => {
-        return { page: params.value.page, itemsPerPage: params.value.itemsPerPage, nombre: params.value.nombre, username: params.value.username };
+    datepicker_fdn: {
+        createdAt: { inputClass: '*:text-14px *:py-0.375rem', outerClass: ' mb-0! ' }
     }
-});
-const getProperty = (i: string) => {
-    // const temp = []
-    if (i == 'fullName') {
-        return 'nombre';
-    } else if (i == '_id') {
-        return 'id';
-    }
-    return i;
 };
-function highlight() {
-    if (!CSS.highlights) {
-        return;
-    }
 
-    CSS.highlights.clear();
-
-    let properties: any = [],
-        property: any = null;
-
-    columns.value
-        .filter((i) => i.search)
-        .forEach((i) => {
-            property = getProperty(i.field);
-            const highlights = document.querySelectorAll(`.highlight.${property}`);
-            if (!highlights.length) {
-                return;
-            }
-
-            if (typeof properties[property] == 'undefined') {
-                properties[property] = [];
-            }
-            highlights.forEach((i) => {
-                // console.log(`.highlight.${property}`);
-
-                const iter = document.createNodeIterator(i, NodeFilter.SHOW_TEXT);
-                let temp = iter.nextNode();
-                if (temp) {
-                    properties[property].push(temp);
-                    while ((temp = iter.nextNode())) {
-                        properties[property].push(temp);
-                    }
-                }
-            });
-        });
-
-    Object.keys(properties).forEach((i) => {
-        let str = params.value[i]?.toString().trim().toLowerCase();
-        if (!str) {
-            return;
-        }
-        // str = str.;
-        // if (Number.isInteger(value)) {
-        //     str = params.value[i];
-        // } else if (typeof value == 'string') {
-        //     str = params.value[i]?.trim().toLowerCase();
-        // }
-
-        const ranges = properties[i]
-            .map((el) => {
-                return { el, text: el.textContent.toLowerCase() };
-            })
-            .map(({ text, el }) => {
-                const indices = [];
-                let startPos = 0;
-                while (startPos < text.length) {
-                    const index = text.indexOf(str, startPos);
-                    if (index === -1) break;
-                    indices.push(index);
-                    startPos = index + str.length;
-                }
-
-                // Create a range object for each instance of
-                // str we found in the text node.
-                return indices.map((index) => {
-                    const range = new Range();
-                    range.setStart(el, index);
-                    range.setEnd(el, index + str.length);
-                    // console.log(index, index + str.length);
-
-                    return range;
-                });
-            });
-        const searchResultsHighlight = new Highlight(...ranges.flat());
-        CSS.highlights.set(`highlight-${i}`, searchResultsHighlight);
+export const collectionFactory = (): Collection => {
+    return reactive({
+        pagination: {
+            page: 0,
+            itemsPerPage: 15,
+            hasNextPage: false,
+            totalCount: 0,
+            offset: 15,
+            lastPage: 0
+            // isPaginate: computed(() => collection.pagination.totalCount > collection.pagination.itemsPerPage)
+        },
+        items: []
     });
-}
-watch(
-    () => collection.items,
-    () => {
-        nextTick(highlight);
-    }
-);
-watch(
-    () => filter.value as any,
-    (v: Record<string, string>) => {
-        params.value.page = 1;
-        params.value = { ...params.value, ...v };
-        if (params.value?.id) {
-            params.value.id = Number(params.value.id) as any;
+};
+
+export const argumentFactory = (): CollectionParameters => {
+    return ref({
+        page: 1,
+        itemsPerPage: 15,
+        orderField: 'id',
+        orderType: 'ASC',
+        order: [{}],
+        loading: false,
+        get: function (field) {
+            switch (field) {
+                case 'fullName':
+                    return 'nombre';
+                default:
+                    return field;
+            }
         }
+    });
+};
+
+export function collectionState(): CollectionState {
+    return {
+        columns: ref([]),
+        collection: collectionFactory(),
+        params: argumentFactory()
+    };
+}
+
+export interface CollectionStore {
+    collection: Collection;
+    params: CollectionParameters;
+    columns: Column;
+    data: Record<string, boolean>;
+}
+
+function columnClass(c: any) {
+    const temp = ['px-8px py-12px'];
+    switch (c.name) {
+        case 'id':
+            return `${temp} min-w-100px pl-5`;
+        case 'username':
+            return `${temp} min-w-130px`;
+        case 'fullName':
+            return `${temp} min-w-250px`;
+        case 'createdAt':
+            return `${temp} min-w-200px`;
+        default:
+            if (c.action) {
+                return `${temp} min-w-60px border-r border-surface-contrast-2`;
+            }
+            return `${temp} min-w-200px`;
+            break;
     }
-);
+}
+
 export const useCollection = () => {
     return {
-        collection,
-        params,
-        columns,
-        filter,
-        getProperty,
-        stopLoading
+        filterInputClasses,
+        columnClass
     };
 };

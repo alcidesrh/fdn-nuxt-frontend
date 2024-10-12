@@ -28,21 +28,18 @@ const schema = [
     name: 'id',
     placeholder: 'Id',
     outerClass: ' max-w-150px!',
-    hotload: true,
     loading: '$loading',
   },
   {
     $formkit: 'texticon_fdn',
     name: 'nombre',
     placeholder: 'nombre',
-    hotload: true,
     loading: '$loading'
   },
   {
     $formkit: 'texticon_fdn',
     name: 'username',
     placeholder: 'usuario',
-    hotload: true,
     loading: '$loading'
   },
   {

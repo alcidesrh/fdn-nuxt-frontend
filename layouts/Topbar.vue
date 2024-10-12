@@ -13,12 +13,11 @@
             <i :class="['pi', { 'pi-moon': ui.darkTheme, 'pi-sun': !ui.darkTheme }]"></i>
           </button>
           <div class="relative">
-            <button
-              v-styleclass="{ selector: '@next', enterFromClass: 'hidden', enterActiveClass: 'animate-scalein', leaveToClass: 'hidden', leaveActiveClass: 'animate-fadeout', hideOnOutsideClick: true }"
-              type="button" class="layout-topbar-action layout-topbar-action-highlight">
+            <button @click="hideConfiguration = !hideConfiguration" type="button"
+              class="layout-topbar-action layout-topbar-action-highlight">
               <i class="pi pi-palette"></i>
             </button>
-            <Configurator />
+            <Configurator :hidden="hideConfiguration" />
           </div>
         </div>
 
@@ -50,6 +49,7 @@
 import Configurator from './Configurator.vue'
 
 const ui = useThemeStateStore()
+const hideConfiguration = ref(true)
 
 onMounted(async () => {
   const el = document.querySelector("#intersectionObservertarget")

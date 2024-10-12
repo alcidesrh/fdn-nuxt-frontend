@@ -10,7 +10,7 @@
 @import './variables/_common';
 @import './variables/_light';
 @import './variables/_dark';
-@import './_typography';
+/* @import './_typography'; */
 @import './components/index';
 
 /* @import './_reset' layer(reset); */
@@ -18,5 +18,6 @@
 @import './_core';
 
 @import './_utils';
+/* @import './_filter'; */
 @import "./_topbar";
 @import "./_sidebar";

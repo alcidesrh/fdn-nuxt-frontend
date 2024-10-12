@@ -100,20 +100,25 @@ type Query {
     after: String
   ): BoletoLogCursorConnection
   boletoLog(id: ID!): BoletoLog
-  buses(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): BusCursorConnection
   bus(id: ID!): Bus
+  buses(
+    "Returns the current page."
+    _page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    marca: String
+    marca_list: [String]
+    placa: String
+    placa_list: [String]
+    status: String
+    status_list: [String]
+    createdAt: [BusFilter_createdAt]
+    order: [BusFilter_order]
+  ): BusPageConnection
   clientes(
     "Returns the first n elements from the list."
     first: Int
@@ -226,7 +231,7 @@ type Query {
     after: String
   ): MenuCursorConnection
   menu(id: ID!): Menu
-  pais(
+  paiss(
     "Returns the first n elements from the list."
     first: Int
 
@@ -239,6 +244,7 @@ type Query {
     "Returns the elements in the list that come after the specified cursor."
     after: String
   ): PaisCursorConnection
+  pais(id: ID!): Pais
   paradas(
     "Returns the first n elements from the list."
     first: Int
@@ -337,7 +343,7 @@ type Query {
     after: String
   ): SalidaLogCursorConnection
   salidaLog(id: ID!): SalidaLog
-  taxa(
+  taxons(
     "Returns the first n elements from the list."
     first: Int
 
@@ -361,14 +367,13 @@ type Query {
 
     id: Int
     id_list: [Int]
-    nombre: String
-    nombre_list: [String]
     username: String
     username_list: [String]
     status: String
     status_list: [String]
     createdAt: [UserFilter_createdAt]
     order: [UserFilter_order]
+    fullName: String
   ): UserPageConnection
   ventas(
     "Returns the first n elements from the list."
@@ -501,8 +506,6 @@ type Agencia implements Node {
 
     id: Int
     id_list: [Int]
-    nombre: String
-    nombre_list: [String]
     username: String
     username_list: [String]
     status: String
@@ -616,8 +619,6 @@ type Permiso implements Node {
 
     id: Int
     id_list: [Int]
-    nombre: String
-    nombre_list: [String]
     username: String
     username_list: [String]
     status: String
@@ -1014,25 +1015,33 @@ type BoletoPageInfo {
   hasPreviousPage: Boolean!
 }
 
-"Cursor connection for Bus."
-type BusCursorConnection {
-  edges: [BusEdge]
-  pageInfo: BusPageInfo!
+input BusFilter_createdAt {
+  before: String
+  strictly_before: String
+  after: String
+  strictly_after: String
+}
+
+input BusFilter_order {
+  id: String
+  marca: String
+  placa: String
+  createdAt: String
+  status: String
+}
+
+"Page connection for Bus."
+type BusPageConnection {
+  collection: [Bus]
+  paginationInfo: BusPaginationInfo!
+}
+
+"Information about the pagination."
+type BusPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
   totalCount: Int!
-}
-
-"Edge of Bus."
-type BusEdge {
-  node: Bus
-  cursor: String!
-}
-
-"Information about the current page."
-type BusPageInfo {
-  endCursor: String
-  startCursor: String
   hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
 }
 
 "Cursor connection for Cliente."
@@ -1122,8 +1131,6 @@ type Estacion implements Node {
 
     id: Int
     id_list: [Int]
-    nombre: String
-    nombre_list: [String]
     username: String
     username_list: [String]
     status: String
@@ -1532,15 +1539,6 @@ type Mutation {
 
   "Creates a BoletoLog."
   createBoletoLog(input: createBoletoLogInput!): createBoletoLogPayload
-
-  "Updates a Bus."
-  updateBus(input: updateBusInput!): updateBusPayload
-
-  "Deletes a Bus."
-  deleteBus(input: deleteBusInput!): deleteBusPayload
-
-  "Creates a Bus."
-  createBus(input: createBusInput!): createBusPayload
 
   "Updates a Cliente."
   updateCliente(input: updateClienteInput!): updateClientePayload
@@ -2003,65 +2001,6 @@ input createBoletoLogInput {
 "Creates a BoletoLog."
 type createBoletoLogPayload {
   boletoLog: BoletoLog
-  clientMutationId: String
-}
-
-"Updates a Bus."
-input updateBusInput {
-  id: ID!
-  codigo: String
-  asientos: [String]
-  precioVariacionAsientoA: Float
-  precioVariacionAsientoB: Float
-  empresa: String
-  piloto: String
-  marca: String
-  placa: String
-  createdAt: String
-  updatedAt: String
-  status: Status
-  legacyId: Int
-  clientMutationId: String
-}
-
-"Updates a Bus."
-type updateBusPayload {
-  bus: Bus
-  clientMutationId: String
-}
-
-"Deletes a Bus."
-input deleteBusInput {
-  id: ID!
-  clientMutationId: String
-}
-
-"Deletes a Bus."
-type deleteBusPayload {
-  bus: Bus
-  clientMutationId: String
-}
-
-"Creates a Bus."
-input createBusInput {
-  codigo: String
-  asientos: [String]
-  precioVariacionAsientoA: Float
-  precioVariacionAsientoB: Float
-  empresa: String
-  piloto: String
-  marca: String
-  placa: String
-  createdAt: String!
-  updatedAt: String!
-  status: Status
-  legacyId: Int
-  clientMutationId: String
-}
-
-"Creates a Bus."
-type createBusPayload {
-  bus: Bus
   clientMutationId: String
 }
 

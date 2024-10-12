@@ -60,7 +60,7 @@ const onConfigButtonClick = () => {
 
             </section>
 
-            <section class="py-4 border-bottom-1 surface-border">
+            <!-- <section class="py-4 border-bottom-1 surface-border">
                 <div class="flex align-items-center gap-2 mb-3">
                     <img src="https://primefaces.org/cdn/primevue/images/themes/lara-light-teal.png"
                         alt="Lara Light Teal" class="border-circle" style="width: 1.5rem" />
@@ -69,14 +69,14 @@ const onConfigButtonClick = () => {
                 <div class="flex align-items-center justify-content-between gap-3 mb-3">
 
                 </div>
-            </section>
+            </section> -->
 
         </div>
     </Drawer>
 </template>
 <style scoped>
 .btn-float {
-    right: -48px;
+    right: -50px;
 
     &.active {
         transition-property: translate, padding;

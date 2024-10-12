@@ -6,7 +6,7 @@
         <Topbar />
         <Sidebar />
         <div id="layout-content" class="layout-content" :class="[menuStore.mode]">
-            <div class="layout-content-slot">
+            <div class="bg-white u-p-l shadow-lg rounded-sm w-full">
                 <NuxtPage />
             </div>
         </div>
@@ -17,6 +17,7 @@
         </div>
     </div>
     <!-- <Toast /> -->
+    <ScrollTop />
 </template>
 <script setup>
 import Topbar from './Topbar.vue'

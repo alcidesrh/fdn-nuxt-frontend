@@ -233,7 +233,7 @@ export default {
     },
 
     toCapitalCase(str) {
-        return this.isString(str, { empty: false }) ? str[0].toUpperCase() + str.slice(1) : str;
+        return ''; //this.isString(str, { empty: false }) ? str[0].toUpperCase() + str.slice(1) : str;
     },
 
     isEmpty(value) {

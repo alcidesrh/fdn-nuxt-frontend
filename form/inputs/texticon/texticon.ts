@@ -1,8 +1,15 @@
-import { Boo } from './../../../graphql/graphql';
 import { createInput } from '@formkit/vue';
 import selectprimevue from './texticon-primevue.vue';
 const props = {
-    modelValue: null,
+    // modelValue: null,
+    name: {
+        type: String,
+        default: null
+    },
+    typeW: {
+        type: String,
+        default: null
+    },
     size: {
         type: String,
         default: null
@@ -34,14 +41,24 @@ const props = {
         type: Boolean,
         default: false
     },
-    hotload: {
-        type: Boolean,
-        default: false
+    inputClass: {
+        type: [String, Object],
+        default: null
+    },
+    eventbus: {
+        type: [String],
+        default: null
+    },
+    test: {
+        type: [String],
+        default: null
     }
 };
-const texticon_fdn = createInput(selectprimevue);
-if (!texticon_fdn.props) {
-    texticon_fdn.props = [];
-}
-texticon_fdn.props = [...texticon_fdn.props, ...Object.keys(props)];
+const texticon_fdn = createInput(selectprimevue, {
+    props: props
+});
+// if (!texticon_fdn.props) {
+// texticon_fdn.props = [];
+// }
+// texticon_fdn.props = [...texticon_fdn.props, ...Object.keys(props)];
 export default texticon_fdn;

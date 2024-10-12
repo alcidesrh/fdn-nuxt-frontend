@@ -1,0 +1,19 @@
+query buses($page: Int, $id: Int, $itemsPerPage: Int, $marca: String, $placa: String, $createdAt: [BusFilter_createdAt], $order: [BusFilter_order]) {
+    buses(_page: $page, id: $id, itemsPerPage: $itemsPerPage, marca: $marca, placa: $placa, createdAt: $createdAt, order: $order) {
+        collection {
+            _id
+            id
+            codigo
+            marca
+            placa
+            createdAt
+            status
+        }
+        paginationInfo {
+            itemsPerPage
+            lastPage
+            totalCount
+            hasNextPage
+        }
+    }
+}

@@ -36,22 +36,22 @@ export const useMenuStateStore = defineStore(
                     {
                         name: 'Emitir',
                         icon: 'icon-park-outline:printer-two',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Chequear',
                         icon: 'icon-park-outline:tickets-checked',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Buscar',
                         icon: 'icon-park-outline:search',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Estadísticas',
                         icon: 'icon-park-outline:market-analysis',
-                        to: '/path'
+                        to: ''
                     }
                 ]
             },
@@ -64,12 +64,12 @@ export const useMenuStateStore = defineStore(
                     {
                         name: 'Registrar',
                         icon: 'icon-park-outline:printer-one',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Entregar',
                         icon: 'icon-park-outline:delivery',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Buscar',
@@ -79,29 +79,29 @@ export const useMenuStateStore = defineStore(
                             {
                                 name: 'Emitir',
                                 icon: 'icon-park-outline:printer-one',
-                                to: '/path'
+                                to: ''
                             },
                             {
                                 name: 'Chequear',
                                 icon: 'icon-park-outline:tickets-checked',
-                                to: '/path'
+                                to: ''
                             },
                             {
                                 name: 'Buscar',
                                 icon: 'icon-park-outline:search',
-                                to: '/path'
+                                to: ''
                             },
                             {
                                 name: 'Estadísticas',
                                 icon: 'icon-park-outline:search',
-                                to: '/path'
+                                to: ''
                             }
                         ]
                     },
                     {
                         name: 'Procesar',
                         icon: 'icon-park-outline:rotating-forward',
-                        to: '/path'
+                        to: ''
                     }
                 ]
             },
@@ -114,49 +114,49 @@ export const useMenuStateStore = defineStore(
                     {
                         name: 'Registrar',
                         icon: 'icon-park-outline:printer-one',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Entregar',
                         icon: 'icon-park-outline:delivery',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Buscar',
                         icon: 'icon-park-outline:search',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Procesar',
                         icon: 'icon-park-outline:rotating-forward',
-                        to: '/path'
+                        to: ''
                     }
                 ]
             },
             {
                 name: 'Clientes',
                 open: true,
-                icon: 'icon-park-outline:EveryUser',
+                icon: 'icon-park-outline:every-user',
                 children: [
                     {
                         name: 'Registrar',
                         icon: 'icon-park-outline:printer-one',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Entregar',
                         icon: 'icon-park-outline:delivery',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Buscar',
                         icon: 'icon-park-outline:search',
-                        to: '/path'
+                        to: ''
                     },
                     {
                         name: 'Procesar',
                         icon: 'icon-park-outline:rotating-forward',
-                        to: '/path'
+                        to: ''
                     }
                 ]
             }
@@ -203,6 +203,6 @@ export const useMenuStateStore = defineStore(
                 document.querySelector('.qq').innerHTML = document.querySelector('.qq').innerHTML + '<br>-mode=' + mode.value + '<br>-modeaux=' + modeaux.value + '<br>--------------------------';
             }
         };
-    }
-    // { persist: true }
+    },
+    { persist: true }
 );

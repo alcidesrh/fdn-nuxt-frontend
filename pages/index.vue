@@ -14,8 +14,8 @@ const items = ref([
   { label: 'Remove', icon: 'pi pi-fw pi-trash' }
 ]);
 
-onMounted(async () => {
-  await nextTick()
+onMounted(() => {
+
   ProductService.getProductsSmall().then((data) => (products.value = data));
   chartData.value = setChartData();
   chartOptions.value = setChartOptions();
@@ -104,6 +104,11 @@ watch([color, surface, darkTheme], () => {
 <template>
   <div class="grid grid-cols-12 gap-8">
     <div class="col-span-12 lg:col-span-6 xl:col-span-3">
+      <div>
+        <NuxtLink :to="{ name: 'users' }">
+          Users
+        </NuxtLink>
+      </div>
       <card class="mb-0">
         <template #content>
           <div class="flex justify-between mb-4">
