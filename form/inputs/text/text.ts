@@ -25,6 +25,10 @@ const props = {
     placeholder: {
         type: String,
         default: null
+    },
+    number: {
+        type: Boolean,
+        default: false
     }
 };
 const text_fdn = createInput(textprimevue);

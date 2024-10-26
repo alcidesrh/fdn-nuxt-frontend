@@ -631,8 +631,6 @@ export type Mutation = {
     createParada?: Maybe<CreateParadaPayload>;
     /** Creates a Permiso. */
     createPermiso?: Maybe<CreatePermisoPayload>;
-    /** Creates a Piloto. */
-    createPiloto?: Maybe<CreatePilotoPayload>;
     /** Creates a Recorrido. */
     createRecorrido?: Maybe<CreateRecorridoPayload>;
     /** Creates a RecorridoAsientoPrecio. */
@@ -681,8 +679,6 @@ export type Mutation = {
     deleteParada?: Maybe<DeleteParadaPayload>;
     /** Deletes a Permiso. */
     deletePermiso?: Maybe<DeletePermisoPayload>;
-    /** Deletes a Piloto. */
-    deletePiloto?: Maybe<DeletePilotoPayload>;
     /** Deletes a Recorrido. */
     deleteRecorrido?: Maybe<DeleteRecorridoPayload>;
     /** Deletes a RecorridoAsientoPrecio. */
@@ -731,8 +727,6 @@ export type Mutation = {
     updateParada?: Maybe<UpdateParadaPayload>;
     /** Updates a Permiso. */
     updatePermiso?: Maybe<UpdatePermisoPayload>;
-    /** Updates a Piloto. */
-    updatePiloto?: Maybe<UpdatePilotoPayload>;
     /** Updates a Recorrido. */
     updateRecorrido?: Maybe<UpdateRecorridoPayload>;
     /** Updates a RecorridoAsientoPrecio. */
@@ -813,10 +807,6 @@ export type MutationCreateParadaArgs = {
 
 export type MutationCreatePermisoArgs = {
     input: CreatePermisoInput;
-};
-
-export type MutationCreatePilotoArgs = {
-    input: CreatePilotoInput;
 };
 
 export type MutationCreateRecorridoArgs = {
@@ -915,10 +905,6 @@ export type MutationDeletePermisoArgs = {
     input: DeletePermisoInput;
 };
 
-export type MutationDeletePilotoArgs = {
-    input: DeletePilotoInput;
-};
-
 export type MutationDeleteRecorridoArgs = {
     input: DeleteRecorridoInput;
 };
@@ -1013,10 +999,6 @@ export type MutationUpdateParadaArgs = {
 
 export type MutationUpdatePermisoArgs = {
     input: UpdatePermisoInput;
-};
-
-export type MutationUpdatePilotoArgs = {
-    input: UpdatePilotoInput;
 };
 
 export type MutationUpdateRecorridoArgs = {
@@ -1195,6 +1177,7 @@ export type Piloto = Node & {
     dpi?: Maybe<Scalars['String']['output']>;
     email?: Maybe<Scalars['String']['output']>;
     fechaNacimiento?: Maybe<Scalars['String']['output']>;
+    fullName?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
     legacyId?: Maybe<Scalars['Int']['output']>;
     licencia?: Maybe<Scalars['String']['output']>;
@@ -1210,28 +1193,35 @@ export type Piloto = Node & {
     updatedAt: Scalars['String']['output'];
 };
 
-/** Cursor connection for Piloto. */
-export type PilotoCursorConnection = {
-    __typename?: 'PilotoCursorConnection';
-    edges?: Maybe<Array<Maybe<PilotoEdge>>>;
-    pageInfo: PilotoPageInfo;
-    totalCount: Scalars['Int']['output'];
+export type PilotoFilter_CreatedAt = {
+    after?: InputMaybe<Scalars['String']['input']>;
+    before?: InputMaybe<Scalars['String']['input']>;
+    strictly_after?: InputMaybe<Scalars['String']['input']>;
+    strictly_before?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Edge of Piloto. */
-export type PilotoEdge = {
-    __typename?: 'PilotoEdge';
-    cursor: Scalars['String']['output'];
-    node?: Maybe<Piloto>;
+export type PilotoFilter_Order = {
+    createdAt?: InputMaybe<Scalars['String']['input']>;
+    email?: InputMaybe<Scalars['String']['input']>;
+    id?: InputMaybe<Scalars['String']['input']>;
+    nombre?: InputMaybe<Scalars['String']['input']>;
+    status?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Information about the current page. */
-export type PilotoPageInfo = {
-    __typename?: 'PilotoPageInfo';
-    endCursor?: Maybe<Scalars['String']['output']>;
+/** Page connection for Piloto. */
+export type PilotoPageConnection = {
+    __typename?: 'PilotoPageConnection';
+    collection?: Maybe<Array<Maybe<Piloto>>>;
+    paginationInfo: PilotoPaginationInfo;
+};
+
+/** Information about the pagination. */
+export type PilotoPaginationInfo = {
+    __typename?: 'PilotoPaginationInfo';
     hasNextPage: Scalars['Boolean']['output'];
-    hasPreviousPage: Scalars['Boolean']['output'];
-    startCursor?: Maybe<Scalars['String']['output']>;
+    itemsPerPage: Scalars['Int']['output'];
+    lastPage: Scalars['Int']['output'];
+    totalCount: Scalars['Int']['output'];
 };
 
 export type Query = {
@@ -1264,19 +1254,19 @@ export type Query = {
     factura?: Maybe<Factura>;
     facturas?: Maybe<FacturaCursorConnection>;
     getMetadataResource?: Maybe<MetadataResource>;
+    getUserByUsernameUser?: Maybe<User>;
     localidad?: Maybe<Localidad>;
     localidads?: Maybe<LocalidadCursorConnection>;
     menu?: Maybe<Menu>;
     menus?: Maybe<MenuCursorConnection>;
     node?: Maybe<Node>;
-    pais?: Maybe<Pais>;
-    paiss?: Maybe<PaisCursorConnection>;
+    pais?: Maybe<PaisCursorConnection>;
     parada?: Maybe<Parada>;
     paradas?: Maybe<ParadaCursorConnection>;
     permiso?: Maybe<Permiso>;
     permisos?: Maybe<PermisoCursorConnection>;
     piloto?: Maybe<Piloto>;
-    pilotos?: Maybe<PilotoCursorConnection>;
+    pilotos?: Maybe<PilotoPageConnection>;
     recorrido?: Maybe<Recorrido>;
     recorridoAsientoPrecio?: Maybe<RecorridoAsientoPrecio>;
     recorridoAsientoPrecios?: Maybe<RecorridoAsientoPrecioCursorConnection>;
@@ -1287,8 +1277,8 @@ export type Query = {
     salidaLog?: Maybe<SalidaLog>;
     salidaLogs?: Maybe<SalidaLogCursorConnection>;
     salidas?: Maybe<SalidaCursorConnection>;
+    taxa?: Maybe<TaxonCursorConnection>;
     taxon?: Maybe<Taxon>;
-    taxons?: Maybe<TaxonCursorConnection>;
     user?: Maybe<User>;
     users?: Maybe<UserPageConnection>;
     venta?: Maybe<Venta>;
@@ -1454,6 +1444,10 @@ export type QueryGetMetadataResourceArgs = {
     status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type QueryGetUserByUsernameUserArgs = {
+    username?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type QueryLocalidadArgs = {
     id: Scalars['ID']['input'];
 };
@@ -1481,10 +1475,6 @@ export type QueryNodeArgs = {
 };
 
 export type QueryPaisArgs = {
-    id: Scalars['ID']['input'];
-};
-
-export type QueryPaissArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
@@ -1518,10 +1508,21 @@ export type QueryPilotoArgs = {
 };
 
 export type QueryPilotosArgs = {
-    after?: InputMaybe<Scalars['String']['input']>;
-    before?: InputMaybe<Scalars['String']['input']>;
-    first?: InputMaybe<Scalars['Int']['input']>;
-    last?: InputMaybe<Scalars['Int']['input']>;
+    _page?: InputMaybe<Scalars['Int']['input']>;
+    createdAt?: InputMaybe<Array<InputMaybe<PilotoFilter_CreatedAt>>>;
+    email?: InputMaybe<Scalars['String']['input']>;
+    email_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    fullName?: InputMaybe<Scalars['String']['input']>;
+    id?: InputMaybe<Scalars['Int']['input']>;
+    id_list?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+    itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
+    licencia?: InputMaybe<Scalars['String']['input']>;
+    licencia_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    order?: InputMaybe<Array<InputMaybe<PilotoFilter_Order>>>;
+    status?: InputMaybe<Scalars['String']['input']>;
+    status_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    telefono?: InputMaybe<Scalars['String']['input']>;
+    telefono_list?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type QueryRecorridoArgs = {
@@ -1579,15 +1580,15 @@ export type QuerySalidasArgs = {
     last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QueryTaxonArgs = {
-    id: Scalars['ID']['input'];
-};
-
-export type QueryTaxonsArgs = {
+export type QueryTaxaArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
     last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryTaxonArgs = {
+    id: Scalars['ID']['input'];
 };
 
 export type QueryUserArgs = {
@@ -2240,36 +2241,6 @@ export type CreatePermisoPayload = {
     permiso?: Maybe<Permiso>;
 };
 
-/** Creates a Piloto. */
-export type CreatePilotoInput = {
-    apellido?: InputMaybe<Scalars['String']['input']>;
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    createdAt: Scalars['String']['input'];
-    direccion?: InputMaybe<Scalars['String']['input']>;
-    dpi?: InputMaybe<Scalars['String']['input']>;
-    email?: InputMaybe<Scalars['String']['input']>;
-    fechaNacimiento?: InputMaybe<Scalars['String']['input']>;
-    legacyId?: InputMaybe<Scalars['Int']['input']>;
-    licencia?: InputMaybe<Scalars['String']['input']>;
-    licenciaVencimiento?: InputMaybe<Scalars['String']['input']>;
-    localidad?: InputMaybe<Scalars['String']['input']>;
-    nacionalidad?: InputMaybe<Scalars['String']['input']>;
-    nit?: InputMaybe<Scalars['String']['input']>;
-    nombre: Scalars['String']['input'];
-    seguroSocial?: InputMaybe<Scalars['String']['input']>;
-    sexo?: InputMaybe<Scalars['String']['input']>;
-    status?: InputMaybe<Status>;
-    telefono?: InputMaybe<Scalars['String']['input']>;
-    updatedAt: Scalars['String']['input'];
-};
-
-/** Creates a Piloto. */
-export type CreatePilotoPayload = {
-    __typename?: 'createPilotoPayload';
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-    piloto?: Maybe<Piloto>;
-};
-
 /** Creates a RecorridoAsientoPrecio. */
 export type CreateRecorridoAsientoPrecioInput = {
     clientMutationId?: InputMaybe<Scalars['String']['input']>;
@@ -2642,19 +2613,6 @@ export type DeletePermisoPayload = {
     __typename?: 'deletePermisoPayload';
     clientMutationId?: Maybe<Scalars['String']['output']>;
     permiso?: Maybe<Permiso>;
-};
-
-/** Deletes a Piloto. */
-export type DeletePilotoInput = {
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    id: Scalars['ID']['input'];
-};
-
-/** Deletes a Piloto. */
-export type DeletePilotoPayload = {
-    __typename?: 'deletePilotoPayload';
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-    piloto?: Maybe<Piloto>;
 };
 
 /** Deletes a RecorridoAsientoPrecio. */
@@ -3096,37 +3054,6 @@ export type UpdatePermisoPayload = {
     __typename?: 'updatePermisoPayload';
     clientMutationId?: Maybe<Scalars['String']['output']>;
     permiso?: Maybe<Permiso>;
-};
-
-/** Updates a Piloto. */
-export type UpdatePilotoInput = {
-    apellido?: InputMaybe<Scalars['String']['input']>;
-    clientMutationId?: InputMaybe<Scalars['String']['input']>;
-    createdAt?: InputMaybe<Scalars['String']['input']>;
-    direccion?: InputMaybe<Scalars['String']['input']>;
-    dpi?: InputMaybe<Scalars['String']['input']>;
-    email?: InputMaybe<Scalars['String']['input']>;
-    fechaNacimiento?: InputMaybe<Scalars['String']['input']>;
-    id: Scalars['ID']['input'];
-    legacyId?: InputMaybe<Scalars['Int']['input']>;
-    licencia?: InputMaybe<Scalars['String']['input']>;
-    licenciaVencimiento?: InputMaybe<Scalars['String']['input']>;
-    localidad?: InputMaybe<Scalars['String']['input']>;
-    nacionalidad?: InputMaybe<Scalars['String']['input']>;
-    nit?: InputMaybe<Scalars['String']['input']>;
-    nombre?: InputMaybe<Scalars['String']['input']>;
-    seguroSocial?: InputMaybe<Scalars['String']['input']>;
-    sexo?: InputMaybe<Scalars['String']['input']>;
-    status?: InputMaybe<Status>;
-    telefono?: InputMaybe<Scalars['String']['input']>;
-    updatedAt?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Updates a Piloto. */
-export type UpdatePilotoPayload = {
-    __typename?: 'updatePilotoPayload';
-    clientMutationId?: Maybe<Scalars['String']['output']>;
-    piloto?: Maybe<Piloto>;
 };
 
 /** Updates a RecorridoAsientoPrecio. */

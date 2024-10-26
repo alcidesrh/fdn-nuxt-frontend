@@ -22,12 +22,6 @@
   },
   "search.exclude": {
     "**/node_modules": false,
-    "**/node_modules/**": true,
-    "**/theme-regenesis/**": true,
-    "*node_modules*": true
-  },
-  "files.exclude": {
-    "**/node_modules/**": true,
-    "node_modules": true
+    "**/theme-regenesis/**": true
   },
 }

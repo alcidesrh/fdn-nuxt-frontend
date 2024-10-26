@@ -231,7 +231,6 @@ useMercureItem({
 });
 
 const id = decodeURIComponent(route.params.id as string);
-alert('await')
 const {
   retrieved: item,
   isLoading,

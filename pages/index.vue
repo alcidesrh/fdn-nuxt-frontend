@@ -105,9 +105,9 @@ watch([color, surface, darkTheme], () => {
   <div class="grid grid-cols-12 gap-8">
     <div class="col-span-12 lg:col-span-6 xl:col-span-3">
       <div>
-        <NuxtLink :to="{ name: 'users' }">
+        <div @click="$router.push(`/usuarios`)">
           Users
-        </NuxtLink>
+        </div>
       </div>
       <card class="mb-0">
         <template #content>

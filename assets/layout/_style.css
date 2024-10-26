@@ -1,0 +1,55 @@
+/* Utils */
+.clearfix:after {
+    content: ' ';
+    display: block;
+    clear: both;
+}
+
+
+.p-toast {
+
+    &.p-toast-top-right,
+    &.p-toast-top-left,
+    &.p-toast-top-center {
+        top: 100px;
+    }
+}
+
+.action {
+    transition: all .1s;
+    cursor: pointer;
+    font-size: var(--step-1) !important;
+
+    &>*,
+    &>g>path {
+        stroke-width: 3px;
+    }
+
+    /* text-emerald-500 cursor-pointer u-text-1 ! action [&>*]:stroke-3px */
+    &.delete {
+        color: var(--p-zinc-400);
+
+        &:hover {
+            color: var(--p-zinc-500);
+        }
+    }
+
+    &.edit {
+        color: var(--p-emerald-600);
+
+        &:hover {
+            color: var(--p-emerald-600);
+        }
+    }
+
+    ;
+
+    /* text-red-300 hover:text-red [&>g>path]:stroke-3px cursor-pointer u-text-1 ! action */
+    &:hover {
+        scale: 1.3;
+        /* background-color: var(--p-primary-contrast-200); */
+        /* border-radius: 999px; */
+        /* color: var(--p-primary-contrast-800); */
+        /* padding: 4px; */
+    }
+}

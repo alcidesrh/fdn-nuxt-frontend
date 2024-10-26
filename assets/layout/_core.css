@@ -34,15 +34,15 @@ body {
     font-family: var(--font-family);
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    /* height: 100%; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--p-surface-ground);
+    background-color: var(--background);
     /* background-color: var(--p-slate-50); */
     color: var(--text-color);
     font-size: var(--step-0);
     line-height: normal;
-    font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712;
+    /* font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712; */
     overflow-x: hidden;
     overflow-y: auto;
 
@@ -52,14 +52,15 @@ a {
     text-decoration: none;
 }
 
-.layout-wrapper {
-    padding-bottom: 2rem;
-}
 
 .layout-content {
     padding: 0 1rem;
-    margin-top: calc(var(--topbar) + 1rem);
+    margin-top: calc(var(--topbar));
     z-index: 800;
+
+    /* &>div {
+        min-height: calc(100vh - var(--topbar));
+    } */
 }
 
 .rounded-full {
@@ -71,14 +72,14 @@ a {
 /* .layout-leave-active, */
 .page-enter-active,
 .page-leave-active {
-    transition: all 0.3s;
+    transition: all 0.5s;
 }
 
 .page-enter-from,
 .page-leave-to {
-    transition: all 0.3s;
+    transition: all 0.5s;
     opacity: 0;
-    filter: blur(1rem);
+    filter: blur(5px);
     /* filter: grayscale(1); */
 }
 

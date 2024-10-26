@@ -18,6 +18,11 @@
         width: 100%;
 
         &>.layout-topbar-logo-container {
+            position: absolute;
+            left: 50%;
+            top: 0px;
+            margin-left: -40.5px;
+
             .logo-wrap {
                 transition:
                     background-color 2s,
@@ -25,13 +30,14 @@
                     transform 1.5s;
                 transform: rotate3d(1, 1, 1);
                 display: flex;
+
                 align-items: center;
                 justify-content: center;
                 border-radius: 999px;
                 margin: 5px 10px;
                 width: var(--step-6);
                 height: var(--step-6);
-                position: absolute;
+                /* position: absolute; */
                 left: 1rem;
                 top: 0px;
                 background-color: var(--p-primary-contrast-0);
@@ -98,8 +104,8 @@
 
     &>.topbar-bg {
         transition: background-color 1.5s;
-        background-color: transparent;
-        opacity: 0.6;
+        /* background-color: transparent; */
+        opacity: 0.3;
     }
 }
 
@@ -117,14 +123,17 @@
 }
 
 .layout-topbar.layout-topbar-sticky {
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(4px);
+    box-shadow: 0px 0px 5px var(--p-primary-contrast-400) !important;
 
     &>.topbar-bg {
-        background-color: var(--p-surface-900);
+        background-color: var(--background);
+        /* background-color: var(--p-surface-900); */
     }
 
+    .p-breadcrumb-item .surface-contrast-600,
     & button>i {
-        color: var(--p-surface-0);
+        color: var(--p-surface-contrast-800) !important;
     }
 
     & .logo-wrap {
@@ -140,9 +149,11 @@
 
 .app-dark .layout-topbar.layout-topbar-sticky {
     backdrop-filter: blur(8px);
+    box-shadow: 0px 0px 5px var(--p-primary-contrast-600) !important;
 
     &>.topbar-bg {
-        background-color: var(--p-surface-contrast-900);
+        background-color: var(--background);
+        /* background-color: var(--p-surface-800); */
     }
 
     & button>i {

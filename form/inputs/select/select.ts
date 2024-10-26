@@ -182,6 +182,24 @@ const props = {
         default: null
     }
 };
+// console.log(props);
+// for (const key in props) {
+//     if (Object.prototype.hasOwnProperty.call(props, key)) {
+//         props[key] = props[key] ? props[key] : { default: null };
+//         // const element = props[key];
+//         // const type = typeof props[key];
+//         // if (typeof props[key] == 'object') console.log(type + `= ${key} => ${element}`);
+//     }
+// }
+// console.log(props);
+
+// const select_fdn = createInput(selectprimevue, {
+//     props: Object.keys(props)
+//         .filter((i) => props[i])
+//         .map((i) => {
+//             return { i: props[i] };
+//         })
+// });
 const select_fdn = createInput(selectprimevue);
 if (!select_fdn.props) {
     select_fdn.props = [];

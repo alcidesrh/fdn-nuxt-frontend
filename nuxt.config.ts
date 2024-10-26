@@ -2,6 +2,8 @@
 import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 import Components from 'unplugin-vue-components/vite';
 import { icons } from './constants';
+import { createResolver } from '@nuxt/kit';
+
 export default defineNuxtConfig({
     modules: [
         '@vueuse/nuxt',
@@ -13,6 +15,14 @@ export default defineNuxtConfig({
         '@nuxt/icon',
         '@formkit/nuxt'
     ],
+    imports: {
+        presets: [
+            {
+                from: '@vue/apollo-composable',
+                imports: ['useQuery']
+            }
+        ]
+    },
 
     icon: {
         clientBundle: {
@@ -64,18 +74,16 @@ export default defineNuxtConfig({
         pageTransition: {
             name: 'page',
             mode: 'out-in'
-            // duration: {
-            //     enter: 0.2,
-            //     leave: 0.2
-            // }
         }
-        // layoutTransition: {
-        //     name: 'layout',
-        //     mode: 'out-in'
-        //     // duration: {
-        //     //     enter: 0.2,
-        //     //     leave: 0.2
-        //     // }
-        // }
+    },
+    hooks: {
+        'pages:routerOptions'({ files }) {
+            const resolver = createResolver(import.meta.url);
+            // add a route
+            files.push({
+                path: resolver.resolve('./router.options'),
+                optional: true
+            });
+        }
     }
 });

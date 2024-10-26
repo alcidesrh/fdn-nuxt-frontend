@@ -7,23 +7,9 @@ fragment DataUser on User {
     createdAt
     status
 }
-query users($page: Int, $id: Int, $itemsPerPage: Int, $fullName: String, $username: String, $createdAt: [UserFilter_createdAt], $order: [UserFilter_order]) {
-    users(_page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, username: $username, createdAt: $createdAt, order: $order) {
-        collection {
-            ...DataUser
-            fullName
-        }
-        paginationInfo {
-            itemsPerPage
-            lastPage
-            totalCount
-            hasNextPage
-        }
-    }
-}
 
-query user($id: ID!) {
-    user(id: $id) {
-        ...DataUser
-    }
-}
+# query user($id: ID!) {
+#     user(id: $id) {
+#         ...DataUser
+#     }
+# }

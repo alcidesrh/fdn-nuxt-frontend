@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('primevue/avatar')['default']
+    Breadcrumb: typeof import('primevue/breadcrumb')['default']
     Button: typeof import('primevue/button')['default']
     ButtonGroup: typeof import('primevue/buttongroup')['default']
     Card: typeof import('primevue/card')['default']
@@ -20,6 +21,7 @@ declare module 'vue' {
     DatePicker: typeof import('primevue/datepicker')['default']
     Divider: typeof import('primevue/divider')['default']
     Drawer: typeof import('primevue/drawer')['default']
+    Fieldset: typeof import('primevue/fieldset')['default']
     FileUpload: typeof import('primevue/fileupload')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
     IconField: typeof import('primevue/iconfield')['default']
@@ -32,11 +34,13 @@ declare module 'vue' {
     MultiSelect: typeof import('primevue/multiselect')['default']
     Paginator: typeof import('primevue/paginator')['default']
     Panel: typeof import('primevue/panel')['default']
+    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScrollTop: typeof import('primevue/scrolltop')['default']
     Select: typeof import('primevue/select')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
+    Sidebar: typeof import('primevue/sidebar')['default']
     Skeleton: typeof import('primevue/skeleton')['default']
     Speeddial: typeof import('primevue/speeddial')['default']
     SpeedDial: typeof import('primevue/speeddial')['default']
@@ -47,6 +51,7 @@ declare module 'vue' {
     Toolbar: typeof import('primevue/toolbar')['default']
   }
   export interface ComponentCustomProperties {
+    KeyFilter: typeof import('primevue/keyfilter')['default']
     StyleClass: typeof import('primevue/styleclass')['default']
     Tooltip: typeof import('primevue/tooltip')['default']
   }

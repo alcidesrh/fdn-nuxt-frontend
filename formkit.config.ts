@@ -2,17 +2,10 @@ import { createAutoAnimatePlugin } from '@formkit/addons';
 import { defineFormKitConfig } from '@formkit/vue';
 // import { genesisIcons } from '@formkit/icons'
 import { es } from '@formkit/i18n';
-import { rootClasses } from './formkit.theme';
+import { rootClasses } from './form/formkit-theme-fdn/formkit.theme';
 import * as inputs from './form/inputs';
 import { generateClasses } from '@formkit/themes';
 
-const simpleInputClasses = {
-    outer: 'mb-3  !border !border-slate-800',
-    label: 'form-label',
-    input: 'form-control',
-    help: 'text-muted',
-    message: 'invalid-feedback'
-};
 export default defineFormKitConfig({
     locale: 'es',
     locales: { es },

@@ -5,7 +5,7 @@ const toast = useToast();
 const bus = useEventBus('msg')
 const error = useEventBus('error')
 bus.on((data) => {
-  const lifetime = {}// life: 5000 
+  const lifetime = { life: 5000 }// life: 5000 
   if (data.type == 'error') {
     toast.add({ ...lifetime, detail: data.msg || 'Ha ocurrido un error. Inténtelo de nuevo.', severity: 'error', summary: 'Error:', });
   }
@@ -16,7 +16,7 @@ bus.on((data) => {
 })
 
 error.on((msg) => {
-  const lifetime = {}// life: 5000 
+  const lifetime = { life: 5000 }// life: 5000 
   toast.add({ ...lifetime, detail: msg?.message || msg || 'Ha ocurrido un error. Inténtelo de nuevo.', severity: 'error', summary: 'Error:', });
 })
 

@@ -27,5 +27,6 @@
     --p-primary-contrast-800: var(--p-primary-800);
     --p-primary-contrast-900: var(--p-primary-900);
     --p-primary-contrast-950: var(--p-primary-950);
-    --p-icon-color: var(--p-primary-100);
+    --p-icon-color: var(--p-surface-contrast-600);
+
 }

@@ -1,25 +1,66 @@
+<script setup lang="ts">
+const props = defineProps<{
+  collection: Collection,
+}>()
+const { columnClass } = useCollection()
+const emit = defineEmits(['sort'])
+const collection = props.collection
+let data = ref({ loading: false })
+
+watch(() => collection.loading, (v) => {
+  data.value.loading = v
+})
+const selected = ref()
+</script>
 <template>
-  <div v-if="columns?.length">
+  <div v-if="collection.columns.length">
+    <slot name="header">
+      <div class="flex flex-wrap justify-between u-mb-l">
+        <div>
+          <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ collection.label }}</span>
+        </div>
 
-    <slot name="header"></slot>
+        <div class="flex flex-wrap gap-5">
+          <Button label="Importar" icon="pi pi-download" severity="secondary" outlined />
+          <Button label="Exportar" icon="pi pi-upload" severity="secondary" outlined />
+          <Button label="Nuevo" icon="pi pi-plus" outlined />
+          <Button label="Eliminar" icon="pi pi-trash" severity="danger" outlined />
+        </div>
+      </div>
+    </slot>
 
-    <FormKit type="form" :actions="false" v-model="params" form-class="block m-auto" :config="{
+    <FormKit type="form" :actions="false" v-model="collection.vars" form-class="block m-auto" :config="{
       inputClass: 'text-14px',
+      outerClass: 'mb-0!',
+      wrapperClass: 'mb-0!'
     }">
 
-      <DataTable stripedRows @update:sortField="sort || false" removableSort tableStyle="min-width:50rem"
-        :sortOrder="params.orderType == 'ASC' ? 1 : (params.orderType == 'DESC' ? -1 : 0)" :value="collection.items"
-        :class="{ 'opacity-50': data.loading || loading }" filterDisplay="row" scrollable>
+      <DataTable stripedRows @update:sortField="(i) => $emit('sort', i)" removableSort tableStyle="min-width:50rem"
+        :sortOrder="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
+        :value="collection.items" :class="{ 'opacity-50': collection.loading }" filterDisplay="row" scrollable
+        v-model:selection="selected">
         <template #loading>... ...buscando... ...</template>
         <template #empty>
           <h5 class=" m-auto my-5! text-slate-4 font-semibold w-fit">No hay información que mostrar</h5>
         </template>
 
-
-        <template v-for="c, i in columns" :key="i">
+        <Column frozen :showFilterMenu="false" :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined"
+          class="text-center">
+          <template #header>
+            <div class="flex justify-center items-center w-full h-full">
+              <CollectionMenu :collection="collection" />
+            </div>
+          </template>
+          <template v-if="collection.menu == 'editar'" #body="{ data }">
+            <slot name="action" :data="data">
+            </slot>
+          </template>
+        </Column>
+        <template v-for="c, i in collection.columns" :key="i">
 
           <Column :header="c.label || c.name" :field="c.name" :showFilterMenu="false" :sortable="!!c.sort"
             alignFrozen="left" :frozen="c.action" :class="[columnClass(c)]">
+
 
             <template v-if="c.schema" #filter>
               <FormKitSchema :schema="c.schema" :data="data" />
@@ -27,69 +68,22 @@
 
             <template #body="{ data }">
               <collection-cell v-if="!c.action" :data="data" :column="c" :index="i" />
-              <slot name="action" :id="data.id" :_id="data._id" v-else>
-
-                <div class="flex gap-5 items-center justify-center w-full">
-                  <Icon name="icon-park-outline:delete"
-                    class="[&>g>path]:stroke-2px  text-orange-500 cursor-pointer u-text-1! action" mode="svg" />
-                  <NuxtLink :to="{ name: 'users-editar' }">
-                    <Icon name="icon-park-outline:pencil" class=" primary-contrast-500 cursor-pointer  u-text-1! action"
-                      mode="svg" />
-                  </NuxtLink>
-                </div>
-
-              </slot>
             </template>
 
-            <template v-if="field !== 'price'">
-              <InputText v-model="data[field]" autofocus fluid />
-            </template>
-            <template v-else>
-              <InputNumber v-model="data[field]" mode="currency" currency="USD" locale="en-US" autofocus fluid />
-            </template>
           </Column>
         </template>
       </DataTable>
     </FormKit>
-    <div class="flex justify-center u-mb-l u-mt-s">
-      <paginate :collection="collectionStore.collection" :params="collectionStore.params" />
+    <div class="flex justify-center u-mb-l u-mt-s" v-if="collection.pagination?.totalCount">
+      <paginate :collection="collection" />
     </div>
   </div>
   <skeleton-list v-else :columns="7" />
+
 </template>
 <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////////////////////////////////////////////////////////////////// -->
-<script setup lang="ts">
-import type { CollectionStore, Column } from '~/composables/useCollection';
 
-const { columnClass } = useCollection()
-
-const emit = defineEmits(['sort'])
-
-const props = defineProps<{
-  collectionStore: CollectionStore,
-  loading: boolean
-}>()
-
-const collection = props.collectionStore.collection
-const params = props.collectionStore.params
-const columns = computed(() => props.collectionStore.columns)
-
-let data = ref({ loading: false })
-
-watch(() => props.collectionStore.data.loading, (v) => {
-  data.value.loading = v
-})
-
-onUnmounted(() => {
-  CSS.highlights.clear()
-})
-
-function sort(i: string) {
-  emit('sort', i)
-}
-
-</script>
 
 <style scoped>
 ::highlight(highlight-0),

@@ -1,6 +1,7 @@
 <template>
   <IconField>
-    <InputText v-model="typing" @input="keyDown" fluid :class="[context.inputClass]" size="small" />
+    <InputText v-model="typing" @input="keyDown" fluid :class="[context.inputClass]" size="small"
+      v-bind="context.attrs" />
     <InputIcon class="text-slate-500" :class="icon" @click="reset" />
   </IconField>
 </template>
@@ -13,7 +14,6 @@ import InputIcon from 'primevue/inputicon';
 const props = defineProps({
   context: Object,
 })
-
 const typing = ref('')
 const loading = ref(false)
 

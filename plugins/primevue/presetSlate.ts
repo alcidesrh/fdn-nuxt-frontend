@@ -497,10 +497,16 @@ export default {
                         cell: {
                             // background: '{surface.500}',
                             // color: '{surface.0}',
-                            // padding: '.3rem',
+                            padding: '12px 6px'
                             // border: {
                             // color: 'transparent'
                             // }
+                            // padding: '0px'
+                        }
+                    },
+                    body: {
+                        cell: {
+                            padding: '12px 6px'
                         }
                     }
                     // sort: {
@@ -515,10 +521,15 @@ export default {
                         cell: {
                             // background: '{surface.500}',
                             // color: '{surface.contrast.100}',
-                            // padding: '0.5rem 1rem 0.2rem 1rem;',
+                            padding: '12px 6px'
                             // border: {
                             // color: 'transparent'
                             // }
+                        }
+                    },
+                    body: {
+                        cell: {
+                            padding: '12px 6px'
                         }
                     }
                     // sort: {
@@ -600,6 +611,44 @@ export default {
         },
         inputtext: {
             placeholderColor: '{surface.contrast.500}'
+            // border: {
+            //     radius: '4px'
+            // }
+        },
+        breadcrumb: {
+            background: 'none',
+            gap: '1px',
+            padding: '.5rem'
+        },
+        radiobutton: {
+            // width: '17px',
+            // height: '17px',
+            icon: {
+                // size: '.6rem',
+                checked: {
+                    color: '{primary.500}'
+                }
+            },
+            background: '{primary.0}',
+            checked: {
+                background: '{primary.0}'
+            },
+            // filled: {
+            //     background: '{surface.contrast.500}'
+            // },
+            border: {
+                color: '{surface.400}'
+            },
+            hover: {
+                border: {
+                    color: '{surface.contrast.800}'
+                }
+            }
+        },
+        multiselect: {
+            option: {
+                gap: '15px'
+            }
         }
     }
 };

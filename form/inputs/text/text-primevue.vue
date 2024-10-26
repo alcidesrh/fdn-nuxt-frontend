@@ -11,8 +11,11 @@ function handleInput(e) {
 </script>
 <template>
   <FloatLabel v-if="context.floatLabel">
-    <InputText :value="props.context._value" @input="handleInput" fluid :placeholder="context.placeholder" />
+    <InputText :v-keyfilter.int="context['v-keyfilter.int']" :value="props.context._value" @input="handleInput" fluid
+      :placeholder="context.placeholder" />
     <label for="username">{{ context.floatLabel }}</label>
   </FloatLabel>
-  <InputText v-else :value="props.context._value" @input="handleInput" fluid :placeholder="context.placeholder" small />
+  <InputText v-else-if="context.number" v-keyfilter.int :value="props.context._value" @input="handleInput" fluid
+    :placeholder="context.placeholder" />
+  <InputText v-else :value="props.context._value" @input="handleInput" fluid :placeholder="context.placeholder" />
 </template>

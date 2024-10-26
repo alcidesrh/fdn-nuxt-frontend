@@ -18,6 +18,8 @@ export default defineConfig({
     content: {
         pipeline: {
             include: [
+                'utils/**/*.{ts,js,vue}',
+                'form/formkit-theme-fdn/formkit.theme.ts',
                 // the default
                 /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
                 // include js/ts files
