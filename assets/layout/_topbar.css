@@ -2,12 +2,12 @@
     height: 70px;
     position: fixed;
     top: 0px;
-    z-index: 997;
+    z-index: 2;
     width: 100%;
     min-width: 100%;
     padding: 0 1rem;
-    transition: background-color 1.5s;
-    background-color: transparent;
+    transition: background-color .3s;
+    /* background-color: var(--background); */
 
     &>.layout-topbar-inner {
         position: relative;
@@ -23,34 +23,22 @@
             top: 0px;
             margin-left: -40.5px;
 
-            .logo-wrap {
+            .logo-fdn {
                 transition:
                     background-color 2s,
-                    box-shadow 1.5s,
-                    transform 1.5s;
-                transform: rotate3d(1, 1, 1);
-                display: flex;
-
-                align-items: center;
+                    box-shadow 2s,
+                    transform 2s;
+                margin-top: 10px;
+                width: 50px;
+                height: 50px;
                 justify-content: center;
-                border-radius: 999px;
-                margin: 5px 10px;
-                width: var(--step-6);
-                height: var(--step-6);
-                /* position: absolute; */
-                left: 1rem;
-                top: 0px;
-                background-color: var(--p-primary-contrast-0);
-                box-shadow: 0px 0px 10px 1px var(--p-primary-contrast-600);
-                opacity: 0.7;
-            }
-
-            .logo-fdn {
-                transition: color 1.5s;
+                align-items: center;
                 letter-spacing: 1px;
                 font-family: 'Corporative Alt';
-                color: var(--p-primary-contrast-700);
-                opacity: 0.8;
+                color: var(--p-zinc-400);
+                border-radius: 999px;
+                background-color: #ffffff;
+                box-shadow: 0px 0px 10px var(--p-zinc-500);
             }
         }
 
@@ -103,9 +91,9 @@
     }
 
     &>.topbar-bg {
-        transition: background-color 1.5s;
+        transition: background-color .3s;
         /* background-color: transparent; */
-        opacity: 0.3;
+        opacity: 0.5;
     }
 }
 
@@ -124,7 +112,7 @@
 
 .layout-topbar.layout-topbar-sticky {
     backdrop-filter: blur(4px);
-    box-shadow: 0px 0px 5px var(--p-primary-contrast-400) !important;
+    box-shadow: 0px 0px 5px var(--p-surface-contrast-400) !important;
 
     &>.topbar-bg {
         background-color: var(--background);
@@ -136,9 +124,9 @@
         color: var(--p-surface-contrast-800) !important;
     }
 
-    & .logo-wrap {
+    & .logo-fdn {
         /* transform: rotate3d(0, 1, 0, 360deg); */
-        background-color: var(--p-primary-700) !important;
+        background-color: var(--p-primary-600) !important;
         box-shadow: 0px 0px 10px 1px var(--p-primary-100) !important;
     }
 
@@ -148,8 +136,8 @@
 }
 
 .app-dark .layout-topbar.layout-topbar-sticky {
-    backdrop-filter: blur(8px);
-    box-shadow: 0px 0px 5px var(--p-primary-contrast-600) !important;
+    backdrop-filter: blur(4px);
+    box-shadow: 0px 0px 5px var(--p-surface-contrast-500) !important;
 
     &>.topbar-bg {
         background-color: var(--background);
@@ -160,7 +148,7 @@
         color: var(--p-surface-contrast-800);
     }
 
-    & .logo-wrap {
+    & .logo-fdn {
         /* transform: rotate3d(0, 1, 0, 360deg); */
         background-color: var(--p-primary-contrast-700) !important;
         box-shadow: 0px 0px 10px 1px var(--p-primary-contrast-50) !important;

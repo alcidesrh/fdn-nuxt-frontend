@@ -1,8 +1,8 @@
 .p-fieldset {
-  width: fit-content;
-  @apply p-4 md:px-8;
-  /* padding: 1em 3em; */
-  /* min-width: calc(20em + (3rem * 2)); */
+  min-width: 24em;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  height: fit-content;
+
 
   & .p-fieldset-legend {
     text-transform: capitalize;

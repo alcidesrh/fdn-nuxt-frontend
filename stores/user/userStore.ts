@@ -6,7 +6,7 @@ export const useUserStore = defineStore(
     'userCollection',
     () => {
         const { collection, sort, highlighted } = collectionStore();
-        let item: Ref<User> = ref({} as User);
+        let item: Ref<User | null> = ref(null);
         let form = ref([]);
         const resource = 'user';
         collection.value.label = 'usuario';

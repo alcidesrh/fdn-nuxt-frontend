@@ -12,9 +12,9 @@ const route = useRoute()
         <NuxtLink v-if="item.route" :to="{ name: item.route, params: item.params }">
           <div class="flex gap-x-2 items-center  py-3 px-1 rounded">
             <div v-if="item.icon">
-              <Icon :name="item.icon" class="surface-contrast-500 cursor-pointer  u-text-0!" mode="svg" />
+              <Icon :name="item.icon" class="surface-contrast-600 cursor-pointer  u-text-0!" mode="svg" />
             </div>
-            <span class="surface-contrast-500  capitalize">{{ item?.label || item.route }}</span>
+            <span class="surface-contrast-600 font-medium  capitalize">{{ item?.label || item.route }}</span>
           </div>
         </NuxtLink>
       </template>

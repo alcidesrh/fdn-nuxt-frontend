@@ -1,8 +1,8 @@
 <template>
 
-    <div class="w-fit h-70px cursor-pointer z-999 fixed top-0 flex justify-center items-center ml-1rem py-2">
-        <Button raised text class="p-0 border-0 border-rounded-4px!">
-            <div @click="toggleSidebar" class="w-40px h-30px  relative flex cursor-pointer ">
+    <div class="w-fit h-70px cursor-pointer z-10 fixed bottom-0 md:top-0 flex justify-center items-center ml-1rem py-2">
+        <Button @click="toggleSidebar" raised text class="p-0 border-0 border-rounded-0px!">
+            <div class="w-40px h-30px  relative flex cursor-pointer ">
                 <div class="w-20px bg-surface-contrast-600 h-full"></div>
                 <div class="flex justify-center items-center w-full h-full">
                     <icon
@@ -13,7 +13,7 @@
         </Button>
         <Divider layout="vertical" />
     </div>
-    <div class="wrap-sidebar" :class="[menuStore.mode]">
+    <div ref="sidebar" class="wrap-sidebar" :class="[menuStore.mode]">
         <div class="sidebar-control" :class="[menuStore.mode]">
             <div>
                 <div>
@@ -36,9 +36,9 @@
                 </div>
             </div>
         </div>
-
-        <aside id="layout-sidebar" class="layout-sidebar" :class="[menuStore.mode]" @mouseover="hover = true"
-            @mouseleave="hover = false">
+        <aside ref="sidebar" id="layout-sidebar" class="layout-sidebar" :class="[menuStore.mode]"
+            @mouseover="hover = true" @mouseleave="hover = false">
+            <close v-if="isMobil" @close="menuStore.mode = 'close'" />
             <nav class="menu-large">
                 <ol class=" layout-menu">
                     <MenuLarge :mode="menuStore.mode" :menu="menuStore.menu" />
@@ -56,19 +56,26 @@
 <script setup lang="ts">
 import replace from 'ramda/es/replace'
 
+const sidebar = ref()
+
+
+
 const menuStore = useMenuStateStore()
 const hover = ref(false)
 const hoverMode = ref(menuStore.mode == 'mini hover')
 let prevMode = menuStore.mode
+
 if (menuStore.mode.match('close')) {
     prevMode = replace(/close| close/, '', menuStore.mode)
 }
+
 watch(() => hover.value, (n) => {
 
     if (menuStore.mode != 'mini hover' && menuStore.mode != 'normal hovermode')
         return;
     menuStore.mode = n ? 'normal hovermode' : 'mini hover'
 })
+
 watch(() => menuStore.mode, (n, p) => {
     if (n == 'mini hover') {
         hoverMode.value = true;
@@ -81,16 +88,18 @@ watch(() => menuStore.mode, (n, p) => {
 })
 
 function toggleSidebar() {
+
     if (menuStore.mode != 'close') {
         prevMode = menuStore.mode
         menuStore.mode = 'close'
     }
-    else if (menuStore.mode == 'close' && !prevMode) {
+    else if ((menuStore.mode == 'close' && !prevMode)) {
         menuStore.mode = 'normal'
         prevMode = 'normal'
     }
     else {
         menuStore.mode = prevMode
     }
+
 }
 </script>

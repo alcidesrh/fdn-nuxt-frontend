@@ -109,7 +109,8 @@ export const colorPalette = [
         return { name: i, palette: colors[i] };
     })
 ];
-const surfaceContrast = revertColors(surfaceZinc);
+const surfaceContrast = revertColors(surface);
+const zincContrast = revertColors(surface);
 const primaryContrast = revertColors(primary);
 
 export default {
@@ -206,6 +207,7 @@ export default {
             light: {
                 surface: { ...surface },
                 surfaceContrast: { ...surface },
+                zincContrast: { ...surface },
                 primaryContrast: { ...primary },
                 primary: {
                     color: '{primary.600}',
@@ -316,8 +318,9 @@ export default {
                 }
             },
             dark: {
-                surface: { ...surfaceZinc },
+                surface: { ...surface },
                 surfaceContrast: { ...surfaceContrast },
+                zincContrast: { ...zincContrast },
                 primary: {
                     color: '{primary.400}',
                     contrastColor: '{surface.900}',
@@ -572,6 +575,10 @@ export default {
             }
         },
         button: {
+            padding: {
+                x: '0.75rem',
+                y: '0.5rem'
+            },
             colorScheme: {
                 light: {
                     outlined: {

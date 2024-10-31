@@ -3,7 +3,7 @@
     <div class="layout-topbar-inner z-50">
       <div class="layout-topbar-logo-container">
         <NuxtLink to="/" class="layout-topbar-logo z-10 absolute left-50%">
-          <LogoSvg />
+          <span class="logo-fdn u-text-1 hidden! sm:flex! md:opacity-100">FDN</span>
         </NuxtLink>
       </div>
 

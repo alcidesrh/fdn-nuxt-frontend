@@ -10,6 +10,7 @@ import toggleswitch_fdn from './toggleswitch/toggleswitch';
 import autoComplete_fdn from './autocomplete/autocomplete';
 import texticon_fdn from './texticon/texticon';
 import number_fdn from './number/number';
+// import fieldset_fdn from './fieldset/fieldset';
 import fieldset_fdn from './fieldset/fieldset';
 
 export { button_fdn, datepicker_fdn, text_fdn, select_fdn, checkbox_fdn, radio_fdn, textarea_fdn, toggleswitch_fdn, autoComplete_fdn, texticon_fdn, number_fdn, multiselect_fdn, fieldset_fdn };

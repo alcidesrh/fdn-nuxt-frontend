@@ -5,12 +5,10 @@
 html {
     height: 100%;
     font-size: 16px;
-
 }
 
 :root {
     scroll-behavior: smooth;
-    ;
 }
 
 /* width */
@@ -19,7 +17,6 @@ html {
     height: .5rem;
     /* display: none; */
     background-color: var(--p-surface-0);
-
 }
 
 /* Handle */
@@ -28,13 +25,10 @@ html {
     height: 5px;
 }
 
-
-
 body {
     font-family: var(--font-family);
     margin: 0;
     padding: 0;
-    /* height: 100%; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background);
@@ -54,13 +48,15 @@ a {
 
 
 .layout-content {
+    position: relative;
     padding: 0 1rem;
     margin-top: calc(var(--topbar));
-    z-index: 800;
+    z-index: 1;
 
-    /* &>div {
-        min-height: calc(100vh - var(--topbar));
-    } */
+    &>div {
+        /* box-shadow: inset 0px 0px 5px var(--p-surface-contrast-400); */
+        border: 1px solid var(--p-surface-border)
+    }
 }
 
 .rounded-full {

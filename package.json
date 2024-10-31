@@ -45,6 +45,7 @@
         "@graphql-eslint/eslint-plugin": "^3.20.1",
         "@hypernym/nuxt-gsap": "^2.4.2",
         "@nuxt/eslint": "^0.5.0",
+        "@nuxtjs/tailwindcss": "^6.12.2",
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@pinia/nuxt": "^0.5.3",
         "@primevue/auto-import-resolver": "^4.0.4",

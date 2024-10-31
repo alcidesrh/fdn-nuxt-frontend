@@ -1,5 +1,5 @@
 import { createInput } from '@formkit/vue';
-import fieldset from './Fieldset.vue';
+import fieldset from './fieldset-primevue.vue';
 const props = {
     legend: String,
     toggleable: Boolean,

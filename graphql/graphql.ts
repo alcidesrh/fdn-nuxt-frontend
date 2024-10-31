@@ -1260,7 +1260,8 @@ export type Query = {
     menu?: Maybe<Menu>;
     menus?: Maybe<MenuCursorConnection>;
     node?: Maybe<Node>;
-    pais?: Maybe<PaisCursorConnection>;
+    pais?: Maybe<Pais>;
+    paiss?: Maybe<PaisCursorConnection>;
     parada?: Maybe<Parada>;
     paradas?: Maybe<ParadaCursorConnection>;
     permiso?: Maybe<Permiso>;
@@ -1277,8 +1278,8 @@ export type Query = {
     salidaLog?: Maybe<SalidaLog>;
     salidaLogs?: Maybe<SalidaLogCursorConnection>;
     salidas?: Maybe<SalidaCursorConnection>;
-    taxa?: Maybe<TaxonCursorConnection>;
     taxon?: Maybe<Taxon>;
+    taxons?: Maybe<TaxonCursorConnection>;
     user?: Maybe<User>;
     users?: Maybe<UserPageConnection>;
     venta?: Maybe<Venta>;
@@ -1475,6 +1476,10 @@ export type QueryNodeArgs = {
 };
 
 export type QueryPaisArgs = {
+    id: Scalars['ID']['input'];
+};
+
+export type QueryPaissArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
@@ -1580,15 +1585,15 @@ export type QuerySalidasArgs = {
     last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QueryTaxaArgs = {
+export type QueryTaxonArgs = {
+    id: Scalars['ID']['input'];
+};
+
+export type QueryTaxonsArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
     last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type QueryTaxonArgs = {
-    id: Scalars['ID']['input'];
 };
 
 export type QueryUserArgs = {

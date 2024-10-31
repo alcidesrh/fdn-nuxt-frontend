@@ -12,21 +12,7 @@ export interface Menu {
 export const useMenuStateStore = defineStore(
     'useMenuState',
     () => {
-        const active = ref(false);
-        const ctrlBtnHorizontal = ref('horizontal');
-        const mode = ref('normal');
-        const modeaux = ref('normal');
-        const collapse = ref(true);
-        const colorBtn = ref({ label: '--p-surface-700', value: '#334155' });
-        const colorBorde = ref({ label: '--p-surface-400', value: '#94a3b8' });
-        const colorBtnBg = ref({ label: '--p-surface-0', value: '#fff' });
-        const btnH = ref(40);
-        const btnW = ref(40);
-        const iconSize = ref(15);
-        const rotate = ref(0);
-        const gap = ref(1);
-        const pinned = ref(true);
-        const menu4 = ref([]);
+        const mode = ref(isMobil ? 'close' : 'normal');
         const menu = ref([
             {
                 name: 'Boleto',
@@ -162,46 +148,9 @@ export const useMenuStateStore = defineStore(
             }
         ]);
 
-        watch(
-            () => collapse.value,
-            (n, o) => {
-                for (let i = 0; i < menu.value.length; i++) {
-                    if (menu.value[i].children?.length) {
-                        menu.value[i].open = collapse.value;
-                    }
-                }
-            }
-        );
         return {
-            active,
-            ctrlBtnHorizontal,
             menu,
-            menu4,
-            collapse,
-            mode,
-            modeaux,
-            colorBtn,
-            colorBorde,
-            colorBtnBg,
-            btnW,
-            btnH,
-            pinned,
-            iconSize,
-            rotate,
-            gap,
-            setMode: (v: string) => {
-                if (!v) {
-                    mode.value = '';
-                    modeaux.value = '';
-                } else if (modeaux.value == v || (modeaux.value == 'mini' && v.match('close'))) {
-                    mode.value = 'normal';
-                    modeaux.value = 'normal';
-                } else {
-                    mode.value = v;
-                    modeaux.value = v;
-                }
-                document.querySelector('.qq').innerHTML = document.querySelector('.qq').innerHTML + '<br>-mode=' + mode.value + '<br>-modeaux=' + modeaux.value + '<br>--------------------------';
-            }
+            mode
         };
     },
     { persist: true }

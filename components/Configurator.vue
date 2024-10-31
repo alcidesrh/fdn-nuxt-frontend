@@ -1,3 +1,46 @@
+<template>
+    <div :class="[hiddenLocal ? 'hide-animation ' : 'show-animation']"
+        class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-64 h-fit p-4 bg-surface-contrast-100 dark:bg-surface-900 border border-surface-contrast-300 origin-top hidden-transition">
+
+        <close @close="hidden" />
+
+        <div class="flex flex-col gap-4">
+            <div>
+                <div class="text-sm  font-semibold mb-2">Color de Botones</div>
+                <div class="pt-2 flex gap-2 flex-wrap justify-between items-center u-mt-3xs">
+                    <div v-for="primaryColor of colorPalette" :key="primaryColor.name" class="rounded-full">
+                        <button type="button" :title="primaryColor.name"
+                            class="border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1"
+                            :class="{ 'outline-primary': ui.color === primaryColor.name }"
+                            @click="ui.updateColors('primary', primaryColor.name)"
+                            :style="{ backgroundColor: `${primaryColor.name === 'noir' ? 'var(--text-color)' : primaryColor.palette['500']}` }"></button>
+                    </div>
+                </div>
+            </div>
+            <div class=" u-my-xs">
+                <div class="text-sm text-muted-color font-semibold mb-2">Color de Fondo</div>
+                <div class="pt-2 flex gap-2 flex-wrap justify-between u-mt-3xs">
+                    <button v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
+                        @click="ui.updateColors('surface', surface.name)" :class="[
+                            'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
+                            { 'outline-primary': ui.surface ? ui.surface === surface.name : ui.darkTheme ? surface.name === 'zinc' : surface.name === 'slate' }
+                        ]" :style="{ backgroundColor: `${surface.palette['500']}` }"></button>
+                </div>
+            </div>
+            <!-- <div class="flex flex-col gap-2">
+                <div class="text-sm text-muted-color font-semibold">Estilo</div>
+                <SelectButton v-model="ui.preset" @change="ui.setPreset()" :options="presetOptions"
+                    :allowEmpty="false" />
+            </div> -->
+
+
+            <div class="relative flex justify-between mt-3 mb-1">
+                <Button size="small" label="Reiniciar" outlined @click="ui.reset();" />
+                <Button size="small" label="Aceptar" @click="hidden" />
+            </div>
+        </div>
+    </div>
+</template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import { colorPalette } from '~/plugins/primevue/presetSlate'
@@ -49,49 +92,6 @@ const surfaces = ref([
 
 const ui = useThemeStateStore()
 </script>
-<template>
-    <div :class="[hiddenLocal ? 'hide-animation ' : 'show-animation']"
-        class="config-panel  absolute top-[3.25rem] right-0 w-64 p-4 bg-surface-contrast-100 dark:bg-surface-900 border border-surface-contrast-300 origin-top hidden-transition">
-
-        <i class="pi pi-times absolute right-0 top-0 m-3 cursor-pointer surface-contrast-600" @click="hidden()" />
-        <div class="flex flex-col gap-4">
-            <div>
-                <div class="text-sm  font-semibold mb-2">Color de Botones</div>
-                <div class="pt-2 flex gap-2 flex-wrap justify-between items-center u-mt-3xs">
-                    <div v-for="primaryColor of colorPalette" :key="primaryColor.name" class="rounded-full">
-                        <button type="button" :title="primaryColor.name"
-                            class="border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1"
-                            :class="{ 'outline-primary': ui.color === primaryColor.name }"
-                            @click="ui.updateColors('primary', primaryColor.name)"
-                            :style="{ backgroundColor: `${primaryColor.name === 'noir' ? 'var(--text-color)' : primaryColor.palette['500']}` }"></button>
-                    </div>
-                </div>
-            </div>
-            <div class=" u-my-xs">
-                <div class="text-sm text-muted-color font-semibold mb-2">Color de Fondo</div>
-                <div class="pt-2 flex gap-2 flex-wrap justify-between u-mt-3xs">
-                    <button v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
-                        @click="ui.updateColors('surface', surface.name)" :class="[
-                            'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
-                            { 'outline-primary': ui.surface ? ui.surface === surface.name : ui.darkTheme ? surface.name === 'zinc' : surface.name === 'slate' }
-                        ]" :style="{ backgroundColor: `${surface.palette['500']}` }"></button>
-                </div>
-            </div>
-            <!-- <div class="flex flex-col gap-2">
-                <div class="text-sm text-muted-color font-semibold">Estilo</div>
-                <SelectButton v-model="ui.preset" @change="ui.setPreset()" :options="presetOptions"
-                    :allowEmpty="false" />
-            </div> -->
-
-
-            <div class="relative flex justify-between mt-3 mb-1">
-                <Button size="small" label="Reiniciar" outlined @click="ui.reset();" />
-                <Button size="small" label="Aceptar" @click="hidden" />
-            </div>
-        </div>
-    </div>
-</template>
-
 <style>
 .hide-animation {
     animation: .3s linear 0s normal forwards hide-animation;

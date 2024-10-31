@@ -8,7 +8,7 @@ export const formkitClasses = (inputs: []): [] => {
             i.number = true;
         }
         if (i.$formkit == 'multiselect_fdn') {
-            i.labelClass = 'alcides';
+            // i.labelClass = 'alcides';
         }
     });
 

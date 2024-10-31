@@ -629,3 +629,8 @@
 .border-primary-contrast-900 {
     border-color: var(--p-primary-contrast-900);
 }
+
+.zinc-contrast-6,
+.surface-contrast-600 {
+    color: var(--p-surface-contrast-600);
+}

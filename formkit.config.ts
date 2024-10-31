@@ -2,7 +2,7 @@ import { createAutoAnimatePlugin } from '@formkit/addons';
 import { defineFormKitConfig } from '@formkit/vue';
 // import { genesisIcons } from '@formkit/icons'
 import { es } from '@formkit/i18n';
-import { rootClasses } from './form/formkit-theme-fdn/formkit.theme';
+import { rootClasses } from './form/formkit.theme';
 import * as inputs from './form/inputs';
 import { generateClasses } from '@formkit/themes';
 

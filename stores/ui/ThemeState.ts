@@ -45,6 +45,7 @@ const presets = {
     Aura
     // Lara
 };
+
 export const useThemeStateStore = defineStore('useThemeState', {
     persist: true,
     state: () => ({
@@ -86,7 +87,11 @@ export const useThemeStateStore = defineStore('useThemeState', {
             preset.semantic.colorScheme.light.surfaceContrast = surfacePalette as any;
             preset.semantic.colorScheme.dark.surface = surfacePalette as any;
             preset.semantic.colorScheme.dark.surfaceContrast = surfacePaletteContrast;
-            // console.log(s);
+
+            const zincPalette = surfaces.value.find((s) => s.name === 'zinc')?.palette;
+            const zincPaletteContrast = revertColors(zincPalette);
+            preset.semantic.colorScheme.light.zincContrast = zincPalette as any;
+            preset.semantic.colorScheme.dark.zincContrast = zincPaletteContrast;
             const primaryPalette = primaryColors.value.find((c) => c.name === this.color)?.palette;
             const primaryContrast = revertColors(primaryPalette);
             preset.semantic.primary = primaryPalette;
