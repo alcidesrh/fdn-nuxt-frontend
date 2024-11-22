@@ -1,5 +1,4 @@
 export const formkitClasses = (inputs: []): [] => {
-    log(inputs);
     inputs.forEach((i: any) => {
         if (['nit', 'id'].includes(i.name)) {
             i.outerClass = 'max-w-130px!';

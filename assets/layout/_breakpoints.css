@@ -2,7 +2,11 @@
 
 @media (max-width: 640px) {}
 
-@media (max-width: 768px) {}
+@media (max-width: 768px) {
+  .p-scrolltop {
+    bottom: 80px;
+  }
+}
 
 @media (min-width: 1024px) {}
 

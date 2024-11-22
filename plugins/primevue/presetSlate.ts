@@ -490,8 +490,6 @@ export default {
                 }
             }
         },
-        // datatable.header.cell.background
-        // datepicker.date.range.selected.background
         datatable: {
             colorScheme: {
                 light: {
@@ -575,42 +573,34 @@ export default {
             }
         },
         button: {
-            padding: {
-                x: '0.75rem',
-                y: '0.5rem'
+            label: {
+                font: {
+                    weight: 400
+                }
             },
+            // padding: {
+            //     x: '0.75rem',
+            //     y: '0.5rem'
+            // },
+
             colorScheme: {
                 light: {
-                    outlined: {
-                        primary: {
-                            border: {
-                                color: '{primary.400}'
-                            }
+                    secondary: {
+                        hover: {
+                            background: '{surface.200}'
                         },
-                        secondary: {
-                            hover: {
-                                background: '{surface.100}'
-                            },
-                            border: {
-                                color: '{surface.400}'
-                            }
+                        border: {
+                            color: '{surface.contrast.300}'
                         }
                     }
                 },
                 dark: {
-                    outlined: {
-                        primary: {
-                            border: {
-                                // color: '{primary.300}'
-                            }
+                    secondary: {
+                        hover: {
+                            background: '{surface.contrast.200}'
                         },
-                        secondary: {
-                            // hover: {
-                            //     background: '{surface.100}'
-                            // },
-                            border: {
-                                color: 'transparent'
-                            }
+                        border: {
+                            color: '{surface.contrast.400}'
                         }
                     }
                 }

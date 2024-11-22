@@ -78,3 +78,12 @@ export const buses = gql`
         }
     }
 `;
+export const updateUser = gql`
+    mutation updateUser($input: updateUserInput!) {
+        updateUser(input: $input) {
+            user {
+                id
+            }
+        }
+    }
+`;

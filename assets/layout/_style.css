@@ -26,23 +26,14 @@
     }
 
     /* text-emerald-500 cursor-pointer u-text-1 ! action [&>*]:stroke-3px */
+    &.edit,
     &.delete {
-        color: var(--p-surface-contrast-600);
+        color: var(--p-surface-contrast-700);
 
         &:hover {
-            color: var(--p-surface-contrast-700);
+            color: var(--p-surface-contrast-800);
         }
     }
-
-    &.edit {
-        color: var(--p-primary-contrast-600);
-
-        &:hover {
-            color: var(--p-primary-contrast-700);
-        }
-    }
-
-    ;
 
     /* text-red-300 hover:text-red [&>g>path]:stroke-3px cursor-pointer u-text-1 ! action */
     &:hover {

@@ -16,10 +16,11 @@
 
 /* @import './_reset' layer(reset); */
 @import './_preloading';
-@import './_core';
+@import './_layout';
 
 @import './_style';
 /* @import './_filter'; */
 @import "./_topbar";
 @import "./_sidebar";
+@import './_mobil';
 @import './_breakpoints';

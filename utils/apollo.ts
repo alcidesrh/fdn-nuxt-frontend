@@ -1,12 +1,12 @@
-import { InputMaybe, Scalars } from './../graphql/graphql';
-import { useQuery, useLazyQuery as l, useQueryLoading } from '@vue/apollo-composable';
+import { users, columnsCollection } from '~~/graphql/queries';
+import { useQuery, useMutation } from '@vue/apollo-composable';
 import { jsonToGraphQLQuery, VariableType } from './json-to-graphql-query/src';
 import gql from 'graphql-tag';
 
 const { y } = useWindowScroll();
 
 export function getCollection(query, collection) {
-    const { result, loading, onError, networkStatus } = useQuery(query, () => collection.value.vars);
+    const { result, loading, onError, refetch } = useQuery(query, () => collection.value.vars);
     onError(merror);
     watch(
         () => result.value,
@@ -29,7 +29,7 @@ export function getCollection(query, collection) {
         }
     );
 
-    return { result, loading };
+    return { result, loading, refetch };
 }
 
 export function gqlQueryColumns(query, data) {
@@ -70,75 +70,9 @@ export function gqlQueryColumns(query, data) {
     return { result, loading };
 }
 
-export function gqlQueryResource(query, ID, store) {
-    const { item: item, resource: resource } = store;
-    const { result, loading, onError } = useQuery(query, { id: ID });
-    onError(merror);
-    watch(
-        () => result.value,
-        (v) => {
-            item.value = useCloned(v[resource]).cloned.value;
-        }
-    );
-
-    // watch(
-    //     () => loading.value,
-    //     (v) => {
-    //         collection.value.loading = v;
-    //     }
-    // );
-
-    return { result, loading };
-}
-
-export function getCustomCollection(resource: string, fields = Array<string>, params: Record<string, Ref | Record<string, string> | null> = { args: null }) {
-    const { reference, args } = params;
-    const root = {
-        query: {}
-    };
-
-    const fielsdParsed: any = {};
-    fields.map((i) => (fielsdParsed[i] = true));
-
-    root.query[resource] = {
-        __args: args,
-        collection: fielsdParsed
-    };
-    const query: any = gql`
-        ${jsonToGraphQLQuery(root)}
-    `;
-    if (!reference) {
-        return useQuery(query);
-    }
-    const { result, loading, onError } = useQuery(query);
-    onError(merror);
-    watch(
-        () => result.value,
-        (v) => {
-            if (typeof v == 'undefined') {
-                return;
-            }
-            y.value = 0;
-
-            const { collection: p, paginationInfo } = v[resource];
-            reference.value.pagination = paginationInfo;
-            reference.value.items = p;
-            reference.value.loading = false;
-        }
-    );
-
-    watch(
-        () => loading.value,
-        (v) => {
-            reference.value.loading = v;
-        }
-    );
-
-    return { result, loading };
-}
-
 export function getResource(resource: string, fields: Array<string> = [], params: any = { args: null }) {
     const { reference, args } = params;
+    log(args);
     let root = {
         query: {}
     };
@@ -147,16 +81,11 @@ export function getResource(resource: string, fields: Array<string> = [], params
     fields.forEach((i) => (fielsdParsed[i] = true));
     root.query = {
         __name: resource,
-        __variables: {
-            username: 'String'
-        }
+        __variables: args.variables.types
     };
     root.query[resource] = {
-        __args: {
-            username: new VariableType('username')
-        },
+        __args: args.signature,
         ...fielsdParsed
-        // }
     };
 
     const query: any = gql`
@@ -166,7 +95,7 @@ export function getResource(resource: string, fields: Array<string> = [], params
     if (!reference) {
         return useQuery(query);
     }
-    const { result, loading, onError, onResult } = useQuery(query, () => args);
+    const { result, loading, onError, onResult } = useQuery(query, args.variables.value);
     onError(merror);
     onResult((v: { data }) => {
         const { data } = v;
@@ -176,22 +105,70 @@ export function getResource(resource: string, fields: Array<string> = [], params
         y.value = 0;
         reference.value = useCloned(data[resource]).cloned.value;
     });
-    // watch(
-    //     () => result.value,
-    //     (v) => {
-    //         if (typeof v == 'undefined') {
-    //             return;
-    //         }
-    //         y.value = 0;
-    //         reference.value = v[resource];
-    //     }
-    // );
-
-    // watch(
-    //     () => loading.value,
-    //     (v) => {
-    //         reference.value.loading = v;
-    //     }
-    // );
     return { result, loading };
+}
+
+export function updateResource(name, args) {
+    const root = {
+        mutation: {
+            __name: name,
+            __variables: args.types
+        }
+    };
+    root.mutation[name] = {
+        __args: args.signature,
+        ...args.properties
+    };
+    const query = gql`
+        ${jsonToGraphQLQuery(root)}
+    `;
+    const { mutate, onError, onDone, loading } = useMutation(query, () => ({
+        update: (cache) => {
+            let data = useCloned(
+                cache.readQuery({
+                    query: users,
+                    variables: args.collection.value.vars
+                })
+            ).cloned.value;
+            log(data);
+            if (!data) return;
+            data.users.collection = { ...data.users.collection, ...[args.item.value] };
+            cache.writeQuery({ query: users, variables: args.collection.value.vars, data });
+        }
+    }));
+    onError((e) => merror({ message: e, life: false }));
+
+    return {
+        mutate,
+        onDone,
+        loading
+    };
+}
+
+export function deleteResource(name, getValue = {}) {
+    const root = {
+        mutation: {
+            __name: name,
+            __variables: {
+                input: `${name}Input!`
+            }
+        }
+    };
+    root.mutation[name] = {
+        __args: {
+            input: new VariableType('input')
+        },
+        ...getValue
+    };
+    const query = gql`
+        ${jsonToGraphQLQuery(root)}
+    `;
+    const { mutate, onError, onDone, loading } = useMutation(query);
+    onError((e) => merror({ message: e, life: false }));
+
+    return {
+        mutate,
+        onDone,
+        loading
+    };
 }

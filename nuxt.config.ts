@@ -6,14 +6,14 @@ import { createResolver } from '@nuxt/kit';
 
 export default defineNuxtConfig({
     modules: [
-        '@vueuse/nuxt',
-        // '@nuxt/eslint',
+        '@vueuse/nuxt', // '@nuxt/eslint',
         // '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
         '@pinia-plugin-persistedstate/nuxt',
         '@unocss/nuxt',
         '@nuxt/icon',
-        '@formkit/nuxt'
+        '@formkit/nuxt',
+        'dayjs-nuxt'
     ],
     imports: {
         presets: [
@@ -23,7 +23,12 @@ export default defineNuxtConfig({
             }
         ]
     },
-
+    dayjs: {
+        locales: ['es'],
+        plugins: ['relativeTime', 'utc', 'timezone'],
+        defaultLocale: 'es',
+        defaultTimezone: 'America/Guatemala'
+    },
     icon: {
         clientBundle: {
             // list of icons to include in the client bundle
@@ -52,7 +57,7 @@ export default defineNuxtConfig({
     },
     vite: {
         optimizeDeps: {
-            noDiscovery: true
+            include: ['daysjs']
         },
         plugins: [
             Components({
@@ -82,6 +87,7 @@ export default defineNuxtConfig({
                 { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
                 { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
                 { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }
+                // { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Faster+One&display=swap' }
             ],
             meta: [
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },

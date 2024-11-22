@@ -1,8 +1,9 @@
 @font-face {
-    font-family: 'Corporative Alt';
+    font-family: 'Faster One';
     font-display: swap;
-    font-weight: 700;
-    src: local('Corporative Alt'), url('/fonts/logo/corporative-alt-cdnfonts/CorporativeSansBoldItalic.otf') format('opentype');
+    font-style: normal;
+    font-weight: 00;
+    src: url('/fonts/logo/FasterOne-Regular.ttf') format('truetype');
 }
 
 /* roboto-flex-latin-wght-normal */

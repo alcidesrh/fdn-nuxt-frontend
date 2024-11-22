@@ -1,16 +1,15 @@
 <template>
   <div class="layout-topbar" :class="{ 'dark': ui.darkTheme }">
     <div class="layout-topbar-inner z-50">
-      <div class="layout-topbar-logo-container">
-        <NuxtLink to="/" class="layout-topbar-logo z-10 absolute left-50%">
-          <span class="logo-fdn u-text-1 hidden! sm:flex! md:opacity-100">FDN</span>
-        </NuxtLink>
-      </div>
-
       <div class=" relative w-200px h-70px flex items-center ml-60px">
         <BreadCumbCustom />
       </div>
 
+      <div class="layout-topbar-logo-container">
+        <NuxtLink :to="{ name: 'inicio' }" class="">
+          <span class="logo-fdn u-text-1 hidden! sm:flex! md:opacity-100 ">FDN</span>
+        </NuxtLink>
+      </div>
       <div class="layout-topbar-actions contrast">
         <div class="layout-config-menu">
           <button type="button" class="layout-topbar-action" @click="ui.toggleDarkMode()">
@@ -54,7 +53,6 @@ import Configurator from './Configurator.vue'
 
 const ui = useThemeStateStore()
 const hideConfiguration = ref(true)
-const menuStore = useMenuStateStore()
 
 onMounted(async () => {
   const el = document.querySelector("#intersectionObservertarget")

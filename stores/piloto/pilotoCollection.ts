@@ -19,7 +19,7 @@ export const usePilotoCollectionStore = defineStore('pilotoCollection', () => {
         gqlQueryColumns(columnsCollection, collection);
     }
 
-    msgbus(`filterinput_${resource}`).on((v: any) => {
+    msg(`filterinput_${resource}`).on((v: any) => {
         collection.value.loading = v;
     });
     return { collection, sort, ini };

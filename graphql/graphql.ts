@@ -641,6 +641,8 @@ export type Mutation = {
     createSalidaLog?: Maybe<CreateSalidaLogPayload>;
     /** Creates a Taxon. */
     createTaxon?: Maybe<CreateTaxonPayload>;
+    /** Creates a User. */
+    createUser?: Maybe<CreateUserPayload>;
     /** Creates a Venta. */
     createVenta?: Maybe<CreateVentaPayload>;
     /** Creates a create_form. */
@@ -689,6 +691,8 @@ export type Mutation = {
     deleteSalidaLog?: Maybe<DeleteSalidaLogPayload>;
     /** Deletes a Taxon. */
     deleteTaxon?: Maybe<DeleteTaxonPayload>;
+    /** Deletes a User. */
+    deleteUser?: Maybe<DeleteUserPayload>;
     /** Deletes a Venta. */
     deleteVenta?: Maybe<DeleteVentaPayload>;
     /** Deletes a create_form. */
@@ -737,6 +741,8 @@ export type Mutation = {
     updateSalidaLog?: Maybe<UpdateSalidaLogPayload>;
     /** Updates a Taxon. */
     updateTaxon?: Maybe<UpdateTaxonPayload>;
+    /** Updates a User. */
+    updateUser?: Maybe<UpdateUserPayload>;
     /** Updates a Venta. */
     updateVenta?: Maybe<UpdateVentaPayload>;
     /** Updates a create_form. */
@@ -827,6 +833,10 @@ export type MutationCreateSalidaLogArgs = {
 
 export type MutationCreateTaxonArgs = {
     input: CreateTaxonInput;
+};
+
+export type MutationCreateUserArgs = {
+    input: CreateUserInput;
 };
 
 export type MutationCreateVentaArgs = {
@@ -925,6 +935,10 @@ export type MutationDeleteTaxonArgs = {
     input: DeleteTaxonInput;
 };
 
+export type MutationDeleteUserArgs = {
+    input: DeleteUserInput;
+};
+
 export type MutationDeleteVentaArgs = {
     input: DeleteVentaInput;
 };
@@ -1019,6 +1033,10 @@ export type MutationUpdateSalidaLogArgs = {
 
 export type MutationUpdateTaxonArgs = {
     input: UpdateTaxonInput;
+};
+
+export type MutationUpdateUserArgs = {
+    input: UpdateUserInput;
 };
 
 export type MutationUpdateVentaArgs = {
@@ -1260,8 +1278,7 @@ export type Query = {
     menu?: Maybe<Menu>;
     menus?: Maybe<MenuCursorConnection>;
     node?: Maybe<Node>;
-    pais?: Maybe<Pais>;
-    paiss?: Maybe<PaisCursorConnection>;
+    pais?: Maybe<PaisCursorConnection>;
     parada?: Maybe<Parada>;
     paradas?: Maybe<ParadaCursorConnection>;
     permiso?: Maybe<Permiso>;
@@ -1278,8 +1295,8 @@ export type Query = {
     salidaLog?: Maybe<SalidaLog>;
     salidaLogs?: Maybe<SalidaLogCursorConnection>;
     salidas?: Maybe<SalidaCursorConnection>;
+    taxa?: Maybe<TaxonCursorConnection>;
     taxon?: Maybe<Taxon>;
-    taxons?: Maybe<TaxonCursorConnection>;
     user?: Maybe<User>;
     users?: Maybe<UserPageConnection>;
     venta?: Maybe<Venta>;
@@ -1476,10 +1493,6 @@ export type QueryNodeArgs = {
 };
 
 export type QueryPaisArgs = {
-    id: Scalars['ID']['input'];
-};
-
-export type QueryPaissArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
@@ -1585,15 +1598,15 @@ export type QuerySalidasArgs = {
     last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QueryTaxonArgs = {
-    id: Scalars['ID']['input'];
-};
-
-export type QueryTaxonsArgs = {
+export type QueryTaxaArgs = {
     after?: InputMaybe<Scalars['String']['input']>;
     before?: InputMaybe<Scalars['String']['input']>;
     first?: InputMaybe<Scalars['Int']['input']>;
     last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryTaxonArgs = {
+    id: Scalars['ID']['input'];
 };
 
 export type QueryUserArgs = {
@@ -2350,6 +2363,33 @@ export type CreateTaxonPayload = {
     taxon?: Maybe<Taxon>;
 };
 
+/** Creates a User. */
+export type CreateUserInput = {
+    apellido?: InputMaybe<Scalars['String']['input']>;
+    clientMutationId?: InputMaybe<Scalars['String']['input']>;
+    createdAt: Scalars['String']['input'];
+    direccion?: InputMaybe<Scalars['String']['input']>;
+    email?: InputMaybe<Scalars['String']['input']>;
+    legacyId?: InputMaybe<Scalars['Int']['input']>;
+    localidad?: InputMaybe<Scalars['String']['input']>;
+    nit?: InputMaybe<Scalars['String']['input']>;
+    nombre: Scalars['String']['input'];
+    password?: InputMaybe<Scalars['String']['input']>;
+    permisos?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    roles: Scalars['Iterable']['input'];
+    status?: InputMaybe<Status>;
+    telefono?: InputMaybe<Scalars['String']['input']>;
+    updatedAt: Scalars['String']['input'];
+    username: Scalars['String']['input'];
+};
+
+/** Creates a User. */
+export type CreateUserPayload = {
+    __typename?: 'createUserPayload';
+    clientMutationId?: Maybe<Scalars['String']['output']>;
+    user?: Maybe<User>;
+};
+
 /** Creates a Venta. */
 export type CreateVentaInput = {
     clientMutationId?: InputMaybe<Scalars['String']['input']>;
@@ -2696,6 +2736,19 @@ export type DeleteTaxonPayload = {
     __typename?: 'deleteTaxonPayload';
     clientMutationId?: Maybe<Scalars['String']['output']>;
     taxon?: Maybe<Taxon>;
+};
+
+/** Deletes a User. */
+export type DeleteUserInput = {
+    clientMutationId?: InputMaybe<Scalars['String']['input']>;
+    id: Scalars['ID']['input'];
+};
+
+/** Deletes a User. */
+export type DeleteUserPayload = {
+    __typename?: 'deleteUserPayload';
+    clientMutationId?: Maybe<Scalars['String']['output']>;
+    user?: Maybe<User>;
 };
 
 /** Deletes a Venta. */
@@ -3169,6 +3222,34 @@ export type UpdateTaxonPayload = {
     __typename?: 'updateTaxonPayload';
     clientMutationId?: Maybe<Scalars['String']['output']>;
     taxon?: Maybe<Taxon>;
+};
+
+/** Updates a User. */
+export type UpdateUserInput = {
+    apellido?: InputMaybe<Scalars['String']['input']>;
+    clientMutationId?: InputMaybe<Scalars['String']['input']>;
+    createdAt?: InputMaybe<Scalars['String']['input']>;
+    direccion?: InputMaybe<Scalars['String']['input']>;
+    email?: InputMaybe<Scalars['String']['input']>;
+    id: Scalars['ID']['input'];
+    legacyId?: InputMaybe<Scalars['Int']['input']>;
+    localidad?: InputMaybe<Scalars['String']['input']>;
+    nit?: InputMaybe<Scalars['String']['input']>;
+    nombre?: InputMaybe<Scalars['String']['input']>;
+    password?: InputMaybe<Scalars['String']['input']>;
+    permisos?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+    roles?: InputMaybe<Scalars['Iterable']['input']>;
+    status?: InputMaybe<Status>;
+    telefono?: InputMaybe<Scalars['String']['input']>;
+    updatedAt?: InputMaybe<Scalars['String']['input']>;
+    username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Updates a User. */
+export type UpdateUserPayload = {
+    __typename?: 'updateUserPayload';
+    clientMutationId?: Maybe<Scalars['String']['output']>;
+    user?: Maybe<User>;
 };
 
 /** Updates a Venta. */

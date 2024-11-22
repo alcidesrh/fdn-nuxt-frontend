@@ -1,4 +1,9 @@
 @import "./datatable";
 @import "./select";
 @import "./multiselect";
-@import "./fieldset"
+@import "./fieldset";
+
+
+.pi.p-confirmdialog-icon {
+  font-size: 2rem;
+}

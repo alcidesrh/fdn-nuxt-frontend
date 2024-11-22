@@ -11,7 +11,7 @@
     <MenuRoot />
 
     <div id="layout-content" class="layout-content " :class="[menuStore.mode]">
-      <div class="bg-surface-contrast-0 u-p-l md:u-px-xl rounded-sm w-full relative max-w-full">
+      <div class="content">
 
         <NuxtPage />
 
@@ -23,10 +23,10 @@
     <div>
       <toast-messages />
     </div>
+    <ScrollTop />
 
   </div>
 
-  <ScrollTop />
 </template>
 
 <script setup lang="ts">

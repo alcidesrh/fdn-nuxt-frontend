@@ -24,9 +24,9 @@ definePageMeta({
 })
 
 const router = useRouter()
-const edit = (_id, id) => {
-  router.push({ name: `usuario_collection` }); return;
-}
+// const edit = (_id, id) => {
+//   router.push({ name: `usuario_collection` }); return;
+// }
 
 const collectionStore = usePilotoCollectionStore()
 

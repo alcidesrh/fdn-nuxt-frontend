@@ -1,7 +1,7 @@
 #syntax=docker/dockerfile:1.4
 
 # Versions
-FROM node:20-alpine AS node_upstream
+FROM node:23-alpine AS node_upstream
 
 # Base stage for dev and build
 FROM node_upstream AS base

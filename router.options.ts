@@ -4,30 +4,37 @@ export default {
     // https://router.vuejs.org/api/interfaces/routeroptions.html#routes
     routes: (_routes) => [
         {
-            name: 'inicio',
+            name: 'home',
             path: '/',
             component: () => import('~/pages/index.vue'),
-            meta: { breadcrumb: false }
-        },
-        {
-            name: 'usuarios',
-            path: '/usuarios',
-            component: {
-                render: () => h(resolveComponent('router-view'))
-            },
-            meta: { breadcrumb: { label: 'usuarios', route: 'usuario_collection', icon: 'icon-park-outline:every-user' } },
+            meta: { label: 'inicio', icon: 'icon-park-outline:home' },
             children: [
                 {
-                    name: 'usuario_collection',
+                    name: 'inicio',
                     path: '',
-                    component: () => import('~/pages/usuarios/UserList.vue'),
-                    meta: { breadcrumb: false }
+                    component: () => import('~/pages/dashboard.vue')
+                    // meta: { label: 'inicio', icon: 'icon-park-outline:home' }
                 },
                 {
-                    name: 'usuario_edit',
-                    path: ':username',
-                    component: () => import('~/pages/usuarios/UserEdit.vue'),
-                    meta: { breadcrumb: { label: 'arg', icon: 'icon-park-outline:user' } }
+                    // name: 'usuarios',
+                    path: '/usuarios',
+                    // component: () => import('~/pages/router.vue'),
+                    meta: { label: 'usuarios', icon: 'icon-park-outline:every-user' },
+
+                    children: [
+                        {
+                            name: 'usuario_collection',
+                            path: '',
+                            component: () => import('~/pages/usuarios/UserList.vue')
+                            // meta: { icon: 'icon-park-outline:every-user' }
+                        },
+                        {
+                            name: 'usuario_edit',
+                            path: ':username',
+                            component: () => import('~/pages/usuarios/UserEdit.vue'),
+                            meta: { icon: 'icon-park-outline:user' }
+                        }
+                    ]
                 }
             ]
         }

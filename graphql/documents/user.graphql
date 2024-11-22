@@ -8,8 +8,10 @@ fragment DataUser on User {
     status
 }
 
-# query user($id: ID!) {
-#     user(id: $id) {
-#         ...DataUser
-#     }
-# }
+mutation updateUser($input: updateUserInput!) {
+    updateUser(input: $input) {
+        user {
+            id
+        }
+    }
+}

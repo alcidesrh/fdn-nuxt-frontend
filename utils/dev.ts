@@ -1,1 +1,1 @@
-export const log = (data) => console.log(data);
+export const log = (...data) => console.log(...data);

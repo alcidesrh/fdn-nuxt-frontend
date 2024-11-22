@@ -1,77 +1,97 @@
 <template>
 
-  <div class="flex justify-between items-center text-14px surface-contrast-600">
-    <div>
-      <span class="font-bold">ID:</span> {{ user?._id }}
-    </div>
-    <div class="flex gap-5 font-medium  justify-end ">
-      <span>
-        <span class="font-bold">Actualizado:</span> {{ dformat(user?.updatedAt) }}
-      </span>
-      <span>
-        <span class="font-bold">Creado:</span> {{ dformat(user?.createdAt) }}
-      </span>
-    </div>
-  </div>
-  <divider class="u-mb-l mx-auto" />
-  <div class="flex justify-between u-mb-l ">
-    <div v-show="user?.username" class="grid">
-      <div class="flex items-center gap-3 mb-2">
-        <icon name="icon-park-outline:user" size="18" />
-        <span class="u-text-1 font-medium">{{ `${user?.username}` }}</span>
+  <div class="w-full h-full @container">
+    <div class="grid @4xl:flex justify-between u-mb-s">
+      <div v-show="user?.username" class="grid">
+        <div class="flex items-center gap-1 mb-2">
+          <icon name="ic:baseline-numbers" size="18" />
+          <span class="u-text-1 font-medium ml-2">{{ `${user?._id}` }} </span>
+        </div>
+        <div class="flex items-center gap-1 my-2 u-text-1">
+          <icon name="icon-park-outline:user" size="18" />
+          <span class="u-text-1 font-medium ml-2"> {{ `${user?.username}` }}: </span> <span class="ml-1">{{ `
+            ${user?.nombre} ${user?.apellido} ` }}</span>
+        </div>
       </div>
-      <span class="ml-7">{{ ` ${user?.nombre} ${user?.apellido} ` }}</span>
+      <div class="grid @4xl:flex my-2 justify-end w-fit h-fit ">
+        <span class="flex gap-3">
+          <icon name="icon-park-outline:calendar" size="18" mode="svg" />
+          <span class="font-medium">Actualizado:</span> {{ month_day_hour_format(user?.updatedAt) }}
+        </span>
+        <divider layout="vertical" />
+        <span class="flex gap-3">
+          <icon name="icon-park-outline:calendar" size="18" mode="svg" />
+          <span class="font-medium">Creado:</span> {{ month_day_hour_format(user?.createdAt) }}
+        </span>
+      </div>
+      <!-- <divider class="u-mb-l ml-auto" /> -->
     </div>
-    <div class="gap-3">
-      <Button @click="submit" label="Guardar" class="mr-5" icon="pi pi-save" />
-      <Button label="Listado" class="mr-5" icon="pi pi-save" outlined severity="info" />
-      <Button label="Eliminar" severity="danger" outlined icon="pi pi-trash" />
-    </div>
-  </div>
-  <FormKit v-if="form.length && user" ref="userForm" v-model="user" id="entityForm" :actions="false" type="form">
-    <div class="grid md:flex md:flex-wrap gap-5 md:gap-10 m-auto">
-      <FormKitSchema :schema="form" :data="data" :library="library" />
-    </div>
-  </FormKit>
-  <div v-else class="flex flex-wrap justify-center gap-5">
-    <SkeletonForm />
+    <div v-if="form.length && user">
+      <div class="flex flex-wrap justify-end u-mb-l gap-5 items-center">
+        <div class=" hidden @3xl:flex @2xl:justify-center @4xl:justify-end w-full @4xl:w-fit h-fit gap-5 ">
 
-    <SkeletonForm />
+          <CrudBotons @delete="toggleConfirm = !toggleConfirm" @cancel="$router.push({ name: 'usuario_collection' })"
+            @submit="submit" />
 
-    <SkeletonForm />
+        </div>
+      </div>
+      <FormKit ref="userForm" v-model="user" id="entityForm" :actions="false" type="form">
+        <div class="grid @4xl:flex @4xl:flex-wrap gap-5 @4xl:gap-10 m-auto justify-center @4xl:justify-start">
+          <FormKitSchema :schema="form" :data="data" :library="library" />
+        </div>
+      </FormKit>
+      <div class="flex flex-wrap justify-end u-mt-l gap-5 items-center">
+        <div class=" flex justify-center @4xl:justify-end w-full @4xl:w-fit h-fit gap-5 ">
+
+          <CrudBotons @delete="toggleConfirm = !toggleConfirm" @cancel="$router.push({ name: 'usuario_collection' })"
+            @submit="submit" />
+
+        </div>
+      </div>
+    </div>
+    <div v-else class="grid flex-wrap justify-center gap-5 w-full m-auto">
+
+      <SkeletonButton :columns="3" class="w-full absolute right-3rem @4xl:right-8rem" />
+
+      <div class="mt-15">
+        <SkeletonForm />
+
+        <SkeletonForm />
+
+        <SkeletonForm />
+      </div>
+
+    </div>
 
   </div>
 
 </template>
 <script setup lang="ts">
+const route = useRoute()
 
-import { ref, markRaw } from "vue";
-import type { MenuItem } from "~~/types/menuitem";
-
-import Fieldset from '../../form/inputs/fieldset/Fieldset.vue';
+import Fieldset from '~/form/inputs/fieldset/Fieldset.vue';
 const library = markRaw({
   Fieldset: Fieldset
 })
 
-const userForm = ref(null)
 
 const userStore = useUserStore()
 
+userStore.editIni(route.params.username)
+
 const { item: user, form } = storeToRefs(userStore)
 
-useFetchItem<MenuItem>("create_forms/user").then(({ retrieved }) => {
-  const temp = formkitClasses(retrieved.value['hydra:member'])
-  form.value = temp
-});
-
-const route = useRoute()
-user.value = null
 const data = ref({})
-const { result, loading } = getResource('getUserByUsernameUser', ['id', '_id', 'nombre', 'username', 'apellido', 'telefono', 'email', 'nit', 'createdAt', 'updatedAt'], { reference: user, args: { username: route.params.username } })
+const toggleConfirm = ref(false)
 
-function submit() {
-  userForm.value.node.submit()
+function remove() {
+  userStore.remove()
+  toggleConfirm.value = false
 }
-watch(() => result.value, (v) => {
-})
+function submit() {
+  userStore.update()
+  toggleConfirm.value = false
+}
+
+
 </script>
