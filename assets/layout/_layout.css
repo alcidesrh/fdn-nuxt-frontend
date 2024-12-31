@@ -4,7 +4,6 @@
 
 html {
     height: 100%;
-    font-size: 16px;
 }
 
 :root {
@@ -41,8 +40,8 @@ body {
     overflow-y: auto;
     height: 100%;
 
-    &>div {
-        height: 100%;
+    &>div:not(#overlay_menu) {
+        /* height: 100%; */
 
         &>main {
             height: 100%;
@@ -84,17 +83,6 @@ a {
     contain: strict;
 }
 
-/* .contain-size {
-    contain: size;
-}
-
-.contain-content {
-    contain: content;
-}
-
-.contain-layout {
-    contain: layout;
-} */
 
 
 .rounded-full {

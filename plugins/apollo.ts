@@ -1,5 +1,4 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client/core';
-import { createApolloProvider } from '@vue/apollo-option';
 import { provideApolloClient, DefaultApolloClient } from '@vue/apollo-composable';
 const httpLink = new HttpLink({
     // You should use an absolute URL here
@@ -13,7 +12,7 @@ const apolloClient = new ApolloClient({
     connectToDevTools: true
 });
 
-const apolloProvider = provideApolloClient(apolloClient);
+provideApolloClient(apolloClient);
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient);

@@ -11,6 +11,7 @@ function breadcrumbReload(route) {
         });
         return breadcrumbArray;
     }, []);
+    breadcrumb.value[breadcrumb.value.length - 1].last = true;
 }
 export const useBreadcrumb = () => {
     return { breadcrumb, breadcrumbReload };

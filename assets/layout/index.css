@@ -4,22 +4,19 @@
 @import 'primeicons/primeicons.css';
 
 @import "./_fonts";
-/* @import "./_color"; */
+@import "./dark.css";
 
 @import "./_utopia";
 @import './variables/_common';
 @import './variables/_light';
 @import './variables/_dark';
 @import './_formkit';
-/* @import './_typography'; */
 @import './components/index';
 
-/* @import './_reset' layer(reset); */
 @import './_preloading';
 @import './_layout';
 
 @import './_style';
-/* @import './_filter'; */
 @import "./_topbar";
 @import "./_sidebar";
 @import './_mobil';

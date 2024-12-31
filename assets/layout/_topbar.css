@@ -1,4 +1,5 @@
 .layout-topbar {
+    contain: layout;
     transition: all .3s;
     height: 70px;
     position: fixed;
@@ -34,9 +35,9 @@
                 font-weight: 600;
                 border-radius: 999px;
                 background-color: var(--background);
-                color: var(--p-primary-400);
+                color: var(--p-primary-500);
                 border: 1ch solid var(--p-primary-contrast-200);
-                /* opacity: .6; */
+                opacity: .6;
             }
         }
 
@@ -90,13 +91,13 @@
 
     &>.topbar-bg {
         transition: background-color .3s;
-        opacity: 0.8;
+        opacity: 0.6;
     }
 }
 
 
 .layout-topbar.layout-topbar-sticky {
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(7px);
     box-shadow: 0px 2px 5px var(--p-surface-contrast-200) !important;
     border-bottom: 2px solid var(--p-surface-contrast-200);
 
@@ -117,7 +118,7 @@
             height: 50px !important;
             font-size: 30px !important;
             border: 9px dashed var(--p-primary-contrast-300) !important;
-            /* color: var(--p-primary-contrast-700); */
+            color: var(--p-primary-contrast-500);
             background-color: var(--p-primary-contrast-100);
         }
     }
@@ -127,8 +128,8 @@
 .app-dark .layout-topbar {
     & .layout-topbar-logo-container {
         .logo-fdn {
-            color: var(--p-primary-400) !important;
-            border: 1ch solid var(--p-primary-contrast-300) !important;
+            color: var(--p-primary-contrast-600) !important;
+            border: 1ch solid var(--p-primary-contrast-200) !important;
         }
     }
 }
@@ -139,9 +140,9 @@
 
         .logo-fdn {
             /* border: 12px dashed var(--p-primary-contrast-200) !important; */
-            border: 9px dashed var(--p-primary-contrast-400) !important;
-            color: var(--p-primary-contrast-600) !important;
-            background-color: var(--p-primary-contrast-200) !important;
+            border: 9px dashed var(--p-primary-contrast-300) !important;
+            color: var(--p-primary-contrast-500) !important;
+            background-color: var(--p-surface-contrast-50) !important;
         }
     }
 

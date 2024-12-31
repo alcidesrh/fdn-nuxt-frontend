@@ -66,7 +66,7 @@ watch(() => props.toggle, (v) => {
 
 unsubscribe = msgbus(`remove`).on((v: any) => {
 
-  confirm.require({ ...data, ...v });
+  confirm.require({ ...data, ...v, header: 'Eliminar' });
 
   if (v.chanel) {
     chanel.value = v.chanel

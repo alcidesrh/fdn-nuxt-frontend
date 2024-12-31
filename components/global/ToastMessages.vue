@@ -25,7 +25,7 @@ bus.on((msg: any) => {
 })
 
 error.on((msg: any) => {
-  const lifetime = msg?.life === false ? {} : { life: 5000 }// life: 5000 
+  const lifetime = msg?.life === false ? {} : { life: 0 }// life: 5000 
   toast.add({ ...lifetime, detail: msg?.message || msg || 'Ha ocurrido un error. Inténtelo de nuevo.', severity: 'error', summary: 'Error:', });
 })
 

@@ -38,7 +38,7 @@ const props = {
         type: String,
         default: undefined
     },
-    nextIcon: {
+    on: {
         type: String,
         default: undefined
     },

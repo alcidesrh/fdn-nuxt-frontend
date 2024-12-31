@@ -11,15 +11,15 @@ export const DataUser = gql`
     }
 `;
 export const columnsCollection = gql`
-    query columnsCollection($className: String) {
-        columnsMetadataResource(className: $className) {
+    query columnsCollection($entity: String) {
+        columnsMetadataResource(entity: $entity) {
             columns
         }
     }
 `;
 export const users = gql`
     query users($page: Int, $id: Int, $itemsPerPage: Int, $fullName: String, $username: String, $createdAt: [UserFilter_createdAt], $order: [UserFilter_order]) {
-        users(_page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, username: $username, createdAt: $createdAt, order: $order) {
+        users(page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, username: $username, createdAt: $createdAt, order: $order) {
             collection {
                 ...DataUser
                 fullName
@@ -36,7 +36,7 @@ export const users = gql`
 `;
 export const pilotos = gql`
     query pilotos($page: Int, $id: Int, $itemsPerPage: Int, $fullName: String, $telefono: String, $licencia: String, $createdAt: [PilotoFilter_createdAt], $order: [PilotoFilter_order]) {
-        pilotos(_page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, telefono: $telefono, licencia: $licencia, createdAt: $createdAt, order: $order) {
+        pilotos(page: $page, id: $id, itemsPerPage: $itemsPerPage, fullName: $fullName, telefono: $telefono, licencia: $licencia, createdAt: $createdAt, order: $order) {
             collection {
                 _id
                 id
@@ -59,7 +59,7 @@ export const pilotos = gql`
 `;
 export const buses = gql`
     query buses($page: Int, $id: Int, $itemsPerPage: Int, $marca: String, $placa: String, $createdAt: [BusFilter_createdAt], $order: [BusFilter_order]) {
-        buses(_page: $page, id: $id, itemsPerPage: $itemsPerPage, marca: $marca, placa: $placa, createdAt: $createdAt, order: $order) {
+        buses(page: $page, id: $id, itemsPerPage: $itemsPerPage, marca: $marca, placa: $placa, createdAt: $createdAt, order: $order) {
             collection {
                 _id
                 id
@@ -68,6 +68,26 @@ export const buses = gql`
                 placa
                 createdAt
                 status
+            }
+            paginationInfo {
+                itemsPerPage
+                lastPage
+                totalCount
+                hasNextPage
+            }
+        }
+    }
+`;
+export const estacions = gql`
+    query estacions($page: Int, $id: Int, $itemsPerPage: Int, $nombre: String, $alias: String, $order: [EstacionFilter_order]) {
+        estacions(page: $page, id: $id, itemsPerPage: $itemsPerPage, nombre: $nombre, alias: $alias, order: $order) {
+            collection {
+                id
+                _id
+                nombre
+                alias
+                status
+                direccion
             }
             paginationInfo {
                 itemsPerPage

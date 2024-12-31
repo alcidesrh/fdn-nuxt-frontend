@@ -24,7 +24,7 @@
     --sidebar-width: 220px;
     --sidebar-mini-width: 5rem;
     --sidebar-mini-hover-width: 50px;
-    --background: var(--p-surface-contrast-100);
+    --background: var(--p-surface-contrast-50);
     --topbar: 70px;
     --shadow: 0px 15px 7px 1px var(--p-slate-500);
 }

@@ -1,9 +1,9 @@
 <template>
   <IconField>
-    <InputText v-model="typing" @input="keyDown" fluid :class="[context.inputClass]" size="small"
-      v-bind="context.attrs" />
-    <InputIcon class="text-slate-500" :class="icon" @click="reset" />
+    <InputText v-model="typing" @input="keyDown" fluid :class="[context.inputClass]" v-bind="context.attrs" />
+    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
   </IconField>
+
 </template>
 
 <script setup>
@@ -16,7 +16,6 @@ const props = defineProps({
 })
 const typing = ref('')
 const loading = ref(false)
-
 const { start: startError, isPending: isPendingError, stop: stopError } = useTimeoutFn(() => {
   loading.value = false
   msgbus(props.context.eventbus).emit(false)
@@ -26,6 +25,7 @@ const { start: startError, isPending: isPendingError, stop: stopError } = useTim
 
 const { start, isPending, stop } = useTimeoutFn(() => {
   loading.value = true
+
   msgbus(props.context.eventbus).emit(true)
   let value = typing.value
   if (props.context.node.name == 'id') {
@@ -34,7 +34,7 @@ const { start, isPending, stop } = useTimeoutFn(() => {
   props.context.node.input(value)
   startError()
 
-}, 1000, { immediate: false })
+}, 500, { immediate: false })
 
 function keyDown() {
   if (!loading.value) {

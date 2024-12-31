@@ -2,8 +2,8 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
     overwrite: true,
-    schema: './graphql/documents/schema.graphql',
-    // schema: 'http://localhost/schema.graphql',
+    // schema: './graphql/documents/schema.graphql',
+    schema: 'http://localhost/schema.graphql',
     generates: {
         './graphql/': {
             documents: ['./pages/**/*.{vue,js,ts}', './components/**/*.{vue,js,ts}', './composables/**/*.{vue,js,ts}'],

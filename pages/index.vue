@@ -12,11 +12,10 @@
 
       <MenuRoot />
 
-      <div id="layout-content" class="layout-content u-p-s md:u-p-l" :class="[menuStore.mode]">
-        <div class="content u-p-s md:u-p-xl lg:u-p-5xl lg:u-py-xl">
+      <div id="layout-content" class="layout-content u-p-s" :class="[menuStore.mode]">
+        <div class="content u-p-s md:u-p-l lg:u-p-5xl lg:u-py-l">
 
           <NuxtPage />
-          <!-- <router-view></router-view> -->
 
         </div>
       </div>
@@ -44,7 +43,8 @@ useHead({
 })
 const ui = useThemeStateStore()
 const menuStore = useMenuStateStore()
-
+const metadata = useMetadataStore()
+metadata.setApiMetadata()
 const mask = computed(() => menuStore.mode == 'normal' && isMobil)
 
 onBeforeMount(() => {

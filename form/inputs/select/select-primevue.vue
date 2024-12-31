@@ -12,5 +12,5 @@ watch(() => value.value, (v) => {
 })
 </script>
 <template>
-  <Select v-model="value" :options="context.options" optionLabel="label" fluid />
+  <Select v-model="value" :options="context.options" optionLabel="label" fluid placeholder="Seleccionar" />
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <collection-list :collection="collection" @sort="collectionStore.sort">
+    <collection-list :collection="collection" @sort="collection.sort">
 
       <template #action="{ _id, id }">
         <div class="flex gap-5 items-center justify-center w-full">

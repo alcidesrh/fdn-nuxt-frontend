@@ -1,0 +1,25 @@
+:root[class*='app-dark'] {
+  .p-datatable-thead>tr {
+    &:last-child>th {
+      background-color: var(--p-surface-contrast-50);
+    }
+  }
+
+  .action-cell {
+    background-color: var(--p-surface-contrast-50);
+    border-top: 0.5px solid var(--p-surface-contrast-300)
+  }
+
+  th.action-cell {
+    background-color: transparent;
+    border: none;
+    border-bottom: 0.5px solid var(--p-surface-contrast-200)
+  }
+
+  .row-mark {
+    /* bg-surface-contrast-200 border-b border-surface-contrast-300 text-surface-contrast-800 */
+    background-color: var(--p-surface-contrast-50);
+    font-weight: 500;
+    color: var(--p-surface-contrast-800)
+  }
+}

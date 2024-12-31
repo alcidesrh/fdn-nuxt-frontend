@@ -38,6 +38,23 @@ export const utopiarules = [
             }
         }
     ],
+    [
+        /^([a-z]+)-contrast-(\d{1,2})$/,
+        (match: string[]) => {
+            let prop = match[2],
+                rule: Record<string, any> = {};
+            const val = `var(--step${match[1] == '-' ? '-' : ''}-${match[3]})`;
+
+            switch (prop) {
+                case 'text':
+                    rule['font-size'] = val;
+                    return [rule];
+                default:
+                    rule[prop] = val;
+                    return [rule];
+            }
+        }
+    ],
     ['text-base', { 'line-height': 'normal' }]
 ];
 

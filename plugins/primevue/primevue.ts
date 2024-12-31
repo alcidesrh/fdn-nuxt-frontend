@@ -17,8 +17,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     nuxtApp.vueApp.use(PrimeVue, {
         locale: es,
+        ripple: true,
         theme: {
+            ripple: true,
             options: {
+                ripple: true,
                 cssLayer: {
                     name: 'primeui',
                     order: 'tailwind-base, primevue, tailwind-utilities '

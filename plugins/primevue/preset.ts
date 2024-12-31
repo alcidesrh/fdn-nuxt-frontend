@@ -7,33 +7,33 @@ export const revertColors = (i: any) => {
     }
     return temp;
 };
-// export const primary = {
-//     '0': '#ffffff',
-//     '50': '#f2f9f9',
-//     '100': '#ddeff0',
-//     '200': '#bfe0e2',
-//     '300': '#92cace',
-//     '400': '#5faab1',
-//     '500': '#438e96',
-//     '600': '#3b757f',
-//     '700': '#356169',
-//     '800': '#325158',
-//     '900': '#2d464c',
-//     '950': '#1a2c32'
-
+// const primary = {
+//     0: '#ffffff',
+//     50: '{slate.50}',
+//     100: '{slate.100}',
+//     200: '{slate.200}',
+//     300: '{slate.300}',
+//     400: '{slate.400}',
+//     500: '{slate.500}',
+//     600: '{slate.600}',
+//     700: '{slate.700}',
+//     800: '{slate.800}',
+//     900: '{slate.900}',
+//     950: '{slate.950}'
 // };
 const primary = {
-    50: '#ecfdf5',
-    100: '#d1fae5',
-    200: '#a7f3d0',
-    300: '#6ee7b7',
-    400: '#34d399',
-    500: '#10b981',
-    600: '#059669',
-    700: '#047857',
-    800: '#065f46',
-    900: '#064e3b',
-    950: '#022c22'
+    '0': '#ffffff',
+    '50': '#f2f9f9',
+    '100': '#ddeff0',
+    '200': '#bfe0e2',
+    '300': '#92cace',
+    '400': '#5faab1',
+    '500': '#438e96',
+    '600': '#3b757f',
+    '700': '#356169',
+    '800': '#325158',
+    '900': '#2d464c',
+    '950': '#1a2c32'
 };
 export const surface = {
     0: '#ffffff',
@@ -49,7 +49,7 @@ export const surface = {
     900: '{slate.900}',
     950: '{slate.950}'
 };
-const surfaceDark = {
+const surfaceZinc = {
     0: '#ffffff',
     50: '{zinc.50}',
     100: '{zinc.100}',
@@ -65,33 +65,21 @@ const surfaceDark = {
 };
 
 const colors = {
-    // primary: {
-    //     '0': '#ffffff',
-    //     '50': '#f2f9f9',
-    //     '100': '#ddeff0',
-    //     '200': '#bfe0e2',
-    //     '300': '#92cace',
-    //     '400': '#5faab1',
-    //     '500': '#438e96',
-    //     '600': '#3b757f',
-    //     '700': '#356169',
-    //     '800': '#325158',
-    //     '900': '#2d464c',
-    //     '950': '#1a2c32'
-    // },
     primary: {
-        50: '#ecfdf5',
-        100: '#d1fae5',
-        200: '#a7f3d0',
-        300: '#6ee7b7',
-        400: '#34d399',
-        500: '#10b981',
-        600: '#059669',
-        700: '#047857',
-        800: '#065f46',
-        900: '#064e3b',
-        950: '#022c22'
+        '0': '#ffffff',
+        '50': '#f2f9f9',
+        '100': '#ddeff0',
+        '200': '#bfe0e2',
+        '300': '#92cace',
+        '400': '#5faab1',
+        '500': '#438e96',
+        '600': '#3b757f',
+        '700': '#356169',
+        '800': '#325158',
+        '900': '#2d464c',
+        '950': '#1a2c32'
     },
+    // primary: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' },
     emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
     green: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d', 950: '#052e16' },
     lime: { 50: '#f7fee7', 100: '#ecfccb', 200: '#d9f99d', 300: '#bef264', 400: '#a3e635', 500: '#84cc16', 600: '#65a30d', 700: '#4d7c0f', 800: '#3f6212', 900: '#365314', 950: '#1a2e05' },
@@ -122,6 +110,7 @@ export const colorPalette = [
     })
 ];
 const surfaceContrast = revertColors(surface);
+const zincContrast = revertColors(surface);
 const primaryContrast = revertColors(primary);
 
 export default {
@@ -218,17 +207,18 @@ export default {
             light: {
                 surface: { ...surface },
                 surfaceContrast: { ...surface },
+                zincContrast: { ...surface },
                 primaryContrast: { ...primary },
                 primary: {
-                    color: '{primary.500}',
+                    color: '{primary.600}',
                     contrastColor: '#ffffff',
                     hoverColor: '{primary.600}',
                     activeColor: '{primary.700}',
                     background: { ...primary }
                 },
                 highlight: {
-                    background: '{primary.50}',
-                    focusBackground: '{primary.100}',
+                    background: '{primary.100}',
+                    focusBackground: '{primary.200}',
                     color: '{primary.700}',
                     focusColor: '{primary.800}'
                 },
@@ -328,10 +318,11 @@ export default {
                 }
             },
             dark: {
-                surface: { ...surfaceDark },
+                surface: { ...surface },
                 surfaceContrast: { ...surfaceContrast },
+                zincContrast: { ...zincContrast },
                 primary: {
-                    color: '{primary.600}',
+                    color: '{primary.400}',
                     contrastColor: '{surface.900}',
                     hoverColor: '{primary.300}',
                     activeColor: '{primary.200}',
@@ -339,10 +330,10 @@ export default {
                 },
                 primaryContrast: { ...primaryContrast },
                 highlight: {
-                    background: 'color-mix(in srgb, {primary.400}, transparent 84%)',
-                    focusBackground: 'color-mix(in srgb, {primary.400}, transparent 76%)',
-                    color: 'rgba(255,255,255,.87)',
-                    focusColor: 'rgba(255,255,255,.87)'
+                    background: 'color-mix(in srgb, {primary.700}, transparent 84%)',
+                    focusBackground: 'color-mix(in srgb, {primary.700}, transparent 76%)',
+                    color: '{primary.100}',
+                    focusColor: '{primary.800}'
                 },
                 mask: {
                     background: 'rgba(0,0,0,0.6)',
@@ -363,8 +354,7 @@ export default {
                     floatLabelColor: '{surface.400}',
                     floatLabelFocusColor: '{surface.400}',
                     floatLabelInvalidColor: '{red.300}',
-                    iconColor: '{surface.400}',
-                    shadow: '0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05)'
+                    iconColor: '{surface.400}'
                 },
                 text: {
                     color: '{surface.0}',
@@ -467,19 +457,6 @@ export default {
         ...colors
     },
     components: {
-        // card: {
-        //     colorScheme: {
-        //         light: {
-        //             root: {
-        //                 borderRadius: '4px',
-        //                 shadow: 'none'
-        //             },
-        //             subtitle: {
-        //                 color: '{surface.500}'
-        //             }
-        //         }
-        //     }
-        // },
         tree: {
             colorScheme: {
                 light: {
@@ -499,50 +476,68 @@ export default {
                 }
             }
         },
-        datatable: {
-            header: {
-                background: '{surface.contrast.300}',
-                color: '{surface.contrast.300}',
-                cell: {
-                    background: '{surface.contrast.300}',
-                    selected: {
-                        background: '{surface.contrast.300}'
-                    }
-                }
-            }
-        },
+
         datepicker: {
             colorScheme: {
                 light: {
+                    today: {
+                        background: '{surface.contrast.500}',
+                        color: '{surface.contrast.100}'
+                    },
                     date: {
                         range: {
                             selected: {
-                                background: '{primary.200}'
+                                background: '{surface.contrast.200}'
+                            }
+                        }
+                    }
+                },
+                dark: {
+                    today: {
+                        background: '{surface.contrast.700}',
+                        color: '{surface.contrast.100}'
+                    },
+                    date: {
+                        range: {
+                            selected: {
+                                background: '{surface.contrast.200}',
+                                color: '{surface.contrast.700}'
                             }
                         }
                     }
                 }
             }
         },
-        button: {
-            colorScheme: {
-                light: {
-                    outlined: {
-                        primary: {
-                            border: {
-                                color: '{primary.400}'
-                            }
-                        },
-                        secondary: {
-                            hover: {
-                                background: '{surface.100}'
-                            },
-                            border: {
-                                color: '{surface.400}'
-                            }
-                        }
-                    }
+        inputtext: {
+            placeholderColor: '{surface.contrast.500}'
+        },
+        breadcrumb: {
+            background: 'none',
+            gap: '1px',
+            padding: '.5rem'
+        },
+        radiobutton: {
+            icon: {
+                checked: {
+                    color: '{primary.500}'
                 }
+            },
+            background: '{primary.0}',
+            checked: {
+                background: '{primary.0}'
+            },
+            border: {
+                color: '{surface.400}'
+            },
+            hover: {
+                border: {
+                    color: '{surface.contrast.800}'
+                }
+            }
+        },
+        multiselect: {
+            option: {
+                gap: '15px'
             }
         }
     }

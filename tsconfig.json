@@ -7,7 +7,10 @@
     "plugins": [
       {
         "name": "@0no-co/graphqlsp",
-        "schema": "./graphql/schema.graphql"
+        "schema": "./graphql/schema.graphql",
+      },
+      {
+        "transform": "tst-reflect-transformer"
       }
     ],
     "noImplicitAny": false

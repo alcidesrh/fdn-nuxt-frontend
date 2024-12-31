@@ -4,6 +4,7 @@
     --code-color: var(--p-surface-100);
 
     --p-surface-contrast-0: var(--p-surface-950);
+    --p-surface-contrast-50: var(--p-surface-950);
     --p-surface-contrast-100: var(--p-surface-900);
     --p-surface-contrast-200: var(--p-surface-800);
     --p-surface-contrast-300: var(--p-surface-700);
@@ -13,7 +14,7 @@
     --p-surface-contrast-700: var(--p-surface-300);
     --p-surface-contrast-800: var(--p-surface-200);
     --p-surface-contrast-900: var(--p-surface-100);
-    --p-surface-contrast-950: var(--p-surface-0);
+    --p-surface-contrast-950: var(--p-surface-50);
 
     --p-primary-contrast-0: var(--p-primary-950);
     --p-primary-contrast-100: var(--p-primary-900);

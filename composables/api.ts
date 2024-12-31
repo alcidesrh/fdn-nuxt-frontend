@@ -65,7 +65,7 @@ export async function useFetchItem<T>(path: string): Promise<FetchItemData<T>> {
     const retrieved: Ref<T | undefined> = ref(undefined);
     const hubUrl: Ref<URL | undefined> = ref(undefined);
 
-    const { data, pending, error } = await useApi<T>(path, {
+    const { data, status, error } = await useApi<T>(path, {
         onResponse({ response }) {
             retrieved.value = response._data;
             // hubUrl.value = extractHubURL(response);
@@ -76,7 +76,7 @@ export async function useFetchItem<T>(path: string): Promise<FetchItemData<T>> {
 
     return {
         retrieved,
-        isLoading: pending,
+        isLoading: computed(() => status.value == 'pending'),
         error,
         hubUrl
     };

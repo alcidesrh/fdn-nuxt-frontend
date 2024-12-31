@@ -43,7 +43,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { colorPalette } from '~/plugins/primevue/presetSlate'
+import { colorPalette } from '~/plugins/primevue/preset'
 
 const hiddenLocal = ref(false)
 

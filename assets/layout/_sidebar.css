@@ -8,6 +8,7 @@
   }
 
   &>.layout-sidebar {
+    contain: content;
     /* container: mini / inline-size; */
     transition-property: width, translate;
     transition-duration: 0.3s;
@@ -248,6 +249,7 @@
   }
 
   &>.sidebar-control {
+    contain: content;
     position: fixed;
     transition: translate 0.3s;
     background-color: transparent;
@@ -357,6 +359,7 @@
 }
 
 .layout-content {
+  contain: content;
   transition: margin-left 0.3s;
   display: flex;
   flex-wrap: wrap;

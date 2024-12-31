@@ -18,7 +18,7 @@
       {{ data._id }}
     </span>
 
-    <span v-else-if="column.name == 'status'">
+    <span v-else-if="column.name == 'status'" class="capitalize">
       {{ data[column.name] }}
     </span>
 

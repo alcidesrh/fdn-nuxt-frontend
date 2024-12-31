@@ -1,5 +1,3 @@
-import { ApolloError } from '@apollo/client/errors';
-
 export const msg = useEventBus('msg');
 
 const error = useEventBus('error');

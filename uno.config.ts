@@ -23,17 +23,22 @@ export default defineConfig({
                 // the default
                 /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
                 // include js/ts files
-                'composables/**/*.{ts,js,vue}'
+                'composables/**/*.{ts,js,vue}',
+                'stores/**/*.{ts,js,vue}',
+                'pages/**/*.{ts,js,vue}',
+                'components/**/*.{ts,js,vue}',
+                'node_modules/@primevue/**/*.{vue,js,ts,jsx,tsx}',
+                'layers/**/*.{js,ts.vue}'
             ]
             // exclude files
             // exclude: []
         },
         filesystem: [
             // 'layers/**/*.{js,ts.vue}',
-            'layers/auth/components/form/*.{ts,js,vue}',
-            'composables/**/*.{ts,js,vue}',
+            // 'layers/auth/components/form/*.{ts,js,vue}',
+            // 'composables/**/*.{ts,js,vue}',
             // './pages/**/*.{ts,js,vue}',
-            './node_modules/@primevue/**/*.{vue,js,ts,jsx,tsx}'
+            // './node_modules/@primevue/**/*.{vue,js,ts,jsx,tsx}'
         ]
     },
     presets: [

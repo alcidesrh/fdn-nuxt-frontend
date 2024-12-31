@@ -7,7 +7,7 @@
 
       <template #footer>
         <div class="flex justify-between u-my-1">
-          <Button label="Cancel" outlined severity="contrast" @click="cancel" />
+          <Button label="Cancelar" outlined severity="contrast" @click="cancel" />
           <Button label="Aceptar" outlined @click="save" severity="contrast" />
         </div>
       </template>
