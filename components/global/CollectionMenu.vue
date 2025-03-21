@@ -1,6 +1,6 @@
 <template>
   <div v-if="!selected" class="card flex justify-center relative z-90">
-    <Button type="button" text @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
+    <Button type="button" text @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="u-p-sm">
       <Icon name="icon-park-outline:setting-config" mode="svg" aria-haspopup="true" aria-controls="overlay_menu"
         class="collection-menu-icon" />
     </Button>
@@ -18,7 +18,8 @@
     </Menu>
   </div>
   <div v-else class="card flex justify-center">
-    <Button type="button" text @click="$emit('removeMultiple')" aria-haspopup="true" aria-controls="overlay_menu">
+    <Button class="u-p-sm" type="button" text @click="$emit('removeMultiple')" aria-haspopup="true"
+      aria-controls="overlay_menu">
       <Icon name="icon-park-outline:delete" class="text-red-400 [&>g]:stroke-3" mode="svg" />
     </Button>
 

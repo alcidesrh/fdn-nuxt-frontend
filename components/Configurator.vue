@@ -1,6 +1,6 @@
 <template>
     <div :class="[hiddenLocal ? 'hide-animation ' : 'show-animation']"
-        class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-64 h-fit p-4 bg-surface-contrast-100 dark:bg-surface-900 border border-surface-contrast-300 origin-top hidden-transition">
+        class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-64 h-fit p-4 rounded-md bg-surface-contrast-50  border border-surface-contrast-300 origin-top hidden-transition">
 
         <close @close="hidden" />
 

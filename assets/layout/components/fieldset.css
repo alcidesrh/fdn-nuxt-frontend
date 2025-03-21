@@ -1,13 +1,13 @@
 .p-fieldset {
-  min-width: 24em;
-  padding: 1rem 1.5rem 1.5rem 1.5rem;
-  height: fit-content;
 
-
-  & .p-fieldset-legend {
+  & .p-fieldset-legend>.p-fieldset-toggle-button>.p-fieldset-legend-label {
     text-transform: capitalize;
-    color: var(--p-surface-contrast-600);
-    font-size: 1rem;
-    font-weight: 500;
+    color: var(--p-surface-contrast-800);
+    font-size: 1.3rem;
+    font-weight: 200;
+
+    & svg {
+      color: var(--p-surface-contrast-400);
+    }
   }
 }

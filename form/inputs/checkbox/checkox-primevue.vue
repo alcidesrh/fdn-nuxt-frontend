@@ -11,7 +11,7 @@ watch(() => value.value, (v) => {
 </script>
 <template>
   <div class="flex items-center">
-    <Checkbox v-model="value" :binary="true" @input="handleInput" />
+    <Checkbox :id="props.context.id" v-model="value" :binary="true" @input="handleInput" />
     <label v-if="context.attrs.label_fdn" v-text="context.attrs.label_fdn" for="ingredient1" class="ml-2" />
   </div>
 </template>

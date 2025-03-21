@@ -2,53 +2,69 @@
   <div>
     <div v-if="collection.columns.length">
       <slot name="header">
-        <div class="flex flex-wrap justify-between">
+        <div class="flex flex-wrap justify-between u-mb-l">
           <div>
-            <span class="u-text-2 capitalize font-medium surface-contrast-600">Listado</span>
+            <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ metadata.singular }}</span>
           </div>
 
           <div class="flex flex-wrap gap-5">
             <Button label="Importar" icon="pi pi-download" severity="secondary" outlined />
             <Button label="Exportar" icon="pi pi-upload" severity="secondary" outlined />
+
+            <NuxtLink :to="{ name: metadata.routes.create }">
+              <Button label="Crear" icon="pi pi-plus" severity="secondary" outlined />
+            </NuxtLink>
           </div>
         </div>
       </slot>
-      <FormKit type="form" :actions="false" v-model="collection.vars" form-class="block m-auto" :config="{
-        outerClass: 'mb-0!',
-        wrapperClass: 'mb-0!'
-      }">
 
-        <DataTable :rowClass="rowClass" @update:sortField="(i) => $emit('sort', i)" removableSort
+      <FormKit type="form" :actions="false" v-model="collection.vars" form-class="block m-auto"
+        :config="{ wrapperClass: 'mb-0!' }">
+
+        <DataTable :rowClass="rowClass" @update:sortField="(i) => collection.sort(i)" removableSort
           tableStyle="min-width:50rem"
           :sortOrder="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
-          :value="collection.items" :class="{ 'opacity-50': collection.loading }" filterDisplay="row" scrollable
-          v-model:selection="selected" scrollHeight="700px">
+          :value="collection.items" :filterDisplay="collection.hasFilter ? 'row' : undefined" scrollable
+          v-model:selection="selected" scrollHeight="700px" :class='{ opacity50: collection.loading }'>
           <template #loading>... ...buscando... ...</template>
           <template #empty>
             <h5 class=" m-auto my-5! text-slate-4 font-semibold w-fit">No hay información que mostrar</h5>
           </template>
 
-          <template v-for="c, i in collection.columns" :key="i">
+          <div v-for="c, i in collection.columns" :key="i">
             <Column :header="c.label || c.name" :field="c.name" :showFilterMenu="false" :sortable="!!c.sort"
-              alignFrozen="left" :frozen="c.action" :class="[collection.columnClass(c)]">
-              <template v-if="c.schema" #filter>
-                <FormKitSchema :schema="c.schema" :data="data" />
+              alignFrozen="left" :frozen="c.action" :class="c?.class">
+              <template #filter>
+                <FormKitSchema :schema="c.schema" :data="data" v-if="c.schema" />
               </template>
               <template #body="{ data }">
                 <collection-cell v-if="!c.action" :data="data" :column="c" :index="i" />
               </template>
             </Column>
-          </template>
+          </div>
           <Column frozen alignFrozen="right" :showFilterMenu="false"
             :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined"
             class="text-center w-100px action-cell">
             <template #header>
-              <div class="flex justify-center items-center w-full h-full">
+              <div class="flex justify-center items-center w-full h-full ">
                 <CollectionMenu :collection="collection" :selected="selected.length" @removeMultiple="removeMultiple" />
               </div>
             </template>
             <template v-if="collection.menu == 'editar'" #body="{ data }">
               <slot name="action" :data="data">
+                <div class="collection-action-wrapper flex gap-4 items-center justify-center w-full relative">
+                  <span class="flex items-center justify-center">
+                    <NuxtLink :to="{ name: metadata.routes.edit, params: { id: data[field || '_id'] } }"
+                      class="absolute">
+                      <Icon name="icon-park-outline:pencil" class="action edit " mode="svg" />
+                    </NuxtLink>
+
+                  </span>
+                  <span class="flex items-center justify-center">
+                    <Icon name="icon-park-outline:delete" class="action delete absolute" mode="svg"
+                      @click="store.remove(data)" />
+                  </span>
+                </div>
               </slot>
             </template>
           </Column>
@@ -63,27 +79,25 @@
 
 </template>
 <script setup lang="ts">
-const props = defineProps<{
-  collection: Collection,
-  deleted: boolean
-}>()
-const emit = defineEmits(['sort', 'removeMultiple'])
-const collection = props.collection
-let data = ref({ loading: false })
 
-watch(() => collection.loading, (v) => {
-  data.value.loading = v
-})
+interface Props {
+  // collection: Collection;
+  // metadata: Metadata;
+  store: any;
+  field?: string;
+}
+const { field = '_id', store } = defineProps<Props>()
+
+const { collection, metadata } = storeToRefs(store)
+
+let data = ref({ loading: computed(() => collection.value.loading) })
+
 const selected = ref([])
-watch(() => props.deleted, (v) => {
-  selected.value = []
-})
-watch(() => selected.value, (v) => {
 
-})
 
 function removeMultiple() {
-  emit('removeMultiple', useCloned(selected.value).cloned)
+  store.removeMultiple(useCloned(selected.value).cloned)
+  selected.value = []
 }
 
 const rowClass = (data) => {
@@ -101,17 +115,5 @@ const rowClass = (data) => {
 ::highlight(highlight-7) {
   background-color: #fde047;
   color: black;
-}
-
-.action {
-  transition: all .2s;
-
-  &:hover {
-    scale: 2;
-    background-color: var(--p-primary-contrast-700);
-    border-radius: 999px;
-    color: var(--p-primary-contrast-100);
-    padding: 3px;
-  }
 }
 </style>

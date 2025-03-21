@@ -1,6 +1,10 @@
 <template>
   <div>
     <ConfirmDialog>
+      <template #closeicon>
+        <close @close="hidden" />
+
+      </template>
       <template #message="{ message }">
         <span v-html="message.message"></span>
       </template>

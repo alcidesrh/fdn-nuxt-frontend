@@ -1,8 +1,9 @@
 <template>
   <InputGroup>
 
-    <DatePicker ref="d" v-model="date" dateFormat="dd/mm" :selectionMode="context.selectionMode || 'single'" fluid
-      :showTime="context.showTime" :hourFormat="String(context.hourFormat)" :numberOfMonths="context.numberOfMonths"
+    <DatePicker :id="props.context.id" ref="d" v-model="date" dateFormat="dd/mm"
+      :selectionMode="context.selectionMode || 'single'" fluid :showTime="context.showTime"
+      :hourFormat="String(context.hourFormat)" :numberOfMonths="context.numberOfMonths"
       :hideOnRangeSelection="context.hideOnRangeSelection" class="min-w-200px" :class="[context.inputClass]">
 
       <template #footer>

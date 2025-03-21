@@ -1,6 +1,7 @@
 <template>
   <IconField>
-    <InputText v-model="typing" @input="keyDown" fluid :class="[context.inputClass]" v-bind="context.attrs" />
+    <InputText :id="props.context.id" v-model="typing" :defaultValue="context._value" @input="keyDown" fluid
+      :class="[context.inputClass]" v-bind="context.attrs" />
     <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
   </IconField>
 
@@ -14,6 +15,7 @@ import InputIcon from 'primevue/inputicon';
 const props = defineProps({
   context: Object,
 })
+
 const typing = ref('')
 const loading = ref(false)
 const { start: startError, isPending: isPendingError, stop: stopError } = useTimeoutFn(() => {
@@ -25,11 +27,11 @@ const { start: startError, isPending: isPendingError, stop: stopError } = useTim
 
 const { start, isPending, stop } = useTimeoutFn(() => {
   loading.value = true
-
   msgbus(props.context.eventbus).emit(true)
+
   let value = typing.value
   if (props.context.node.name == 'id') {
-    value = Number(value)
+    value = value ? Number(value) : null
   }
   props.context.node.input(value)
   startError()
@@ -46,6 +48,7 @@ function keyDown() {
   }
 }
 watch(() => props.context.loading, (v) => {
+
   if (!v) {
     if (isPending) {
       stop()
@@ -57,7 +60,7 @@ watch(() => props.context.loading, (v) => {
   }
 })
 
-const icon = computed(() => loading.value ? 'pi pi-spin pi-spinner' : (typing.value ? 'pi pi-times cursor-pointer' : 'pi pi-search opacity-70'))
+const icon = computed(() => loading.value ? 'pi pi-spin pi-spinner' : (typing.value || props.context._value ? 'pi pi-times cursor-pointer' : 'pi pi-search opacity-70'))
 
 function reset() {
   loading.value = false

@@ -1,25 +1,47 @@
 :root[class*='app-dark'] {
-  .p-datatable-thead>tr {
-    &:last-child>th {
-      background-color: var(--p-surface-contrast-50);
+  .p-datatable {
+
+    & .p-datatable-column-header-content {
+      /* display: grid; */
+
+      &>.p-checkbox {
+        margin: auto;
+        /* margin-bottom: 15px; */
+      }
+    }
+
+    & .p-datatable-thead>tr {
+
+
+      &>th {
+        @apply bg-slate-600/90;
+      }
     }
   }
 
-  .action-cell {
-    background-color: var(--p-surface-contrast-50);
-    border-top: 0.5px solid var(--p-surface-contrast-300)
+
+  td.action-cell {
+    @apply bg-slate-600/90;
+
+    border-top: 0.5px solid var(--p-surface-contrast-400);
+    border-left: 1px solid var(--p-surface-contrast-400);
+    border-right: 1px solid var(--p-surface-contrast-200);
   }
 
-  th.action-cell {
-    background-color: transparent;
-    border: none;
-    border-bottom: 0.5px solid var(--p-surface-contrast-200)
+  .collection-action-wrapper {
+
+    &>span {
+      & .action {
+        background-color: #414F63;
+
+        &.edit,
+        &.delete {
+          color: var(--p-surface-contrast-800);
+          font-size: 20px !important;
+        }
+      }
+    }
+
   }
 
-  .row-mark {
-    /* bg-surface-contrast-200 border-b border-surface-contrast-300 text-surface-contrast-800 */
-    background-color: var(--p-surface-contrast-50);
-    font-weight: 500;
-    color: var(--p-surface-contrast-800)
-  }
 }

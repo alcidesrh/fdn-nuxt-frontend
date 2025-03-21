@@ -21,35 +21,98 @@ export default {
 
                     children: [
                         {
-                            name: 'user_collection',
+                            name: 'user_list',
                             path: '',
                             component: () => import('~/pages/usuarios/UserList.vue'),
-                            meta: { type: 'user', action: 'list', route: 'user_collection' }
+                            meta: { type: 'user', action: 'list', route: 'user_list' }
+                        },
+                        {
+                            name: 'user_create',
+                            path: 'crear',
+                            component: () => import('~/pages/usuarios/UserForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'user', action: 'create', route: 'users_create' }
                         },
                         {
                             name: 'user_edit',
-                            path: ':username',
-                            component: () => import('~/pages/usuarios/UserEdit.vue'),
-                            meta: { icon: 'icon-park-outline:user', type: 'user', action: 'edit', route: 'user_edit' }
+                            path: 'edit/:id',
+                            component: () => import('~/pages/usuarios/UserForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'user', action: 'edit', route: 'user_edit' }
+                        }
+                    ]
+                },
+
+                {
+                    path: '/menus',
+                    meta: { label: 'menu', icon: 'icon-park-outline:tree-list' },
+
+                    children: [
+                        {
+                            name: 'menu_list',
+                            path: '',
+                            component: () => import('~/pages/menus/MenuList.vue'),
+                            meta: { type: 'menu', action: 'list', route: 'menu_collection' }
+                        },
+                        {
+                            name: 'menu_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/menus/MenuForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'menu', action: 'edit', route: 'menu_edit' }
+                        },
+                        {
+                            name: 'menu_create',
+                            path: 'crear',
+                            component: () => import('~/pages/menus/MenuForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'menu', action: 'create', route: 'menu_create' }
                         }
                     ]
                 },
                 {
-                    path: '/estaciones',
-                    meta: { label: 'estaciones', icon: 'icon-park-outline:every-user' },
+                    path: '/localidades',
+                    meta: { label: 'localidad', icon: 'icon-park-outline:tree-list' },
 
                     children: [
                         {
-                            name: 'estacion_collection',
+                            name: 'localidad_list',
                             path: '',
-                            component: () => import('~/pages/estacions/EstacionList.vue'),
-                            meta: { type: 'estacion', action: 'list', route: 'estacion_collection' }
+                            component: () => import('~/pages/localidads/LocalidadList.vue'),
+                            meta: { type: 'localidad', action: 'list', route: 'localidad_collection' }
                         },
                         {
-                            name: 'estacion_edit',
-                            path: ':slug',
-                            component: () => import('~/pages/estacions/EstacionEdit.vue'),
-                            meta: { icon: 'icon-park-outline:user', type: 'estacion', action: 'edit', route: 'estacion_edit' }
+                            name: 'localidad_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/localidads/LocalidadForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'localidad', action: 'edit', route: 'localidad_edit' }
+                        },
+                        {
+                            name: 'localidad_create',
+                            path: 'crear',
+                            component: () => import('~/pages/localidads/LocalidadForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'localidad', action: 'create', route: 'localidad_create' }
+                        }
+                    ]
+                },
+                {
+                    path: '/paises',
+                    meta: { label: 'nacion', icon: 'icon-park-outline:tree-list' },
+
+                    children: [
+                        {
+                            name: 'nacion_list',
+                            path: '',
+                            component: () => import('~/pages/nacion/NacionList.vue'),
+                            meta: { type: 'nacion', action: 'list', route: 'nacion_collection' }
+                        },
+                        {
+                            name: 'nacion_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/nacion/NacionForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'nacion', action: 'edit', route: 'nacion_edit' }
+                        },
+                        {
+                            name: 'nacion_create',
+                            path: 'crear',
+                            component: () => import('~/pages/nacion/NacionForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'nacion', action: 'create', route: 'nacion_create' }
                         }
                     ]
                 }

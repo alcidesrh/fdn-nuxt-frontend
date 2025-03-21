@@ -1,6 +1,6 @@
 <template>
-  <Autocomplete v-model="value" :optionLabel="context.optionLabel" :placeholder="context.placeholder" delay="1000"
-    :loading="loading" />
+  <Autocomplete :id="props.context.id" v-model="value" :optionLabel="context.optionLabel"
+    :placeholder="context.placeholder" delay="1000" :loading="loading" />
 </template>
 
 <script setup>

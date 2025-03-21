@@ -1,3 +1,8 @@
+<template>
+  <ToggleSwitch :id="props.context.id" v-model="value" />
+</template>
+
+
 <script setup>
 import ToggleSwitch from 'primevue/toggleswitch';
 
@@ -11,6 +16,3 @@ watch(() => value.value, (v) => {
   props.context.node.input(v)
 })
 </script>
-<template>
-  <ToggleSwitch v-model="value" />
-</template>

@@ -9,7 +9,8 @@ export default defineNuxtConfig({
         '@vueuse/nuxt', // '@nuxt/eslint',
         // '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
-        '@pinia-plugin-persistedstate/nuxt',
+        'pinia-plugin-persistedstate/nuxt',
+        // '@pinia-plugin-persistedstate/nuxt',
         '@unocss/nuxt',
         '@nuxt/icon',
         '@formkit/nuxt',
@@ -52,9 +53,15 @@ export default defineNuxtConfig({
         storesDirs: ['./stores/**']
     },
 
-    piniaPersistedstate: {
+    piniaPluginPersistedstate: {
+        // cookieOptions: {
+        //     sameSite: 'strict'
+        // },
+        // storage: 'cookies'
+
         storage: 'localStorage'
     },
+
     vite: {
         optimizeDeps: {
             include: ['daysjs']

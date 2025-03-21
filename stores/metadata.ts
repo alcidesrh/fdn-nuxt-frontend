@@ -1,33 +1,35 @@
 import { defineStore } from 'pinia';
-import { Api, parseGraphQl } from '@api-platform/api-doc-parser';
+import { parseGraphQl } from '@api-platform/api-doc-parser';
+import { User } from '~/types/user';
+import { getApiResources } from '~/types';
 
 interface State {
-    api: {} | boolean;
+    api: Ref<Record<'User' | any, User | any>> | null;
 }
-
 export const useMetadataStore = defineStore('Metadata', {
-    persist: true,
+    persist: {
+        afterHydrate: (ctx) => {
+            console.log(`just hydrated '${ctx.store.$id}'`);
+        },
+        beforeHydrate: (ctx) => {
+            console.log(`about to hydrate '${ctx.store.$id}'`);
+        }
+    },
     state: (): State => ({
-        api: false
+        api: null //ref({} as Record<'User', User>)
     }),
     actions: {
-        setApiMetadata() {
-            // log(this.api.User);
-            // this.api = { p: 9 };
-            log(this.api);
-            if (!this.api) {
-                this.api = {};
-                parseGraphQl('http://localhost/graphql').then(({ api }: any) => {
-                    api.resources.forEach((element, i) => {
-                        if (i > 7) return;
-                        try {
-                            this.api[element.name] = useCloned(element).cloned.value;
-                        } catch (error) {}
+        async setApiMetadata() {
+            if (!Object.keys(this.api || {}).length) {
+                await parseGraphQl(ENTRYPOINT_GRAPHQL)
+                    .then(({ api }: any) => {
+                        this.api = getApiResources(api);
+                    })
+                    .catch((e) => {
+                        this.api = getApiResources();
                     });
-
-                    log(this.api);
-                });
             }
+            fdn.value.api = this.api;
         }
     }
 });

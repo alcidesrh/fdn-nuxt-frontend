@@ -3,7 +3,6 @@
   <main>
     <!-- <VitePwaManifest /> -->
     <NuxtLoadingIndicator />
-
     <div class="layout-wrapper" :class="{ 'mobil': isMobil }">
 
       <div id="intersectionObservertarget" class="absolute top-4rem"></div>
@@ -11,9 +10,14 @@
       <Topbar />
 
       <MenuRoot />
-
-      <div id="layout-content" class="layout-content u-p-s" :class="[menuStore.mode]">
-        <div class="content u-p-s md:u-p-l lg:u-p-5xl lg:u-py-l">
+      <div v-if="fdn.api.MetadataResource" id="layout-content" class="layout-content u-p-s relative"
+        :class="[menuStore.mode]">
+        <div class="spinner-wraper z-20" :class="{ hidden: !(loading || mloading || gLoading) }">
+          <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="3" fill="transparent" animationDuration=".5s"
+            aria-label="Custom ProgressSpinner" />
+          <div></div>
+        </div>
+        <div class="content u-p-s md:u-p-l lg:u-p-5xl lg:u-py-l z-10 ">
 
           <NuxtPage />
 
@@ -44,16 +48,33 @@ useHead({
 const ui = useThemeStateStore()
 const menuStore = useMenuStateStore()
 const metadata = useMetadataStore()
+const { api } = storeToRefs(metadata)
+
 metadata.setApiMetadata()
 const mask = computed(() => menuStore.mode == 'normal' && isMobil)
 
 onBeforeMount(() => {
+
+  const eventSource = new EventSource('http://localhost/.well-known/mercure?topic=error');
+
+  eventSource.onmessage = (event) => {
+    msg.emit(JSON.parse(event.data))
+  };
 
   if (ui.darkTheme) {
     ui.toggleDarkMode(true)
   }
   ui.setPreset()
 })
+import { useGlobalQueryLoading, useGlobalMutationLoading } from '@vue/apollo-composable'
+const loading = useGlobalQueryLoading()
+const mloading = useGlobalMutationLoading()
+watch(() => mloading.value, (v) => {
+  alert(v)
+})
+
+
+
 </script>
 
 <style>

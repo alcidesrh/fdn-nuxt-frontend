@@ -1,6 +1,6 @@
-import type { Item } from "./item";
+import type { Item } from './item';
 
 export interface Localidad extends Item {
-  nombre?: string;
-  pais?: any;
+    nombre?: string;
+    nacion?: any;
 }

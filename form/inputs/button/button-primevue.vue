@@ -10,5 +10,5 @@ function handleInput(e) {
 }
 </script>
 <template>
-  <Button label="Submit" />
+  <Button :id="props.context.id" label="Submit" />
 </template>

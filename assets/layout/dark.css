@@ -1,1 +1,8 @@
 @import "./components/datatable-dark.css";
+
+:root[class*='app-dark'] {
+  .fdn-form-header {
+    display: flex;
+    @apply bg-slate-700/40;
+  }
+}

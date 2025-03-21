@@ -1,5 +1,5 @@
 <template>
-  <div class="normal-case">
+  <div class="collection-cell-wrap">
 
     <span v-if="column.name == 'createdAt'">
       <slot :name="column.name">
@@ -18,10 +18,16 @@
       {{ data._id }}
     </span>
 
+    <span v-else-if="data[column.name]?.id">
+      <Chip class="u-m-3xs u-py-2xs" :label="data[column.name]?.nombre"></Chip>
+    </span>
+
     <span v-else-if="column.name == 'status'" class="capitalize">
       {{ data[column.name] }}
     </span>
-
+    <span v-else-if="Array.isArray(data[column.name]?.collection)">
+      <Chip class="u-m-3xs u-py-2xs" v-for="v in data[column.name].collection" :key="v.id" :label="v.nombre"></Chip>
+    </span>
     <span v-else :class="column.schema ? `highlight-${index}` : ''" :data-property="column.name">
       {{ data[column.name] }}
     </span>

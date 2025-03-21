@@ -1,11 +1,13 @@
 export const getIdFromIri = (iri?: string): string => {
-  if (!iri) return "";
+    if (!iri) return '';
 
-  const id = iri.split("/").pop();
+    const id = iri.split('/').pop();
 
-  if (!id) {
-    return "";
-  }
+    if (!id) {
+        return '';
+    }
 
-  return id;
+    return id;
 };
+
+export const getIriFromId = (id, entity): string => `/api/${entity}s/${id}`;

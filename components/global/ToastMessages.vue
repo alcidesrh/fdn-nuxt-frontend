@@ -12,7 +12,7 @@ const error = useEventBus('error')
 bus.on((msg: any) => {
 
   const lifetime = msg?.life === false ? {} : { life: 5000 }// life: 5000 
-  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: 'Info:', });
+  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: msg.summary || 'Info:', });
 
   // const lifetime = { life: 5000 }// life: 5000 
   // if (data.type == 'error') {

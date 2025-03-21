@@ -1,92 +1,56 @@
 import { defineStore } from 'pinia';
+
 import mergeDeepWith from 'ramda/es/mergeDeepWith';
 import concat from 'ramda/es/concat';
-import routes from '~/router.options';
-import omit from 'ramda/es/omit';
 import { User } from '~/types/user';
+import omit from 'ramda/es/omit';
 
-export const useUserStore = defineStore('userStore', () => {
-    const { metadata, collection, itemGeneric, formkitSchema, setFormkitSchema, updateGeneric, remove, removeMultiple, iniCollection, resource, sort, formkitFields } = createStore('user');
+export const useUserStore = defineStore(
+    'userStore',
+    () => {
+        const { metadata, collection, item, formkitSchema, setFormkitSchema, remove, removeMultiple, resource } = createStore('User');
 
-    metadata.value.plural = 'usuarios';
+        metadata.value.query.get = 'getUserByUsernameUser';
 
-    let item: Ref<User> = ref({}) as Ref<User>;
-
-    watch(
-        () => itemGeneric.value,
-        (v) => {
-            item.value = v as User;
-        }
-    );
-
-    metadata.value.singular = 'usuario';
-    collection.value.query = 'users';
-
-    collection.value.columnClass = (c: Record<string, string>) => {
-        const temp = '';
-        switch (c.name) {
-            case 'id':
-                return `${temp} pl-5 w-180px`;
-            case 'username':
-                return `${temp} w-250px`;
-            case 'fullName':
-                return `${temp} w-250px`;
-            case 'createdAt':
-                return `${temp} w-435px`;
-            case 'status':
-                return `${temp}  w-110px`;
-
-            default:
-                if (c.action) {
-                    return `${temp} min-w-60px border-r border-surface-contrast-2`;
+        function filterValues() {
+            const val = omit(['permisos', '__typename', '_id'], item.value);
+            Object.keys(val).forEach((i) => {
+                if (typeof val[i] == 'object') {
+                    val[i] = val[i]?.id || val[i]?.value || val[i];
                 }
-                return `${temp} min-w-200px`;
+            });
+            return val;
         }
-    };
-
-    collection.value.filterInputClass = (input: any) => {
-        const defaultClass = { outerClass: 'mb-0! ' };
-        const temp = {
-            texticon_fdn: {
-                id: { outerClass: 'min-w-100px max-w-130px ' },
-                username: { outerClass: 'max-w-200px! ' },
-                fullName: { outerClass: 'max-w-200px ' },
-                status: { outerClass: 'max-w-50px ' }
-            },
-            datepicker_fdn: {
-                inputClass: { outerClass: 'max-w-315px! ' }
-            }
-        };
-        if (temp[input.schema.$formkit]) {
-            const classes = temp[input.schema.$formkit][input.schema.name] || {};
-            const inputClass = temp[input.schema.$formkit]['inputClass'] || {};
-
-            return mergeDeepWith(concat, classes, mergeDeepWith(concat, inputClass, defaultClass));
-        }
-        return {};
-    };
-
-    extractObjectField(routes.routes(), 'meta', 'user').forEach((i) => {
-        if (typeof i.action != 'undefined' && typeof i.route != 'undefined' && typeof metadata.value.routes[i.action] != 'undefined') {
-            metadata.value.routes[i.action] = i.route;
-        }
-    });
-
-    function update() {
-        const { mutate, onDone } = updateGeneric({ properties: { user: { username: true } } });
-        onDone(
-            ({
-                data: {
-                    updateUser: { user }
-                }
-            }) => {
+        function submit() {
+            const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
+            const fields = {};
+            fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity);
+            const vars = filterValues();
+            const { onDone, loading } = apollo.mutate(query, fields, { input: vars });
+            gLoading.value = true;
+            onDone((data) => {
+                msg.emit(getAlertText('update'));
+                collection.value.items = [];
+                collection.value.reload();
                 const router = useRouter();
-                // reload();
                 router.push({ name: metadata.value.routes.list });
-            }
-        );
-        mutate({ input: omit(['__typename', '_id'], item.value) });
-    }
 
-    return { metadata, collection, item, formkitSchema, update, resource, remove, removeMultiple, sort, iniCollection, setFormkitSchema, formkitFields };
-});
+                gLoading.value = false;
+                return;
+            });
+        }
+
+        return { metadata, collection, item, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema };
+    },
+    {
+        persist: {
+            afterHydrate: (ctx) => {
+                console.log(`just hydrated '${ctx.store.$id}'`);
+            },
+            beforeHydrate: (ctx) => {
+                console.log(`about to hydrate '${ctx.store.$id}'`);
+            }
+            // omit: ['collection']
+        }
+    }
+);

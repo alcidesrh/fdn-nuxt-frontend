@@ -1,36 +1,9 @@
 type Query {
   node(id: ID!): Node
-  columnFieldsResources(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): ColumnFieldsResourceCursorConnection
-  columnFieldsResource(id: ID!): ColumnFieldsResource
-  create_forms(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): create_formCursorConnection
-  create_form(id: ID!): create_form
-  getMetadataResource(entity: String): MetadataResource
-  columnsMetadataResource(entity: String): MetadataResource
-  getResource(entity: String, field: String, value: String): Resource
+  agnostic(id: ID!): Agnostic
+  collectionAgnostic(resource: String): Agnostic
+  getMetadataResource(resource: String): MetadataResource
+  columnsMetadataResource(resource: String): MetadataResource
   agencias(
     "Returns the first n elements from the list."
     first: Int
@@ -186,47 +159,38 @@ type Query {
     after: String
   ): FacturaCursorConnection
   factura(id: ID!): Factura
-  localidads(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): LocalidadCursorConnection
   localidad(id: ID!): Localidad
-  menus(
-    "Returns the first n elements from the list."
-    first: Int
+  localidads(
+    "Returns the current page."
+    page: Int
 
-    "Returns the last n elements from the list."
-    last: Int
+    "Returns the number of items per page."
+    itemsPerPage: Int
 
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): MenuCursorConnection
+    id: Int
+    id_list: [Int]
+    nombre: String
+    nombre_list: [String]
+    order: [LocalidadFilter_order]
+  ): LocalidadPageConnection
   menu(id: ID!): Menu
-  pais(
-    "Returns the first n elements from the list."
-    first: Int
+  menus(
+    "Returns the current page."
+    page: Int
 
-    "Returns the last n elements from the list."
-    last: Int
+    "Returns the number of items per page."
+    itemsPerPage: Int
 
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
+    order: [MenuFilter_order]
+  ): MenuPageConnection
+  nacion(id: ID!): Nacion
+  nacions(
+    "Returns the current page."
+    page: Int
 
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): PaisCursorConnection
+    "Returns the number of items per page."
+    itemsPerPage: Int
+  ): NacionPageConnection
   paradas(
     "Returns the first n elements from the list."
     first: Int
@@ -241,20 +205,16 @@ type Query {
     after: String
   ): ParadaCursorConnection
   parada(id: ID!): Parada
-  permisos(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): PermisoCursorConnection
   permiso(id: ID!): Permiso
+  permisos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
   piloto(id: ID!): Piloto
   pilotos(
     "Returns the current page."
@@ -367,7 +327,6 @@ type Query {
     apellido_list: [String]
     createdAt: [UserFilter_createdAt]
     order: [UserFilter_order]
-    fullName: String
   ): UserPageConnection
   getUserByUsernameUser(username: String): User
   ventas(
@@ -392,261 +351,18 @@ interface Node {
   id: ID!
 }
 
-"Cursor connection for ColumnFieldsResource."
-type ColumnFieldsResourceCursorConnection {
-  edges: [ColumnFieldsResourceEdge]
-  pageInfo: ColumnFieldsResourcePageInfo!
-  totalCount: Int!
-}
-
-"Edge of ColumnFieldsResource."
-type ColumnFieldsResourceEdge {
-  node: ColumnFieldsResource
-  cursor: String!
-}
-
-type ColumnFieldsResource implements Node {
-  id: ID!
-}
-
-"Information about the current page."
-type ColumnFieldsResourcePageInfo {
-  endCursor: String
-  startCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-}
-
-"Cursor connection for create_form."
-type create_formCursorConnection {
-  edges: [create_formEdge]
-  pageInfo: create_formPageInfo!
-  totalCount: Int!
-}
-
-"Edge of create_form."
-type create_formEdge {
-  node: create_form
-  cursor: String!
-}
-
-type create_form implements Node {
-  id: ID!
-}
-
-"Information about the current page."
-type create_formPageInfo {
-  endCursor: String
-  startCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-}
-
-type MetadataResource implements Node {
+type Agnostic implements Node {
   id: ID!
   data: Iterable!
-  _id: String!
 }
 
 "The `Iterable` scalar type represents an array or a Traversable with any kind of data."
 scalar Iterable
 
-type Resource implements Node {
+type MetadataResource implements Node {
   id: ID!
-  user: User
-  estacion: Estacion
+  data: Iterable!
   _id: String!
-}
-
-type User implements Node {
-  id: ID!
-  username: String!
-  roles: Iterable!
-  password: String
-  fullName: String
-  permisos(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): PermisoCursorConnection
-  _id: Int!
-  createdAt: String!
-  updatedAt: String!
-  status: Status
-  legacyId: Int
-  apellido: String
-  nombre: String!
-  email: String
-  nit: String
-  telefono: String
-  direccion: String
-  localidad: Localidad
-  userIdentifier: String!
-  validTokenStrings: Iterable!
-}
-
-"Cursor connection for Permiso."
-type PermisoCursorConnection {
-  edges: [PermisoEdge]
-  pageInfo: PermisoPageInfo!
-  totalCount: Int!
-}
-
-"Edge of Permiso."
-type PermisoEdge {
-  node: Permiso
-  cursor: String!
-}
-
-type Permiso implements Node {
-  id: ID!
-  padre: Permiso
-  hijos(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): PermisoCursorConnection
-  usuarios(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    id: Int
-    id_list: [Int]
-    username: String
-    username_list: [String]
-    status: String
-    status_list: [String]
-    nombre: String
-    nombre_list: [String]
-    apellido: String
-    apellido_list: [String]
-    createdAt: [UserFilter_createdAt]
-    order: [UserFilter_order]
-  ): UserPageConnection
-  nombre: String
-  nota: String
-  _id: Int!
-  status: Status
-}
-
-input UserFilter_createdAt {
-  before: String
-  strictly_before: String
-  after: String
-  strictly_after: String
-}
-
-input UserFilter_order {
-  id: String
-  nombre: String
-  apellido: String
-  username: String
-  createdAt: String
-  status: String
-}
-
-"Page connection for User."
-type UserPageConnection {
-  collection: [User]
-  paginationInfo: UserPaginationInfo!
-}
-
-"Information about the pagination."
-type UserPaginationInfo {
-  itemsPerPage: Int!
-  lastPage: Int!
-  totalCount: Int!
-  hasNextPage: Boolean!
-}
-
-enum Status {
-  creado
-  progreso
-  finalizado
-  activo
-  inactivo
-  cancelado
-  error
-  pausa
-  confirmado
-  expirado
-  reasignado
-}
-
-"Information about the current page."
-type PermisoPageInfo {
-  endCursor: String
-  startCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-}
-
-type Localidad implements Node {
-  id: ID!
-  toString: String
-  nombre: String!
-  pais: Pais
-  _id: Int!
-}
-
-type Pais implements Node {
-  id: ID!
-  nombre: String!
-  _id: Int!
-}
-
-type Estacion implements Node {
-  id: ID!
-  users(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    id: Int
-    id_list: [Int]
-    username: String
-    username_list: [String]
-    status: String
-    status_list: [String]
-    nombre: String
-    nombre_list: [String]
-    apellido: String
-    apellido_list: [String]
-    createdAt: [UserFilter_createdAt]
-    order: [UserFilter_order]
-  ): UserPageConnection
-  alias: String!
-  email: String
-  telefono: String
-  direccion: String
-  localidad: Localidad
-  nombre: String
-  nota: String
-  _id: Int!
-  status: Status
-  legacyId: Int
-  slug: String
 }
 
 "Cursor connection for Agencia."
@@ -692,8 +408,161 @@ type Agencia implements Node {
   nombre: String
   nota: String
   _id: Int!
+  label: String
   status: Status
   legacyId: Int
+}
+
+input UserFilter_createdAt {
+  before: String
+  strictly_before: String
+  after: String
+  strictly_after: String
+}
+
+input UserFilter_order {
+  id: String
+  nombre: String
+  apellido: String
+  username: String
+  createdAt: String
+  status: String
+}
+
+"Page connection for User."
+type UserPageConnection {
+  collection: [User]
+  paginationInfo: UserPaginationInfo!
+}
+
+type User implements Node {
+  id: ID!
+  username: String!
+  roles: Iterable!
+  password: String
+  fullName: String
+  permisos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  _id: Int!
+  label: String
+  createdAt: String!
+  updatedAt: String!
+  status: Status
+  legacyId: Int
+  apellido: String
+  nombre: String!
+  email: String
+  nit: String
+  telefono: String
+  direccion: String
+  localidad: Localidad
+  userIdentifier: String!
+  validTokenStrings: Iterable!
+}
+
+input PermisoFilter_order {
+  id: String
+  nombre: String
+  status: String
+}
+
+"Page connection for Permiso."
+type PermisoPageConnection {
+  collection: [Permiso]
+  paginationInfo: PermisoPaginationInfo!
+}
+
+type Permiso implements Node {
+  id: ID!
+  padre: Permiso
+  hijos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  usuarios(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    nombre: String
+    nombre_list: [String]
+    apellido: String
+    apellido_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
+  ): UserPageConnection
+  nombre: String
+  nota: String
+  _id: Int!
+  label: String
+  status: Status
+}
+
+enum Status {
+  creado
+  progreso
+  finalizado
+  activo
+  inactivo
+  cancelado
+  error
+  pausa
+  confirmado
+  expirado
+  reasignado
+}
+
+"Information about the pagination."
+type PermisoPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
+}
+
+type Localidad implements Node {
+  id: ID!
+  nombre: String!
+  nacion: Nacion
+  _id: Int!
+  label: String
+}
+
+type Nacion implements Node {
+  id: ID!
+  nombre: String!
+  _id: Int!
+  label: String
+}
+
+"Information about the pagination."
+type UserPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
 }
 
 "Information about the current page."
@@ -723,6 +592,7 @@ type Asiento implements Node {
   bus: Bus!
   clase: String
   _id: Int!
+  label: String
 }
 
 type Bus implements Node {
@@ -748,6 +618,7 @@ type Bus implements Node {
   marca: String
   placa: String
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -760,6 +631,7 @@ type Empresa implements Node {
   denominacionSocial: String
   alias: String
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -783,6 +655,7 @@ type Piloto implements Node {
   nacionalidad: String
   fullName: String
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -837,6 +710,7 @@ type Boleto implements Node {
   asiento: Asiento!
   salida: Salida!
   _id: Int!
+  label: String
   status: Status
   createdAt: String!
   updatedAt: String!
@@ -846,6 +720,7 @@ type Cliente implements Node {
   id: ID!
   dpi: String
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -877,6 +752,7 @@ type BoletoLog implements Node {
   boleto: Boleto!
   tipo: Int
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   descripcion: String
@@ -924,6 +800,7 @@ type Salida implements Node {
     after: String
   ): BoletoCursorConnection
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -938,6 +815,7 @@ type Recorrido implements Node {
   nombre: String
   nota: String
   _id: Int!
+  label: String
   status: Status
   legacyId: Int
 }
@@ -961,6 +839,7 @@ type Parada implements Node {
   nombre: String
   nota: String
   _id: Int!
+  label: String
   status: Status
 }
 
@@ -973,6 +852,7 @@ type Enclave implements Node {
   nombre: String
   nota: String
   _id: Int!
+  label: String
   status: Status
 }
 
@@ -1015,6 +895,7 @@ type SalidaLog implements Node {
   tipo: String
   salida: Salida!
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   descripcion: String
@@ -1063,6 +944,7 @@ type BusPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+  currentPage: Int!
   hasNextPage: Boolean!
 }
 
@@ -1098,6 +980,7 @@ type EmpresaPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+  currentPage: Int!
   hasNextPage: Boolean!
 }
 
@@ -1122,6 +1005,42 @@ type EnclavePageInfo {
   hasPreviousPage: Boolean!
 }
 
+type Estacion implements Node {
+  id: ID!
+  users(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    nombre: String
+    nombre_list: [String]
+    apellido: String
+    apellido_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
+  ): UserPageConnection
+  alias: String!
+  email: String
+  telefono: String
+  direccion: String
+  localidad: Localidad
+  nombre: String
+  nota: String
+  _id: Int!
+  label: String
+  status: Status
+  legacyId: Int
+  slug: String
+}
+
 input EstacionFilter_order {
   id: String
   nombre: String
@@ -1140,6 +1059,7 @@ type EstacionPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+  currentPage: Int!
   hasNextPage: Boolean!
 }
 
@@ -1159,6 +1079,7 @@ type FDNEdge {
 type FDN implements Node {
   id: ID!
   _id: Int!
+  label: String
 }
 
 "Information about the current page."
@@ -1190,6 +1111,7 @@ type Factura implements Node {
   serie: String
   venta: Venta
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -1203,6 +1125,7 @@ type Venta implements Node {
   precio: Float
   factura: Factura
   _id: Int!
+  label: String
   createdAt: String!
   updatedAt: String!
   status: Status
@@ -1216,136 +1139,81 @@ type FacturaPageInfo {
   hasPreviousPage: Boolean!
 }
 
-"Cursor connection for Localidad."
-type LocalidadCursorConnection {
-  edges: [LocalidadEdge]
-  pageInfo: LocalidadPageInfo!
+input LocalidadFilter_order {
+  id: String
+  nombre: String
+}
+
+"Page connection for Localidad."
+type LocalidadPageConnection {
+  collection: [Localidad]
+  paginationInfo: LocalidadPaginationInfo!
+}
+
+"Information about the pagination."
+type LocalidadPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
   totalCount: Int!
-}
-
-"Edge of Localidad."
-type LocalidadEdge {
-  node: Localidad
-  cursor: String!
-}
-
-"Information about the current page."
-type LocalidadPageInfo {
-  endCursor: String
-  startCursor: String
+  currentPage: Int!
   hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-}
-
-"Cursor connection for Menu."
-type MenuCursorConnection {
-  edges: [MenuEdge]
-  pageInfo: MenuPageInfo!
-  totalCount: Int!
-}
-
-"Edge of Menu."
-type MenuEdge {
-  node: Menu
-  cursor: String!
 }
 
 type Menu implements Node {
   id: ID!
+  _id: Int!
   link: String
+  posicion: Int
   tipo: String
-  parent: Taxon
-  posicion: Int
-  children(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): TaxonCursorConnection
   nombre: String
   nota: String
-  _id: Int!
+  parent: Menu
+  children(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [MenuFilter_order]
+  ): MenuPageConnection
   status: Status
 }
 
-type Taxon implements Node {
-  id: ID!
-  parent: Taxon
-  posicion: Int
-  children(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): TaxonCursorConnection
+input MenuFilter_order {
+  id: String
   nombre: String
-  nota: String
-  _id: Int!
-  status: Status
+  status: String
 }
 
-"Cursor connection for Taxon."
-type TaxonCursorConnection {
-  edges: [TaxonEdge]
-  pageInfo: TaxonPageInfo!
+"Page connection for Menu."
+type MenuPageConnection {
+  collection: [Menu]
+  paginationInfo: MenuPaginationInfo!
+}
+
+"Information about the pagination."
+type MenuPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
   totalCount: Int!
-}
-
-"Edge of Taxon."
-type TaxonEdge {
-  node: Taxon
-  cursor: String!
-}
-
-"Information about the current page."
-type TaxonPageInfo {
-  endCursor: String
-  startCursor: String
+  currentPage: Int!
   hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
 }
 
-"Information about the current page."
-type MenuPageInfo {
-  endCursor: String
-  startCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
+"Page connection for Nacion."
+type NacionPageConnection {
+  collection: [Nacion]
+  paginationInfo: NacionPaginationInfo!
 }
 
-"Cursor connection for Pais."
-type PaisCursorConnection {
-  edges: [PaisEdge]
-  pageInfo: PaisPageInfo!
+"Information about the pagination."
+type NacionPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
   totalCount: Int!
-}
-
-"Edge of Pais."
-type PaisEdge {
-  node: Pais
-  cursor: String!
-}
-
-"Information about the current page."
-type PaisPageInfo {
-  endCursor: String
-  startCursor: String
+  currentPage: Int!
   hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
 }
 
 "Cursor connection for Parada."
@@ -1395,6 +1263,7 @@ type PilotoPaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
+  currentPage: Int!
   hasNextPage: Boolean!
 }
 
@@ -1448,6 +1317,51 @@ type SalidaPageInfo {
   hasPreviousPage: Boolean!
 }
 
+"Cursor connection for Taxon."
+type TaxonCursorConnection {
+  edges: [TaxonEdge]
+  pageInfo: TaxonPageInfo!
+  totalCount: Int!
+}
+
+"Edge of Taxon."
+type TaxonEdge {
+  node: Taxon
+  cursor: String!
+}
+
+type Taxon implements Node {
+  id: ID!
+  parent: Taxon
+  posicion: Int
+  children(
+    "Returns the first n elements from the list."
+    first: Int
+
+    "Returns the last n elements from the list."
+    last: Int
+
+    "Returns the elements in the list that come before the specified cursor."
+    before: String
+
+    "Returns the elements in the list that come after the specified cursor."
+    after: String
+  ): TaxonCursorConnection
+  nombre: String
+  nota: String
+  _id: Int!
+  label: String
+  status: Status
+}
+
+"Information about the current page."
+type TaxonPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 "Cursor connection for Venta."
 type VentaCursorConnection {
   edges: [VentaEdge]
@@ -1470,26 +1384,8 @@ type VentaPageInfo {
 }
 
 type Mutation {
-  "Updates a ColumnFieldsResource."
-  updateColumnFieldsResource(input: updateColumnFieldsResourceInput!): updateColumnFieldsResourcePayload
-
-  "Deletes a ColumnFieldsResource."
-  deleteColumnFieldsResource(input: deleteColumnFieldsResourceInput!): deleteColumnFieldsResourcePayload
-
-  "Creates a ColumnFieldsResource."
-  createColumnFieldsResource(input: createColumnFieldsResourceInput!): createColumnFieldsResourcePayload
-
-  "Updates a create_form."
-  updatecreate_form(input: updateCreate_formInput!): updateCreate_formPayload
-
-  "Deletes a create_form."
-  deletecreate_form(input: deleteCreate_formInput!): deleteCreate_formPayload
-
-  "Creates a create_form."
-  createcreate_form(input: createCreate_formInput!): createCreate_formPayload
-
-  "Deletes a MultipleResource."
-  deleteMultipleResource(input: deleteMultipleResourceInput!): deleteMultipleResourcePayload
+  "Deletes a Agnostic."
+  deleteAgnostic(input: deleteAgnosticInput!): deleteAgnosticPayload
 
   "Updates a Agencia."
   updateAgencia(input: updateAgenciaInput!): updateAgenciaPayload
@@ -1581,14 +1477,17 @@ type Mutation {
   "Creates a Factura."
   createFactura(input: createFacturaInput!): createFacturaPayload
 
+  "Creates a Localidad."
+  createLocalidad(input: createLocalidadInput!): createLocalidadPayload
+
   "Updates a Localidad."
   updateLocalidad(input: updateLocalidadInput!): updateLocalidadPayload
 
   "Deletes a Localidad."
   deleteLocalidad(input: deleteLocalidadInput!): deleteLocalidadPayload
 
-  "Creates a Localidad."
-  createLocalidad(input: createLocalidadInput!): createLocalidadPayload
+  "Creates a Menu."
+  createMenu(input: createMenuInput!): createMenuPayload
 
   "Updates a Menu."
   updateMenu(input: updateMenuInput!): updateMenuPayload
@@ -1596,17 +1495,14 @@ type Mutation {
   "Deletes a Menu."
   deleteMenu(input: deleteMenuInput!): deleteMenuPayload
 
-  "Creates a Menu."
-  createMenu(input: createMenuInput!): createMenuPayload
+  "Creates a Nacion."
+  createNacion(input: createNacionInput!): createNacionPayload
 
-  "Updates a Pais."
-  updatePais(input: updatePaisInput!): updatePaisPayload
+  "Updates a Nacion."
+  updateNacion(input: updateNacionInput!): updateNacionPayload
 
-  "Deletes a Pais."
-  deletePais(input: deletePaisInput!): deletePaisPayload
-
-  "Creates a Pais."
-  createPais(input: createPaisInput!): createPaisPayload
+  "Deletes a Nacion."
+  deleteNacion(input: deleteNacionInput!): deleteNacionPayload
 
   "Updates a Parada."
   updateParada(input: updateParadaInput!): updateParadaPayload
@@ -1617,14 +1513,14 @@ type Mutation {
   "Creates a Parada."
   createParada(input: createParadaInput!): createParadaPayload
 
+  "Creates a Permiso."
+  createPermiso(input: createPermisoInput!): createPermisoPayload
+
   "Updates a Permiso."
   updatePermiso(input: updatePermisoInput!): updatePermisoPayload
 
   "Deletes a Permiso."
   deletePermiso(input: deletePermisoInput!): deletePermisoPayload
-
-  "Creates a Permiso."
-  createPermiso(input: createPermisoInput!): createPermisoPayload
 
   "Updates a Recorrido."
   updateRecorrido(input: updateRecorridoInput!): updateRecorridoPayload
@@ -1690,93 +1586,17 @@ type Mutation {
   createVenta(input: createVentaInput!): createVentaPayload
 }
 
-"Updates a ColumnFieldsResource."
-input updateColumnFieldsResourceInput {
-  id: ID!
-  className: String
-  clientMutationId: String
-}
-
-"Updates a ColumnFieldsResource."
-type updateColumnFieldsResourcePayload {
-  columnFieldsResource: ColumnFieldsResource
-  clientMutationId: String
-}
-
-"Deletes a ColumnFieldsResource."
-input deleteColumnFieldsResourceInput {
-  id: ID!
-  clientMutationId: String
-}
-
-"Deletes a ColumnFieldsResource."
-type deleteColumnFieldsResourcePayload {
-  columnFieldsResource: ColumnFieldsResource
-  clientMutationId: String
-}
-
-"Creates a ColumnFieldsResource."
-input createColumnFieldsResourceInput {
-  className: String!
-  clientMutationId: String
-}
-
-"Creates a ColumnFieldsResource."
-type createColumnFieldsResourcePayload {
-  columnFieldsResource: ColumnFieldsResource
-  clientMutationId: String
-}
-
-"Updates a create_form."
-input updateCreate_formInput {
-  id: ID!
-  clientMutationId: String
-}
-
-"Updates a create_form."
-type updateCreate_formPayload {
-  create_form: create_form
-  clientMutationId: String
-}
-
-"Deletes a create_form."
-input deleteCreate_formInput {
-  id: ID!
-  clientMutationId: String
-}
-
-"Deletes a create_form."
-type deleteCreate_formPayload {
-  create_form: create_form
-  clientMutationId: String
-}
-
-"Creates a create_form."
-input createCreate_formInput {
-  clientMutationId: String
-}
-
-"Creates a create_form."
-type createCreate_formPayload {
-  create_form: create_form
-  clientMutationId: String
-}
-
-"Deletes a MultipleResource."
-input deleteMultipleResourceInput {
+"Deletes a Agnostic."
+input deleteAgnosticInput {
   ids: [ID]
   resource: String
   clientMutationId: String
 }
 
-"Deletes a MultipleResource."
-type deleteMultipleResourcePayload {
-  multipleResource: MultipleResource
+"Deletes a Agnostic."
+type deleteAgnosticPayload {
+  agnostic: Agnostic
   clientMutationId: String
-}
-
-type MultipleResource implements Node {
-  id: ID!
 }
 
 "Updates a Agencia."
@@ -2285,11 +2105,24 @@ type createFacturaPayload {
   clientMutationId: String
 }
 
+"Creates a Localidad."
+input createLocalidadInput {
+  nombre: String!
+  nacion: String
+  clientMutationId: String
+}
+
+"Creates a Localidad."
+type createLocalidadPayload {
+  localidad: Localidad
+  clientMutationId: String
+}
+
 "Updates a Localidad."
 input updateLocalidadInput {
   id: ID!
   nombre: String
-  pais: String
+  nacion: String
   clientMutationId: String
 }
 
@@ -2311,16 +2144,22 @@ type deleteLocalidadPayload {
   clientMutationId: String
 }
 
-"Creates a Localidad."
-input createLocalidadInput {
-  nombre: String!
-  pais: String
+"Creates a Menu."
+input createMenuInput {
+  link: String
+  posicion: Int
+  tipo: String
+  nombre: String
+  nota: String
+  parent: String
+  children: [String]
+  status: Status
   clientMutationId: String
 }
 
-"Creates a Localidad."
-type createLocalidadPayload {
-  localidad: Localidad
+"Creates a Menu."
+type createMenuPayload {
+  menu: Menu
   clientMutationId: String
 }
 
@@ -2328,12 +2167,12 @@ type createLocalidadPayload {
 input updateMenuInput {
   id: ID!
   link: String
-  tipo: String
-  parent: String
   posicion: Int
-  children: [String]
+  tipo: String
   nombre: String
   nota: String
+  parent: String
+  children: [String]
   status: Status
   clientMutationId: String
 }
@@ -2356,59 +2195,40 @@ type deleteMenuPayload {
   clientMutationId: String
 }
 
-"Creates a Menu."
-input createMenuInput {
-  link: String
-  tipo: String
-  parent: String
-  posicion: Int
-  children: [String]
-  nombre: String
-  nota: String
-  status: Status
-  clientMutationId: String
-}
-
-"Creates a Menu."
-type createMenuPayload {
-  menu: Menu
-  clientMutationId: String
-}
-
-"Updates a Pais."
-input updatePaisInput {
-  id: ID!
-  nombre: String
-  clientMutationId: String
-}
-
-"Updates a Pais."
-type updatePaisPayload {
-  pais: Pais
-  clientMutationId: String
-}
-
-"Deletes a Pais."
-input deletePaisInput {
-  id: ID!
-  clientMutationId: String
-}
-
-"Deletes a Pais."
-type deletePaisPayload {
-  pais: Pais
-  clientMutationId: String
-}
-
-"Creates a Pais."
-input createPaisInput {
+"Creates a Nacion."
+input createNacionInput {
   nombre: String!
   clientMutationId: String
 }
 
-"Creates a Pais."
-type createPaisPayload {
-  pais: Pais
+"Creates a Nacion."
+type createNacionPayload {
+  nacion: Nacion
+  clientMutationId: String
+}
+
+"Updates a Nacion."
+input updateNacionInput {
+  id: ID!
+  nombre: String
+  clientMutationId: String
+}
+
+"Updates a Nacion."
+type updateNacionPayload {
+  nacion: Nacion
+  clientMutationId: String
+}
+
+"Deletes a Nacion."
+input deleteNacionInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"Deletes a Nacion."
+type deleteNacionPayload {
+  nacion: Nacion
   clientMutationId: String
 }
 
@@ -2457,6 +2277,23 @@ type createParadaPayload {
   clientMutationId: String
 }
 
+"Creates a Permiso."
+input createPermisoInput {
+  padre: String
+  hijos: [String]
+  usuarios: [String]
+  nombre: String
+  nota: String
+  status: Status
+  clientMutationId: String
+}
+
+"Creates a Permiso."
+type createPermisoPayload {
+  permiso: Permiso
+  clientMutationId: String
+}
+
 "Updates a Permiso."
 input updatePermisoInput {
   id: ID!
@@ -2483,23 +2320,6 @@ input deletePermisoInput {
 
 "Deletes a Permiso."
 type deletePermisoPayload {
-  permiso: Permiso
-  clientMutationId: String
-}
-
-"Creates a Permiso."
-input createPermisoInput {
-  padre: String
-  hijos: [String]
-  usuarios: [String]
-  nombre: String
-  nota: String
-  status: Status
-  clientMutationId: String
-}
-
-"Creates a Permiso."
-type createPermisoPayload {
   permiso: Permiso
   clientMutationId: String
 }

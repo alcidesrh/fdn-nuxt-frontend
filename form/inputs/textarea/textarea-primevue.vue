@@ -1,3 +1,6 @@
+<template>
+  <Textarea :id="props.context.id" v-model="value" :rows="context.row" :cols="context.col" />
+</template>
 <script setup>
 import Textarea from 'primevue/textarea';
 const props = defineProps({
@@ -11,6 +14,3 @@ watch(() => value.value, (v) => {
   props.context.node.input(v)
 })
 </script>
-<template>
-  <Textarea v-model="value" :rows="context.row" :cols="context.col" />
-</template>
