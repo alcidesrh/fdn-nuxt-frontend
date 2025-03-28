@@ -3,6 +3,7 @@ import type { Ref } from 'vue';
 import { Collection, CollectionVars } from './useCollection';
 import { User, Menu } from '~/types';
 import { Nacion } from '~/types/nacion';
+import { SelectOption } from '~/types/fdn';
 
 export type Metadata = {
     resource: string;
@@ -30,12 +31,7 @@ export type Store = {
     metadata: Ref<Metadata>;
     collection: Ref<Collection>;
     setFormkitSchema: () => Record<any, any>;
-    removeAgnostic: (id: string) => void;
-    removeMultipleAgnostic: (ids: Array<string>) => void;
-    iniCollection: () => void;
     resource: () => void;
-    sort: (d: string) => void;
-    getCollection: () => void;
     removeMultiple: (items: Ref<Array<any>>) => void;
     remove: (any) => void;
 };
@@ -57,7 +53,7 @@ function getMetadata(name): Ref<Metadata> {
             update: `update${pascalCase}`,
             delete: `delete${pascalCase}`
         },
-        updateExclude: ['label'],
+        updateExclude: ['label', 'createdAt', 'updatedAt'],
         routes: {
             list: `${camelCase}_list`,
             create: `${camelCase}_create`,
@@ -67,6 +63,8 @@ function getMetadata(name): Ref<Metadata> {
 }
 
 export const createStore = (name: string) => {
+    const items: Ref<Array<SelectOption> | []> = ref([]);
+
     const entity = useChangeCase(name, 'pascalCase').value;
 
     const metadata = getMetadata(name);
@@ -99,7 +97,6 @@ export const createStore = (name: string) => {
         }
 
         const fields = fdn.value.resourceFields(metadata.value.entity, metadata.value.updateExclude);
-
         if (typeof arg != 'object') {
             arg = { id: arg };
         }
@@ -124,8 +121,10 @@ export const createStore = (name: string) => {
                     // }
                 }
             });
-            cl(temp);
             item.value = temp;
+            if (typeof item.value.id == 'undefined') {
+                item.value.id = getIriFromId(item.value._id, metadata.value.entity);
+            }
         });
     }
     let chanel = '';
@@ -144,7 +143,7 @@ export const createStore = (name: string) => {
             unsubscribeChanel();
             const fields = {};
             fields[metadata.value.resource] = ['id'];
-            const { onDone } = apollo.mutate(metadata.value.query.delete, fields, { input: { id: temp.id } }, 'delete' + metadata.value.entity);
+            const { onDone } = apollo.remove(metadata.value.query.delete, getIriFromId(temp._id, metadata.value.resource), fields);
             onDone(() => {
                 msg.emit(getAlertText('remove_after'));
                 collection.value.reload();
@@ -167,7 +166,7 @@ export const createStore = (name: string) => {
             unsubscribeChanel();
             const fields = { agnostic: ['id'] };
             const temp = Array.isArray(items.value) ? items.value : [items];
-            const { onDone } = apollo.mutate('deleteAgnostic', fields, { input: { resource: metadata.value.entity, ids: temp.map((i: any) => i._id) } }, 'deleteAgnostic');
+            const { onDone } = apollo.mutate('deleteAgnostic', { resource: metadata.value.entity, ids: temp.map((i: any) => i._id) }, fields, 'deleteAgnostic');
             onDone(() => {
                 msg.emit(getAlertText('remove_after'));
                 collection.value.reload();
@@ -178,5 +177,19 @@ export const createStore = (name: string) => {
         });
     }
 
-    return { metadata, collection, item, formkitSchema, setFormkitSchema, remove, removeMultiple, resource };
+    function getItems(force = false) {
+        if (!force && items.value.length != 0) {
+            return;
+        }
+        const { onResult } = apollo.collectionAgnostic(metadata.value.resource);
+
+        onResult(({ data, networkStatus }) => {
+            if (typeof data == 'undefined' && networkStatus == 1) {
+                return;
+            }
+            items.value = data.collectionAgnostic.data.collection;
+        });
+    }
+
+    return { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource };
 };

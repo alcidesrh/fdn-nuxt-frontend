@@ -32,7 +32,7 @@
   "css.hover.documentation": false,
   "css.completion.triggerPropertyValueCompletion": true,
   "css.completion.completePropertyWithSemicolon": true,
-  "tailwindCSS.suggestions": true,
+  "tailwindCSS.suggestions": false,
   "emmet.showExpandedAbbreviation": "always",
   "editor.parameterHints.enabled": true,
   "editor.parameterHints.cycle": true,

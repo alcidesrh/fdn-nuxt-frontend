@@ -476,7 +476,6 @@ export default {
                 }
             }
         },
-
         datepicker: {
             colorScheme: {
                 light: {

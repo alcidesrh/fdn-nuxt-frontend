@@ -1,4 +1,5 @@
 @import "./components/datatable-dark.css";
+@import "./components/picklist-dark.css";
 
 :root[class*='app-dark'] {
   .fdn-form-header {

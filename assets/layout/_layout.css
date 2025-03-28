@@ -4,6 +4,7 @@
 
 html {
     height: 100%;
+    font-size: 14px;
 }
 
 :root {
@@ -33,7 +34,8 @@ body {
     background-color: var(--background);
     /* background-color: var(--p-emerald-50); */
     color: var(--text-color);
-    font-size: var(--step-0);
+    font-size: 1rem;
+    /* var(--step-0); */
     line-height: normal;
     /* font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712; */
     overflow-x: hidden;

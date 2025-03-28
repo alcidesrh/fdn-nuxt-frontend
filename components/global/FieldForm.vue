@@ -26,7 +26,6 @@ const data = ref({})
 
 function getSchema(v, i) {
   const temp = useCloned(v).cloned
-  cl(v.children)
   temp.value.children = `$slots.${v.props.id}`
   return temp.value
 }

@@ -19,4 +19,6 @@ export interface Piloto extends Item {
   telefono?: string;
   direccion?: string;
   localidad?: any;
+  fullName?: string;
+  label?: string;
 }

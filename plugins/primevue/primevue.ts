@@ -16,6 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(DialogService);
 
     nuxtApp.vueApp.use(PrimeVue, {
+        // unstyled: true,
         locale: es,
         ripple: true,
         theme: {

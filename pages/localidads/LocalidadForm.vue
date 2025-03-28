@@ -12,12 +12,9 @@
 const store = useLocalidadStore()
 const nacionStore = useNacionStore()
 
-const { naciones } = storeToRefs(nacionStore)
-nacionStore.getNaciones()
-
-const { item } = storeToRefs(store)
-
+const { items } = storeToRefs(nacionStore)
+nacionStore.getItems()
 const data = ref({
-  naciones: naciones,
+  naciones: items,
 })
 </script>

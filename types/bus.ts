@@ -13,4 +13,5 @@ export interface Bus extends Item {
   updatedAt?: string;
   status?: string;
   legacyId?: number;
+  label?: string;
 }

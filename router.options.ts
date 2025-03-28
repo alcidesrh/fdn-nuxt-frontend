@@ -67,6 +67,31 @@ export default {
                     ]
                 },
                 {
+                    path: '/roles',
+                    meta: { label: 'role', icon: 'icon-park-outline:tree-list' },
+
+                    children: [
+                        {
+                            name: 'role_list',
+                            path: '',
+                            component: () => import('~/pages/roles/RoleList.vue'),
+                            meta: { type: 'role', action: 'list', route: 'role_collection' }
+                        },
+                        {
+                            name: 'role_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/roles/RoleForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'role', action: 'edit', route: 'role_edit' }
+                        },
+                        {
+                            name: 'role_create',
+                            path: 'crear',
+                            component: () => import('~/pages/roles/RoleForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'role', action: 'create', route: 'role_create' }
+                        }
+                    ]
+                },
+                {
                     path: '/localidades',
                     meta: { label: 'localidad', icon: 'icon-park-outline:tree-list' },
 
@@ -113,6 +138,31 @@ export default {
                             path: 'crear',
                             component: () => import('~/pages/nacion/NacionForm.vue'),
                             meta: { icon: 'icon-park-outline:edit', type: 'nacion', action: 'create', route: 'nacion_create' }
+                        }
+                    ]
+                },
+                {
+                    path: '/permisos',
+                    meta: { label: 'permiso', icon: 'icon-park-outline:tree-list' },
+
+                    children: [
+                        {
+                            name: 'permiso_list',
+                            path: '',
+                            component: () => import('~/pages/permiso/PermisoList.vue'),
+                            meta: { type: 'permiso', action: 'list', route: 'permiso_collection' }
+                        },
+                        {
+                            name: 'permiso_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/permiso/PermisoForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'permiso', action: 'edit', route: 'permiso_edit' }
+                        },
+                        {
+                            name: 'permiso_create',
+                            path: 'crear',
+                            component: () => import('~/pages/permiso/PermisoForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'permiso', action: 'create', route: 'permiso_create' }
                         }
                     ]
                 }

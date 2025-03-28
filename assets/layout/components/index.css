@@ -3,6 +3,7 @@
 @import "./multiselect";
 @import "./fieldset";
 @import "./toast";
+@import "./picklist";
 
 
 .pi.p-confirmdialog-icon {

@@ -5,5 +5,5 @@
 </template>
 
 <script lang="ts" setup>
-import List from "~/pages/usuarios/UserList.vue";
+import List from "~~/components/menu/MenuList.vue";
 </script>

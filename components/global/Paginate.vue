@@ -1,3 +1,30 @@
+<script lang="ts" setup>
+import { Collection } from '~/composables/useCollection';
+
+// const props = defineProps<{
+//   collection: Collection
+// }>()
+
+interface Props {
+  collection: Collection;
+  // metadata: Metadata;
+  // store: any;
+  // field?: string;
+}
+const { collection } = defineProps<Props>()
+
+function onChangePage(e: any) {
+  if (collection.vars.itemsPerPage != e.rows) {
+    collection.vars.page = 1
+    collection.vars.itemsPerPage = e.rows
+  }
+  else {
+    collection.vars.page = e.page + 1;
+  }
+}
+</script>
+
+<style></style>
 <template>
   <Paginator v-show="collection.pagination.totalCount > collection.vars.itemsPerPage"
     :rows="collection.vars.itemsPerPage" :totalRecords="collection.pagination.totalCount" :pageLinkSize="3"
@@ -10,23 +37,3 @@
 
   </Paginator>
 </template>
-<script lang="ts" setup>
-import { Collection } from '~/composables/useCollection';
-
-
-const props = defineProps<{
-  collection: Collection
-}>()
-
-function onChangePage(e: any) {
-  if (props.collection.vars.itemsPerPage != e.rows) {
-    props.collection.vars.page = 1
-    props.collection.vars.itemsPerPage = e.rows
-  }
-  else {
-    props.collection.vars.page = e.page + 1;
-  }
-}
-</script>
-
-<style></style>

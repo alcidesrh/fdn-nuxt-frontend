@@ -10,4 +10,5 @@ export interface Recorrido extends Item {
   nota?: string;
   status?: string;
   legacyId?: number;
+  label?: string;
 }

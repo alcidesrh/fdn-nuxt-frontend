@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AutoComplete: typeof import('primevue/autocomplete')['default']
     Breadcrumb: typeof import('primevue/breadcrumb')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
@@ -30,6 +31,7 @@ declare module 'vue' {
     Paginator: typeof import('primevue/paginator')['default']
     Panel: typeof import('primevue/panel')['default']
     Password: typeof import('primevue/password')['default']
+    PickList: typeof import('primevue/picklist')['default']
     ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RadioButton: typeof import('primevue/radiobutton')['default']
     Rating: typeof import('primevue/rating')['default']

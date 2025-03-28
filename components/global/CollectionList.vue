@@ -8,7 +8,7 @@
           </div>
 
           <div class="flex flex-wrap gap-5">
-            <Button label="Importar" icon="pi pi-download" severity="secondary" outlined />
+            <Button label="Importar" icon="pi pi-download" severity="secondary" outlined size="small" />
             <Button label="Exportar" icon="pi pi-upload" severity="secondary" outlined />
 
             <NuxtLink :to="{ name: metadata.routes.create }">
@@ -81,8 +81,6 @@
 <script setup lang="ts">
 
 interface Props {
-  // collection: Collection;
-  // metadata: Metadata;
   store: any;
   field?: string;
 }

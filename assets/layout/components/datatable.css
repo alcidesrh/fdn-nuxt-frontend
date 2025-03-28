@@ -22,18 +22,26 @@
   & .p-datatable-thead>tr {
 
     &:last-child>th {
-      /* background-color: var(--p-surface-contrast-100); */
+      background-color: var(--p-surface-contrast-0);
       @apply bg-slate-100/80;
       /* padding-top: 12px; */
       /* padding-bottom: 12px; */
-      padding: 0px 15px;
+      padding: 0px 10px;
 
       &:last-child {
-        /* width: 80px !important; */
+        background-color: var(--p-surface-contrast-0);
         display: flex;
         justify-content: center;
         align-items: center;
         height: 62px;
+      }
+    }
+
+    &:first-child>th {
+      padding: 0px 10px;
+
+      &:last-child {
+        background-color: var(--p-surface-contrast-0);
       }
     }
 
@@ -112,6 +120,14 @@
 
   & .collection-cell-wrap {
     max-height: 100px;
+
+    &>div {
+      padding: 5px;
+      max-height: 100px;
+      overflow: scroll;
+
+
+    }
   }
 
   & .columns-wraper {

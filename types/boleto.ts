@@ -9,4 +9,5 @@ export interface Boleto extends Item {
   status?: string;
   createdAt?: string;
   updatedAt?: string;
+  label?: string;
 }

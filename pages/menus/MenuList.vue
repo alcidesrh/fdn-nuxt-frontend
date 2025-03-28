@@ -10,7 +10,7 @@
 
 const store = useMenuStore()
 
-const { metadata, collection } = store
+const { collection } = store
 
 collection.iniCollection()
 

@@ -11,4 +11,5 @@ export interface Agencia extends Item {
   nota?: string;
   status?: string;
   legacyId?: number;
+  label?: string;
 }

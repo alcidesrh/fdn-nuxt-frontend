@@ -9,4 +9,5 @@ export interface Venta extends Item {
   createdAt?: string;
   updatedAt?: string;
   status?: string;
+  label?: string;
 }

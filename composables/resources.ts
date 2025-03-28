@@ -49,7 +49,6 @@ export const fdn = ref({
                     temp[i.name] = ['id', 'nombre'];
                     return temp;
                 } else {
-                    cl(i);
                     const temp = {};
                     temp[i.name] = [{ collection: ['id', 'nombre'] }];
                     return temp;

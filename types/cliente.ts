@@ -13,4 +13,5 @@ export interface Cliente extends Item {
   telefono?: string;
   direccion?: string;
   localidad?: any;
+  label?: string;
 }

@@ -5,28 +5,12 @@ import { useChangeCase } from '@vueuse/integrations/useChangeCase';
 import * as gqlBuilder from 'gql-query-builder';
 import { OptionsParameter, VariablesParameter } from '@vue/apollo-composable/dist/useQuery.js';
 import { OperationVariables } from '@apollo/client/core';
+import omit from 'ramda/es/omit';
 
 export const apollo = {
-    queryParseArg: function (endpoint: string, vars: VariablesParameter<OperationVariables>, fields?: Record<string, any>, resource?: string | null, options?: OptionsParameter<any, OperationVariables>) {
-        const temp = this.parseVariablesGraphQl(vars, resource);
-        const queryBuild = gqlBuilder.query({
-            operation: endpoint,
-            fields: (fields as Array<string>) || ['data'],
-            variables: temp
-        });
-        const query: any = gql`
-            ${queryBuild.query}
-        `;
-
-        return {
-            query: query,
-            vars: queryBuild.variables,
-            options: options || {}
-        };
-    },
-    query: function (endpoint: string, pvars: VariablesParameter<OperationVariables>, fields?: Record<string, any>, resource?: string | null, poptions?: OptionsParameter<any, OperationVariables>) {
-        const { query, vars, options } = this.queryParseArg(endpoint, pvars, fields, resource);
-        const { result, loading, onError, refetch, fetchMore, onResult, variables } = useQuery(query, vars, options);
+    query: function (endpoint: string, pvars: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null, poptions?: OptionsParameter<any, OperationVariables>) {
+        const { query, vars } = this.queryParseArg(endpoint, pvars, fields, resource);
+        const { result, loading, onError, refetch, fetchMore, onResult, variables } = useQuery(query, vars, poptions || {});
 
         onError((e) => {
             gLoading.value = false;
@@ -36,26 +20,36 @@ export const apollo = {
         return { result, loading, onResult, refetch, variables, fetchMore };
     },
     collectionAgnostic: function (resource: string) {
-        return this.query('collectionAgnostic', { resource: resource });
+        return this.query('collectionAgnostic', { resource: resource }, null, null, { fetchPolicy: 'network-only' });
     },
 
-    mutate: function (endpoint: string, fields: any, vars: any, resource?: any) {
-        cl(endpoint, fields, vars);
-        const queryBuild = gqlBuilder.mutation({
-            operation: endpoint,
-            fields: [fields], //parseFieldsGraphQl(fields),
-            variables: this.parseVariablesGraphQl(vars, resource || endpoint)
-        });
-        const query: any = gql`
-            ${queryBuild.query}
-        `;
-
+    mutate: function (endpoint: string, vars: any, fields: any, resource?: any) {
+        vars = { input: this.omitFields(vars) };
+        const temp = this.parseVariablesGraphQl(vars, resource || endpoint);
+        const query = this.getMutationQuery(endpoint, temp, fields);
         const { mutate, onDone, loading, onError } = useMutation(query);
         onError((e) => {
             gLoading.value = false;
             merror({ message: e, life: false });
         });
-        mutate(queryBuild.variables);
+        mutate(vars);
+
+        return {
+            onDone,
+            loading,
+            onError
+        };
+    },
+
+    remove: function (endpoint, id, fields): any {
+        const vars = this.parseVariablesGraphQl({ input: { id: id } }, endpoint);
+        const query = this.getMutationQuery(endpoint, vars, fields);
+        const { mutate, onDone, loading, onError } = useMutation(query);
+        onError((e) => {
+            gLoading.value = false;
+            merror({ message: e, life: false });
+        });
+        mutate({ input: { id: id } });
 
         return {
             onDone,
@@ -83,7 +77,7 @@ export const apollo = {
         const query: any = gql`
             ${queryBuild.query}
         `;
-        const { result, loading, onError, onResult, variables } = useQuery(query, collection.vars, fetchPolicy);
+        const { result, loading, onError, onResult, variables } = useQuery(query, () => collection.vars, fetchPolicy);
 
         onError((e) => {
             gLoading.value = false;
@@ -122,6 +116,49 @@ export const apollo = {
             }
             temp[i] = { ...temp[i], value: value };
         });
+
         return temp;
+    },
+    omitFields: function (vars) {
+        vars = omit(['__typename', '_id'], vars);
+        Object.keys(vars).forEach((i) => {
+            if (vars[i] && typeof vars[i] == 'object') {
+                if (typeof vars[i].collection != 'undefined') {
+                    vars[i] = vars[i].collection.map((v) => v?.id || v);
+                } else {
+                    vars[i] = vars[i]?.id || vars[i]?.value || vars[i];
+                }
+            }
+        });
+        return vars;
+    },
+    getMutationQuery: (endpoint, vars, fields) => {
+        const queryBuild = gqlBuilder.mutation({
+            operation: endpoint,
+            fields: [fields], //parseFieldsGraphQl(fields),
+            variables: vars
+        });
+
+        const query: any = gql`
+            ${queryBuild.query}
+        `;
+        return query;
+    },
+    queryParseArg: function (endpoint: string, vars: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null) {
+        const temp = this.parseVariablesGraphQl(vars, resource);
+        cl(endpoint, fields, temp);
+        const queryBuild = gqlBuilder.query({
+            operation: endpoint,
+            fields: (fields as Array<string>) || ['data'],
+            variables: temp
+        });
+        const query: any = gql`
+            ${queryBuild.query}
+        `;
+
+        return {
+            query: query,
+            vars: queryBuild.variables
+        };
     }
 };

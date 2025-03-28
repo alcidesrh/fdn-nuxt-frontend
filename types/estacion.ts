@@ -11,4 +11,6 @@ export interface Estacion extends Item {
   nota?: string;
   status?: string;
   legacyId?: number;
+  slug?: string;
+  label?: string;
 }

@@ -8,4 +8,5 @@ export interface Enclave extends Item {
   nombre?: string;
   nota?: string;
   status?: string;
+  label?: string;
 }

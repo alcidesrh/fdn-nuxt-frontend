@@ -1,6 +1,6 @@
 <template>
   <MultiSelect :id="props.context.id" v-model="value" display="chip" :options="context.options" optionLabel="label"
-    filter fluid optionValue="value" @change="(v) => context.node.input(v.value)" />
+    filter fluid placeholder="Seleccionar" optionValue="value" @change="(v) => context.node.input(v.value)" />
 </template>
 <script setup lang="ts">
 import MultiSelect from 'primevue/multiselect';

@@ -7,4 +7,5 @@ export interface SalidaLog extends Item {
   updatedAt?: string;
   descripcion?: string;
   user?: any;
+  label?: string;
 }

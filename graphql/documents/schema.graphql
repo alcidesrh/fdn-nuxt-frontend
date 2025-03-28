@@ -265,6 +265,16 @@ type Query {
     after: String
   ): RecorridoAsientoPrecioCursorConnection
   recorridoAsientoPrecio(id: ID!): RecorridoAsientoPrecio
+  role(id: ID!): Role
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
   salidas(
     "Returns the first n elements from the list."
     first: Int
@@ -438,9 +448,17 @@ type UserPageConnection {
 type User implements Node {
   id: ID!
   username: String!
-  roles: Iterable!
   password: String
   fullName: String
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
   permisos(
     "Returns the current page."
     page: Int
@@ -467,6 +485,51 @@ type User implements Node {
   validTokenStrings: Iterable!
 }
 
+input RoleFilter_order {
+  id: String
+  nombre: String
+}
+
+"Page connection for Role."
+type RolePageConnection {
+  collection: [Role]
+  paginationInfo: RolePaginationInfo!
+}
+
+type Role implements Node {
+  id: ID!
+  nombre: String!
+  parents(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  children(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  permisos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  _id: Int!
+  label: String
+}
+
 input PermisoFilter_order {
   id: String
   nombre: String
@@ -481,8 +544,16 @@ type PermisoPageConnection {
 
 type Permiso implements Node {
   id: ID!
-  padre: Permiso
-  hijos(
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  parents(
     "Returns the current page."
     page: Int
 
@@ -491,26 +562,15 @@ type Permiso implements Node {
 
     order: [PermisoFilter_order]
   ): PermisoPageConnection
-  usuarios(
+  children(
     "Returns the current page."
     page: Int
 
     "Returns the number of items per page."
     itemsPerPage: Int
 
-    id: Int
-    id_list: [Int]
-    username: String
-    username_list: [String]
-    status: String
-    status_list: [String]
-    nombre: String
-    nombre_list: [String]
-    apellido: String
-    apellido_list: [String]
-    createdAt: [UserFilter_createdAt]
-    order: [UserFilter_order]
-  ): UserPageConnection
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
   nombre: String
   nota: String
   _id: Int!
@@ -534,6 +594,15 @@ enum Status {
 
 "Information about the pagination."
 type PermisoPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
+}
+
+"Information about the pagination."
+type RolePaginationInfo {
   itemsPerPage: Int!
   lastPage: Int!
   totalCount: Int!
@@ -1161,12 +1230,30 @@ type LocalidadPaginationInfo {
 
 type Menu implements Node {
   id: ID!
-  _id: Int!
   link: String
   posicion: Int
   tipo: String
   nombre: String
   nota: String
+  icon: String
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  permisos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
   parent: Menu
   children(
     "Returns the current page."
@@ -1177,6 +1264,48 @@ type Menu implements Node {
 
     order: [MenuFilter_order]
   ): MenuPageConnection
+  allowUsers(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    nombre: String
+    nombre_list: [String]
+    apellido: String
+    apellido_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
+  ): UserPageConnection
+  denyUsers(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    id: Int
+    id_list: [Int]
+    username: String
+    username_list: [String]
+    status: String
+    status_list: [String]
+    nombre: String
+    nombre_list: [String]
+    apellido: String
+    apellido_list: [String]
+    createdAt: [UserFilter_createdAt]
+    order: [UserFilter_order]
+  ): UserPageConnection
+  _id: Int!
+  label: String
   status: Status
 }
 
@@ -1539,6 +1668,15 @@ type Mutation {
 
   "Creates a RecorridoAsientoPrecio."
   createRecorridoAsientoPrecio(input: createRecorridoAsientoPrecioInput!): createRecorridoAsientoPrecioPayload
+
+  "Creates a Role."
+  createRole(input: createRoleInput!): createRolePayload
+
+  "Updates a Role."
+  updateRole(input: updateRoleInput!): updateRolePayload
+
+  "Deletes a Role."
+  deleteRole(input: deleteRoleInput!): deleteRolePayload
 
   "Updates a Salida."
   updateSalida(input: updateSalidaInput!): updateSalidaPayload
@@ -2151,8 +2289,13 @@ input createMenuInput {
   tipo: String
   nombre: String
   nota: String
+  icon: String
+  roles: [String]
+  permisos: [String]
   parent: String
   children: [String]
+  allowUsers: [String]
+  denyUsers: [String]
   status: Status
   clientMutationId: String
 }
@@ -2171,8 +2314,13 @@ input updateMenuInput {
   tipo: String
   nombre: String
   nota: String
+  icon: String
+  roles: [String]
+  permisos: [String]
   parent: String
   children: [String]
+  allowUsers: [String]
+  denyUsers: [String]
   status: Status
   clientMutationId: String
 }
@@ -2279,9 +2427,9 @@ type createParadaPayload {
 
 "Creates a Permiso."
 input createPermisoInput {
-  padre: String
-  hijos: [String]
-  usuarios: [String]
+  roles: [String]
+  parents: [String]
+  children: [String]
   nombre: String
   nota: String
   status: Status
@@ -2297,9 +2445,9 @@ type createPermisoPayload {
 "Updates a Permiso."
 input updatePermisoInput {
   id: ID!
-  padre: String
-  hijos: [String]
-  usuarios: [String]
+  roles: [String]
+  parents: [String]
+  children: [String]
   nombre: String
   nota: String
   status: Status
@@ -2413,6 +2561,49 @@ input createRecorridoAsientoPrecioInput {
 "Creates a RecorridoAsientoPrecio."
 type createRecorridoAsientoPrecioPayload {
   recorridoAsientoPrecio: RecorridoAsientoPrecio
+  clientMutationId: String
+}
+
+"Creates a Role."
+input createRoleInput {
+  nombre: String!
+  parents: [String]
+  children: [String]
+  permisos: [String]
+  clientMutationId: String
+}
+
+"Creates a Role."
+type createRolePayload {
+  role: Role
+  clientMutationId: String
+}
+
+"Updates a Role."
+input updateRoleInput {
+  id: ID!
+  nombre: String
+  parents: [String]
+  children: [String]
+  permisos: [String]
+  clientMutationId: String
+}
+
+"Updates a Role."
+type updateRolePayload {
+  role: Role
+  clientMutationId: String
+}
+
+"Deletes a Role."
+input deleteRoleInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"Deletes a Role."
+type deleteRolePayload {
+  role: Role
   clientMutationId: String
 }
 
@@ -2566,8 +2757,8 @@ type createTaxonPayload {
 "Creates a User."
 input createUserInput {
   username: String!
-  roles: Iterable!
   password: String
+  roles: [String]
   permisos: [String]
   createdAt: String!
   updatedAt: String!
@@ -2593,8 +2784,8 @@ type createUserPayload {
 input updateUserInput {
   id: ID!
   username: String
-  roles: Iterable
   password: String
+  roles: [String]
   permisos: [String]
   createdAt: String
   updatedAt: String

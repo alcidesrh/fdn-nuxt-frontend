@@ -72,7 +72,6 @@ export const useCollection: (resource: string) => Record<any, Ref<Collection>> =
             collection.value.hasFilter = data.filter as boolean;
             collection.value.columns = (data.collection as any).map((i) => {
                 let temp: any = useCloned(i).cloned.value;
-                let temp2: any = {};
                 if (temp.schema) {
                     temp.schema = { ...temp.schema, ...{ eventbus: `filterinput_${resource}` } };
                     if (typeof temp.schema.bind != 'undefined') {
@@ -90,10 +89,9 @@ export const useCollection: (resource: string) => Record<any, Ref<Collection>> =
                 }
                 return temp;
             });
-            cl(collection.value.columns);
         },
         reload: function () {
-            this.getCollection();
+            this.getCollection({ fetchPolicy: 'network-only' });
         },
         sort: function (d: string) {
             const col = this.columns.find((i) => i.name == d);
@@ -137,6 +135,7 @@ export const useCollection: (resource: string) => Record<any, Ref<Collection>> =
                 if (typeof data == 'undefined' && networkStatus == 1) {
                     return;
                 }
+
                 this.setColumns(data.columnsMetadataResource.data);
                 this.getCollection();
             });
@@ -170,12 +169,13 @@ export const useCollection: (resource: string) => Record<any, Ref<Collection>> =
             );
         }
     });
-    watch(
-        () => collection.value.vars,
-        (v) => {
-            collection.value.reload();
-        }
-    );
+    // watch(
+    //     () => collection.value.vars,
+    //     (v, o) => {
+    //         cl(v, o);
+    //         collection.value.reload();
+    //     }
+    // );
 
     watch(
         () => collection.value.items,

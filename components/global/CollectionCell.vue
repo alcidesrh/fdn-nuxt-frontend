@@ -1,18 +1,11 @@
 <template>
   <div class="collection-cell-wrap">
 
-    <span v-if="column.name == 'createdAt'">
+    <div v-if="column.name == 'createdAt'">
       <slot :name="column.name">
         {{ dformat(data[column.name]) }}
       </slot>
-    </span>
-
-
-    <div class="flex justify-around gap-1" v-else-if="column.name == 'roles'">
-      <Chip v-for="r, i in data[column.name]" :key="i" :label="r"
-        pt:root:class=" u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" />
     </div>
-
     <span v-else-if="column.name == 'id'" :class="column.schema ? `highlight-${index}` : ''"
       :data-property="column.name">
       {{ data._id }}
@@ -25,9 +18,10 @@
     <span v-else-if="column.name == 'status'" class="capitalize">
       {{ data[column.name] }}
     </span>
-    <span v-else-if="Array.isArray(data[column.name]?.collection)">
-      <Chip class="u-m-3xs u-py-2xs" v-for="v in data[column.name].collection" :key="v.id" :label="v.nombre"></Chip>
-    </span>
+    <div v-else-if="Array.isArray(data[column.name]?.collection)">
+      <Chip pt:root:class=" u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" v-for="v in data[column.name].collection"
+        :key="v.id" :label="v.nombre"></Chip>
+    </div>
     <span v-else :class="column.schema ? `highlight-${index}` : ''" :data-property="column.name">
       {{ data[column.name] }}
     </span>

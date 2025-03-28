@@ -14,4 +14,5 @@ export interface Empresa extends Item {
   telefono?: string;
   direccion?: string;
   localidad?: any;
+  label?: string;
 }
