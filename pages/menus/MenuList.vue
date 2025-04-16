@@ -14,4 +14,6 @@ const { collection } = store
 
 collection.iniCollection()
 
+const classfromserver = 'grid grid-cols-2 gap-8'
+
 </script>

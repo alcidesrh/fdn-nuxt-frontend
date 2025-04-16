@@ -16,6 +16,9 @@ export default defineNuxtConfig({
         '@formkit/nuxt',
         'dayjs-nuxt'
     ],
+    components: {
+        dirs: [{ global: true, path: '~/form/inputs/components' }, '~/components/global', '~/components']
+    },
     imports: {
         presets: [
             {
@@ -72,6 +75,7 @@ export default defineNuxtConfig({
             })
         ]
     },
+
     postcss: {
         plugins: {
             tailwindcss: {},
@@ -92,12 +96,12 @@ export default defineNuxtConfig({
             viewport: 'width=device-width,initial-scale=1',
             link: [
                 { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-                { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
+                // { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
                 { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }
                 // { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Faster+One&display=swap' }
             ],
             meta: [
-                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'viewport', content: 'height=device-height, width=device-width, initial-scale=1.0,   minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi' },
                 { name: 'description', content: '' },
                 { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
                 { name: 'theme-color', media: '(prefers-color-scheme: light)', content: 'white' },

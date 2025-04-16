@@ -10,8 +10,6 @@ export const useUserStore = defineStore(
 
         metadata.value.updateExclude = [...metadata.value.updateExclude, ...['password', 'userIdentifier', 'validTokenStrings', 'legacyId', 'fullName']];
 
-        const options: Ref<Array<SelectOption> | []> = ref([]);
-
         function submit() {
             const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
             const fields = {};

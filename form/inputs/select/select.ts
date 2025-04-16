@@ -200,9 +200,9 @@ const props = {
 //             return { i: props[i] };
 //         })
 // });
-const select_fdn = createInput(selectprimevue);
-if (!select_fdn.props) {
-    select_fdn.props = [];
+const primevue_select = createInput(selectprimevue);
+if (!primevue_select.props) {
+    primevue_select.props = [];
 }
-select_fdn.props = [...select_fdn.props, ...Object.keys(props)];
-export default select_fdn;
+primevue_select.props = [...primevue_select.props, ...Object.keys(props)];
+export default primevue_select;

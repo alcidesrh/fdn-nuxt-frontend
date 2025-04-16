@@ -1,0 +1,94 @@
+<template>
+  <div>
+
+    <PickList v-model="value" dataKey="label" breakpoint="600px" :showTargetControls="false" :showSourceControls="false"
+      scrollHeight="20rem" class="min-h-25em max-w-40em u-mt-s">
+      <template #option="{ option }">
+        <div class="w-full">
+          {{ option.label }}
+          <divider :pt="{ root: 'mb-0 w-full' }" />
+        </div>
+      </template>
+
+      <template #sourceheader="{ header }">
+        <div class="u-text-2  font-medium ">
+          {{ context.sourceText }}
+        </div>
+        <div class="u-pt-xs">
+          {{ search }}
+          <FormKitSchema @node="setNode" :schema="schema" :data="data" />
+        </div>
+      </template>
+      <template #targetheader="{ header }">
+        <div class="u-text-1 u-pb-xs ">
+          {{ context.targetText }}
+        </div>
+      </template>
+
+    </PickList>
+  </div>
+</template>
+
+<script setup>
+import { getNode } from '@formkit/core'
+
+const props = defineProps({
+  context: Object,
+})
+const value = ref()
+const picklist = computed(() => {
+  const noallow = []
+  const allow = []
+  props.context.options.forEach(element => {
+
+
+    if (props.context.allowItems && props.context.allowItems.map(v => v?.value || v).includes(element.value)) {
+      allow.push(element)
+    }
+    else {
+      noallow.push(element)
+
+    }
+  });
+  return [noallow, allow]
+})
+value.value = picklist.value
+
+watch(() => picklist.value, (v) => {
+
+  // value.value = v
+}, { deep: true })
+
+watch(() => value.value, (v) => {
+  props.context.node.input(v[1].map(v => v.value))
+})
+
+const schema = [{
+  $formkit: "text_primevue",
+  name: "search",
+  id: 'search',
+  placeholder: "...buscar...",
+  size: 'small',
+  icon: 'pi pi-times cursor-pointer',
+  outerClass: 'mb-2! min-w-15em!',
+  '@node': '$search'   // close: true
+}]
+const data = ref({
+  search: (n) => alert(87)
+})
+
+
+watch(() => data.value.search, (needle) => {
+  value.value = [!!needle ? props.context.collection[0].filter(v => v.label.toLowerCase().includes(needle.toLowerCase())) : props.context.collection[0], [value.value[1]]]
+})
+
+function reset() {
+  loading.value = false
+  typing.value = null
+  props.context.node.input(null)
+}
+function setNode() {
+  alert(7)
+}
+
+</script>

@@ -175,9 +175,9 @@ const props = {
     }
 };
 
-const multiselect_fdn = createInput(multiselect);
-if (!multiselect_fdn.props) {
-    multiselect_fdn.props = [];
+const primevue_multiselect = createInput(multiselect);
+if (!primevue_multiselect.props) {
+    primevue_multiselect.props = [];
 }
-multiselect_fdn.props = [...multiselect_fdn.props, ...Object.keys(props)];
-export default multiselect_fdn;
+primevue_multiselect.props = [...primevue_multiselect.props, ...Object.keys(props)];
+export default primevue_multiselect;

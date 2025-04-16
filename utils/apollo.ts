@@ -19,6 +19,7 @@ export const apollo = {
 
         return { result, loading, onResult, refetch, variables, fetchMore };
     },
+
     collectionAgnostic: function (resource: string) {
         return this.query('collectionAgnostic', { resource: resource }, null, null, { fetchPolicy: 'network-only' });
     },
@@ -146,7 +147,6 @@ export const apollo = {
     },
     queryParseArg: function (endpoint: string, vars: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null) {
         const temp = this.parseVariablesGraphQl(vars, resource);
-        cl(endpoint, fields, temp);
         const queryBuild = gqlBuilder.query({
             operation: endpoint,
             fields: (fields as Array<string>) || ['data'],

@@ -87,7 +87,8 @@ export const createStore = (name: string) => {
             if (typeof data == 'undefined' && networkStatus == 1) {
                 return;
             }
-            formkitSchema.value = data.getMetadataResource.data.form;
+            formkitSchema.value = useCloned(data.getMetadataResource.data).cloned.value;
+            // formkitSchema.value[0].childs = formkitSchema.value[0].children;
         });
     }
 

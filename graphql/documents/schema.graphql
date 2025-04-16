@@ -1,7 +1,7 @@
 type Query {
   node(id: ID!): Node
   agnostic(id: ID!): Agnostic
-  collectionAgnostic(resource: String): Agnostic
+  collectionAgnostic(resource: String, fields: [String]): Agnostic
   getMetadataResource(resource: String): MetadataResource
   columnsMetadataResource(resource: String): MetadataResource
   agencias(

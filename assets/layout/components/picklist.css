@@ -1,10 +1,32 @@
 .p-picklist {
-  &>.p-picklist-source-list-container>.p-listbox {
-    @apply bg-red-50/60;
+
+  &>.p-picklist-source-list-container>.p-listbox,
+  &>.p-picklist-target-list-container>.p-listbox {
+    /* @apply bg-red-50/60; */
+    padding: 0px 10px;
+    border: 1px solid var(--p-surface-contrast-300);
+    /* @apply bg-red-50/60; */
   }
 
+
+
   &>.p-picklist-target-list-container>.p-listbox {
-    background-color: var(--p-emerald-50);
-    @apply bg-emerald-50/60;
+    /* background-color: var(--p-emerald-50); */
+    /* @apply bg-emerald-50/60; */
   }
+}
+
+div[data-type="picklist_fdn"].formkit-label {
+  margin: 10px;
+  font-size: 20px !important;
+}
+
+.picklist-labelClass {
+  max-width: 100% !important;
+  margin: 10px 0px;
+  font-size: 18px !important;
+}
+
+.picklist-outerClass {
+  max-width: 100% !important;
 }

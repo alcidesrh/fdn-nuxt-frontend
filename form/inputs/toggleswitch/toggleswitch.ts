@@ -50,9 +50,9 @@ const props = {
         default: null
     }
 };
-const toggleswitch_fdn = createInput(c);
-if (!toggleswitch_fdn.props) {
-    toggleswitch_fdn.props = [];
+const primeveu_toggleswitch = createInput(c);
+if (!primeveu_toggleswitch.props) {
+    primeveu_toggleswitch.props = [];
 }
-toggleswitch_fdn.props = [...toggleswitch_fdn.props, ...Object.keys(props)];
-export default toggleswitch_fdn;
+primeveu_toggleswitch.props = [...primeveu_toggleswitch.props, ...Object.keys(props)];
+export default primeveu_toggleswitch;

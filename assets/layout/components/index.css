@@ -4,6 +4,7 @@
 @import "./fieldset";
 @import "./toast";
 @import "./picklist";
+@import "./accordion";
 
 
 .pi.p-confirmdialog-icon {

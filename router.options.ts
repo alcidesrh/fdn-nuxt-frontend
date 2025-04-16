@@ -4,6 +4,11 @@ export default {
     // https://router.vuejs.org/api/interfaces/routeroptions.html#routes
     routes: (): any => [
         {
+            name: 'test',
+            path: '/test',
+            component: () => import('~/components/global/Test.vue')
+        },
+        {
             name: 'home',
             path: '/',
             component: () => import('~/pages/index.vue'),
@@ -50,7 +55,7 @@ export default {
                             name: 'menu_list',
                             path: '',
                             component: () => import('~/pages/menus/MenuList.vue'),
-                            meta: { type: 'menu', action: 'list', route: 'menu_collection' }
+                            meta: { type: 'menu', action: 'list', route: 'menu_collection', class: 'grid grid-cols-3 gap-4' }
                         },
                         {
                             name: 'menu_edit',

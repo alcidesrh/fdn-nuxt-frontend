@@ -53,9 +53,9 @@ const props = {
         default: null
     }
 };
-const radio_fdn = createInput(selectprimevue);
-if (!radio_fdn.props) {
-    radio_fdn.props = [];
+const primevue_radio = createInput(selectprimevue);
+if (!primevue_radio.props) {
+    primevue_radio.props = [];
 }
-radio_fdn.props = [...radio_fdn.props, ...Object.keys(props)];
-export default radio_fdn;
+primevue_radio.props = [...primevue_radio.props, ...Object.keys(props)];
+export default primevue_radio;

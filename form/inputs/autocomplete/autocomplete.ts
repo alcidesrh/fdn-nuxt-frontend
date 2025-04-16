@@ -179,9 +179,9 @@ const props = {
         default: null
     }
 };
-const autocomplete_fdn = createInput(c);
-if (!autocomplete_fdn.props) {
-    autocomplete_fdn.props = [];
+const primevue_autocomplete = createInput(c);
+if (!primevue_autocomplete.props) {
+    primevue_autocomplete.props = [];
 }
-autocomplete_fdn.props = [...autocomplete_fdn.props, ...Object.keys(props)];
-export default autocomplete_fdn;
+primevue_autocomplete.props = [...primevue_autocomplete.props, ...Object.keys(props)];
+export default primevue_autocomplete;

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-// import Aura from '@primevue/themes/aura';
-// import Lara from '@primevue/themes/lara';
+import Aura from '@primevue/themes/aura';
+import Lara from '@primevue/themes/lara';
+import Nora from '@primevue/themes/nora';
 import Material from '@primevue/themes/material';
 import { $t } from '@primevue/themes';
 import { colorPalette, revertColors } from '~/plugins/primevue/preset';
@@ -43,16 +44,17 @@ const surfaces = ref([
     }
 ]);
 const presets = {
-    Material
-    // Aura,
-    // Lara
+    Material,
+    Aura,
+    Lara,
+    Nora
 };
 
 export const useThemeStateStore = defineStore('useThemeState', {
     persist: true,
     state: () => ({
         darkTheme: false,
-        preset: 'Material',
+        preset: 'Nora',
         color: 'primary',
         surface: 'slate'
     }),

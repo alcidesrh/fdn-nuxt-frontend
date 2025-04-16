@@ -359,7 +359,7 @@
 }
 
 .layout-content {
-  contain: content;
+  /* contain: content; */
   transition: margin-left 0.3s;
   display: flex;
   flex-wrap: wrap;

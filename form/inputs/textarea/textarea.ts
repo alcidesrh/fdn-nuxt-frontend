@@ -24,9 +24,9 @@ const props = {
         default: 30
     }
 };
-const textarea_fdn = createInput(selectprimevue);
-if (!textarea_fdn.props) {
-    textarea_fdn.props = [];
+const primevue_autocomplete = createInput(selectprimevue);
+if (!primevue_autocomplete.props) {
+    primevue_autocomplete.props = [];
 }
-textarea_fdn.props = [...textarea_fdn.props, ...Object.keys(props)];
-export default textarea_fdn;
+primevue_autocomplete.props = [...primevue_autocomplete.props, ...Object.keys(props)];
+export default primevue_autocomplete;

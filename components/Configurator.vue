@@ -1,13 +1,13 @@
 <template>
     <div :class="[hiddenLocal ? 'hide-animation ' : 'show-animation']"
-        class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-64 h-fit p-4 rounded-md bg-surface-contrast-50  border border-surface-contrast-300 origin-top hidden-transition">
+        class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-[20em] h-fit p-4 rounded-md bg-surface-contrast-50  border border-surface-contrast-300 origin-top hidden-transition">
 
         <close @close="hidden" />
 
         <div class="flex flex-col gap-4">
             <div>
                 <div class="text-sm  font-semibold mb-2">Color de Botones</div>
-                <div class="pt-2 flex gap-2 flex-wrap justify-between items-center u-mt-3xs">
+                <div class="pt-2 flex gap-2 flex-wrap  items-center u-mt-3xs">
                     <div v-for="primaryColor of colorPalette" :key="primaryColor.name" class="rounded-full">
                         <button type="button" :title="primaryColor.name"
                             class="border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1"
@@ -19,7 +19,7 @@
             </div>
             <div class=" u-my-xs">
                 <div class="text-sm text-muted-color font-semibold mb-2">Color de Fondo</div>
-                <div class="pt-2 flex gap-2 flex-wrap justify-between u-mt-3xs">
+                <div class="pt-2 flex gap-2 flex-wrap u-mt-3xs m-auto">
                     <button v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
                         @click="ui.updateColors('surface', surface.name)" :class="[
                             'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
@@ -27,11 +27,11 @@
                         ]" :style="{ backgroundColor: `${surface.palette['500']}` }"></button>
                 </div>
             </div>
-            <!-- <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
                 <div class="text-sm text-muted-color font-semibold">Estilo</div>
                 <SelectButton v-model="ui.preset" @change="ui.setPreset()" :options="presetOptions"
                     :allowEmpty="false" />
-            </div> -->
+            </div>
 
 
             <div class="relative flex justify-between mt-3 mb-1">
@@ -53,8 +53,9 @@ const hidden = () => {
     hiddenLocal.value = true
     nextTick(() => emit('hidden'))
 }
+const ui = useThemeStateStore()
 
-
+const presetOptions = ['Aura', 'Lara', 'Material', 'Nora'];
 const surfaces = ref([
     {
         name: 'slate',
@@ -90,7 +91,6 @@ const surfaces = ref([
     }
 ]);
 
-const ui = useThemeStateStore()
 </script>
 <style>
 .hide-animation {

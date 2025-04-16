@@ -1,0 +1,9 @@
+.p-accordion {
+  & .p-accordioncontent-content {
+    border: none !important;
+  }
+
+  & .p-accordionheader {
+    font-weight: 400;
+  }
+}

@@ -29,11 +29,18 @@ const props = {
     number: {
         type: Boolean,
         default: false
+    },
+    icon: {
+        type: String,
+        default: ''
     }
 };
-const text_fdn = createInput(textprimevue);
-if (!text_fdn.props) {
-    text_fdn.props = [];
+const primevue_text = createInput(textprimevue);
+
+if (!primevue_text.props) {
+    primevue_text.props = [];
 }
-text_fdn.props = [...text_fdn.props, ...Object.keys(props)];
-export default text_fdn;
+
+primevue_text.props = [...primevue_text.props, ...Object.keys(props)];
+
+export default primevue_text;

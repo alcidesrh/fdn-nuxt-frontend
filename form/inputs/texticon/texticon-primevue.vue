@@ -1,10 +1,9 @@
 <template>
   <IconField>
     <InputText :id="props.context.id" v-model="typing" :defaultValue="context._value" @input="keyDown" fluid
-      :class="[context.inputClass]" v-bind="context.attrs" />
+      :class="[context.inputClass]" v-bind="context.attrs" :size="context.size" />
     <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
   </IconField>
-
 </template>
 
 <script setup>
@@ -12,9 +11,7 @@ import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 
-const props = defineProps({
-  context: Object,
-})
+
 
 const typing = ref('')
 const loading = ref(false)

@@ -17,7 +17,7 @@
             aria-label="Custom ProgressSpinner" />
           <div></div>
         </div>
-        <div class="content u-p-s md:u-p-l lg:u-p-5xl lg:u-py-l z-10 ">
+        <div class="content u-p-l md:u-p-xl lg:u-p-5xl lg:u-py-l z-10 ">
 
           <NuxtPage />
 
@@ -31,7 +31,7 @@
 
         <ConfirmDialogCustom />
       </div>
-      <ScrollTop />
+      <!-- <ScrollTop /> -->
 
     </div>
 

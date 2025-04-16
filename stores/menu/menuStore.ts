@@ -13,7 +13,7 @@ export const useMenuStore = defineStore(
             const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
             const fields = {};
             fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity);
-
+            cl(item.value);
             const { onDone, loading } = apollo.mutate(query, item.value, fields);
 
             gLoading.value = true;

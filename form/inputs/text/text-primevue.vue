@@ -1,22 +1,28 @@
 <template>
-  <FloatLabel v-if="context.floatLabel">
-    <InputText :id="props.context.id" :v-keyfilter.int="context['v-keyfilter.int']" :value="props.context._value"
-      @input="handleInput" fluid :placeholder="context.placeholder" />
-    <label for="username">{{ context.floatLabel }}</label>
-  </FloatLabel>
-  <InputText v-else-if="context.number" :id="props.context.id" v-keyfilter.int :value="props.context._value"
-    @input="handleInput" fluid :placeholder="context.placeholder" />
-  <InputText v-else :id="props.context.id" :value="props.context._value" @input="handleInput" fluid
-    :placeholder="context.placeholder" />
+  <IconField>
+    <InputText v-if="context.number" :id="context.id" v-keyfilter.int :value="context._value" @input="handleInput" fluid
+      :placeholder="context.placeholder" />
+    <InputText v-else v-model="value" :id="context.id" :value="context._value" @input="handleInput" fluid
+      :placeholder="context.placeholder" :size="context.size" />
+    <InputIcon v-if="context.icon && value" class="surface-contrast-500" :class="context.icon" @click="reset" />
+
+  </IconField>
 </template>
 <script setup>
 import InputText from 'primevue/inputtext';
-import FloatLabel from 'primevue/floatlabel';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+
+
 const props = defineProps({
   context: Object,
 })
+const value = ref()
 function handleInput(e) {
-
   props.context.node.input(e.target.value)
+}
+function reset() {
+  value.value = ''
+  props.context.node.input('')
 }
 </script>

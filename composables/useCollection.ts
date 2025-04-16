@@ -172,7 +172,6 @@ export const useCollection: (resource: string) => Record<any, Ref<Collection>> =
     // watch(
     //     () => collection.value.vars,
     //     (v, o) => {
-    //         cl(v, o);
     //         collection.value.reload();
     //     }
     // );

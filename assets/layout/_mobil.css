@@ -1,7 +1,14 @@
-.layout-wrapper.mobil {
-  & .content {
-    padding-bottom: calc(var(--topbar) + 60px);
-    /* padding-bottom: 130px; */
-  }
+body>div>main {
+  &>.layout-wrapper.mobil {
+    & .content {
+      padding-bottom: calc(var(--topbar) + 60px);
+      /* padding-bottom: 130px; */
+    }
 
+    &>.layout-content#layout-content {
+      margin-top: 0px;
+
+    }
+
+  }
 }

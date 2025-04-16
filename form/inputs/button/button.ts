@@ -82,9 +82,9 @@ const props = {
         default: null
     }
 };
-const button_fdn = createInput(buttonprimevue);
-if (!button_fdn.props) {
-    button_fdn.props = [];
+const primevue_button = createInput(buttonprimevue);
+if (!primevue_button.props) {
+    primevue_button.props = [];
 }
-button_fdn.props = [...button_fdn.props, ...Object.keys(props)];
-export default button_fdn;
+primevue_button.props = [...primevue_button.props, ...Object.keys(props)];
+export default primevue_button;

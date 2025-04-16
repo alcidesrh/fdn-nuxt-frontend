@@ -1,16 +1,29 @@
-import button_fdn from './button/button';
-import datepicker_fdn from './datepicker/datepicker';
-import select_fdn from './select/select';
-import multiselect_fdn from './multiselect/multiselect';
-import text_fdn from './text/text';
-import checkbox_fdn from './checkbox/checkox';
-import radio_fdn from './radio/radio';
-import textarea_fdn from './textarea/textarea';
-import toggleswitch_fdn from './toggleswitch/toggleswitch';
-import autoComplete_fdn from './autocomplete/autocomplete';
-import texticon_fdn from './texticon/texticon';
-import number_fdn from './number/number';
-// import fieldset_fdn from './fieldset/fieldset';
-import fieldset_fdn from './fieldset/fieldset';
+import button_primevue from './button/button';
+import datepicker_primevue from './datepicker/datepicker';
+import select_primevue from './select/select';
+import multiselect_primevue from './multiselect/multiselect';
+import text_primevue from './text/text';
+import checkbox_primevue from './checkbox/checkox';
+import radio_primevue from './radio/radio';
+import textarea_primevue from './textarea/textarea';
+import toggleswitch_primevue from './toggleswitch/toggleswitch';
+import autoComplete_primevue from './autocomplete/autocomplete';
+import texticon_primevue from './texticon/texticon';
+import number_primevue from './number/number';
+import picklist_primevue from './picklist/picklist';
 
-export { button_fdn, datepicker_fdn, text_fdn, select_fdn, checkbox_fdn, radio_fdn, textarea_fdn, toggleswitch_fdn, autoComplete_fdn, texticon_fdn, number_fdn, multiselect_fdn, fieldset_fdn };
+export {
+    button_primevue,
+    datepicker_primevue,
+    text_primevue,
+    select_primevue,
+    checkbox_primevue,
+    radio_primevue,
+    textarea_primevue,
+    toggleswitch_primevue,
+    autoComplete_primevue,
+    texticon_primevue,
+    number_primevue,
+    multiselect_primevue,
+    picklist_primevue
+};

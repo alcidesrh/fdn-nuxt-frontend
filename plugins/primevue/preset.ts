@@ -507,9 +507,7 @@ export default {
                 }
             }
         },
-        inputtext: {
-            placeholderColor: '{surface.contrast.500}'
-        },
+
         breadcrumb: {
             background: 'none',
             gap: '1px',

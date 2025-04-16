@@ -153,9 +153,9 @@ const props = {
         default: null
     }
 };
-const number_fdn = createInput(numberprimevue);
-if (!number_fdn.props) {
-    number_fdn.props = [];
+const primevue_number = createInput(numberprimevue);
+if (!primevue_number.props) {
+    primevue_number.props = [];
 }
-number_fdn.props = [...number_fdn.props, ...Object.keys(props)];
-export default number_fdn;
+primevue_number.props = [...primevue_number.props, ...Object.keys(props)];
+export default primevue_number;

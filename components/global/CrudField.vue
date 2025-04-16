@@ -27,9 +27,12 @@
 import { FormKitMessages } from '@formkit/vue'
 interface Props {
   field: any
-  data: any
+  data: Ref
 }
-const { field } = defineProps<Props>()
+const { field, data = ref() } = defineProps<Props>()
+
+cl(field, data.value)
+
 
 
 // const data = ref({})

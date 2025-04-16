@@ -54,11 +54,11 @@ const props = {
         default: null
     }
 };
-const texticon_fdn = createInput(selectprimevue, {
+const primevue_texticon = createInput(selectprimevue, {
     props: props
 });
 // if (!texticon_fdn.props) {
 // texticon_fdn.props = [];
 // }
 // texticon_fdn.props = [...texticon_fdn.props, ...Object.keys(props)];
-export default texticon_fdn;
+export default primevue_texticon;

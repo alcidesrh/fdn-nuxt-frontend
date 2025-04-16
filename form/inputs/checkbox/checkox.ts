@@ -65,9 +65,9 @@ const props = {
         default: null
     }
 };
-const checkbox_fdn = createInput(c);
-if (!checkbox_fdn.props) {
-    checkbox_fdn.props = [];
+const primevue_checkbox = createInput(c);
+if (!primevue_checkbox.props) {
+    primevue_checkbox.props = [];
 }
-checkbox_fdn.props = [...checkbox_fdn.props, ...Object.keys(props)];
-export default checkbox_fdn;
+primevue_checkbox.props = [...primevue_checkbox.props, ...Object.keys(props)];
+export default primevue_checkbox;

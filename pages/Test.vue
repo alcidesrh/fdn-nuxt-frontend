@@ -41,7 +41,7 @@ const schema = [
     testing: 'sirvio'
   },
   {
-    $formkit: 'text_fdn',
+    $formkit: 'text_primevue',
     label: 'label',
     name: 'text',
     help: 'help',
