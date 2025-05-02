@@ -2,9 +2,7 @@
   <div class="collection-cell-wrap">
 
     <div v-if="column.name == 'createdAt'">
-      <slot :name="column.name">
-        {{ dformat(data[column.name]) }}
-      </slot>
+      {{ dformat(data[column.name]) }}
     </div>
     <span v-else-if="column.name == 'id'" :class="column.schema ? `highlight-${index}` : ''"
       :data-property="column.name">
@@ -18,7 +16,7 @@
     <span v-else-if="column.name == 'status'" class="capitalize">
       {{ data[column.name] }}
     </span>
-    <div v-else-if="Array.isArray(data[column.name]?.collection)">
+    <div v-else-if="Array.isArray(data[column.name]?.collection)" class="flex flex-wrap gap-1">
       <Chip pt:root:class=" u-mr-3xs u--text-1 u-p-3xs u-px-xs lowercase" v-for="v in data[column.name].collection"
         :key="v.id" :label="v.nombre"></Chip>
     </div>

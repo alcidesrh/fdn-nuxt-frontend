@@ -8,7 +8,7 @@ import { OperationVariables } from '@apollo/client/core';
 import omit from 'ramda/es/omit';
 
 export const apollo = {
-    query: function (endpoint: string, pvars: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null, poptions?: OptionsParameter<any, OperationVariables>) {
+    query: function (endpoint: string, pvars?: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null, poptions?: OptionsParameter<any, OperationVariables>) {
         const { query, vars } = this.queryParseArg(endpoint, pvars, fields, resource);
         const { result, loading, onError, refetch, fetchMore, onResult, variables } = useQuery(query, vars, poptions || {});
 
@@ -145,8 +145,8 @@ export const apollo = {
         `;
         return query;
     },
-    queryParseArg: function (endpoint: string, vars: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null) {
-        const temp = this.parseVariablesGraphQl(vars, resource);
+    queryParseArg: function (endpoint: string, vars?: VariablesParameter<OperationVariables>, fields?: Record<string, any> | null, resource?: string | null) {
+        const temp = vars ? this.parseVariablesGraphQl(vars, resource) : {};
         const queryBuild = gqlBuilder.query({
             operation: endpoint,
             fields: (fields as Array<string>) || ['data'],

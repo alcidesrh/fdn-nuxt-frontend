@@ -2,8 +2,22 @@ type Query {
   node(id: ID!): Node
   agnostic(id: ID!): Agnostic
   collectionAgnostic(resource: String, fields: [String]): Agnostic
-  getMetadataResource(resource: String): MetadataResource
+  getFormResource(entity: String): FormResource
   columnsMetadataResource(resource: String): MetadataResource
+  actions(
+    "Returns the first n elements from the list."
+    first: Int
+
+    "Returns the last n elements from the list."
+    last: Int
+
+    "Returns the elements in the list that come before the specified cursor."
+    before: String
+
+    "Returns the elements in the list that come after the specified cursor."
+    after: String
+  ): ActionCursorConnection
+  action(id: ID!): Action
   agencias(
     "Returns the first n elements from the list."
     first: Int
@@ -369,10 +383,43 @@ type Agnostic implements Node {
 "The `Iterable` scalar type represents an array or a Traversable with any kind of data."
 scalar Iterable
 
+type FormResource implements Node {
+  id: ID!
+  schema: Iterable!
+}
+
 type MetadataResource implements Node {
   id: ID!
   data: Iterable!
   _id: String!
+}
+
+"Cursor connection for Action."
+type ActionCursorConnection {
+  edges: [ActionEdge]
+  pageInfo: ActionPageInfo!
+  totalCount: Int!
+}
+
+"Edge of Action."
+type ActionEdge {
+  node: Action
+  cursor: String!
+}
+
+type Action implements Node {
+  id: ID!
+  _id: Int!
+  ruta: String
+  icon: String
+}
+
+"Information about the current page."
+type ActionPageInfo {
+  endCursor: String
+  startCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
 }
 
 "Cursor connection for Agencia."
@@ -1304,6 +1351,7 @@ type Menu implements Node {
     createdAt: [UserFilter_createdAt]
     order: [UserFilter_order]
   ): UserPageConnection
+  action: Action
   _id: Int!
   label: String
   status: Status
@@ -1515,6 +1563,15 @@ type VentaPageInfo {
 type Mutation {
   "Deletes a Agnostic."
   deleteAgnostic(input: deleteAgnosticInput!): deleteAgnosticPayload
+
+  "Updates a Action."
+  updateAction(input: updateActionInput!): updateActionPayload
+
+  "Deletes a Action."
+  deleteAction(input: deleteActionInput!): deleteActionPayload
+
+  "Creates a Action."
+  createAction(input: createActionInput!): createActionPayload
 
   "Updates a Agencia."
   updateAgencia(input: updateAgenciaInput!): updateAgenciaPayload
@@ -1734,6 +1791,45 @@ input deleteAgnosticInput {
 "Deletes a Agnostic."
 type deleteAgnosticPayload {
   agnostic: Agnostic
+  clientMutationId: String
+}
+
+"Updates a Action."
+input updateActionInput {
+  id: ID!
+  ruta: String
+  icon: String
+  clientMutationId: String
+}
+
+"Updates a Action."
+type updateActionPayload {
+  action: Action
+  clientMutationId: String
+}
+
+"Deletes a Action."
+input deleteActionInput {
+  id: ID!
+  clientMutationId: String
+}
+
+"Deletes a Action."
+type deleteActionPayload {
+  action: Action
+  clientMutationId: String
+}
+
+"Creates a Action."
+input createActionInput {
+  ruta: String
+  icon: String
+  clientMutationId: String
+}
+
+"Creates a Action."
+type createActionPayload {
+  action: Action
   clientMutationId: String
 }
 
@@ -2296,6 +2392,7 @@ input createMenuInput {
   children: [String]
   allowUsers: [String]
   denyUsers: [String]
+  action: String
   status: Status
   clientMutationId: String
 }
@@ -2321,6 +2418,7 @@ input updateMenuInput {
   children: [String]
   allowUsers: [String]
   denyUsers: [String]
+  action: String
   status: Status
   clientMutationId: String
 }

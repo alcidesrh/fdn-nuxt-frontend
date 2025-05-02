@@ -457,6 +457,9 @@ export default {
         ...colors
     },
     components: {
+        toast: {
+            width: '450px'
+        },
         tree: {
             colorScheme: {
                 light: {
@@ -476,6 +479,7 @@ export default {
                 }
             }
         },
+
         datepicker: {
             colorScheme: {
                 light: {
@@ -512,6 +516,13 @@ export default {
             background: 'none',
             gap: '1px',
             padding: '.5rem'
+        },
+        button: {
+            label: {
+                font: {
+                    weight: 500
+                }
+            }
         },
         radiobutton: {
             icon: {

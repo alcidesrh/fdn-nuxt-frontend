@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Fieldset class="form-wrapper" v-bind="attrs">
+    <Fieldset v-bind="attrs">
       <slot :value="value"></slot>
     </Fieldset>
   </div>

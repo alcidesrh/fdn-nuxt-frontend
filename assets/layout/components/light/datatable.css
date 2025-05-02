@@ -134,7 +134,7 @@
     min-width: 200px;
 
     &.small-column {
-      width: 150px;
+      width: 100px;
       min-width: 85px;
 
       & .small-column-id {

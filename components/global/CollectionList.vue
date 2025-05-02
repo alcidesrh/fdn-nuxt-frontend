@@ -38,7 +38,9 @@
                 <FormKitSchema :schema="c.schema" :data="data" v-if="c.schema" />
               </template>
               <template #body="{ data }">
-                <collection-cell v-if="!c.action" :data="data" :column="c" :index="i" />
+                <slot :name="c.name" :data="data[c.name]">
+                  <collection-cell v-if="!c.action" :data="data" :column="c" :index="i" />
+                </slot>
               </template>
             </Column>
           </div>

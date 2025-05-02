@@ -1,0 +1,52 @@
+.p-fieldset {
+  /* background-color: var(--p-surface-contrast-100); */
+  width: fit-content;
+  @apply mb-7;
+
+  & .p-fieldset-legend>.p-fieldset-toggle-button {
+    /* border: 1px solid var(--p-surface-contrast-200); */
+
+
+
+    &>.p-fieldset-legend-label {
+      text-transform: capitalize;
+      /* color: var(--p-surface-contrast-500); */
+      font-size: 1.2rem;
+      font-weight: 500;
+
+
+      & svg {
+        color: var(--p-surface-contrast-400);
+      }
+    }
+  }
+
+  & .p-fieldset-content>.formkit-outer {
+    max-width: fit-content;
+  }
+
+  & .p-fieldset-content {
+    padding: 15px;
+    padding-bottom: 0px;
+    padding-top: 20px;
+  }
+
+  &.form-wrapper {
+    &>.p-fieldset-legend>button>.p-fieldset-legend-label {
+      font-size: 22px;
+      padding: 3px 10px;
+      font-weight: 500;
+    }
+
+    /* max-width: 25em; */
+    /* width: fit-content; */
+    /* padding: 1rem 1.5rem 1.5rem 1.5rem; */
+    /* height: fit-content; */
+
+    /* margin: 10px; */
+    /* float: left; */
+    /* margin-left: auto; */
+    /* margin-bottom: auto; */
+  }
+
+}

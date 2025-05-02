@@ -5,6 +5,7 @@
 @import "./toast";
 @import "./picklist";
 @import "./accordion";
+@import "./dialog";
 
 
 .pi.p-confirmdialog-icon {

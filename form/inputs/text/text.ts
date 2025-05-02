@@ -35,12 +35,12 @@ const props = {
         default: ''
     }
 };
-const primevue_text = createInput(textprimevue);
+const text_primevue = createInput(textprimevue);
 
-if (!primevue_text.props) {
-    primevue_text.props = [];
+if (!text_primevue.props) {
+    text_primevue.props = [];
 }
 
-primevue_text.props = [...primevue_text.props, ...Object.keys(props)];
+text_primevue.props = [...text_primevue.props, ...Object.keys(props)];
 
-export default primevue_text;
+export default text_primevue;

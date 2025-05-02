@@ -31,10 +31,5 @@ interface Props {
 }
 const { field, data = ref() } = defineProps<Props>()
 
-cl(field, data.value)
-
-
-
-// const data = ref({})
 
 </script>

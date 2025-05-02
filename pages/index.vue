@@ -10,6 +10,7 @@
       <Topbar />
 
       <MenuRoot />
+
       <div v-if="fdn.api.MetadataResource" id="layout-content" class="layout-content u-p-s relative"
         :class="[menuStore.mode]">
         <div class="spinner-wraper z-20" :class="{ hidden: !(loading || mloading || gLoading) }">

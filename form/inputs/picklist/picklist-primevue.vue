@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <PickList v-model="value" dataKey="label" breakpoint="600px" :showTargetControls="false" :showSourceControls="false"
       scrollHeight="20rem" class="min-h-25em max-w-40em u-mt-s">
       <template #option="{ option }">
@@ -15,8 +14,7 @@
           {{ context.sourceText }}
         </div>
         <div class="u-pt-xs">
-          {{ search }}
-          <FormKitSchema @node="setNode" :schema="schema" :data="data" />
+          <FormKitSchema :schema="schema" :data="data" />
         </div>
       </template>
       <template #targetheader="{ header }">
@@ -35,60 +33,75 @@ import { getNode } from '@formkit/core'
 const props = defineProps({
   context: Object,
 })
+
+
+
+const schema = ref(
+  [{
+    $formkit: 'group',
+    name: `search_${props.context.field}`,
+    modelValue: '$search',
+    ignore: true,
+    children: [
+      {
+        $formkit: "text_primevue",
+        name: 'term',
+        placeholder: "...buscar...",
+        size: 'small',
+        icon: 'pi pi-times cursor-pointer',
+        outerClass: 'mb-2! min-w-auto! px-0!',
+      }
+    ]
+  }]
+)
+const term = ref({})
+const data = ref({
+  search: term.value,
+})
+
 const value = ref()
+const options = ref(props.context.attrs.options);
+
 const picklist = computed(() => {
   const noallow = []
   const allow = []
-  props.context.options.forEach(element => {
-
-
-    if (props.context.allowItems && props.context.allowItems.map(v => v?.value || v).includes(element.value)) {
+  options.value.forEach(element => {
+    if ((props.context.allowItems && props.context.allowItems.map(v => v?.value || v).includes(element.value))) {
       allow.push(element)
     }
-    else {
+    else if (!term.value?.term || element.label.toLowerCase().includes(term.value.term.toLowerCase())) {
       noallow.push(element)
 
     }
+
   });
   return [noallow, allow]
 })
 value.value = picklist.value
 
 watch(() => picklist.value, (v) => {
-
-  // value.value = v
+  value.value = v
 }, { deep: true })
 
 watch(() => value.value, (v) => {
-  props.context.node.input(v[1].map(v => v.value))
+  props.context.node.input(v[1] ? v[1].map(v => v.value) : [])
 })
 
-const schema = [{
-  $formkit: "text_primevue",
-  name: "search",
-  id: 'search',
-  placeholder: "...buscar...",
-  size: 'small',
-  icon: 'pi pi-times cursor-pointer',
-  outerClass: 'mb-2! min-w-15em!',
-  '@node': '$search'   // close: true
-}]
-const data = ref({
-  search: (n) => alert(87)
-})
+// watch(() => term.value, (needle) => {
 
-
-watch(() => data.value.search, (needle) => {
-  value.value = [!!needle ? props.context.collection[0].filter(v => v.label.toLowerCase().includes(needle.toLowerCase())) : props.context.collection[0], [value.value[1]]]
-})
+//   if (typeof needle.term == 'undefined') {
+//     return
+//   }
+//   cl(value.value[0])
+//   value.value = [!!needle.term ? value.value[0].filter(v => v.label.toLowerCase().includes(needle.term.toLowerCase())) : options.value, [...value.value[1]]]
+// },
+//   { deep: true })
 
 function reset() {
   loading.value = false
-  typing.value = null
+  value.value = null
   props.context.node.input(null)
 }
-function setNode() {
-  alert(7)
-}
+
 
 </script>

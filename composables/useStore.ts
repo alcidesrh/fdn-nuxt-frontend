@@ -16,6 +16,7 @@ export type Metadata = {
         update: string;
         delete: string;
         collection: string;
+        form: string;
     };
     updateExclude: Array<string>;
     routes: {
@@ -51,7 +52,8 @@ function getMetadata(name): Ref<Metadata> {
             collection: 'collection' + camelCase + 's',
             create: `create${pascalCase}`,
             update: `update${pascalCase}`,
-            delete: `delete${pascalCase}`
+            delete: `delete${pascalCase}`,
+            form: `getFormResource`
         },
         updateExclude: ['label', 'createdAt', 'updatedAt'],
         routes: {
@@ -75,19 +77,21 @@ export const createStore = (name: string) => {
 
     const formkitSchema = ref([]);
 
+    const form = ref();
+
     function setFormkitSchema(returnQuery = false) {
         if (formkitSchema.value.length != 0) {
             return;
         }
         if (returnQuery) {
-            return apollo.query('getMetadataResource', { resource: metadata.value.entity });
+            return apollo.query(metadata.value.query.form, { entity: metadata.value.entity }, ['schema']);
         }
-        const { onResult, loading } = apollo.query('getMetadataResource', { resource: metadata.value.entity });
+        const { onResult, loading } = apollo.query(metadata.value.query.form, { entity: metadata.value.entity }, ['schema']);
         onResult(({ data, networkStatus }) => {
             if (typeof data == 'undefined' && networkStatus == 1) {
                 return;
             }
-            formkitSchema.value = useCloned(data.getMetadataResource.data).cloned.value;
+            formkitSchema.value = useCloned(data[metadata.value.query.form].schema).cloned.value;
             // formkitSchema.value[0].childs = formkitSchema.value[0].children;
         });
     }
@@ -192,5 +196,5 @@ export const createStore = (name: string) => {
         });
     }
 
-    return { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource };
+    return { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, form };
 };

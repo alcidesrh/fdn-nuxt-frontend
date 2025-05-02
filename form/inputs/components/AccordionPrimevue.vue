@@ -3,13 +3,14 @@
     <Accordion v-bind="attrs" pt:root:class="border-none">
       <AccordionPanel v-for="tab in tabs" :key="tab.title" :value="tab.value">
         <AccordionHeader>
-          <div class="flex gap-3 items-center">
-            <Icon v-if="icon" size="20" :name="icon" mode="svg" />
-            <span class="u-text-1 capitalize ">{{ label }}</span>
+          <div class="flex gap-3 items-center min-w-20em">
+            <Icon v-if="icon" size="16" :name="icon" mode="svg" />
+            <span class=" capitalize ">{{ label }}</span>
           </div>
         </AccordionHeader>
         <AccordionContent>
           <slot v-bind="value" />
+
         </AccordionContent>
       </AccordionPanel>
     </Accordion>

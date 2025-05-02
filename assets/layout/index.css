@@ -4,14 +4,15 @@
 @import 'primeicons/primeicons.css';
 
 @import "./_fonts";
-@import "./dark.css";
+@import "./components/dark/index";
+@import './components/light/index';
 
 @import "./_utopia";
 @import './variables/_common';
 @import './variables/_light';
 @import './variables/_dark';
 @import './_formkit';
-@import './components/index';
+
 
 @import './_preloading';
 @import './_layout';

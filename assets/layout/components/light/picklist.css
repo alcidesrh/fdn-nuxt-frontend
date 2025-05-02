@@ -8,9 +8,7 @@
     /* @apply bg-red-50/60; */
   }
 
-
-
-  &>.p-picklist-target-list-container>.p-listbox {
+  q &>.p-picklist-target-list-container>.p-listbox {
     /* background-color: var(--p-emerald-50); */
     /* @apply bg-emerald-50/60; */
   }

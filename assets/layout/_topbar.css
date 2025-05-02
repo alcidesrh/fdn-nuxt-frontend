@@ -128,8 +128,9 @@
 .app-dark .layout-topbar {
     & .layout-topbar-logo-container {
         .logo-fdn {
-            color: var(--p-primary-contrast-600) !important;
-            border: 1ch solid var(--p-primary-contrast-200) !important;
+            color: var(--p-primary-contrast-800) !important;
+            border: 1.3ch solid var(--p-primary-contrast-200) !important;
+
         }
     }
 }

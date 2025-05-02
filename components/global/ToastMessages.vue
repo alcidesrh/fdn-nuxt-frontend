@@ -2,10 +2,14 @@
   <!-- <div class="card flex justify-center"> -->
   <Toast class="z-999 h-fit" position="top-center">
     <template #message="slotProps">
-      <i class="pi pi-exclamation-triangle"></i>
-      <div class="p-toast-message-text" data-p="error" data-pc-section="messagetext"><span class="p-toast-summary"
-          data-p="error" data-pc-section="summary">{{ slotProps.message.summary }}</span>
-        <div class="p-toast-detail u-text-1 u-mt-s" data-p="error" data-pc-section="detail">{{
+
+      <div class="p-toast-message-text " data-p="error" data-pc-section="messagetext">
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-exclamation-triangle "></i>
+          <span class="p-toast-summary " data-p="error" data-pc-section="summary">{{ slotProps.message.summary
+          }}</span>
+        </div>
+        <div class="p-toast-detail u-my-2xs u-pl-xs  font-normal" data-p="error" data-pc-section="detail">{{
           slotProps.message.detail
         }}
         </div>
@@ -27,8 +31,7 @@
   <!-- </div> -->
 </template>
 <script setup lang="ts">
-import { ApolloErrorOptions, GraphQLErrors } from "@apollo/client/errors";
-import { GraphQLFormattedError } from "graphql";
+import { ApolloErrorOptions } from "@apollo/client/errors";
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
@@ -37,7 +40,7 @@ const error = useEventBus('error')
 bus.on((msg: any) => {
 
   const lifetime = msg?.life === false ? {} : { life: 5000 }// life: 5000 
-  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: msg.summary || 'Info:', });
+  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: msg.summary || 'Info', });
 })
 
 error.on((e: any) => {

@@ -1,19 +1,14 @@
 import { defineStore } from 'pinia';
 
-import { Menu } from '~/types/menu';
-import omit from 'ramda/es/omit';
-import { SelectOption } from '~/types/fdn';
-
 export const useMenuStore = defineStore(
     'menuStore',
     () => {
-        const { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource } = createStore('Menu');
+        const { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, form } = createStore('Menu');
 
-        function submit() {
+        function submit(v = null) {
             const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
             const fields = {};
             fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity);
-            cl(item.value);
             const { onDone, loading } = apollo.mutate(query, item.value, fields);
 
             gLoading.value = true;
@@ -28,7 +23,7 @@ export const useMenuStore = defineStore(
             });
         }
 
-        return { metadata, collection, item, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems };
+        return { metadata, collection, item, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems, form };
     }
     // {
     //     persist: {
