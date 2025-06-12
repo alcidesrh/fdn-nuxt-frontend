@@ -6,7 +6,7 @@
 
       </template>
       <template #message="{ message }">
-        <span v-html="message.message"></span>
+        <span v-html="message.message" class="u-text-1"></span>
       </template>
     </ConfirmDialog>
   </div>

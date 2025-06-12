@@ -1,5 +1,7 @@
 .wrap-sidebar {
 
+
+
   &.hover.mini {
     height: 100%;
     min-width: var(--sidebar-mini-hover-width);

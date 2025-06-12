@@ -547,6 +547,18 @@ export default {
             option: {
                 gap: '15px'
             }
+        },
+        fieldset: {
+            border: {
+                color: '{surface.contrast.200}'
+            },
+            legend: {
+                background: '{surface.contrast.100}',
+                color: '{surface.contrast.400}',
+                border: {
+                    color: '{surface.contrast.300}'
+                }
+            }
         }
     }
 };

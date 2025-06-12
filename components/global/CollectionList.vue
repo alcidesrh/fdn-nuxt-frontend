@@ -4,14 +4,14 @@
       <slot name="header">
         <div class="flex flex-wrap justify-between u-mb-l">
           <div>
-            <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ metadata.singular }}</span>
+            <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ entity.name }}</span>
           </div>
 
           <div class="flex flex-wrap gap-5">
             <Button label="Importar" icon="pi pi-download" severity="secondary" outlined size="small" />
             <Button label="Exportar" icon="pi pi-upload" severity="secondary" outlined />
 
-            <NuxtLink :to="{ name: metadata.routes.create }">
+            <NuxtLink :to="{ name: entity.routes.create }">
               <Button label="Crear" icon="pi pi-plus" severity="secondary" outlined />
             </NuxtLink>
           </div>
@@ -21,7 +21,7 @@
       <FormKit type="form" :actions="false" v-model="collection.vars" form-class="block m-auto"
         :config="{ wrapperClass: 'mb-0!' }">
 
-        <DataTable :rowClass="rowClass" @update:sortField="(i) => collection.sort(i)" removableSort
+        <DataTable :rowClass="rowClass" @update:sortField="(i) => store.sortCollection(i)" removableSort
           tableStyle="min-width:50rem"
           :sortOrder="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
           :value="collection.items" :filterDisplay="collection.hasFilter ? 'row' : undefined" scrollable
@@ -45,8 +45,7 @@
             </Column>
           </div>
           <Column frozen alignFrozen="right" :showFilterMenu="false"
-            :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined"
-            class="text-center w-100px action-cell">
+            :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined" class="text-center action-cell">
             <template #header>
               <div class="flex justify-center items-center w-full h-full ">
                 <CollectionMenu :collection="collection" :selected="selected.length" @removeMultiple="removeMultiple" />
@@ -56,8 +55,7 @@
               <slot name="action" :data="data">
                 <div class="collection-action-wrapper flex gap-4 items-center justify-center w-full relative">
                   <span class="flex items-center justify-center">
-                    <NuxtLink :to="{ name: metadata.routes.edit, params: { id: data[field || '_id'] } }"
-                      class="absolute">
+                    <NuxtLink :to="{ name: entity.routes.edit, params: { id: data[field || '_id'] } }" class="absolute">
                       <Icon name="icon-park-outline:pencil" class="action edit " mode="svg" />
                     </NuxtLink>
 
@@ -87,8 +85,10 @@ interface Props {
   field?: string;
 }
 const { field = '_id', store } = defineProps<Props>()
+store.iniCollection()
 
-const { collection, metadata } = storeToRefs(store)
+const { collection, entity } = storeToRefs(store)
+
 
 let data = ref({ loading: computed(() => collection.value.loading) })
 
@@ -103,6 +103,10 @@ function removeMultiple() {
 const rowClass = (data) => {
   return [{ 'row-mark': selected.value.map(i => i['_id']).includes(data['_id'] as never) }];
 };
+
+onMounted(() => {
+  nextTick(() => (gLoading.value = false));
+})
 </script>
 <style scoped>
 ::highlight(highlight-0),
@@ -115,5 +119,10 @@ const rowClass = (data) => {
 ::highlight(highlight-7) {
   background-color: #fde047;
   color: black;
+}
+
+.w-min-100 {
+  max-width: 100px !important;
+  min-width: 100px``` `;
 }
 </style>

@@ -10,4 +10,4 @@ export const getIdFromIri = (iri?: string): string => {
     return id;
 };
 
-export const getIriFromId = (id, entity): string => `/api/${entity}s/${id}`;
+export const getIriFromId = (id, entity): string => `/api/${entity.toLowerCase()}s/${id}`;

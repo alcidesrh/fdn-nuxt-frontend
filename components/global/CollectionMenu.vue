@@ -27,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import CollectionCell from './CollectionCell.vue';
+
 
 const props = defineProps<{
   collection: Collection,
@@ -57,6 +59,8 @@ const items = ref([
 const toggle = (event) => {
   menu.value.toggle(event);
 };
+
+
 </script>
 
 <style scoped>

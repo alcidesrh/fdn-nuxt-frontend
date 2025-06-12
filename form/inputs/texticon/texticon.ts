@@ -48,10 +48,6 @@ const props = {
     eventbus: {
         type: [String],
         default: null
-    },
-    test: {
-        type: [String],
-        default: null
     }
 };
 const primevue_texticon = createInput(selectprimevue, {
@@ -60,5 +56,5 @@ const primevue_texticon = createInput(selectprimevue, {
 // if (!texticon_fdn.props) {
 // texticon_fdn.props = [];
 // }
-// texticon_fdn.props = [...texticon_fdn.props, ...Object.keys(props)];
+// texticon_fdn.props = [...    .props, ...Object.keys(props)];
 export default primevue_texticon;

@@ -152,6 +152,6 @@ export const useMenuStateStore = defineStore(
             menu,
             mode
         };
-    },
-    { persist: true }
+    }
+    // { persist: true }
 );

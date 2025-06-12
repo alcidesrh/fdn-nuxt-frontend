@@ -4,11 +4,6 @@ export default {
     // https://router.vuejs.org/api/interfaces/routeroptions.html#routes
     routes: (): any => [
         {
-            name: 'test',
-            path: '/test',
-            component: () => import('~/components/global/Test.vue')
-        },
-        {
             name: 'home',
             path: '/',
             component: () => import('~/pages/index.vue'),
@@ -168,6 +163,31 @@ export default {
                             path: 'crear',
                             component: () => import('~/pages/permiso/PermisoForm.vue'),
                             meta: { icon: 'icon-park-outline:edit', type: 'permiso', action: 'create', route: 'permiso_create' }
+                        }
+                    ]
+                },
+                {
+                    path: '/actions',
+                    meta: { label: 'action', icon: 'material-symbols:modeling-outline' },
+
+                    children: [
+                        {
+                            name: 'action_list',
+                            path: '',
+                            component: () => import('~/pages/action/ActionList.vue'),
+                            meta: { type: 'action', action: 'list', route: 'action_collection' }
+                        },
+                        {
+                            name: 'action_edit',
+                            path: 'edit/:id',
+                            component: () => import('~/pages/action/ActionForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'action', action: 'edit', route: 'action_edit' }
+                        },
+                        {
+                            name: 'action_create',
+                            path: 'crear',
+                            component: () => import('~/pages/action/ActionForm.vue'),
+                            meta: { icon: 'icon-park-outline:edit', type: 'action', action: 'create', route: 'action_create' }
                         }
                     ]
                 }

@@ -1,33 +1,17 @@
 import { defineStore } from 'pinia';
+import { Nacion } from '~/types/nacion';
 
 export const useNacionStore = defineStore(
     'paisStore',
     () => {
-        const { metadata, collection, item, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, items, getItems } = createStore('Nacion');
+        const { collection, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, items, getItems, entity, submit } = createStore<Nacion>('Nacion');
 
         collection.value.vars = {
             page: 1,
             itemsPerPage: 15
         };
 
-        function submit() {
-            const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
-            const fields = {};
-            fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity);
-            const { onDone, loading } = apollo.mutate(query, item.value, fields);
-            gLoading.value = true;
-            onDone((data) => {
-                msg.emit(getAlertText('update'));
-                collection.value.reload();
-                const router = useRouter();
-                router.push({ name: metadata.value.routes.list });
-
-                gLoading.value = false;
-                return;
-            });
-        }
-
-        return { metadata, collection, item, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems };
+        return { collection, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems, entity };
     }
     // {
     //     persist: {

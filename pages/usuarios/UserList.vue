@@ -5,10 +5,5 @@
   </div>
 </template>
 <script setup lang="ts">
-
 const store = useUserStore()
-const { collection } = store
-
-collection.iniCollection()
-
 </script>

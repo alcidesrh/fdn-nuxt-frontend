@@ -1,15 +1,8 @@
 <script lang="ts" setup>
-import { Collection } from '~/composables/useCollection';
-
-// const props = defineProps<{
-//   collection: Collection
-// }>()
+import { Collection } from '~/types/collection';
 
 interface Props {
   collection: Collection;
-  // metadata: Metadata;
-  // store: any;
-  // field?: string;
 }
 const { collection } = defineProps<Props>()
 

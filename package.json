@@ -8,7 +8,8 @@
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
-        "codegen:watch": "yarn graphql-codegen --watch"
+        "codegen:watch": "yarn graphql-codegen --watch",
+        "typedGraphql": "npx typed-graphql-builder --schema http://localhost/graphql --output ./graphql/typed-api.ts"
     },
     "dependencies": {
         "@api-platform/api-doc-parser": "^0.16.8",

@@ -1,118 +1,80 @@
-import { useChangeCase } from '@vueuse/integrations/useChangeCase';
 import type { Ref } from 'vue';
-import { Collection, CollectionVars } from './useCollection';
 import { User, Menu } from '~/types';
-import { Nacion } from '~/types/nacion';
 import { SelectOption } from '~/types/fdn';
+import { Collection } from '~/types/collection';
+import { Entity } from '~/graphql/parse/src/graphql/parseGraphQl';
 
-export type Metadata = {
-    resource: string;
-    entity: string;
-    singular: string;
-    plural: string;
-    query: {
-        get: string;
-        create: string;
-        update: string;
-        delete: string;
-        collection: string;
-        form: string;
-    };
-    updateExclude: Array<string>;
-    routes: {
-        list: string;
-        create: string;
-        edit: string;
-    };
-};
-
-export type Store = {
-    item: Ref<Menu, User>;
-    formkitSchema: Ref<Array<Record<any, any>>>;
-    metadata: Ref<Metadata>;
-    collection: Ref<Collection>;
-    setFormkitSchema: () => Record<any, any>;
-    resource: () => void;
-    removeMultiple: (items: Ref<Array<any>>) => void;
-    remove: (any) => void;
-};
-function getMetadata(name): Ref<Metadata> {
-    const entity = useChangeCase(name, 'pascalCase').value;
-
-    const camelCase = useChangeCase(name, 'camelCase').value;
-
-    const pascalCase = useChangeCase(name, 'pascalCase').value;
-    return ref({
-        resource: camelCase,
-        entity: entity,
-        singular: camelCase,
-        plural: camelCase + 's',
-        query: {
-            get: camelCase,
-            collection: 'collection' + camelCase + 's',
-            create: `create${pascalCase}`,
-            update: `update${pascalCase}`,
-            delete: `delete${pascalCase}`,
-            form: `getFormResource`
-        },
-        updateExclude: ['label', 'createdAt', 'updatedAt'],
-        routes: {
-            list: `${camelCase}_list`,
-            create: `${camelCase}_create`,
-            edit: `${camelCase}_edit`
+export const createStore = <Type>(name: string) => {
+    const collection: Ref<Collection> = ref({
+        resource: name,
+        menu: 'editar',
+        columns: [],
+        pagination: {} as any,
+        items: [],
+        orderField: 'id',
+        orderType: 'ASC',
+        loading: false,
+        hasFilter: false,
+        vars: {
+            page: 1,
+            itemsPerPage: 15,
+            order: [{ id: 'ASC' }]
         }
     });
-}
-
-export const createStore = (name: string) => {
     const items: Ref<Array<SelectOption> | []> = ref([]);
 
-    const entity = useChangeCase(name, 'pascalCase').value;
-
-    const metadata = getMetadata(name);
-
-    const { collection } = useCollection(entity) as unknown as Record<'collection', Ref<Collection>>;
-
-    let item: Ref<Menu, User> = ref({});
+    const entity = ref(new Entity<Type>(name));
 
     const formkitSchema = ref([]);
 
-    const form = ref();
-
-    function setFormkitSchema(returnQuery = false) {
-        if (formkitSchema.value.length != 0) {
-            return;
-        }
-        if (returnQuery) {
-            return apollo.query(metadata.value.query.form, { entity: metadata.value.entity }, ['schema']);
-        }
-        const { onResult, loading } = apollo.query(metadata.value.query.form, { entity: metadata.value.entity }, ['schema']);
-        onResult(({ data, networkStatus }) => {
-            if (typeof data == 'undefined' && networkStatus == 1) {
-                return;
-            }
-            formkitSchema.value = useCloned(data[metadata.value.query.form].schema).cloned.value;
-            // formkitSchema.value[0].childs = formkitSchema.value[0].children;
-        });
+    function query(params) {
+        return apollo.query(params);
     }
 
-    function resource(arg?) {
-        if (!arg) {
+    function setFormkitSchema(args = null) {
+        if (formkitSchema.value.length == 0) {
+            const params = { operation: entity.value.endpoints.form, variables: { entity: entity.value.name }, fields: ['schema'] };
+
+            const { onResult, loading } = apollo.query(params);
+            onResult(({ data, networkStatus }) => {
+                if (typeof data == 'undefined' && networkStatus == 1) {
+                    return;
+                }
+                formkitSchema.value = useCloned(data[entity.value.endpoints.form].schema).cloned.value;
+                if (args) {
+                    resource(args);
+                } else {
+                    entity.value.item = {};
+                }
+            });
+        } else {
+            if (args) {
+                resource(args);
+            } else {
+                entity.value.item = {};
+            }
+        }
+    }
+
+    function resource(variables?) {
+        if (!variables) {
             return false;
         }
-
-        const fields = fdn.value.resourceFields(metadata.value.entity, metadata.value.updateExclude);
-        if (typeof arg != 'object') {
-            arg = { id: arg };
+        if (typeof variables != 'object') {
+            args = { id: args };
         }
-        const { onResult, loading } = apollo.query(metadata.value.query.get, arg, fields, metadata.value.resource, { fetchPolicy: 'network-only' });
+
+        if (variables.id) {
+            variables.id = entity.value.getIriFromId(variables.id);
+        }
+        const params = { operation: entity.value.endpoints.get, variables: variables, poptions: { fetchPolicy: 'network-only' }, fields: entity.value.getQueryFields() };
+        const { onResult, loading } = query(params);
 
         onResult(({ data }) => {
             if (typeof data == 'undefined') {
                 return;
             }
-            let temp = data[metadata.value.query.get]; //['getUserByUsernameUser'];
-
+            let temp = data[entity.value.endpoints.get];
             const { y: scrollY } = useWindowScroll();
             scrollY.value = 0;
             temp = useCloned(temp).cloned.value;
@@ -126,12 +88,13 @@ export const createStore = (name: string) => {
                     // }
                 }
             });
-            item.value = temp;
-            if (typeof item.value.id == 'undefined') {
-                item.value.id = getIriFromId(item.value._id, metadata.value.entity);
+            entity.value.item = temp;
+            if (typeof entity.value.item.id == 'undefined') {
+                entity.value.item.id = getIriFromId(entity.value.item._id, entity.value.name);
             }
         });
     }
+
     let chanel = '';
     let unsubscribe: any;
     function unsubscribeChanel() {
@@ -139,21 +102,22 @@ export const createStore = (name: string) => {
             unsubscribe();
         }
     }
+
     function remove(arg?) {
-        const temp = arg || item.value;
+        const temp = arg || entity.value.item;
         unsubscribeChanel();
         chanel = random();
         msgbus('remove').emit({ chanel: chanel, header: 'Eliminar', message: getAlertText('remove', temp?.nombre || 'este elemento.') });
         unsubscribe = msgbus(chanel).on((v: any) => {
             unsubscribeChanel();
             const fields = {};
-            fields[metadata.value.resource] = ['id'];
-            const { onDone } = apollo.remove(metadata.value.query.delete, getIriFromId(temp._id, metadata.value.resource), fields);
+            fields[entity.value.camelCase] = ['id'];
+            const { onDone } = apollo.remove(entity.value.endpoints.delete, { id: getIriFromId(temp._id, entity.value.name) }, fields);
             onDone(() => {
                 msg.emit(getAlertText('remove_after'));
-                collection.value.reload();
+                reload();
                 const router = useRouter();
-                router.push({ name: metadata.value.routes.list });
+                router.push({ name: entity.value.routes.list });
                 return;
             });
         });
@@ -171,12 +135,12 @@ export const createStore = (name: string) => {
             unsubscribeChanel();
             const fields = { agnostic: ['id'] };
             const temp = Array.isArray(items.value) ? items.value : [items];
-            const { onDone } = apollo.mutate('deleteAgnostic', { resource: metadata.value.entity, ids: temp.map((i: any) => i._id) }, fields, 'deleteAgnostic');
+            const { onDone } = apollo.remove('deleteAgnostic', { resource: entity.value.name, ids: temp.map((i: any) => i._id) }, fields);
             onDone(() => {
                 msg.emit(getAlertText('remove_after'));
-                collection.value.reload();
+                reload();
                 const router = useRouter();
-                router.push({ name: metadata.value.routes.list });
+                router.push({ name: entity.value.routes.list });
                 return;
             });
         });
@@ -186,7 +150,7 @@ export const createStore = (name: string) => {
         if (!force && items.value.length != 0) {
             return;
         }
-        const { onResult } = apollo.collectionAgnostic(metadata.value.resource);
+        const { onResult } = apollo.collectionAgnostic(entity.value.name);
 
         onResult(({ data, networkStatus }) => {
             if (typeof data == 'undefined' && networkStatus == 1) {
@@ -196,5 +160,126 @@ export const createStore = (name: string) => {
         });
     }
 
-    return { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, form };
+    function iniCollection() {
+        if (collection.value.columns.length) {
+            getCollection();
+            return;
+        }
+        const { onResult, loading } = apollo.query({ operation: 'columnsMetadataResource', variables: { resource: entity.value.name }, fields: ['data'] });
+
+        onResult(({ data, networkStatus }) => {
+            if (typeof data == 'undefined' && networkStatus == 1) {
+                return;
+            }
+            entity.value.setColumns(data.columnsMetadataResource.data.collection.map((v) => v.name));
+            setColumns(data.columnsMetadataResource.data);
+            getCollection();
+        });
+        watch(
+            () => loading.value,
+            (v) => {
+                collection.value.loading = v;
+            }
+        );
+    }
+
+    function setColumns(data) {
+        collection.value.hasFilter = data.filter as boolean;
+        collection.value.columns = (data.collection as any).map((i) => {
+            let temp: any = useCloned(i).cloned.value;
+            if (temp.schema) {
+                const eventbus = `filterinput_${temp.schema.name}_${resource}`;
+                temp.schema = { ...temp.schema, ...{ eventbus: eventbus } };
+                collection.value.vars[temp.schema.name] = null;
+
+                msgbus(eventbus).on((v: any) => {
+                    collection.value.loading = v;
+                });
+            }
+
+            return temp;
+        });
+    }
+
+    function reload() {
+        getCollection({ fetchPolicy: 'network-only' });
+    }
+
+    function sortCollection(d: string) {
+        const col = collection.value.columns.find((i) => i.name == d);
+        if (typeof col != 'undefined') {
+            d = col.name;
+        }
+        if (collection.value.orderField == d) {
+            if (collection.value.orderType == 'ASC') {
+                collection.value.orderType = 'DESC';
+            } else if (collection.value.orderType == 'DESC') {
+                collection.value.orderField = '';
+                collection.value.orderType = '';
+            }
+        } else if (d) {
+            collection.value.vars.page = 1;
+            collection.value.orderField = d;
+            collection.value.orderType = 'ASC';
+        } else {
+            collection.value.orderField = '';
+            collection.value.orderType = '';
+        }
+
+        if (!collection.value.orderField) {
+            collection.value.vars.order = [{}];
+        } else {
+            // const
+            const order = {} as any;
+            order[collection.value.orderField] = collection.value.orderType;
+            collection.value.vars.order = [order];
+        }
+    }
+
+    function getCollection(fetchPolicy = {}) {
+        const { loading, onResult } = apollo.collection(collection, entity.value.getColumnsFields(), fetchPolicy);
+        onResult(({ data, networkStatus }) => {
+            if (typeof data == 'undefined' && networkStatus == 1) {
+                return;
+            }
+            const { y: scrollY } = useWindowScroll();
+            scrollY.value = 0;
+            const { collection: collectionResult, paginationInfo } = data[getCollectionQuery(collection.value.resource)];
+            collection.value.pagination = paginationInfo;
+            collection.value.items = collectionResult;
+            collection.value.loading = false;
+        });
+
+        watch(
+            () => loading.value,
+            (v) => {
+                collection.value.loading = v;
+            }
+        );
+    }
+
+    function submit() {
+        const { onDone, loading } = apollo.mutate({ operation: entity.value.getCrudOperation(), variables: { input: Entity.prepareVariables(entity.value.item) }, fields: entity.value.getMutationFields() });
+        gLoading.value = true;
+        onDone((data) => {
+            entity.value.item = {} as any;
+            msg.emit(getAlertText('update'));
+            reload();
+            const router = useRouter();
+            router.push({ name: entity.value.routes.list });
+        });
+    }
+
+    watch(
+        () => collection.value.items,
+        () => {
+            nextTick(() => highlighted(collection));
+        }
+    );
+
+    msgbus(`filterinput_${resource}`).on((v: any) => {
+        collection.value.loading = v;
+    });
+
+    return { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit, items };
 };

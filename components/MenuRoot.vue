@@ -58,12 +58,50 @@
 
 <script setup lang="ts">
 import replace from 'ramda/es/replace'
+// import { query, $, all } from "~/generated-api"
+// import { useQuery, useMutation } from '@vue/apollo-composable';
+
+// const menu = query(q => [
+//     q.users({ username: $("username"), nombre: $("nombre") }, c => [
+//         c.collection(c => [
+//             c.id,
+//             c.nombre,
+//             c.username,
+//             c.nombre
+//         ]),
+//     ])
+// ])
+
+// const user = query(q => [
+//     q.getUserByUsernameUser({ username: $("username") }, c => [
+//         c.id,
+//         c.nombre,
+//         c.username,
+//         c.nombre
+//     ])
+// ])
+
+// const { result, loading, onError, refetch, fetchMore, onResult, variables } = useQuery(
+//     user, { nombre: "iana", username: 'alcidesrh' });
+
+// onError((e) => {
+//     gLoading.value = false;
+//     merror({ message: e });
+// });
+// onResult(({ data }) => {
+//     if (typeof data == 'undefined') {
+//         return;
+//     }
+// });
 
 const sidebar = ref()
 
 
 
 const menuStore = useMenuStateStore()
+
+// const menu = useMenuStore()
+// menu.resource({ params: [{ tipo: 'root' }, { username: 'usernae' }] }, 'getMenu')
 const hover = ref(false)
 const hoverMode = ref(menuStore.mode == 'mini hover')
 let prevMode = menuStore.mode

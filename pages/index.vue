@@ -4,22 +4,16 @@
     <!-- <VitePwaManifest /> -->
     <NuxtLoadingIndicator />
     <div class="layout-wrapper" :class="{ 'mobil': isMobil }">
-
       <div id="intersectionObservertarget" class="absolute top-4rem"></div>
-
       <Topbar />
-
       <MenuRoot />
-
-      <div v-if="fdn.api.MetadataResource" id="layout-content" class="layout-content u-p-s relative"
-        :class="[menuStore.mode]">
+      <div v-if="!fdn.isEmpty" id="layout-content" class="layout-content u-p-s relative" :class="[menuStore.mode]">
         <div class="spinner-wraper z-20" :class="{ hidden: !(loading || mloading || gLoading) }">
           <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="3" fill="transparent" animationDuration=".5s"
             aria-label="Custom ProgressSpinner" />
           <div></div>
         </div>
         <div class="content u-p-l md:u-p-xl lg:u-p-5xl lg:u-py-l z-10 ">
-
           <NuxtPage />
 
         </div>
@@ -32,7 +26,6 @@
 
         <ConfirmDialogCustom />
       </div>
-      <!-- <ScrollTop /> -->
 
     </div>
 
@@ -49,9 +42,9 @@ useHead({
 const ui = useThemeStateStore()
 const menuStore = useMenuStateStore()
 const metadata = useMetadataStore()
-const { api } = storeToRefs(metadata)
 
 metadata.setApiMetadata()
+
 const mask = computed(() => menuStore.mode == 'normal' && isMobil)
 
 onBeforeMount(() => {

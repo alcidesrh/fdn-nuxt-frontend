@@ -10,6 +10,8 @@ import toggleswitch_primevue from './toggleswitch/toggleswitch';
 import autoComplete_primevue from './autocomplete/autocomplete';
 import texticon_primevue from './texticon/texticon';
 import number_primevue from './number/number';
+import number_search_primevue from './number/number-search';
+import iconinput_primevue from './icon/iconinput';
 import picklist_primevue from './picklist/picklist';
 
 export {
@@ -24,6 +26,8 @@ export {
     autoComplete_primevue,
     texticon_primevue,
     number_primevue,
+    number_search_primevue,
     multiselect_primevue,
-    picklist_primevue
+    picklist_primevue,
+    iconinput_primevue
 };

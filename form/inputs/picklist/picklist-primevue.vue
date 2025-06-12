@@ -92,7 +92,6 @@ watch(() => value.value, (v) => {
 //   if (typeof needle.term == 'undefined') {
 //     return
 //   }
-//   cl(value.value[0])
 //   value.value = [!!needle.term ? value.value[0].filter(v => v.label.toLowerCase().includes(needle.term.toLowerCase())) : options.value, [...value.value[1]]]
 // },
 //   { deep: true })

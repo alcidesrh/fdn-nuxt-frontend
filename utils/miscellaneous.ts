@@ -1,4 +1,5 @@
 import { useChangeCase } from '@vueuse/integrations/useChangeCase.mjs';
+import { Collection } from '~/types/collection';
 
 export const random = (number = false, length = 5) => Array.from({ length }, () => Math.floor(Math.random() * 256)).join('');
 
@@ -18,7 +19,7 @@ export const getAlertText = (type: string, target: {} | null = null) => {
     }
 };
 
-export const highlighted = (collection: Ref<Collection>): void => {
+export const highlighted = (collection: Collection): void => {
     if (!CSS.highlights) {
         return;
     }

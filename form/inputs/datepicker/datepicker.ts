@@ -240,9 +240,9 @@ const props = {
         default: null
     }
 };
-const primevue_datepicker = createInput(c);
-if (!primevue_datepicker.props) {
-    primevue_datepicker.props = [];
+const datepicker_primevue = createInput(c);
+if (!datepicker_primevue.props) {
+    datepicker_primevue.props = [];
 }
-primevue_datepicker.props = [...primevue_datepicker.props, ...Object.keys(props)];
-export default primevue_datepicker;
+datepicker_primevue.props = [...datepicker_primevue.props, ...Object.keys(props)];
+export default datepicker_primevue;

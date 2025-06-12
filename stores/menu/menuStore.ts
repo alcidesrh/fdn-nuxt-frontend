@@ -1,29 +1,44 @@
 import { defineStore } from 'pinia';
-
+import { Menu } from '~/types/menu';
 export const useMenuStore = defineStore(
     'menuStore',
     () => {
-        const { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, form } = createStore('Menu');
+        const { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit, items } = createStore<Menu>('Menu');
 
-        function submit(v = null) {
-            const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
-            const fields = {};
-            fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity);
-            const { onDone, loading } = apollo.mutate(query, item.value, fields);
-
-            gLoading.value = true;
-            onDone((data) => {
-                msg.emit(getAlertText('update'));
-                collection.value.reload();
-                const router = useRouter();
-                router.push({ name: metadata.value.routes.list });
-                gLoading.value = false;
-                getItems(true);
+        collection.value.iniCollection2 = function () {
+            if (this.columns.length) {
+                this.getCollection();
                 return;
+            }
+
+            const { onResult, loading } = apollo.query({ endpoint: 'columnsMetadataResource', args: { resource: this.resource } });
+
+            onResult(({ data, networkStatus }) => {
+                if (typeof data == 'undefined' && networkStatus == 1) {
+                    return;
+                }
+
+                this.setColumns(data.columnsMetadataResource.data);
+                this.getCollection();
+            });
+            watch(
+                () => loading.value,
+                (v) => {
+                    collection.value.loading = v;
+                }
+            );
+        };
+
+        function getMenu() {
+            const { onResult, loading } = apollo.query('getMenu', { tipo: 'root' });
+
+            onResult(({ data, networkStatus }) => {
+                if (typeof data == 'undefined' && networkStatus == 1) {
+                    return;
+                }
             });
         }
-
-        return { metadata, collection, item, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems, form };
+        return { collection, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, getItems, getMenu, entity, iniCollection, sortCollection, items };
     }
     // {
     //     persist: {

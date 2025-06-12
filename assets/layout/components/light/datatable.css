@@ -136,12 +136,20 @@
     &.small-column {
       width: 100px;
       min-width: 85px;
+      /* max-width: 100px; */
 
-      & .small-column-id {
-        width: 130px;
-        min-width: 85px;
+
+    }
+
+    &.medium-column {
+      width: 200px;
+      min-width: 85px;
+      max-width: 200px;
+
+      & input,
+      & .group {
+        max-width: 180px;
       }
-
     }
   }
 }

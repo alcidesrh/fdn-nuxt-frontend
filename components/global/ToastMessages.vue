@@ -3,23 +3,27 @@
   <Toast class="z-999 h-fit" position="top-center">
     <template #message="slotProps">
 
-      <div class="p-toast-message-text " data-p="error" data-pc-section="messagetext">
-        <div class="flex gap-3 items-center">
-          <i class="pi pi-exclamation-triangle "></i>
-          <span class="p-toast-summary " data-p="error" data-pc-section="summary">{{ slotProps.message.summary
-          }}</span>
+      <div class="p-toast-message-text u-py-xs " data-p="error" data-pc-section="messagetext">
+        <div class="flex gap-5 items-start">
+          <i class="pi pi-exclamation-triangle mt-2px "></i>
+          <div class="grid">
+            <span v-if="slotProps.message.summary" class="p-toast-summary " data-p="error" data-pc-section="summary">{{
+              slotProps.message.summary
+              }}</span>
+            <div class="p-toast-detail   font-normal" data-p="error" data-pc-section="detail">{{
+              slotProps.message.detail
+              }}
+            </div>
+          </div>
         </div>
-        <div class="p-toast-detail u-my-2xs u-pl-xs  font-normal" data-p="error" data-pc-section="detail">{{
-          slotProps.message.detail
-        }}
-        </div>
+
         <div v-if="slotProps.message.file" class=" u-my-2xs p-toast-detail font-semibold flex  gap-2" data-p="error"
           data-pc-section="detail">
           <i class="pi pi-code"></i>
 
           <div>
             Archivo: {{
-              slotProps.message.file }}.
+            slotProps.message.file }}.
             <span v-if="slotProps.message.line">line: {{ slotProps.message.line }}</span>
           </div>
         </div>
@@ -40,25 +44,30 @@ const error = useEventBus('error')
 bus.on((msg: any) => {
 
   const lifetime = msg?.life === false ? {} : { life: 5000 }// life: 5000 
-  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: msg.summary || 'Info', });
+  toast.add({ ...lifetime, detail: msg?.msg || msg || 'Mensaje vacio.', severity: msg?.severity || 'success', summary: msg.summary || null, });
 })
 
 error.on((e: any) => {
 
-  const { graphQLErrors, networkError } = e?.message as ApolloErrorOptions
-
   let msg: any = {}
 
-  if (graphQLErrors?.length) {
-    msg = { summary: graphQLErrors[0].message, message: graphQLErrors[0]?.extensions?.debugMessage, file: graphQLErrors[0]?.extensions?.file, line: graphQLErrors[0]?.extensions?.line }
-  } else if (networkError) {
-    msg = { message: networkError?.cause || networkError.message, summary: networkError?.cause ? networkError.message : null }
-  }
-  else {
-    msg = e
+  try {
+    const { graphQLErrors, networkError } = e?.message as ApolloErrorOptions
+
+
+    if (graphQLErrors?.length) {
+      msg = { summary: graphQLErrors[0].message, message: graphQLErrors[0]?.extensions?.debugMessage, file: graphQLErrors[0]?.extensions?.file, line: graphQLErrors[0]?.extensions?.line }
+    } else if (networkError) {
+      msg = { message: networkError?.cause || networkError.message, summary: networkError?.cause ? networkError.message : null }
+    }
+    else {
+      msg = e
+    }
+
+  } catch (err) {
+    msg = e || null
   }
 
-  // cl(msg?.message?.cause?.extentions?.debugMessage, msg)
 
   const lifetime = msg?.life === false ? {} : { life: 0 }// life: 5000 
   toast.add({ ...lifetime, detail: msg?.message || msg || 'Ha ocurrido un error. Inténtelo de nuevo.', severity: 'error', summary: msg?.summary || 'Error:', file: msg?.file, line: msg?.line });

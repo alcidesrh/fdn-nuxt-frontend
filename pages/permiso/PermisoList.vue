@@ -1,17 +1,11 @@
-<template>
-  <div>
-    <collection-list :store="store" :collection="collection" @sort="collection.sort"
-      @removeMultiple="store.removeMultiple">
-
-    </collection-list>
-  </div>
-</template>
+  <template>
+    <div>
+      <collection-list :store="store">
+      </collection-list>
+    </div>
+  </template>
 <script setup lang="ts">
 
 const store = usePermisoStore()
-
-const { collection } = store
-
-collection.iniCollection()
 
 </script>

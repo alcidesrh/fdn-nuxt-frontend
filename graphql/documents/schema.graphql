@@ -4,20 +4,16 @@ type Query {
   collectionAgnostic(resource: String, fields: [String]): Agnostic
   getFormResource(entity: String): FormResource
   columnsMetadataResource(resource: String): MetadataResource
-  actions(
-    "Returns the first n elements from the list."
-    first: Int
-
-    "Returns the last n elements from the list."
-    last: Int
-
-    "Returns the elements in the list that come before the specified cursor."
-    before: String
-
-    "Returns the elements in the list that come after the specified cursor."
-    after: String
-  ): ActionCursorConnection
   action(id: ID!): Action
+  actions(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [ActionFilter_order]
+  ): ActionPageConnection
   agencias(
     "Returns the first n elements from the list."
     first: Int
@@ -196,7 +192,10 @@ type Query {
     itemsPerPage: Int
 
     order: [MenuFilter_order]
+    tipo: String
+    tipo_list: [String]
   ): MenuPageConnection
+  getMenu(params: Iterable): Menu
   nacion(id: ID!): Nacion
   nacions(
     "Returns the current page."
@@ -331,7 +330,7 @@ type Query {
     after: String
   ): TaxonCursorConnection
   taxon(id: ID!): Taxon
-  user(id: ID!): User
+  user(username: String): User
   users(
     "Returns the current page."
     page: Int
@@ -394,32 +393,174 @@ type MetadataResource implements Node {
   _id: String!
 }
 
-"Cursor connection for Action."
-type ActionCursorConnection {
-  edges: [ActionEdge]
-  pageInfo: ActionPageInfo!
-  totalCount: Int!
-}
-
-"Edge of Action."
-type ActionEdge {
-  node: Action
-  cursor: String!
-}
-
 type Action implements Node {
   id: ID!
-  _id: Int!
   ruta: String
-  icon: String
+  nombre: String
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  _id: Int!
+  status: Status
 }
 
-"Information about the current page."
-type ActionPageInfo {
-  endCursor: String
-  startCursor: String
+input RoleFilter_order {
+  id: String
+  nombre: String
+}
+
+"Page connection for Role."
+type RolePageConnection {
+  collection: [Role]
+  paginationInfo: RolePaginationInfo!
+}
+
+type Role implements Node {
+  id: ID!
+  nombre: String!
+  parents(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  children(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  permisos(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  actions(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [ActionFilter_order]
+  ): ActionPageConnection
+  _id: Int!
+}
+
+input PermisoFilter_order {
+  id: String
+  nombre: String
+  status: String
+}
+
+"Page connection for Permiso."
+type PermisoPageConnection {
+  collection: [Permiso]
+  paginationInfo: PermisoPaginationInfo!
+}
+
+type Permiso implements Node {
+  id: ID!
+  roles(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [RoleFilter_order]
+  ): RolePageConnection
+  parents(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  children(
+    "Returns the current page."
+    page: Int
+
+    "Returns the number of items per page."
+    itemsPerPage: Int
+
+    order: [PermisoFilter_order]
+  ): PermisoPageConnection
+  nombre: String
+  nota: String
+  _id: Int!
+  status: Status
+}
+
+enum Status {
+  creado
+  progreso
+  finalizado
+  activo
+  inactivo
+  cancelado
+  error
+  pausa
+  confirmado
+  expirado
+  reasignado
+}
+
+"Information about the pagination."
+type PermisoPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
   hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
+}
+
+input ActionFilter_order {
+  id: String
+  nombre: String
+  status: String
+}
+
+"Page connection for Action."
+type ActionPageConnection {
+  collection: [Action]
+  paginationInfo: ActionPaginationInfo!
+}
+
+"Information about the pagination."
+type ActionPaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
+}
+
+"Information about the pagination."
+type RolePaginationInfo {
+  itemsPerPage: Int!
+  lastPage: Int!
+  totalCount: Int!
+  currentPage: Int!
+  hasNextPage: Boolean!
 }
 
 "Cursor connection for Agencia."
@@ -465,7 +606,6 @@ type Agencia implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
   legacyId: Int
 }
@@ -516,9 +656,8 @@ type User implements Node {
     order: [PermisoFilter_order]
   ): PermisoPageConnection
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   apellido: String
@@ -532,144 +671,17 @@ type User implements Node {
   validTokenStrings: Iterable!
 }
 
-input RoleFilter_order {
-  id: String
-  nombre: String
-}
-
-"Page connection for Role."
-type RolePageConnection {
-  collection: [Role]
-  paginationInfo: RolePaginationInfo!
-}
-
-type Role implements Node {
-  id: ID!
-  nombre: String!
-  parents(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [RoleFilter_order]
-  ): RolePageConnection
-  children(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [RoleFilter_order]
-  ): RolePageConnection
-  permisos(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [PermisoFilter_order]
-  ): PermisoPageConnection
-  _id: Int!
-  label: String
-}
-
-input PermisoFilter_order {
-  id: String
-  nombre: String
-  status: String
-}
-
-"Page connection for Permiso."
-type PermisoPageConnection {
-  collection: [Permiso]
-  paginationInfo: PermisoPaginationInfo!
-}
-
-type Permiso implements Node {
-  id: ID!
-  roles(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [RoleFilter_order]
-  ): RolePageConnection
-  parents(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [PermisoFilter_order]
-  ): PermisoPageConnection
-  children(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [PermisoFilter_order]
-  ): PermisoPageConnection
-  nombre: String
-  nota: String
-  _id: Int!
-  label: String
-  status: Status
-}
-
-enum Status {
-  creado
-  progreso
-  finalizado
-  activo
-  inactivo
-  cancelado
-  error
-  pausa
-  confirmado
-  expirado
-  reasignado
-}
-
-"Information about the pagination."
-type PermisoPaginationInfo {
-  itemsPerPage: Int!
-  lastPage: Int!
-  totalCount: Int!
-  currentPage: Int!
-  hasNextPage: Boolean!
-}
-
-"Information about the pagination."
-type RolePaginationInfo {
-  itemsPerPage: Int!
-  lastPage: Int!
-  totalCount: Int!
-  currentPage: Int!
-  hasNextPage: Boolean!
-}
-
 type Localidad implements Node {
   id: ID!
   nombre: String!
   nacion: Nacion
   _id: Int!
-  label: String
 }
 
 type Nacion implements Node {
   id: ID!
   nombre: String!
   _id: Int!
-  label: String
 }
 
 "Information about the pagination."
@@ -708,7 +720,6 @@ type Asiento implements Node {
   bus: Bus!
   clase: String
   _id: Int!
-  label: String
 }
 
 type Bus implements Node {
@@ -734,9 +745,8 @@ type Bus implements Node {
   marca: String
   placa: String
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
 }
@@ -747,9 +757,8 @@ type Empresa implements Node {
   denominacionSocial: String
   alias: String
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   nombre: String!
@@ -771,9 +780,8 @@ type Piloto implements Node {
   nacionalidad: String
   fullName: String
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   apellido: String
@@ -826,19 +834,17 @@ type Boleto implements Node {
   asiento: Asiento!
   salida: Salida!
   _id: Int!
-  label: String
   status: Status
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
 }
 
 type Cliente implements Node {
   id: ID!
   dpi: String
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   apellido: String
@@ -868,9 +874,8 @@ type BoletoLog implements Node {
   boleto: Boleto!
   tipo: Int
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   descripcion: String
   user: User
 }
@@ -916,9 +921,8 @@ type Salida implements Node {
     after: String
   ): BoletoCursorConnection
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
 }
 
@@ -931,7 +935,6 @@ type Recorrido implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
   legacyId: Int
 }
@@ -955,7 +958,6 @@ type Parada implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
 }
 
@@ -968,7 +970,6 @@ type Enclave implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
 }
 
@@ -1011,9 +1012,8 @@ type SalidaLog implements Node {
   tipo: String
   salida: Salida!
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   descripcion: String
   user: User
 }
@@ -1151,7 +1151,6 @@ type Estacion implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
   legacyId: Int
   slug: String
@@ -1195,7 +1194,6 @@ type FDNEdge {
 type FDN implements Node {
   id: ID!
   _id: Int!
-  label: String
 }
 
 "Information about the current page."
@@ -1227,9 +1225,8 @@ type Factura implements Node {
   serie: String
   venta: Venta
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
 }
 
@@ -1241,9 +1238,8 @@ type Venta implements Node {
   precio: Float
   factura: Factura
   _id: Int!
-  label: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
 }
 
@@ -1277,30 +1273,10 @@ type LocalidadPaginationInfo {
 
 type Menu implements Node {
   id: ID!
-  link: String
   posicion: Int
   tipo: String
   nombre: String
-  nota: String
   icon: String
-  roles(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [RoleFilter_order]
-  ): RolePageConnection
-  permisos(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    order: [PermisoFilter_order]
-  ): PermisoPageConnection
   parent: Menu
   children(
     "Returns the current page."
@@ -1310,50 +1286,11 @@ type Menu implements Node {
     itemsPerPage: Int
 
     order: [MenuFilter_order]
+    tipo: String
+    tipo_list: [String]
   ): MenuPageConnection
-  allowUsers(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    id: Int
-    id_list: [Int]
-    username: String
-    username_list: [String]
-    status: String
-    status_list: [String]
-    nombre: String
-    nombre_list: [String]
-    apellido: String
-    apellido_list: [String]
-    createdAt: [UserFilter_createdAt]
-    order: [UserFilter_order]
-  ): UserPageConnection
-  denyUsers(
-    "Returns the current page."
-    page: Int
-
-    "Returns the number of items per page."
-    itemsPerPage: Int
-
-    id: Int
-    id_list: [Int]
-    username: String
-    username_list: [String]
-    status: String
-    status_list: [String]
-    nombre: String
-    nombre_list: [String]
-    apellido: String
-    apellido_list: [String]
-    createdAt: [UserFilter_createdAt]
-    order: [UserFilter_order]
-  ): UserPageConnection
   action: Action
   _id: Int!
-  label: String
   status: Status
 }
 
@@ -1527,7 +1464,6 @@ type Taxon implements Node {
   nombre: String
   nota: String
   _id: Int!
-  label: String
   status: Status
 }
 
@@ -1564,14 +1500,14 @@ type Mutation {
   "Deletes a Agnostic."
   deleteAgnostic(input: deleteAgnosticInput!): deleteAgnosticPayload
 
+  "Creates a Action."
+  createAction(input: createActionInput!): createActionPayload
+
   "Updates a Action."
   updateAction(input: updateActionInput!): updateActionPayload
 
   "Deletes a Action."
   deleteAction(input: deleteActionInput!): deleteActionPayload
-
-  "Creates a Action."
-  createAction(input: createActionInput!): createActionPayload
 
   "Updates a Agencia."
   updateAgencia(input: updateAgenciaInput!): updateAgenciaPayload
@@ -1794,11 +1730,28 @@ type deleteAgnosticPayload {
   clientMutationId: String
 }
 
+"Creates a Action."
+input createActionInput {
+  ruta: String
+  nombre: String
+  roles: [String]
+  status: Status
+  clientMutationId: String
+}
+
+"Creates a Action."
+type createActionPayload {
+  action: Action
+  clientMutationId: String
+}
+
 "Updates a Action."
 input updateActionInput {
   id: ID!
   ruta: String
-  icon: String
+  nombre: String
+  roles: [String]
+  status: Status
   clientMutationId: String
 }
 
@@ -1816,19 +1769,6 @@ input deleteActionInput {
 
 "Deletes a Action."
 type deleteActionPayload {
-  action: Action
-  clientMutationId: String
-}
-
-"Creates a Action."
-input createActionInput {
-  ruta: String
-  icon: String
-  clientMutationId: String
-}
-
-"Creates a Action."
-type createActionPayload {
   action: Action
   clientMutationId: String
 }
@@ -1969,8 +1909,8 @@ input createBoletoInput {
   asiento: String!
   salida: String!
   status: Status
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   clientMutationId: String
 }
 
@@ -2014,8 +1954,8 @@ type deleteBoletoLogPayload {
 input createBoletoLogInput {
   boleto: String!
   tipo: Int
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   descripcion: String
   user: String
   clientMutationId: String
@@ -2066,8 +2006,8 @@ type deleteClientePayload {
 "Creates a Cliente."
 input createClienteInput {
   dpi: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   apellido: String
@@ -2091,8 +2031,8 @@ input createEmpresaInput {
   nombreComercial: String
   denominacionSocial: String
   alias: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   nombre: String!
@@ -2327,8 +2267,8 @@ input createFacturaInput {
   fecha: String
   serie: String
   venta: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   clientMutationId: String
 }
@@ -2380,18 +2320,12 @@ type deleteLocalidadPayload {
 
 "Creates a Menu."
 input createMenuInput {
-  link: String
   posicion: Int
   tipo: String
   nombre: String
-  nota: String
   icon: String
-  roles: [String]
-  permisos: [String]
   parent: String
   children: [String]
-  allowUsers: [String]
-  denyUsers: [String]
   action: String
   status: Status
   clientMutationId: String
@@ -2406,18 +2340,12 @@ type createMenuPayload {
 "Updates a Menu."
 input updateMenuInput {
   id: ID!
-  link: String
   posicion: Int
   tipo: String
   nombre: String
-  nota: String
   icon: String
-  roles: [String]
-  permisos: [String]
   parent: String
   children: [String]
-  allowUsers: [String]
-  denyUsers: [String]
   action: String
   status: Status
   clientMutationId: String
@@ -2668,6 +2596,7 @@ input createRoleInput {
   parents: [String]
   children: [String]
   permisos: [String]
+  actions: [String]
   clientMutationId: String
 }
 
@@ -2684,6 +2613,7 @@ input updateRoleInput {
   parents: [String]
   children: [String]
   permisos: [String]
+  actions: [String]
   clientMutationId: String
 }
 
@@ -2746,8 +2676,8 @@ input createSalidaInput {
   empresa: String
   salidaLogs: [String]
   boletos: [String]
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   clientMutationId: String
 }
@@ -2792,8 +2722,8 @@ type deleteSalidaLogPayload {
 input createSalidaLogInput {
   tipo: String
   salida: String!
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   descripcion: String
   user: String
   clientMutationId: String
@@ -2858,8 +2788,8 @@ input createUserInput {
   password: String
   roles: [String]
   permisos: [String]
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   legacyId: Int
   apellido: String
@@ -2956,8 +2886,8 @@ input createVentaInput {
   user: String!
   precio: Float
   factura: String
-  createdAt: String!
-  updatedAt: String!
+  createdAt: String
+  updatedAt: String
   status: Status
   clientMutationId: String
 }

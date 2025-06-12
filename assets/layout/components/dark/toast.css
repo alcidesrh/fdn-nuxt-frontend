@@ -11,6 +11,7 @@
     & .p-toast-summary {
       font-weight: 600;
       font-size: 22px;
+      margin-bottom: 20px;
     }
 
     & .p-toast-detail {

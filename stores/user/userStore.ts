@@ -1,34 +1,15 @@
-import { SelectOption } from '~/types/fdn';
 import { defineStore } from 'pinia';
-import omit from 'ramda/es/omit';
+import { User } from '~/types/user';
+
 export const useUserStore = defineStore(
     'userStore',
     () => {
-        const { metadata, collection, item, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource } = createStore('User');
+        const { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit } = createStore<User>('User');
 
-        metadata.value.query.get = 'getUserByUsernameUser';
+        entity.value.endpoints.get = 'getUserByUsernameUser';
+        entity.value.excludeFields = ['password', 'userIdentifier', 'validTokenStrings', 'legacyId', 'fullName'];
 
-        metadata.value.updateExclude = [...metadata.value.updateExclude, ...['password', 'userIdentifier', 'validTokenStrings', 'legacyId', 'fullName']];
-
-        function submit() {
-            const query = item.value.id ? metadata.value.query.update : metadata.value.query.create;
-            const fields = {};
-            fields[metadata.value.resource] = fdn.value.resourceFields(metadata.value.entity, metadata.value.updateExclude);
-            const { onDone, loading } = apollo.mutate(query, omit(['permisos', 'fullName'], item.value), fields);
-            gLoading.value = true;
-            onDone((data) => {
-                msg.emit(getAlertText('update'));
-                collection.value.items = [];
-                collection.value.reload();
-                const router = useRouter();
-                router.push({ name: metadata.value.routes.list });
-
-                gLoading.value = false;
-                return;
-            });
-        }
-
-        return { metadata, collection, item, items, getItems, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema };
+        return { collection, getItems, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, entity, iniCollection, sortCollection };
     }
     // {
     //     persist: {

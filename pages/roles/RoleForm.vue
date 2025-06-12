@@ -11,24 +11,19 @@
 </template>
 
 <script setup lang="ts">
-import { Permiso } from '~/types/permiso'
 import { Role } from '~/types/role'
 
-
 const store = useRoleStore()
+store.getItems()
 const permisoStore = usePermisoStore()
 permisoStore.getItems(true)
 
+const {items, entity} = storeToRefs(store) 
+const { items: permisos } = storeToRefs(permisoStore)
 
-const { item } = storeToRefs(store) as Record<any, Ref<Role>>
-const { options } = storeToRefs(store) as Record<any, Ref<Array<Record<'value', string>>>>
-const { options: permisos } = storeToRefs(permisoStore) as Record<any, Ref<Array<Record<'value', string>>>>
+const parents = computed(() => items.value.filter(v => entity.value.item.id != v.value && (entity.value.item?.children ? !entity.value.item?.children || !entity.value.item?.children.includes(v.value) : true)))
 
-const parents = computed(() => options.value.filter(v => item.value.id != v.value && (item.value?.children ? !item.value?.children || !item.value?.children.includes(v.value) : true)))
-
-const children = computed(() => options.value.filter(v => item.value.id != v.value && (item.value?.parents ? !item.value?.parents || !item.value?.parents.includes(v.value) : true)))
-
-// const permisosOptions = computed(() => permisos.value.filter(v => item.value. != v.value && (item.value?.parents ? !item.value?.parents || !item.value?.parents.includes(v.value) : true)))
+const children = computed(() => permisos.value.filter(v => entity.value.item.id != v.value && (entity.value.item?.parents ? !entity.value.item?.parents || !entity.value.item?.parents.includes(v.value) : true)))
 
 const data = ref({
   children: children,

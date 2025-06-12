@@ -1,7 +1,6 @@
 <template>
   <div>
-    <collection-list :store="store" :collection="collection" @sort="collection.sort"
-      @removeMultiple="store.removeMultiple">
+    <collection-list :store="store">
 
     </collection-list>
   </div>
@@ -9,9 +8,5 @@
 <script setup lang="ts">
 
 const store = useRoleStore()
-
-const { collection } = store
-
-collection.iniCollection()
 
 </script>

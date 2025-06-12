@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia';
-import { parseGraphQl } from '@api-platform/api-doc-parser';
 import { User } from '~/types/user';
 import { getApiResources } from '~/types';
+// import { parseGraphQl } from '@api-platform/api-doc-parser';
+import { parseGraphQl } from '~/graphql/parse/src';
 
 interface State {
     api: Ref<Record<'User' | any, User | any>> | null;
 }
 export const useMetadataStore = defineStore('Metadata', {
-    persist: {
-        afterHydrate: (ctx) => {
-            console.log(`just hydrated '${ctx.store.$id}'`);
-        },
-        beforeHydrate: (ctx) => {
-            console.log(`about to hydrate '${ctx.store.$id}'`);
-        }
-    },
+    // persist: {
+    //     afterHydrate: (ctx) => {
+    //         console.log(`just hydrated '${ctx.store.$id}'`);
+    //     },
+    //     beforeHydrate: (ctx) => {
+    //         console.log(`about to hydrate '${ctx.store.$id}'`);
+    //     }
+    // },
     state: (): State => ({
         api: null //ref({} as Record<'User', User>)
     }),
@@ -22,14 +23,18 @@ export const useMetadataStore = defineStore('Metadata', {
         async setApiMetadata() {
             if (!Object.keys(this.api || {}).length) {
                 await parseGraphQl(ENTRYPOINT_GRAPHQL)
-                    .then(({ api }: any) => {
-                        this.api = getApiResources(api);
+                    .then(({ resources, queries, mutations, payload, input }: any) => {
+                        fdn.value.mutations = mutations;
+                        fdn.value.queries = queries;
+                        fdn.value.resources = resources;
+                        fdn.value.payload = payload;
+                        fdn.value.input = input;
                     })
                     .catch((e) => {
-                        this.api = getApiResources();
+                        // this.api = getApiResources();
                     });
             }
-            fdn.value.api = this.api;
+            // api.value.api = this.api;
         }
     }
 });

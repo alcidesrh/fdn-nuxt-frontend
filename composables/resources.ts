@@ -1,9 +1,13 @@
-import { Ref } from 'vue';
+import { useChangeCase } from '@vueuse/integrations/useChangeCase.mjs';
+import { IntrospectionType } from 'graphql';
+import { Mutation, Query } from '~/graphql/graphql';
+import { Resource } from '~/types/utils';
+
 type props = {
     name: string;
     fields: Array<Record<'name' | 'type' | 'reference', string | null | Array<Record<'name' | 'type', string>>>>;
 };
-type Resource = {
+type ApiResource = {
     MetadataResource: props;
     Agencia: props;
     User: props;
@@ -31,68 +35,47 @@ type Resource = {
     RecorridoAsientoPrecio: props;
     MultipleResource: props;
 };
-// export const fdn: Ref<Resource> | null = ref({} as Resource);
+
+export const getCollectionQuery = (text) => useChangeCase(text, 'camelCase').value + 's';
 
 export const fdn = ref({
-    api: {} as any,
-    resourceFields: function (key, exclude = ['label'] as Array<string>) {
-        if (typeof this.api[key] == undefined) {
-            throw new Error('No existe el recurso' + key);
-        }
-        return this.api[key].fields
-            .filter((i: Record<'name', string>) => !exclude.includes(i.name))
-            .map((i) => {
-                if (['String', 'ID', 'Iterable', 'Int', 'Status'].includes(i.type)) {
-                    return i.name;
-                } else if (i.reference) {
-                    const temp = {};
-                    temp[i.name] = ['id', 'nombre'];
-                    return temp;
-                } else {
-                    const temp = {};
-                    temp[i.name] = [{ collection: ['id', 'nombre'] }];
-                    return temp;
-                }
-                // else {
-                // }
-            });
-    },
-    parse: function (fields) {
-        const temp: Array<any> = [];
-        let temp2 = {};
-
-        Object.keys(fields).forEach((i) => {
-            if (Array.isArray(fields[i])) {
-                temp2[i] = fields[i];
-                temp.push(temp2);
-                temp2 = {};
-            } else if (fields[i] instanceof Object) {
-                temp2[i] = this.parseFieldsGraphQl(fields[i]);
-                temp.push(temp2);
-                temp2 = {};
-            } else {
-                temp.push(i);
-            }
-        });
-        return temp;
-    },
-    parseFieldsGraphQl: function (fields: any) {
-        const temp: Array<any> = [];
-        let temp2 = {};
-
-        Object.keys(fields).forEach((i) => {
-            if (Array.isArray(fields[i])) {
-                temp2[i] = fields[i];
-                temp.push(temp2);
-                temp2 = {};
-            } else if (fields[i] instanceof Object) {
-                temp2[i] = parseFieldsGraphQl(fields[i]);
-                temp.push(temp2);
-                temp2 = {};
-            } else {
-                temp.push(i);
-            }
-        });
-        return temp;
-    }
+    resources: {} as ReadonlyArray<IntrospectionType>,
+    queries: {} as Query[],
+    mutations: {} as Mutation[],
+    payload: {} as any[],
+    input: {} as any[],
+    isEmpty: computed(() => Object.keys(fdn.value.resources).length == 0)
 });
+const getArgs = (v: any) => {
+    const temp = {};
+    v.args
+        .filter((v) => !v.name.endsWith('_list'))
+        .forEach((v) => {
+            if (typeof v.type.ofType != 'undefined') {
+                if (v.type.kind == 'LIST') {
+                    temp[v.name] = { type: `[${v.type.ofType.name}]` };
+                } else if (v.type.kind == 'NON_NULL') {
+                    temp[v.name] = { type: v.type.ofType.name + '!' };
+                }
+            } else {
+                temp[v.name] = { type: v.type.name };
+            }
+        });
+    return temp;
+};
+export const getQueryArgs = (query: string) => {
+    if (typeof fdn.value.queries[query] != undefined) {
+        cl(query);
+        return getArgs(fdn.value.queries[query]);
+    }
+};
+export const getMutationArgs = (query: string) => {
+    if (typeof fdn.value.mutations[query] != undefined) {
+        return getArgs(fdn.value.mutations[query]);
+    }
+};
+export const getFields = (resource) => {
+    const r = fdn.value.resources[resource];
+
+    return r;
+};

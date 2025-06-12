@@ -1,23 +1,13 @@
 <template>
   <div>
-    <collection-list :store="store" :collection="collection" @sort="collection.sort"
-      @removeMultiple="store.removeMultiple">
+    <collection-expanded-list :store="store">
       <template #icon="{ data }">
-        <Icon v-if="data" class="" :name="data" mode="svg" aria-haspopup="true" aria-controls="overlay_menu"
-          size="20" />
-        <span v-else>---</span>
+        <Icon v-if="data" :name="data" mode="svg" class="" />
       </template>
-    </collection-list>
+    </collection-expanded-list>
   </div>
 </template>
 <script setup lang="ts">
-
 const store = useMenuStore()
-
-const { collection } = store
-
-collection.iniCollection()
-
-const classfromserver = 'grid grid-cols-2 gap-8'
 
 </script>
