@@ -1,0 +1,13 @@
+.entity-wrap {
+  @apply font-semibold flex gap-2 cursor-pointer;
+  margin-bottom: var(--space-s);
+  margin-left: var(--space-2xs);
+
+  &.active {
+    /* @apply text-primary; */
+  }
+
+  &:hover {
+    /* @apply text-primary; */
+  }
+}

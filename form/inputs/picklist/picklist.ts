@@ -2,10 +2,6 @@ import { createInput } from '@formkit/vue';
 import picklistprimevue from './picklist-primevue.vue';
 
 const props = {
-    // options: {
-    //     type: Array,
-    //     default: []
-    // },
     allowItems: {
         type: Array,
         default: []

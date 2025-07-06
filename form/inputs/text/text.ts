@@ -6,22 +6,6 @@ const props = {
         type: String,
         default: null
     },
-    invalid: {
-        type: Boolean,
-        default: false
-    },
-    variant: {
-        type: String,
-        default: null
-    },
-    fluid: {
-        type: Boolean,
-        default: null
-    },
-    floatLabel: {
-        type: String,
-        default: null
-    },
     placeholder: {
         type: String,
         default: null

@@ -17,9 +17,12 @@
   gap: 45px;
 }
 
+form.medium {
+  min-width: 1024px;
+}
+
 .form-wrapper {
-  max-width: 1500px;
-  width: 100%;
+  width: fit-content;
   margin: auto;
 
   & form {

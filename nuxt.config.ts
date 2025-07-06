@@ -3,18 +3,19 @@ import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 import Components from 'unplugin-vue-components/vite';
 import { icons } from './constants';
 import { createResolver } from '@nuxt/kit';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
     modules: [
-        '@vueuse/nuxt', // '@nuxt/eslint',
-        // '@nuxtjs/tailwindcss',
+        // '@nuxt/eslint',
+        '@vueuse/nuxt', // '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
-        'pinia-plugin-persistedstate/nuxt',
-        // '@pinia-plugin-persistedstate/nuxt',
+        'pinia-plugin-persistedstate/nuxt', // '@pinia-plugin-persistedstate/nuxt',
         '@unocss/nuxt',
         '@nuxt/icon',
         '@formkit/nuxt',
-        'dayjs-nuxt'
+        'dayjs-nuxt',
+        'nuxt-tailwindcss4'
     ],
     components: {
         dirs: [{ global: true, path: '~/form/inputs/components' }, '~/components/global', '~/components']
@@ -75,13 +76,12 @@ export default defineNuxtConfig({
             })
         ]
     },
-
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {}
-        }
-    },
+    // postcss: {
+    //     plugins: {
+    //         tailwindcss: {},
+    //         autoprefixer: {}
+    //     }
+    // },
     compatibilityDate: '2024-04-03',
     devtools: {
         enabled: false,

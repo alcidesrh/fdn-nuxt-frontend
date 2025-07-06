@@ -5,3 +5,7 @@
 .p-select-label {
   text-transform: capitalize;
 }
+
+.p-cascadeselect-list {
+  min-width: fit-content
+}

@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 import * as gqlBuilder from 'gql-query-builder';
 import { OptionsParameter, VariablesParameter } from '@vue/apollo-composable/dist/useQuery.js';
 import { OperationVariables } from '@apollo/client/core';
-import { query as queryGraphql, $, mutation as mutationGraphql } from '~/graphql/typed-api';
 import { Collection } from '~/types/collection';
 
 export const apollo = {

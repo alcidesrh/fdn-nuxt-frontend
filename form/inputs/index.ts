@@ -13,6 +13,7 @@ import number_primevue from './number/number';
 import number_search_primevue from './number/number-search';
 import iconinput_primevue from './icon/iconinput';
 import picklist_primevue from './picklist/picklist';
+import selectcascade_primevue from './selectcascade/selectcascade';
 
 export {
     button_primevue,
@@ -29,5 +30,6 @@ export {
     number_search_primevue,
     multiselect_primevue,
     picklist_primevue,
-    iconinput_primevue
+    iconinput_primevue,
+    selectcascade_primevue
 };

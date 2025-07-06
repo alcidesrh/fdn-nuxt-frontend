@@ -106,11 +106,19 @@ export class Entity<Type> {
                 const r = fdn.value.resources[v.type.name].fields.find((v) => v.type.kind == 'LIST').type.ofType.name;
                 temp[v.name] = [{ collection: fdn.value.resources[r].fields.filter((v) => ['id', 'nombre'].includes(v.name)).map((v) => v.name) }];
             } else if (v.type.name.endsWith('CursorConnection')) {
-                const r = fdn.value.resources[v.type.name].fields.find((v) => v.type.kind == 'edges').type.ofType.name;
+                const r = fdn.value.resources[v.type.name].fields.find((v) => v.name == 'edges').type.ofType.name;
                 const r2 = fdn.value.resources[r].fields.find((v) => v.name == 'node').type.name;
-                temp[v.name] = [{ edges: [{ node: fdn.value.resources[r2].fields.filter((v) => ['id', 'nombre'].includes(v.name)).map((v) => v.name) }] }];
+                temp[v.name] = [{ edges: [{ node: fdn.value.resources[r2].fields.filter((v) => ['id', 'nombre'].includes(ofType.name)).map((v) => v.name) }] }];
             } else {
-                temp[v.name] = ['id', 'nombre'];
+                cl(fdn.value.resources[v.type.name].fields.map((v) => v.name));
+                temp[v.name] = fdn.value.resources[v.type.name].fields.map((v) => v.name);
+                // temp[v.name] = ['id', 'nombre'];
+            }
+            return temp;
+        } else if (v.type.kind == 'LIST') {
+            let temp = {};
+            if (v.type.ofType.kind == 'OBJECT') {
+                temp[v.name] = fdn.value.resources[v.type.ofType.name].fields.map((v) => v.name);
             }
             return temp;
         }

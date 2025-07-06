@@ -4,9 +4,7 @@ import { Action } from '~/types/action';
 export const useActionStore = defineStore(
     'actionStore',
     () => {
-        const { collection, items, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit } = createStore<Action>('Action');
-
-        return { collection, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, items, getItems, entity, iniCollection, sortCollection };
+        return createStore<Action>('Action');
     }
     // {
     //     persist: {

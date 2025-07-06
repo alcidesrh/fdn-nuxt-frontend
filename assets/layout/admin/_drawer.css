@@ -1,0 +1,51 @@
+.fixed-center-vertical {
+    &>svg {
+        width: 60px;
+        height: 60px;
+        rotate: -45deg;
+
+        &>g {
+            fill: var(--p-surface-contrast-600);
+            stroke: var(--p-surface-contrast-400);
+            stroke-width: 4;
+        }
+
+        transition: all 0.3s ease;
+
+        &:hover {
+            rotate: 30deg;
+            scale: 1.2;
+        }
+    }
+
+    opacity: .7;
+    position: fixed;
+    top: 50%;
+    right: -25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* @apply bg-slate-800; */
+    backdrop-filter: blur(1px);
+    border-radius: 50%;
+    z-index: 1015;
+    /* Ajusta según necesidad */
+    transition: all 0.3s ease;
+
+    &:hover {
+        right: 0;
+        opacity: 1;
+        border-radius: 10%;
+    }
+}
+
+.tree-entities {
+    & .p-tree-node-content {
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--p-surface-contrast-100);
+        }
+    }
+}

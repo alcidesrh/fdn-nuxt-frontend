@@ -16,6 +16,11 @@ export default {
                     // meta: { label: 'inicio', icon: 'icon-park-outline:home' }
                 },
                 {
+                    name: 'admin',
+                    path: '/admin',
+                    component: () => import('~/pages/admin/Entities.vue')
+                },
+                {
                     path: '/usuarios',
                     meta: { label: 'usuarios', icon: 'icon-park-outline:every-user' },
 
@@ -24,19 +29,19 @@ export default {
                             name: 'user_list',
                             path: '',
                             component: () => import('~/pages/usuarios/UserList.vue'),
-                            meta: { type: 'user', action: 'list', route: 'user_list' }
+                            meta: { label: 'List', type: 'user', action: 'list', route: 'user_list' }
                         },
                         {
                             name: 'user_create',
                             path: 'crear',
                             component: () => import('~/pages/usuarios/UserForm.vue'),
-                            meta: { icon: 'icon-park-outline:edit', type: 'user', action: 'create', route: 'users_create' }
+                            meta: { label: 'Crear usuario', icon: 'icon-park-outline:edit', type: 'user', action: 'create', route: 'users_create' }
                         },
                         {
                             name: 'user_edit',
                             path: 'edit/:id',
                             component: () => import('~/pages/usuarios/UserForm.vue'),
-                            meta: { icon: 'icon-park-outline:edit', type: 'user', action: 'edit', route: 'user_edit' }
+                            meta: { label: 'Editar usuario', icon: 'icon-park-outline:edit', type: 'user', action: 'edit', route: 'user_edit' }
                         }
                     ]
                 },

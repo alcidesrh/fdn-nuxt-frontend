@@ -13,7 +13,6 @@ const props = defineProps({
     },
 
 })
-const router = useRouter()
 const route = useRoute()
 
 // function isActiveRootmenuItem(menuitem) {

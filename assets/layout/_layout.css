@@ -4,7 +4,7 @@
 
 html {
     height: 100%;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 :root {
@@ -32,59 +32,28 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background);
-    /* background-color: var(--p-emerald-50); */
     color: var(--text-color);
     font-size: 1rem;
-    /* var(--step-0); */
     line-height: normal;
-    /* font-variation-settings: "slnt" 0, "GRAD" 0, "XOPQ" 96, "XTRA" 468, "YOPQ" 79, "YTAS" 750, "YTDE" -203, "YTFI" 738, "YTLC" 514, "YTUC" 712; */
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
 
+}
 
-    &>div {
-        &:first-child {
-            height: 100%;
-        }
+.layout-content {
+    height: 100%;
+    position: relative;
+    margin-top: calc(var(--topbar));
+    z-index: 1;
 
-        &:not(#overlay_menu) {
-            /* height: 100%; */
-
-            &>main {
-                height: 100%;
-
-                &>.layout-wrapper {
-                    height: 100%;
-
-                    &>.layout-content {
-                        height: 100%;
-                        position: relative;
-                        /* padding: 1rem; */
-                        margin-top: calc(var(--topbar));
-                        z-index: 1;
-
-                        &>.content {
-                            background-color: var(--p-surface-contrast-0);
-                            width: 100%;
-                            max-width: 100%;
-                            position: relative;
-                            /* padding: var(--step-8); */
-                            /* @apply u-p-l; */
-                            border-radius: 4px;
-                            /* bg-surface-contrast-0 u-p-l md: u-px-xl rounded-sm w-full relative max-w-full */
-                            /* box-shadow: 0px 0px 12px var(--p-surface-contrast-300); */
-                            /* border: 1px solid var(--p-surface-contrast-300) */
-                        }
-                    }
-
-                }
-            }
-        }
+    &>.content {
+        background-color: var(--p-surface-contrast-0);
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        border-radius: 4px;
     }
-
-
-
 }
 
 a {

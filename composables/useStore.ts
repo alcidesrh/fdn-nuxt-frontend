@@ -27,35 +27,30 @@ export const createStore = <Type>(name: string) => {
 
     const formkitSchema = ref([]);
 
-    function query(params) {
-        return apollo.query(params);
-    }
+    let chanel = '';
+
+    let unsubscribe: any;
 
     function setFormkitSchema(args = null) {
-        if (formkitSchema.value.length == 0) {
-            const params = { operation: entity.value.endpoints.form, variables: { entity: entity.value.name }, fields: ['schema'] };
-
-            const { onResult, loading } = apollo.query(params);
-            onResult(({ data, networkStatus }) => {
-                if (typeof data == 'undefined' && networkStatus == 1) {
-                    return;
-                }
-                formkitSchema.value = useCloned(data[entity.value.endpoints.form].schema).cloned.value;
-                if (args) {
-                    resource(args);
-                } else {
-                    entity.value.item = {};
-                }
-            });
-        } else {
+        entity.value.item = {} as any;
+        (async (params) => {
+            if (formkitSchema.value.length == 0) {
+                await ((params) => Promise.resolve(apollo.query(params)))(params).then(({ onResult }) => {
+                    onResult(({ data, networkStatus }) => {
+                        if (typeof data == 'undefined' && networkStatus == 1) {
+                            return;
+                        }
+                        formkitSchema.value = useCloned(data[entity.value.endpoints.form].schema).cloned.value;
+                    });
+                });
+            }
             if (args) {
                 resource(args);
             } else {
                 entity.value.item = {};
             }
-        }
+        })({ operation: entity.value.endpoints.form, variables: { entity: entity.value.name }, fields: ['schema'] });
     }
-
     function resource(variables?) {
         if (!variables) {
             return false;
@@ -67,8 +62,9 @@ export const createStore = <Type>(name: string) => {
         if (variables.id) {
             variables.id = entity.value.getIriFromId(variables.id);
         }
+
         const params = { operation: entity.value.endpoints.get, variables: variables, poptions: { fetchPolicy: 'network-only' }, fields: entity.value.getQueryFields() };
-        const { onResult, loading } = query(params);
+        const { onResult, loading } = apollo.query(params);
 
         onResult(({ data }) => {
             if (typeof data == 'undefined') {
@@ -94,15 +90,11 @@ export const createStore = <Type>(name: string) => {
             }
         });
     }
-
-    let chanel = '';
-    let unsubscribe: any;
     function unsubscribeChanel() {
         if (typeof unsubscribe != undefined && unsubscribe) {
             unsubscribe();
         }
     }
-
     function remove(arg?) {
         const temp = arg || entity.value.item;
         unsubscribeChanel();
@@ -122,7 +114,6 @@ export const createStore = <Type>(name: string) => {
             });
         });
     }
-
     function removeMultiple(items: Ref<[any]> | any) {
         unsubscribeChanel();
         chanel = random();
@@ -145,7 +136,6 @@ export const createStore = <Type>(name: string) => {
             });
         });
     }
-
     function getItems(force = false) {
         if (!force && items.value.length != 0) {
             return;
@@ -159,7 +149,6 @@ export const createStore = <Type>(name: string) => {
             items.value = data.collectionAgnostic.data.collection;
         });
     }
-
     function iniCollection() {
         if (collection.value.columns.length) {
             getCollection();
@@ -182,13 +171,12 @@ export const createStore = <Type>(name: string) => {
             }
         );
     }
-
     function setColumns(data) {
         collection.value.hasFilter = data.filter as boolean;
         collection.value.columns = (data.collection as any).map((i) => {
             let temp: any = useCloned(i).cloned.value;
             if (temp.schema) {
-                const eventbus = `filterinput_${temp.schema.name}_${resource}`;
+                const eventbus = `filterinput_${temp.schema.name}_resource`;
                 temp.schema = { ...temp.schema, ...{ eventbus: eventbus } };
                 collection.value.vars[temp.schema.name] = null;
 
@@ -200,11 +188,9 @@ export const createStore = <Type>(name: string) => {
             return temp;
         });
     }
-
     function reload() {
         getCollection({ fetchPolicy: 'network-only' });
     }
-
     function sortCollection(d: string) {
         const col = collection.value.columns.find((i) => i.name == d);
         if (typeof col != 'undefined') {
@@ -235,7 +221,6 @@ export const createStore = <Type>(name: string) => {
             collection.value.vars.order = [order];
         }
     }
-
     function getCollection(fetchPolicy = {}) {
         const { loading, onResult } = apollo.collection(collection, entity.value.getColumnsFields(), fetchPolicy);
         onResult(({ data, networkStatus }) => {
@@ -257,7 +242,6 @@ export const createStore = <Type>(name: string) => {
             }
         );
     }
-
     function submit() {
         const { onDone, loading } = apollo.mutate({ operation: entity.value.getCrudOperation(), variables: { input: Entity.prepareVariables(entity.value.item) }, fields: entity.value.getMutationFields() });
         gLoading.value = true;
@@ -269,17 +253,14 @@ export const createStore = <Type>(name: string) => {
             router.push({ name: entity.value.routes.list });
         });
     }
-
     watch(
         () => collection.value.items,
         () => {
             nextTick(() => highlighted(collection));
         }
     );
-
     msgbus(`filterinput_${resource}`).on((v: any) => {
         collection.value.loading = v;
     });
-
     return { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit, items };
 };

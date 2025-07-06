@@ -458,106 +458,116 @@ export default {
     },
     components: {
         toast: {
-            width: '450px'
-        },
-        tree: {
-            colorScheme: {
-                light: {
-                    root: {
-                        background: '{surface.700}',
-                        color: '{surface.700}'
-                    }
-                }
+            root: {
+                width: '450px'
             }
         },
+
         paginator: {
-            nav: {
-                button: {
-                    selected: {
-                        background: '{surface.contrast.200}'
+            root: {
+                nav: {
+                    button: {
+                        selected: {
+                            background: '{surface.contrast.200}'
+                        }
                     }
                 }
             }
         },
 
         datepicker: {
-            colorScheme: {
-                light: {
-                    today: {
-                        background: '{surface.contrast.500}',
-                        color: '{surface.contrast.100}'
-                    },
-                    date: {
-                        range: {
-                            selected: {
-                                background: '{surface.contrast.200}'
+            root: {
+                colorScheme: {
+                    light: {
+                        today: {
+                            background: '{surface.contrast.500}',
+                            color: '{surface.contrast.100}'
+                        },
+                        date: {
+                            range: {
+                                selected: {
+                                    background: '{surface.contrast.200}'
+                                }
                             }
                         }
-                    }
-                },
-                dark: {
-                    today: {
-                        background: '{surface.contrast.700}',
-                        color: '{surface.contrast.100}'
                     },
-                    date: {
-                        range: {
-                            selected: {
-                                background: '{surface.contrast.200}',
-                                color: '{surface.contrast.700}'
+                    dark: {
+                        today: {
+                            background: '{surface.contrast.700}',
+                            color: '{surface.contrast.100}'
+                        },
+                        date: {
+                            range: {
+                                selected: {
+                                    background: '{surface.contrast.200}',
+                                    color: '{surface.contrast.700}'
+                                }
                             }
                         }
                     }
                 }
             }
         },
-
-        breadcrumb: {
-            background: 'none',
-            gap: '1px',
-            padding: '.5rem'
-        },
         button: {
-            label: {
-                font: {
-                    weight: 500
+            root: {
+                label: {
+                    font: {
+                        weight: 500
+                    }
                 }
             }
         },
         radiobutton: {
-            icon: {
+            root: {
+                icon: {
+                    checked: {
+                        color: '{primary.500}'
+                    }
+                },
+                background: '{primary.0}',
                 checked: {
-                    color: '{primary.500}'
-                }
-            },
-            background: '{primary.0}',
-            checked: {
-                background: '{primary.0}'
-            },
-            border: {
-                color: '{surface.400}'
-            },
-            hover: {
+                    background: '{primary.0}'
+                },
                 border: {
-                    color: '{surface.contrast.800}'
+                    root: {
+                        color: '{surface.400}'
+                    }
+                },
+                hover: {
+                    root: {
+                        border: {
+                            color: '{surface.contrast.800}'
+                        }
+                    }
                 }
             }
         },
         multiselect: {
-            option: {
-                gap: '15px'
+            root: {
+                option: {
+                    gap: '15px'
+                }
             }
         },
         fieldset: {
-            border: {
-                color: '{surface.contrast.200}'
-            },
-            legend: {
-                background: '{surface.contrast.100}',
-                color: '{surface.contrast.400}',
+            root: {
                 border: {
                     color: '{surface.contrast.300}'
+                },
+                legend: {
+                    background: '{surface.contrast.100}',
+                    color: '{surface.contrast.400}',
+                    border: {
+                        color: '{surface.contrast.300}'
+                    }
                 }
+            }
+        },
+        breadcrumb: {
+            root: {
+                background: 'none',
+                gap: '1px',
+                padding: '.5rem'
             }
         }
     }

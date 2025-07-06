@@ -33,7 +33,7 @@
   }
 
   &.p-toast-message-error {
-    @apply bg-red-50/80;
+    @apply bg-red-50/70;
     border: 1px solid var(--p-red-400);
     color: var(--p-red-700);
 

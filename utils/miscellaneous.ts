@@ -1,5 +1,8 @@
 import { useChangeCase } from '@vueuse/integrations/useChangeCase.mjs';
 import { Collection } from '~/types/collection';
+import voca from 'voca';
+
+export const str = voca;
 
 export const random = (number = false, length = 5) => Array.from({ length }, () => Math.floor(Math.random() * 256)).join('');
 
@@ -107,13 +110,24 @@ export const arrayToObject = (i, o = {}) => {
     return o;
 };
 
-export const setMetadata = (resource: string) => {
-    const pascalCase = useChangeCase(resource, 'pascalCase').value;
-    return {
-        get: useChangeCase(resource, 'camelCase').value,
-        create: `create${pascalCase}`,
-        update: `update${pascalCase}`,
-        delete: `delete${pascalCase}`
-    };
+export const treeKey = (items: {}[], l = 0, key = '') => {
+    const data = [];
+    let key2 = '';
+    items.forEach((v: any, i) => {
+        key2 = key != '' ? key + '-' + i : `${i}`;
+        if (v.name) {
+            const words = str(v.name).capitalize().words();
+        }
+        const label = str(v.name).capitalize().words().join(' ') || str.capitalize(v?.meta?.label);
+        const temp: any = { key: key2, label: label, path: v.path, name: v.name };
+
+        if (v.children) {
+            temp.children = treeKey(v.children, l + 1, key2);
+        }
+
+        data.push(temp);
+    });
+    return data;
 };
+
 export const gLoading = ref(false);

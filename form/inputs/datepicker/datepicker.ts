@@ -1,19 +1,11 @@
 import { createInput } from '@formkit/vue';
 import c from './datepicker-primevue.vue';
 const props = {
-    modelValue: null,
     selectionMode: {
         type: String,
         default: 'single'
     },
-    dateFormat: {
-        type: String,
-        default: null
-    },
-    inline: {
-        type: Boolean,
-        default: false
-    },
+
     showOtherMonths: {
         type: Boolean,
         default: true
@@ -22,47 +14,12 @@ const props = {
         type: Boolean,
         default: false
     },
-    showIcon: {
-        type: Boolean,
-        default: false
-    },
-    iconDisplay: {
-        type: String,
-        default: 'button'
-    },
-    icon: {
-        type: String,
-        default: undefined
-    },
-    prevIcon: {
-        type: String,
-        default: undefined
-    },
-    on: {
-        type: String,
-        default: undefined
-    },
-    incrementIcon: {
-        type: String,
-        default: undefined
-    },
-    decrementIcon: {
-        type: String,
-        default: undefined
-    },
+
     numberOfMonths: {
         type: Number,
         default: 1
     },
-    responsiveOptions: Array,
-    breakpoint: {
-        type: String,
-        default: '769px'
-    },
-    view: {
-        type: String,
-        default: 'date'
-    },
+
     minDate: {
         type: Date,
         value: null
@@ -79,29 +36,10 @@ const props = {
         type: Array,
         value: null
     },
-    maxDateCount: {
-        type: Number,
-        value: null
-    },
+
     showOnFocus: {
         type: Boolean,
         default: true
-    },
-    autoZIndex: {
-        type: Boolean,
-        default: true
-    },
-    baseZIndex: {
-        type: Number,
-        default: 0
-    },
-    showButtonBar: {
-        type: Boolean,
-        default: false
-    },
-    shortYearCutoff: {
-        type: String,
-        default: '+10'
     },
     showTime: {
         type: Boolean,
@@ -155,10 +93,7 @@ const props = {
         type: [String, Object],
         default: 'body'
     },
-    variant: {
-        type: String,
-        default: null
-    },
+
     invalid: {
         type: Boolean,
         default: false
@@ -226,18 +161,6 @@ const props = {
         default() {
             return { severity: 'secondary', text: true, rounded: true };
         }
-    },
-    fluid: {
-        type: Boolean,
-        default: null
-    },
-    ariaLabelledby: {
-        type: String,
-        default: null
-    },
-    ariaLabel: {
-        type: String,
-        default: null
     }
 };
 const datepicker_primevue = createInput(c);

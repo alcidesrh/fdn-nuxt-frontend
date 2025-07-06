@@ -1,17 +1,7 @@
 import { createInput } from '@formkit/vue';
 import selectprimevue from './iconinput-primevue.vue';
 const props = {
-    // modelValue: null,
-    name: {
-        type: String,
-        default: null
-    },
-
     icon: {
-        type: String,
-        default: null
-    },
-    placeholder: {
         type: String,
         default: null
     }

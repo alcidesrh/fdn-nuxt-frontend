@@ -1,7 +1,6 @@
 import { useChangeCase } from '@vueuse/integrations/useChangeCase.mjs';
 import { IntrospectionType } from 'graphql';
 import { Mutation, Query } from '~/graphql/graphql';
-import { Resource } from '~/types/utils';
 
 type props = {
     name: string;
@@ -44,7 +43,7 @@ export const fdn = ref({
     mutations: {} as Mutation[],
     payload: {} as any[],
     input: {} as any[],
-    isEmpty: computed(() => Object.keys(fdn.value.resources).length == 0)
+    isReady: computed(() => Object.keys(fdn.value.resources).length)
 });
 const getArgs = (v: any) => {
     const temp = {};
@@ -64,8 +63,7 @@ const getArgs = (v: any) => {
     return temp;
 };
 export const getQueryArgs = (query: string) => {
-    if (typeof fdn.value.queries[query] != undefined) {
-        cl(query);
+    if (typeof fdn.value.queries[query] != 'undefined') {
         return getArgs(fdn.value.queries[query]);
     }
 };
