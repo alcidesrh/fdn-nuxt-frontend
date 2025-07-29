@@ -23,7 +23,7 @@
 
     &:last-child>th {
       background-color: var(--p-surface-contrast-0);
-      @apply bg-slate-100/80;
+      /* @apply bg-slate-100/80; */
       /* padding-top: 12px; */
       /* padding-bottom: 12px; */
       padding: 0px 10px;
@@ -65,7 +65,7 @@
   & td.action-cell {
     /* background-color: transparent; */
     width: 80px;
-    @apply bg-slate-100/80;
+    /* @apply bg-slate-100/80; */
 
     /* border-top: 0.5px solid var(--p-surface-contrast-300); */
     border-left: 1px solid var(--p-surface-contrast-300);

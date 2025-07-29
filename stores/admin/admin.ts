@@ -9,20 +9,20 @@ import { SettingResource } from '~/types/settingresource';
 
 interface State {
     entities: Ref<string[]>;
-    toggleEntity: Ref<boolean>;
+    openEntityList: Ref<boolean>;
 }
 export const useAdminStore = defineStore('Admin', {
-    // persist: {
-    //     afterHydrate: (ctx) => {
-    //         console.log(`just hydrated '${ctx.store.$id}'`);
-    //     },
-    //     beforeHydrate: (ctx) => {
-    //         console.log(`about to hydrate '${ctx.store.$id}'`);
-    //     }
-    // },
+    persist: {
+        afterHydrate: (ctx) => {
+            console.log(`just hydrated '${ctx.store.$id}'`);
+        },
+        beforeHydrate: (ctx) => {
+            console.log(`about to hydrate '${ctx.store.$id}'`);
+        }
+    },
     state: (): State => ({
         entities: ref([]),
-        toggleEntity: ref(false)
+        openEntityList: ref(false)
     }),
     actions: {
         getEntities() {

@@ -13,7 +13,7 @@ html {
 
 /* width */
 ::-webkit-scrollbar {
-    width: .5rem;
+    width: .2rem;
     height: .5rem;
     /* display: none; */
     background-color: var(--p-surface-0);
@@ -41,21 +41,6 @@ body {
 
 }
 
-.layout-content {
-    height: 100%;
-    position: relative;
-    margin-top: calc(var(--topbar));
-    z-index: 1;
-
-    &>.content {
-        background-color: var(--p-surface-contrast-0);
-        width: 100%;
-        max-width: 100%;
-        position: relative;
-        border-radius: 4px;
-    }
-}
-
 a {
     text-decoration: none;
 }
@@ -64,12 +49,9 @@ a {
     contain: strict;
 }
 
-
-
 .rounded-full {
     border-radius: 9999px;
 }
-
 
 /* .layout-enter-active, */
 /* .layout-leave-active, */
@@ -85,12 +67,6 @@ a {
     filter: blur(5px);
     /* filter: grayscale(1); */
 }
-
-/* .layout-enter-from,
-.layout-leave-to {
-    transition: all 0.3s;
-    filter: grayscale(1);
-} */
 
 .layout-submenu-enter-from,
 .layout-submenu-leave-to {
@@ -136,8 +112,7 @@ a {
 }
 
 .edit-head {
-    container: editHead / inline-size;
-    ;
+    container: editHead / inline-size
 }
 
 

@@ -14,14 +14,14 @@
 
 
       &>th {
-        @apply bg-slate-600/90;
+        /* @apply bg-slate-600/90; */
       }
     }
   }
 
 
   td.action-cell {
-    @apply bg-slate-600/90;
+    /* @apply bg-slate-600/90; */
 
     border-top: 0.5px solid var(--p-surface-contrast-400);
     border-left: 1px solid var(--p-surface-contrast-400);

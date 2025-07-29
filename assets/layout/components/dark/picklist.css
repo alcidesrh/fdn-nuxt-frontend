@@ -1,9 +1,9 @@
 :root[class*='app-dark'] {
   .p-picklist-source-list-container>.p-listbox {
-    @apply bg-red-700/30;
+    /* @apply bg-red-700/30; */
   }
 
   .p-picklist-target-list-container>.p-listbox {
-    @apply bg-emerald-700/30;
+    /* @apply bg-emerald-700/30; */
   }
 }

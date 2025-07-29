@@ -12,11 +12,11 @@
 
 @layer base {
   h1 {
-    @apply text-2xl font-medium;
+    /* @apply font-medium; */
   }
 
   h2 {
-    @apply text-xl;
+    /* @apply text-xl; */
   }
 
   /* ... */

@@ -1,13 +1,4 @@
 import { defineStore } from 'pinia';
-// import DomHandler from '@/utils/primevueutils/DomHandler'
-
-export interface Menu {
-    name: string;
-    key?: string | number;
-    icon?: string;
-    open?: boolean;
-    children?: Menu[];
-}
 
 export const useMenuStateStore = defineStore(
     'useMenuState',
@@ -22,7 +13,7 @@ export const useMenuStateStore = defineStore(
                     {
                         name: 'Emitir',
                         icon: 'icon-park-outline:printer-two',
-                        to: ''
+                        to: '/usuarios'
                     },
                     {
                         name: 'Chequear',

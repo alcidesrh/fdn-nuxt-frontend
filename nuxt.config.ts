@@ -8,14 +8,15 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
     modules: [
         // '@nuxt/eslint',
-        '@vueuse/nuxt', // '@nuxtjs/tailwindcss',
+        // '@nuxtjs/tailwindcss',
+        '@vueuse/nuxt',
         '@pinia/nuxt',
-        'pinia-plugin-persistedstate/nuxt', // '@pinia-plugin-persistedstate/nuxt',
+        'pinia-plugin-persistedstate/nuxt',
         '@unocss/nuxt',
         '@nuxt/icon',
         '@formkit/nuxt',
         'dayjs-nuxt',
-        'nuxt-tailwindcss4'
+        '@pinia/nuxt'
     ],
     components: {
         dirs: [{ global: true, path: '~/form/inputs/components' }, '~/components/global', '~/components']
@@ -73,15 +74,10 @@ export default defineNuxtConfig({
         plugins: [
             Components({
                 resolvers: [PrimeVueResolver()]
-            })
+            }),
+            tailwindcss()
         ]
     },
-    // postcss: {
-    //     plugins: {
-    //         tailwindcss: {},
-    //         autoprefixer: {}
-    //     }
-    // },
     compatibilityDate: '2024-04-03',
     devtools: {
         enabled: false,

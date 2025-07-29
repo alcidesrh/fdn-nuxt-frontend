@@ -4,11 +4,11 @@
 
 
 .form-columns-2 {
-  @apply grid md:grid-cols-2 gap-4;
+  /* @apply grid md:grid-cols-2 gap-4; */
 }
 
 .form-columns-3 {
-  @apply grid md:grid-cols-3 gap-4;
+  /* @apply grid md:grid-cols-3 gap-4; */
 }
 
 .form-flex {

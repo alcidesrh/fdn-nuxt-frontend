@@ -155,7 +155,6 @@ export const createStore = <Type>(name: string) => {
             return;
         }
         const { onResult, loading } = apollo.query({ operation: 'columnsMetadataResource', variables: { resource: entity.value.name }, fields: ['data'] });
-
         onResult(({ data, networkStatus }) => {
             if (typeof data == 'undefined' && networkStatus == 1) {
                 return;
@@ -234,7 +233,6 @@ export const createStore = <Type>(name: string) => {
             collection.value.items = collectionResult;
             collection.value.loading = false;
         });
-
         watch(
             () => loading.value,
             (v) => {

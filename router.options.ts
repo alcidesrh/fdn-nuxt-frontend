@@ -22,6 +22,7 @@ export default {
                 },
                 {
                     path: '/usuarios',
+                    name: 'User',
                     meta: { label: 'usuarios', icon: 'icon-park-outline:every-user' },
 
                     children: [
@@ -48,6 +49,7 @@ export default {
 
                 {
                     path: '/menus',
+                    name: 'Menu',
                     meta: { label: 'menu', icon: 'icon-park-outline:tree-list' },
 
                     children: [
@@ -73,6 +75,7 @@ export default {
                 },
                 {
                     path: '/roles',
+                    name: 'Role',
                     meta: { label: 'role', icon: 'icon-park-outline:tree-list' },
 
                     children: [
@@ -97,6 +100,7 @@ export default {
                     ]
                 },
                 {
+                    name: 'Localidad',
                     path: '/localidades',
                     meta: { label: 'localidad', icon: 'icon-park-outline:tree-list' },
 
@@ -122,6 +126,7 @@ export default {
                     ]
                 },
                 {
+                    name: 'Nacion',
                     path: '/paises',
                     meta: { label: 'nacion', icon: 'icon-park-outline:tree-list' },
 
@@ -147,6 +152,7 @@ export default {
                     ]
                 },
                 {
+                    name: 'Permiso',
                     path: '/permisos',
                     meta: { label: 'permiso', icon: 'icon-park-outline:tree-list' },
 
@@ -172,6 +178,7 @@ export default {
                     ]
                 },
                 {
+                    name: 'Action',
                     path: '/actions',
                     meta: { label: 'action', icon: 'material-symbols:modeling-outline' },
 

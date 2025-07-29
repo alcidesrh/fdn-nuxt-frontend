@@ -1,9 +1,11 @@
+@reference '~/assets/styles.css';
+
 :root[class*='app-dark'] {
 
   .p-toast-message-error,
   .p-toast-message-info,
   .p-toast-message-success {
-    @apply bg-emerald-800/85;
+    @apply bg-emerald-300/20;
     border: 1px solid var(--p-emerald-400);
     padding-left: 15px;
     color: var(--text-color);
@@ -21,12 +23,12 @@
     }
 
     &.p-toast-message-error {
-      @apply bg-red-800/85;
-      border: 1px solid var(--p-red-400);
+      @apply bg-red-300/20;
+      border: 1px solid var(--p-red-300);
     }
 
     &.p-toast-message-info {
-      @apply bg-sky-800/85;
+      @apply bg-sky-300/20;
       border: 1px solid var(--p-sky-400);
     }
   }

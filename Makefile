@@ -306,7 +306,7 @@ db_port: ## up with xdebug
 	symfony var:export --multiline | grep DATABASE_SERVER
 
 debug-build:
-	XDEBUG_MODE=debug  APP_ENV=dev $(DOCKER_COMP) up --build  -d
+	$(DOCKER_COMP) up --build  -d
 debug:
 	XDEBUG_MODE=debug  APP_ENV=dev $(DOCKER_COMP) up -d
 

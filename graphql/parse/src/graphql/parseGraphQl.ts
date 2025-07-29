@@ -110,9 +110,8 @@ export class Entity<Type> {
                 const r2 = fdn.value.resources[r].fields.find((v) => v.name == 'node').type.name;
                 temp[v.name] = [{ edges: [{ node: fdn.value.resources[r2].fields.filter((v) => ['id', 'nombre'].includes(ofType.name)).map((v) => v.name) }] }];
             } else {
-                cl(fdn.value.resources[v.type.name].fields.map((v) => v.name));
-                temp[v.name] = fdn.value.resources[v.type.name].fields.map((v) => v.name);
-                // temp[v.name] = ['id', 'nombre'];
+                temp[v.name] = fdn.value.resources[v.type.name].fields.filter(v => !['OBJECT'].includes(v.type?.kind)).map((v) => v.name);
+
             }
             return temp;
         } else if (v.type.kind == 'LIST') {

@@ -1,22 +1,22 @@
 <template>
     <main>
-        <!-- <VitePwaManifest /> -->
         <NuxtLoadingIndicator />
         <div class="layout-wrapper" :class="{ mobil: isMobil }">
-            <div id="intersectionObservertarget" class="absolute top-4rem"></div>
+            <div id="intersectionObservertarget" class="top-4rem absolute"></div>
             <Topbar />
-            <MenuRoot />
-            <div v-if="fdn.isReady" id="layout-content" class="layout-content u-p-s relative" :class="[menuStore.mode]">
-                <div class="spinner-wraper z-20" :class="{ hidden: !(loading || mloading || gLoading) }">
-                    <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="3" fill="transparent" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
-                    <div></div>
+            <div class="flex h-full w-full">
+                <SidebarLeft />
+                <div v-if="fdn.isReady" id="layout-content" class="layout-content" :class="[sidebarLeftClass, sidebarRightClass]">
+                    <div class="spinner-wraper z-20" :class="{ hidden: !(loading || mloading || gLoading) }">
+                        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="3" fill="transparent" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+                        <div></div>
+                    </div>
+                    <div class="content u-p-l md: u-p-xl lg:u-p-5xl lg:u-py-l">
+                        <NuxtPage />
+                    </div>
                 </div>
-                <div class="content u-p-l md:u-p-xl lg:u-p-5xl lg:u-py-l z-10">
-                    <NuxtPage />
-                </div>
+                <SidebarRight v-if="fdn.isReady" />
             </div>
-
-            <div @click="menuStore.mode = 'close'" class="layout-mask animate-fadein" :class="{ active: mask }" />
 
             <div>
                 <toast-messages />
@@ -24,22 +24,22 @@
                 <ConfirmDialogCustom />
             </div>
         </div>
-        <SettingDrawer v-if="fdn.isReady" />
     </main>
 </template>
 
 <script setup lang="ts">
-import SettingDrawer from '~/pages/admin/SettingDrawer.vue';
 import { appName } from '~/constants';
 
 useHead({
     title: appName
 });
 const ui = useThemeStateStore();
-const menuStore = useMenuStateStore();
+const sidebarLeft = useSidebarStore('sidebarLeft');
+const sidebarRight = useSidebarStore('sidebarRight', 'right');
 const metadata = useMetadataStore();
 
-const mask = computed(() => menuStore.mode == 'normal' && isMobil);
+const sidebarLeftClass = computed(() => sidebarLeft.position + '-' + sidebarLeft.mode);
+const sidebarRightClass = computed(() => sidebarRight.position + '-' + sidebarRight.mode);
 
 onBeforeMount(() => {
     metadata.setApiMetadata();
