@@ -1,12 +1,12 @@
 import type { RouterConfig } from '@nuxt/schema';
 import { h, resolveComponent } from 'vue';
 export default {
-    // https://router.vuejs.org/api/interfaces/routeroptions.html#routes
+    // https://router.vuejs.org/api/interfaces/routeroptions.html#rou
     routes: (): any => [
         {
             name: 'home',
             path: '/',
-            component: () => import('~/pages/index.vue'),
+            // component: () => import('~/pages/index.vue'),
             meta: { label: 'inicio', icon: 'icon-park-outline:home' },
             children: [
                 {
@@ -204,6 +204,12 @@ export default {
                     ]
                 }
             ]
+        },
+        {
+            name: 'Login',
+            path: '/login',
+            component: () => import('~/pages/auth/Login.vue'),
+            meta: { icon: 'icon-park-outline:edit', type: 'action', action: 'login', route: 'action_login', layout: false }
         }
     ]
 } satisfies RouterConfig;

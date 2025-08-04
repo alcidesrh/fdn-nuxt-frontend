@@ -6,6 +6,14 @@
     src: url('/fonts/logo/FasterOne-Regular.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Fast-Track';
+    font-display: swap;
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+    src: url('/fonts/FAST-TRACK.ttf') format('truetype');
+}
+
 /* roboto-flex-latin-wght-normal */
 @font-face {
     font-family: 'Roboto Flex Variable';

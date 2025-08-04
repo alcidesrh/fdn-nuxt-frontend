@@ -24,17 +24,23 @@
     --content-width: 100%;
     --sidebar-background: var(--p-surface-contrast-0);
     --sidebar-width: 220px;
+    --topbar: 70px;
+    --sidebar-top: calc(var(--topbar) + 1rem);
+    --sidebar-height: calc(100vh - var(--topbar)* 2);
     --sidebar-small-width: 4rem;
     --sidebar-mini-width: 50px;
     --sidebar-width-r: 300px;
     --sidebar-small-width-r: 7rem;
     --sidebar-mini-width-r: 70px;
-    --background: var(--p-surface-contrast-200);
-    --topbar: 70px;
-    --shadow: 0px 0px 15px 1px var(--p-surface-contrast-100);
-    --shadow: 0 3px 5px 1px var(--p-surface-contrast-400),
-        0 5px 8px var(--p-surface-contrast-400),
-        0 1px 14px var(--p-surface-contrast-200);
+    --background: var(--p-surface-contrast-100);
+
+    /* --shadow: 0px 0px 15px 1px var(--p-surface-contrast-100); */
+    /* --shadow: 0 2px 5px 1px var(--p-surface-contrast-400); */
+    /* 0 0px 5px var(--p-surface-contrast-400), */
+    /* 0px 1px 14px var(--p-surface-contrast-300); */
+    --shadow: 0px 3px 7px 0px var(--p-surface-contrast-400);
+    /* 0px 3px 4px var(--p-surface-contrast-200),
+        0px 3px 7px var(--p-surface-contrast-600); */
     --border: 1px solid var(--p-surface-contrast-400);
 }
 

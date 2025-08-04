@@ -59,5 +59,5 @@ error.on((e: any) => {
 });
 </script>
 
-<style src="~/assets/layout/components/light/toast.css"></style>
-<style src="~/assets/layout/components/dark/toast.css"></style>
+<!-- <style src="~/assets/layout/components/light/toast.css"></style>
+<style src="~/assets/layout/components/dark/toast.css"></style> -->

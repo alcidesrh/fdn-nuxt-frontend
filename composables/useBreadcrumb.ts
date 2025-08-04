@@ -1,5 +1,8 @@
 const breadcrumb: any = ref();
 function breadcrumbReload(route) {
+    if (route.matched.length == 0) {
+        return {};
+    }
     let pathArray = route.path.split('/'),
         routeArray = route.matched[route.matched.length - 1].path.split('/');
     breadcrumb.value = pathArray.reduce((breadcrumbArray, path, idx) => {

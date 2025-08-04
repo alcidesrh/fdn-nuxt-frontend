@@ -1,7 +1,7 @@
 .layout-topbar {
     contain: layout;
     transition: all .3s;
-    height: 70px;
+    height: var(--topbar);
     position: fixed;
     top: 0px;
     z-index: 999;

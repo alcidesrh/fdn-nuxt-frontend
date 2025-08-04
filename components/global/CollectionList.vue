@@ -47,9 +47,9 @@ onMounted(() => {
     <div>
         <div v-if="collection.columns.length">
             <slot name="header">
-                <div class="flex flex-wrap justify-between u-mb-l">
+                <div class="u-mb-l flex flex-wrap justify-between">
                     <div>
-                        <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ entity.name }}</span>
+                        <span class="u-text-2 surface-contrast-600 font-medium capitalize">{{ entity.name }}</span>
                     </div>
 
                     <div class="flex flex-wrap gap-5">
@@ -79,7 +79,7 @@ onMounted(() => {
                 >
                     <template #loading>... ...buscando... ...</template>
                     <template #empty>
-                        <h5 class="m-auto my-5! text-slate-4 font-semibold w-fit">No hay información que mostrar</h5>
+                        <h5 class="my-5! text-slate-4 m-auto w-fit font-semibold">No hay información que mostrar</h5>
                     </template>
 
                     <div v-for="(c, i) in collection.columns" :key="i">
@@ -94,15 +94,15 @@ onMounted(() => {
                             </template>
                         </Column>
                     </div>
-                    <Column frozen alignFrozen="right" :showFilterMenu="false" :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined" class="text-center action-cell">
+                    <Column frozen alignFrozen="right" :showFilterMenu="false" :selectionMode="collection.menu == 'selection' ? 'multiple' : undefined" class="action-cell text-center">
                         <template #header>
-                            <div class="flex justify-center items-center w-full h-full">
+                            <div class="flex h-full w-full items-center justify-center">
                                 <CollectionMenu :collection="collection" :selected="selected.length" @removeMultiple="removeMultiple" />
                             </div>
                         </template>
                         <template v-if="collection.menu == 'editar'" #body="{ data }">
                             <slot name="action" :data="data">
-                                <div class="collection-action-wrapper flex gap-4 items-center justify-center w-full relative">
+                                <div class="collection-action-wrapper relative flex w-full items-center justify-center gap-4">
                                     <span class="flex items-center justify-center">
                                         <NuxtLink :to="{ name: entity.routes.edit, params: { id: data[field || '_id'] } }" class="absolute">
                                             <Icon name="icon-park-outline:pencil" class="action edit" mode="svg" />
@@ -117,7 +117,7 @@ onMounted(() => {
                     </Column>
                 </DataTable>
             </FormKit>
-            <div class="flex justify-center u-mb-l u-mt-s" v-if="collection.pagination?.totalCount">
+            <div class="u-mb-l u-mt-s flex justify-center" v-if="collection.pagination?.totalCount">
                 <paginate :collection="collection" />
             </div>
         </div>

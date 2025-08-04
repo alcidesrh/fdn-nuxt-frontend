@@ -94,15 +94,15 @@ function menuRootClick(e, $event) {
             }
 
             & .fdn-icon {
-                width: 25px;
-                height: 25px;
+                width: 30px;
+                height: 30px;
 
-                color: var(--p-surface-contrast-700);
+                color: var(--p-surface-contrast-500);
 
                 &:is(svg) {
                     & > * > *,
                     & > * {
-                        stroke-width: 2;
+                        stroke-width: 3;
                     }
                 }
 
