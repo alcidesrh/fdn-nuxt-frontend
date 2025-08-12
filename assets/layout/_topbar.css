@@ -7,101 +7,40 @@
     z-index: 999;
     width: 100%;
     min-width: 100%;
-    padding: 0 1rem;
 
     &>.layout-topbar-inner {
         position: relative;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
         align-items: center;
-        justify-content: space-between;
         height: 100%;
         width: 100%;
 
-        &>.layout-topbar-logo-container {
-            margin: auto;
-
-            .logo-fdn {
-                transition: all .3s;
-                /* width: 115px;
-                height: 115px; */
-                width: 60px !important;
-                height: 60px !important;
-                font-size: 42px;
-                justify-content: center;
-                align-items: center;
-                letter-spacing: 5px;
-                font-family: "Faster One", system-ui;
-                font-weight: 600;
-                border-radius: 999px;
-                color: var(--p-surface-contrast-500);
-                border: 1ch solid var(--p-surface-contrast-300);
-                /* opacity: .6; */
-            }
-        }
-
-        .layout-topbar-action {
-            display: inline-flex;
-            justify-content: center;
+        &>.layout-topbar-actions {
+            display: flex;
+            gap: 2rem;
             align-items: center;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
-            cursor: pointer;
-
-            &:hover {
-                background-color: var(--p-surface-hover);
-            }
-
-            i {
-                font-size: 1.25rem;
-            }
-
-            span {
-                font-size: 1rem;
-                display: none;
-            }
-
-            &.layout-topbar-action-highlight {
-                background-color: var(--p-primary-contrast-600);
-
-                &>i.pi {
-                    color: var(--p-primary-contrast-color);
-                }
-            }
+            position: fixed;
+            right: calc(var(--sidebar-small-width) + 2rem);
         }
 
-        .layout-topbar-actions {
-            margin-left: auto;
-            display: flex;
-            gap: 1rem;
-        }
 
-        .layout-topbar-menu-content {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .layout-config-menu {
-            display: flex;
-            gap: 1rem;
-        }
     }
 
     &>.topbar-bg {
-        transition: background-color .3s;
-        /* opacity: 0.6; */
+        /* transition: background-color .3s; */
     }
+
 }
 
 
 .layout-topbar.layout-topbar-sticky {
-    backdrop-filter: blur(3 px);
-    box-shadow: 0px 2px 5px var(--p-surface-contrast-400) !important;
+    backdrop-filter: blur(8px);
+    /* box-shadow: 0px 2px 5px var(--p-surface-contrast-400) !important; */
+    box-shadow: var(--shadow-small) !important;
     /* border-bottom: 2px solid var(--p-surface-contrast-300); */
 
     &>.topbar-bg {
-        background-color: var(--topbar-background);
+        background-color: --alpha(var(--p-surface-contrast-100)/50%);
     }
 
     .p-breadcrumb-item .surface-contrast-600,
@@ -109,39 +48,6 @@
         color: var(--p-surface-contrast-800) !important;
     }
 
-    & .layout-topbar-logo-container {
 
-        .logo-fdn {
-            align-items: center;
-            width: 50px !important;
-            height: 50px !important;
-            font-size: 30px !important;
-            border: 9px dashed var(--p-surface-contrast-400) !important;
-            color: var(--p-surface-contrast-600);
-            background-color: var(--p-surface-contrast-100);
-        }
-    }
-
-}
-
-.app-dark .layout-topbar {
-    & .layout-topbar-logo-container {
-        .logo-fdn {
-            color: var(--p-surface-contrast-500) !important;
-            border: 1ch solid var(--p-surface-contrast-200) !important;
-        }
-    }
-}
-
-.app-dark .layout-topbar.layout-topbar-sticky {
-
-    & .layout-topbar-logo-container {
-
-        .logo-fdn {
-            border: 9px dashed var(--p-surface-contrast-300) !important;
-            color: var(--p-surface-contrast-500) !important;
-            background-color: var(--p-surface-contrast-50) !important;
-        }
-    }
 
 }

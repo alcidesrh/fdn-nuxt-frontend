@@ -1,6 +1,7 @@
 <template>
     <IconField>
-        <InputText v-model="value" :id="context.id" :value="context._value" @input="handleInput" fluid :placeholder="context.placeholder" :size="context.size" />
+        <InputText v-if="context.number" :id="context.id" v-keyfilter.int :value="context._value" @input="handleInput" fluid :placeholder="context.placeholder" />
+        <Password v-else-if="context.password" :id="context.id" :value="context._value" @input="handleInput" fluid :placeholder="context.placeholder" />
         <InputIcon v-if="context.icon && value" class="surface-contrast-500" :class="context.icon" @click="reset" />
     </IconField>
 </template>

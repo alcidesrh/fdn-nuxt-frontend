@@ -1,6 +1,6 @@
 /* @import './lib/hint.min'; */
 @import './lib/toast.css';
-
+@import 'animate.css';
 @import 'primeicons/primeicons.css';
 
 @import "./_fonts";

@@ -1,10 +1,13 @@
 import { FetchError } from 'ofetch';
+import { User } from '~/types/user';
+// import { useUserSessionStore } from '~/stores/session';
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
     {
         const store = useUserSessionStore();
-        const { user } = store;
-
-        if (to.meta.auth && !user && to.name != 'Login') {
+        const { user } = store as Ref<Record<'user', User>>;
+        if (!user?.token && to.name != 'Login') {
+            store.authErrorAttempts = 1;
             store.redirectTo = to.path;
             return '/login';
         } else if (user?.token && !(to.name == 'Login' && store.authErrorAttempts)) {
@@ -28,10 +31,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 store.authErrorAttempts = 0;
                 return navigateTo('/', { redirectCode: 301 });
             }
-        } else if (!user?.token && to.name != 'Login') {
-            store.authErrorAttempts = 1;
-            store.redirectTo = to.path;
-            return '/login';
+
+            const { breadcrumbReload } = useBreadcrumb();
+            breadcrumbReload(to);
         }
     }
 });

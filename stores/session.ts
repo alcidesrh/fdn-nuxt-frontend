@@ -10,7 +10,7 @@ export interface setUserSession {
     uri?: string;
 }
 interface State {
-    user?: User;
+    user?: Ref<User>;
     isLoading: boolean;
     redirectTo?: string;
     error?: string;
@@ -22,7 +22,7 @@ interface State {
 export const useUserSessionStore = defineStore('userSession', {
     persist: true,
     state: (): State => ({
-        user: undefined,
+        user: ref(),
         isLoading: false,
         error: undefined,
         violations: undefined,
@@ -37,7 +37,7 @@ export const useUserSessionStore = defineStore('userSession', {
 
     actions: {
         setData({ user, isLoading, error, violations }: UserItemData<User>) {
-            this.setUserd(user.value);
+            this.setUser(user.value);
             this.setLoading(isLoading.value);
             this.setViolations(violations.value);
 

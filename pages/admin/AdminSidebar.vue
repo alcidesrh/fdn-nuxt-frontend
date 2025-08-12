@@ -59,7 +59,7 @@ const { position = 'left' } = defineProps<Props>();
 const visible = ref(false);
 
 const sidebar = ref();
-import { useSidebarStore } from '~/stores/menu/sidebar';
+import { useSidebarStore } from '~/stores/ui/sidebar';
 const sidebarStore = useSidebarStore('sidebarRight');
 const hover = ref(false);
 const hoverMode = ref(sidebarStore.mode == 'mini hover');

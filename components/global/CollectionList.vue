@@ -1,48 +1,3 @@
-<script setup lang="ts">
-interface Props {
-    store: any;
-    field?: string;
-}
-const { field = '_id', store } = defineProps<Props>();
-store.iniCollection();
-
-const { collection, entity } = storeToRefs(store);
-let data = ref({ loading: computed(() => collection.value.loading) });
-
-const selected = ref([]);
-
-function removeMultiple() {
-    store.removeMultiple(useCloned(selected.value).cloned);
-    selected.value = [];
-}
-
-const rowClass = (data) => {
-    return [{ 'row-mark': selected.value.map((i) => i['_id']).includes(data['_id'] as never) }];
-};
-
-onMounted(() => {
-    nextTick(() => (gLoading.value = false));
-});
-</script>
-<style scoped>
-::highlight(highlight-0),
-::highlight(highlight-1),
-::highlight(highlight-2),
-::highlight(highlight-3),
-::highlight(highlight-4),
-::highlight(highlight-5),
-::highlight(highlight-6),
-::highlight(highlight-7) {
-    background-color: #fde047;
-    color: black;
-}
-
-.w-min-100 {
-    max-width: 100px !important;
-    min-width: 100px``` `;
-}
-</style>
-
 <template>
     <div>
         <div v-if="collection.columns.length">
@@ -124,3 +79,42 @@ onMounted(() => {
         <skeleton-list v-else :columns="7" />
     </div>
 </template>
+<script setup lang="ts">
+interface Props {
+    store: any;
+    field?: string;
+}
+const { field = '_id', store } = defineProps<Props>();
+store.iniCollection();
+
+const { collection, entity } = storeToRefs(store);
+let data = ref({ loading: computed(() => collection.value.loading) });
+
+const selected = ref([]);
+
+function removeMultiple() {
+    store.removeMultiple(useCloned(selected.value).cloned);
+    selected.value = [];
+}
+
+const rowClass = (data) => {
+    return [{ 'row-mark': selected.value.map((i) => i['_id']).includes(data['_id'] as never) }];
+};
+
+onMounted(() => {
+    nextTick(() => (gLoading.value = false));
+});
+</script>
+<style scoped>
+::highlight(highlight-0),
+::highlight(highlight-1),
+::highlight(highlight-2),
+::highlight(highlight-3),
+::highlight(highlight-4),
+::highlight(highlight-5),
+::highlight(highlight-6),
+::highlight(highlight-7) {
+    background-color: #fde047;
+    color: black;
+}
+</style>

@@ -10,8 +10,7 @@ function breadcrumbReload(route) {
         if (path != routeArray[idx] && routeArray[idx].indexOf(':') != -1) {
             const last = breadcrumbArray.length - 1;
             breadcrumbArray[last].path = breadcrumbArray[last].path + '/' + path;
-            breadcrumbArray[last].label = routeArray[idx].replace(/:/, '') + ': ' + path + ' ';
-            breadcrumbArray[last].label;
+            breadcrumbArray[last].label = routeArray[idx].replace(/:.*/, '') + path + ' ';
             breadcrumbArray[last].icon = temp?.meta.icon || breadcrumbArray[last].icon;
         } else {
             (breadcrumbArray as any).push({
@@ -20,6 +19,7 @@ function breadcrumbReload(route) {
                 icon: temp?.meta.icon || null
             });
         }
+        cl(breadcrumbArray);
         return breadcrumbArray;
     }, []);
 }

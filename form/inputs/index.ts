@@ -3,6 +3,7 @@ import datepicker_primevue from './datepicker/datepicker';
 import select_primevue from './select/select';
 import multiselect_primevue from './multiselect/multiselect';
 import text_primevue from './text/text';
+import text_mixed_primevue from './text_mixed/text-mixed';
 import checkbox_primevue from './checkbox/checkox';
 import radio_primevue from './radio/radio';
 import textarea_primevue from './textarea/textarea';
@@ -31,5 +32,6 @@ export {
     multiselect_primevue,
     picklist_primevue,
     iconinput_primevue,
-    selectcascade_primevue
+    selectcascade_primevue,
+    text_mixed_primevue
 };

@@ -1,148 +1,30 @@
 import { defineStore } from 'pinia';
 
-export const useMenuStateStore = defineStore(
-    'useMenuState',
-    () => {
-        const mode = ref(isMobil ? 'close' : 'normal');
-        const menu = ref([
-            {
-                name: 'Boleto',
-                icon: 'icon-park-outline:tickets-checked',
-                open: true,
-                children: [
-                    {
-                        name: 'Emitir',
-                        icon: 'icon-park-outline:printer-two',
-                        to: '/usuarios'
-                    },
-                    {
-                        name: 'Chequear',
-                        icon: 'icon-park-outline:tickets-checked',
-                        to: ''
-                    },
-                    {
-                        name: 'Buscar',
-                        icon: 'icon-park-outline:search',
-                        to: ''
-                    },
-                    {
-                        name: 'Estadísticas',
-                        icon: 'icon-park-outline:market-analysis',
-                        to: ''
-                    }
-                ]
-            },
+export interface Menu {
+    toggle: Ref<boolean>;
+    menu: Ref<Array<any>>;
+}
 
-            {
-                name: 'Encomienda',
-                icon: 'icon-park-outline:dropbox',
-                open: true,
-                children: [
-                    {
-                        name: 'Registrar',
-                        icon: 'icon-park-outline:printer-one',
-                        to: ''
-                    },
-                    {
-                        name: 'Entregar',
-                        icon: 'icon-park-outline:delivery',
-                        to: ''
-                    },
-                    {
-                        name: 'Buscar',
-                        icon: 'icon-park-outline:search',
-                        open: true,
-                        children: [
-                            {
-                                name: 'Emitir',
-                                icon: 'icon-park-outline:printer-one',
-                                to: ''
-                            },
-                            {
-                                name: 'Chequear',
-                                icon: 'icon-park-outline:tickets-checked',
-                                to: ''
-                            },
-                            {
-                                name: 'Buscar',
-                                icon: 'icon-park-outline:search',
-                                to: ''
-                            },
-                            {
-                                name: 'Estadísticas',
-                                icon: 'icon-park-outline:search',
-                                to: ''
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Procesar',
-                        icon: 'icon-park-outline:rotating-forward',
-                        to: ''
-                    }
-                ]
-            },
+const definedStores = new Map<string, ReturnType<typeof createStore>>();
 
-            {
-                name: 'Salidas',
-                open: true,
-                icon: 'icon-park-outline:tree-diagram',
-                children: [
-                    {
-                        name: 'Registrar',
-                        icon: 'icon-park-outline:printer-one',
-                        to: ''
-                    },
-                    {
-                        name: 'Entregar',
-                        icon: 'icon-park-outline:delivery',
-                        to: ''
-                    },
-                    {
-                        name: 'Buscar',
-                        icon: 'icon-park-outline:search',
-                        to: ''
-                    },
-                    {
-                        name: 'Procesar',
-                        icon: 'icon-park-outline:rotating-forward',
-                        to: ''
-                    }
-                ]
-            },
-            {
-                name: 'Clientes',
-                open: true,
-                icon: 'icon-park-outline:every-user',
-                children: [
-                    {
-                        name: 'Registrar',
-                        icon: 'icon-park-outline:printer-one',
-                        to: ''
-                    },
-                    {
-                        name: 'Entregar',
-                        icon: 'icon-park-outline:delivery',
-                        to: ''
-                    },
-                    {
-                        name: 'Buscar',
-                        icon: 'icon-park-outline:search',
-                        to: ''
-                    },
-                    {
-                        name: 'Procesar',
-                        icon: 'icon-park-outline:rotating-forward',
-                        to: ''
-                    }
-                ]
-            }
-        ]);
-
-        return {
-            menu,
-            mode
-        };
+const storeFactory = (storeId: string, menu: Array<any>) => {
+    if (!definedStores.has(storeId)) {
+        definedStores.set(storeId, createStore(storeId, menu));
     }
-    // { persist: true }
-);
+
+    return definedStores.get(storeId) as ReturnType<typeof createStore>;
+};
+function createStore(storeId: string, menu: Array<any>) {
+    return defineStore(storeId, {
+        // persist: true,
+        state: (): Menu => {
+            return {
+                toggle: ref(true),
+                menu: ref(menu)
+            };
+        }
+    });
+}
+export const useMenuStateStore = (storeId: string, menu: Array<any>) => {
+    return storeFactory(storeId, menu)();
+};

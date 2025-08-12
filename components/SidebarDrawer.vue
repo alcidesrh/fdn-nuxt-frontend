@@ -1,7 +1,7 @@
 <template>
-    <div @mouseover="hoverMouse = true" @mouseleave="hoverMouse = false" :class="[`toggle-sidebar`, `${sidebarStore.position}`, `${sidebarStore.mode}`, openDialbtn ? 'open-dialbtn' : '']" severity="contrast" variant="outlined" raised>
+    <div @mouseover="hoverFloatButton = true" @mouseleave="hoverFloatButton = false" :class="[`toggle-sidebar`, `${sidebarStore.position}`, `${sidebarStore.mode}`, openDialbtn ? 'open-dialbtn' : '']" severity="contrast" variant="outlined" raised>
         <!-- <icon :name="sidebarStore.position == 'left' ? `icon-park-outline:right-two` : `material-symbols-light:settings-account-box-outline-sharp`" mode="svg" /> -->
-        <SpeedDial @show="openDialbtn = true" @hide="openDialbtn = false" :model="items" :radius="120" type="quarter-circle" :direction="sidebarStore.position == 'left' ? 'up-right' : 'up-left'" :tooltipOptions="{ position: 'left' }">
+        <SpeedDial @show="openDialbtn = true" @hide="openDialbtn = false" :model="items" :radius="120" type="quarter-circle" :direction="sidebarStore.position == 'left' ? 'down-right' : 'down-left'" :tooltipOptions="{ position: 'left' }">
             <template #button="{ toggleCallback }">
                 <div @click="toggleCallback" data-pc-name="pcbutton" class="menu-btn">
                     <icon :name="sidebarStore.position == 'left' ? `mdi:bus-clock` : `material-symbols:person-celebrate`" mode="svg" />
@@ -14,7 +14,7 @@
             </template>
         </SpeedDial>
     </div>
-    <div @mouseover="hoverMouse2 = true" @mouseleave="hoverMouse2 = false" ref="sidebar" class="wrap-sidebar" :class="[sidebarStore.position, sidebarStore.mode, classes]">
+    <div @mouseover="hoverSidebar = true" @mouseleave="hoverSidebar = false" ref="sidebar" class="wrap-sidebar" :class="[sidebarStore.position, sidebarStore.mode, classes]">
         <div class="sidebar-control" :class="[sidebarStore.position]">
             <div :class="[sidebarStore.position, sidebarStore.mode]">
                 <div :class="{ selected: hoverMode && sidebarStore.mode == modes.close }" @click="toggleSidebar()"></div>
@@ -33,7 +33,7 @@
             <slot name="content" :data="sidebarStore"></slot>
         </aside>
     </div>
-    <div @mouseover="hoverMouse3 = true" @mouseleave="hoverMouse3 = false" class="toggle-sidebar-lateral" :class="[sidebarStore.position, sidebarStore.mode]"></div>
+    <div @mouseover="hoverScreenEdge = true" @mouseleave="hoverScreenEdge = false" class="toggle-sidebar-lateral" :class="[sidebarStore.position, sidebarStore.mode]"></div>
 </template>
 <style src="~/assets/layout/admin/sidebar.css" />
 
@@ -48,9 +48,9 @@ const { position = 'left', classes = '', storeId } = defineProps<Props>();
 const sidebar = ref();
 const sidebarStore = useSidebarStore(storeId, position);
 const modes = sidebarStore.modeStates;
-const hoverMouse = ref(false);
-const hoverMouse2 = ref(false);
-const hoverMouse3 = ref(false);
+const hoverFloatButton = ref(false);
+const hoverSidebar = ref(false);
+const hoverScreenEdge = ref(false);
 const hoverMode = ref(sidebarStore.mode == modes.onhover);
 let prevMode = sidebarStore.mode;
 const openDialbtn = ref(false);
@@ -63,7 +63,7 @@ const { start, isPending, stop } = useTimeoutFn(
 );
 
 watch(
-    () => hoverMouse.value,
+    () => hoverFloatButton.value,
     (n) => {
         if (!n && sidebarStore.mode == modes.onhover) {
             start();
@@ -76,7 +76,7 @@ watch(
     }
 );
 watch(
-    () => hoverMouse3.value,
+    () => hoverScreenEdge.value,
     (n) => {
         if (n && sidebarStore.mode == modes.close) {
             sidebarStore.mode = modes.onhover;
@@ -84,7 +84,7 @@ watch(
     }
 );
 watch(
-    () => hoverMouse2.value,
+    () => hoverSidebar.value,
     (n) => {
         if (sidebarStore.mode == modes.onhover) {
             if (!n) {

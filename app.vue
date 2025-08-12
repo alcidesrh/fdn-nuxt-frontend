@@ -6,6 +6,12 @@
     </NuxtLayout>
 </template>
 <script setup lang="ts">
+import { User } from './types/user';
+
+const store = useUserSessionStore();
+const { user: userFromStore } = store;
+user.value = userFromStore as User;
+
 const { progress, isLoading, start, finish, clear } = useLoadingIndicator({
     duration: 2000,
     throttle: 200,

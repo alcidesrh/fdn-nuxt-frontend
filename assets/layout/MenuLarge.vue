@@ -1,3 +1,26 @@
+<script setup>
+const props = defineProps({
+    menu: {
+        type: Object,
+        default: null
+    },
+    mode: {
+        type: String,
+        default: 'normal'
+    },
+    root: {
+        type: Boolean,
+        default: false
+    }
+});
+const route = useRoute();
+
+function menuRootClick(e, $event) {
+    $event.preventDefault();
+    e.open = !e.open;
+}
+</script>
+
 <template>
     <ol v-if="root" class="layout-menu">
         <MenuLarge :mode="mode" :menu="menu" />
@@ -38,29 +61,6 @@
         </Transition>
     </li>
 </template>
-<script setup>
-const props = defineProps({
-    menu: {
-        type: Object,
-        default: null
-    },
-    mode: {
-        type: String,
-        default: 'normal'
-    },
-    root: {
-        type: Boolean,
-        default: false
-    }
-});
-const route = useRoute();
-
-function menuRootClick(e, $event) {
-    $event.preventDefault();
-    e.open = !e.open;
-}
-</script>
-
 <style scoped>
 .layout-menu > li {
     margin-bottom: 15px;

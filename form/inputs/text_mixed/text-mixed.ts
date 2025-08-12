@@ -1,5 +1,5 @@
 import { createInput } from '@formkit/vue';
-import textprimevue from './text-primevue.vue';
+import textprimevue from './text-mixed-primevue.vue';
 const props = {
     modelValue: null,
     size: {
@@ -23,12 +23,12 @@ const props = {
         default: ''
     }
 };
-const text_primevue = createInput(textprimevue);
+const text_mixed_primevue = createInput(textprimevue);
 
-if (!text_primevue.props) {
-    text_primevue.props = [];
+if (!text_mixed_primevue.props) {
+    text_mixed_primevue.props = [];
 }
 
-text_primevue.props = [...text_primevue.props, ...Object.keys(props)];
+text_mixed_primevue.props = [...text_mixed_primevue.props, ...Object.keys(props)];
 
-export default text_primevue;
+export default text_mixed_primevue;

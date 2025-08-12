@@ -4,7 +4,8 @@
 
 
 .form-columns-2 {
-  /* @apply grid md:grid-cols-2 gap-4; */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .form-columns-3 {
@@ -50,4 +51,15 @@ form.medium {
   /* float: left; */
   /* margin-left: auto; */
   /* margin-bottom: auto; */
+}
+
+.formkit-form {
+  &>.formkit-messages {
+    position: absolute;
+    bottom: 0;
+
+    &>.formkit-message[data-message-type="error"] {
+      font-size: 1rem;
+    }
+  }
 }

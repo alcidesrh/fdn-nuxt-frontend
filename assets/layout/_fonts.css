@@ -7,12 +7,12 @@
 }
 
 @font-face {
-    font-family: 'Fast-Track';
-    font-display: swap;
+    font-family: 'diplomata-sc-regular';
     font-weight: 100 1000;
     font-stretch: 25% 151%;
-    src: url('/fonts/FAST-TRACK.ttf') format('truetype');
+    src: url('/fonts/Orbitron-VariableFont_wght.ttf');
 }
+
 
 /* roboto-flex-latin-wght-normal */
 @font-face {
