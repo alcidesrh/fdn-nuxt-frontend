@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-size: 16px;
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: .2rem;
+    height: .5rem;
+    /* display: none; */
+    background-color: var(--p-surface-0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: var(--p-slate-400);
+    height: 5px;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background);
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: normal;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+
+}
+
+#__nuxt {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+/* .layout-enter-active, */
+/* .layout-leave-active, */
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.5s;
+}
+
+.page-enter-from,
+.page-leave-to {
+    transition: all 0.5s;
+    opacity: 0;
+    filter: blur(5px);
+    /* filter: grayscale(1); */
+}
+
+.layout-submenu-enter-from,
+.layout-submenu-leave-to {
+    max-height: 0;
+}
+
+.layout-submenu-enter-to,
+.layout-submenu-leave-from {
+    max-height: 1000px;
+}
+
+.layout-submenu-leave-active {
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+}
+
+.layout-submenu-enter-active {
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+}
+
+
+.spinner-wraper {
+    top: -70px;
+    left: 0px;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+    &>div {
+        &:nth-of-type(1) {
+            z-index: 20;
+
+            &>svg>circle {
+                stroke: var(--p-surface-contrast-400) !important;
+            }
+        }
+
+        &:nth-of-type(2) {
+            /* filter: blur(10px); */
+            background-color: var(--p-surface-contrast-50);
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: .7;
+        }
+    }
+}

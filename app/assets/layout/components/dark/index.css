@@ -1,0 +1,9 @@
+@import "./datatable";
+@import "./picklist";
+
+:root[class*='app-dark'] {
+  .form-header {
+    display: flex;
+    @apply bg-slate-700/40;
+  }
+}

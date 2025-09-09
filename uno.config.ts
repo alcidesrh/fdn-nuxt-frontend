@@ -10,7 +10,7 @@ import {
     type Rule
 } from 'unocss';
 
-import { utopiarules } from './utils/unocss_rules';
+import { utopiarules } from './app/utils/unocss_rules';
 
 export default defineConfig({
     rules: [...(utopiarules as Rule<object>[])],

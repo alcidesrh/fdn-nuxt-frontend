@@ -10,7 +10,7 @@ FROM node_upstream AS base
 # hadolint ignore=DL3018
 RUN apk add --no-cache libc6-compat
 
-WORKDIR /fdn_frontend
+WORKDIR /frontend
 
 RUN corepack enable && \
 	corepack prepare --activate pnpm@latest && \
@@ -40,15 +40,15 @@ RUN	pnpm install --frozen-lockfile --offline --prod && \
 # Production image, copy all the files and run next
 FROM node_upstream AS prod
 
-WORKDIR /fdn_frontend
+WORKDIR /frontend
 
 ENV NODE_ENV production
 
 # RUN addgroup --system --gid 1001 nodejs; \
 # 	adduser --system --uid 1001 nuxtjs
 
-COPY --from=builder --link /fdn_frontend/.output ./.output
-COPY --from=builder --link /fdn_frontend/public ./public
+COPY --from=builder --link /frontend/.output ./.output
+COPY --from=builder --link /frontend/public ./public
 EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
