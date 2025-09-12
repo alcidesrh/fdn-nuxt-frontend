@@ -1,18 +1,18 @@
-import inflection from "inflection";
-import type { FieldType } from "../Field.js";
+import type { FieldType } from '../Field.js'
+import inflection from 'inflection'
 
-const getType = (openApiType: string, format?: string): FieldType => {
+function getType(openApiType: string, format?: string): FieldType {
   if (format) {
     switch (format) {
-      case "int32":
-      case "int64":
-        return "integer";
+      case 'int32':
+      case 'int64':
+        return 'integer'
       default:
-        return inflection.camelize(format.replace("-", "_"), true);
+        return inflection.camelize(format.replace('-', '_'), true)
     }
   }
 
-  return openApiType;
-};
+  return openApiType
+}
 
-export default getType;
+export default getType

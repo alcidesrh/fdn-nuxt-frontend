@@ -1,23 +1,10 @@
-<template>
-  <div>
-    <!-- <pre>
-      {{ entity.item }}
-    </pre> -->
-    <CrudForm :form-id="'menuForm'" @submit="submit" :data="data" :store="store"
-      :arg="$route.params.id ? { id: $route.params.id } : null" />
-  </div>
-</template>
-
-
 <script setup lang="ts">
-
 const store = useMenuStore()
 const actionStore = useActionStore()
 
-
 const { entity, items } = storeToRefs(store)
 store.getItems()
-const { items: actions } = storeToRefs(actionStore) 
+const { items: actions } = storeToRefs(actionStore)
 actionStore.getItems()
 const parent = computed(() => items.value.filter(v => entity.value.item.id != v.value && (entity.value.item?.children ? !entity.value.item?.children || !entity.value.item?.children.includes(v.value) : true)))
 const children = computed(() => items.value.filter(v => entity.value.item.id != v.value && v.value != entity.value.item.parent))
@@ -29,9 +16,8 @@ const data = ref({
   children: computed(() => children.value),
   twoColumnClass: 'flex flex-wrap  xl:justify-center gap-10',
   types: [{ label: 'Root', value: 'root' }, { label: 'Submenu', value: 'submenu_root' }, { label: 'Leaft', value: 'leaft' }],
-  icon: computed(() => entity.value.item.icon)
+  icon: computed(() => entity.value.item.icon),
 })
-
 
 // watch(() => entity.value.item, (v) => {
 
@@ -40,5 +26,16 @@ const data = ref({
 //   channel.postMessage(temp);
 
 // }, { deep: true })
-
 </script>
+
+<template>
+  <div>
+    <!-- <pre>
+      {{ entity.item }}
+    </pre> -->
+    <CrudForm
+      form-id="menuForm" :data="data" :store="store" :arg="$route.params.id ? { id: $route.params.id } : null"
+      @submit="submit"
+    />
+  </div>
+</template>

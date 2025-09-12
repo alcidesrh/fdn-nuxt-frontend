@@ -1,9 +1,9 @@
-export const msg = useEventBus('msg');
+export const msg = useEventBus('msg')
 
-const error = useEventBus('error');
+const error = useEventBus('error')
 
-export const merror = (msg: any) => error.emit(msg);
+export const merror = (msg: any) => error.emit(msg)
 
-export const msgbus = (b) => {
-    return useEventBus(b);
-};
+export function msgbus(b) {
+  return useEventBus(b)
+}

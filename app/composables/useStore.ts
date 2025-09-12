@@ -1,89 +1,88 @@
-import { watch, type Ref } from "vue";
-import { useChangeCase } from "@vueuse/integrations/useChangeCase.mjs";
-import type { SelectOption } from "~/types/fdn";
-import type { Collection } from "~/types/collection";
+import type { Ref } from 'vue'
+import type { Collection } from '~/types/collection'
+import type { SelectOption } from '~/types/fdn'
+import { useChangeCase } from '@vueuse/integrations/useChangeCase.mjs'
+import { watch } from 'vue'
 
-export const createStore = <Type>(
-  name: string,
-  options: Record<string, any> = {}
-) => {
+export function createStore<Type>(name: string, options: Record<string, any> = {}) {
   const collection: Ref<Collection> = ref({
     resource: name,
-    menu: "editar",
+    menu: 'editar',
     columns: [],
     pagination: {} as any,
     items: [],
-    orderField: "id",
-    orderType: "ASC",
+    orderField: 'id',
+    orderType: 'ASC',
     loading: false,
     hasFilter: false,
     vars: {
       page: 1,
       itemsPerPage: 15,
-      order: [{ id: "ASC" }],
+      order: [{ id: 'ASC' }],
     },
-    query: useChangeCase(name, "camelCase").value + "s",
-  });
-  const items: Ref<Array<SelectOption> | []> = ref([]);
+    query: `${useChangeCase(name, 'camelCase').value}s`,
+  })
+  const items: Ref<Array<SelectOption> | []> = ref([])
 
-  const entity = ref(new Entity<Type>(name));
+  const entity = ref(new Entity<Type>(name))
 
-  const formkitSchema = ref([]);
+  const formkitSchema = ref([])
 
-  let chanel = "";
+  let chanel = ''
 
-  let unsubscribe: any;
+  let unsubscribe: any
 
   function setFormkitSchema(args = null) {
     entity.value.item = {} as any;
     (async (params) => {
       if (formkitSchema.value.length == 0) {
         await apollo.query(params).then(({ data, networkStatus }) => {
-          if (typeof data == "undefined" && networkStatus == 1) {
-            return;
+          if (typeof data == 'undefined' && networkStatus == 1) {
+            return
           }
           formkitSchema.value = useCloned(
-            data[entity.value.endpoints.form].schema
-          ).cloned.value;
-        });
+            data[entity.value.endpoints.form].schema,
+          ).cloned.value
+        })
       }
       if (args) {
-        resource(args);
-      } else {
-        entity.value.item = {};
+        resource(args)
+      }
+      else {
+        entity.value.item = {}
       }
     })({
       operation: entity.value.endpoints.form,
       variables: { entity: entity.value.name },
-      fields: ["schema"],
-    });
+      fields: ['schema'],
+    })
   }
   function resource(variables?) {
     if (!variables) {
-      return false;
+      return false
     }
-    if (typeof variables != "object") {
-      args = { id: args };
+    if (typeof variables != 'object') {
+      args = { id: args }
     }
 
     if (variables.id) {
-      variables.id = entity.value.getIriFromId(variables.id);
+      variables.id = entity.value.getIriFromId(variables.id)
     }
 
     const params = {
       operation: entity.value.endpoints.get,
-      variables: variables,
-      poptions: { fetchPolicy: "network-only" },
+      variables,
+      poptions: { fetchPolicy: 'network-only' },
       fields: entity.value.getQueryFields(),
-    };
+    }
     const { onResult, loading } = apollo.query(params).then(({ data }) => {
-      if (typeof data == "undefined") {
-        return;
+      if (typeof data == 'undefined') {
+        return
       }
-      let temp = data[entity.value.endpoints.get];
-      const { y: scrollY } = useWindowScroll();
-      scrollY.value = 0;
-      temp = useCloned(temp).cloned.value;
+      let temp = data[entity.value.endpoints.get]
+      const { y: scrollY } = useWindowScroll()
+      scrollY.value = 0
+      temp = useCloned(temp).cloned.value
       // Object.keys(temp).forEach((v) => {
       //     if (typeof temp[v] == 'object') {
       //         if (typeof temp[v]?.collection != 'undefined') {
@@ -94,14 +93,14 @@ export const createStore = <Type>(
       //         // }
       //     }
       // });
-      entity.value.item = temp;
-      if (typeof entity.value.item.id == "undefined") {
+      entity.value.item = temp
+      if (typeof entity.value.item.id == 'undefined') {
         entity.value.item.id = getIriFromId(
           entity.value.item._id,
-          entity.value.name
-        );
+          entity.value.name,
+        )
       }
-    });
+    })
 
     // onResult(({ data }) => {
     //     if (typeof data == 'undefined') {
@@ -129,75 +128,73 @@ export const createStore = <Type>(
   }
   function unsubscribeChanel() {
     if (typeof unsubscribe != undefined && unsubscribe) {
-      unsubscribe();
+      unsubscribe()
     }
   }
   function remove(arg?) {
-    const temp = arg || entity.value.item;
-    unsubscribeChanel();
-    chanel = random();
-    msgbus("remove").emit({
-      chanel: chanel,
-      header: "Eliminar",
-      message: getAlertText("remove", temp?.nombre || "este elemento."),
-    });
+    const temp = arg || entity.value.item
+    unsubscribeChanel()
+    chanel = random()
+    msgbus('remove').emit({
+      chanel,
+      header: 'Eliminar',
+      message: getAlertText('remove', temp?.nombre || 'este elemento.'),
+    })
     unsubscribe = msgbus(chanel).on((v: any) => {
-      unsubscribeChanel();
-      const fields = {};
-      fields[entity.value.camelCase] = ["id"];
+      unsubscribeChanel()
+      const fields = {}
+      fields[entity.value.camelCase] = ['id']
       const { onDone } = apollo.remove(
         entity.value.endpoints.delete,
         { id: getIriFromId(temp._id, entity.value.name) },
-        fields
-      );
+        fields,
+      )
       onDone(() => {
-        msg.emit(getAlertText("remove_after"));
-        reload();
-        const router = useRouter();
-        router.push({ name: entity.value.routes.list });
-        return;
-      });
-    });
+        msg.emit(getAlertText('remove_after'))
+        reload()
+        const router = useRouter()
+        router.push({ name: entity.value.routes.list })
+      })
+    })
   }
   function removeMultiple(items: Ref<[any]> | any) {
-    unsubscribeChanel();
-    chanel = random();
-    let text = "";
+    unsubscribeChanel()
+    chanel = random()
+    let text = ''
 
-    text = getAlertText("remove", `${items.value.length} elementos`);
+    text = getAlertText('remove', `${items.value.length} elementos`)
 
-    msgbus("remove").emit({ chanel: chanel, message: text });
+    msgbus('remove').emit({ chanel, message: text })
     unsubscribe = msgbus(chanel).on((v: any) => {
-      unsubscribeChanel();
-      const fields = { agnostic: ["id"] };
-      const temp = Array.isArray(items.value) ? items.value : [items];
+      unsubscribeChanel()
+      const fields = { agnostic: ['id'] }
+      const temp = Array.isArray(items.value) ? items.value : [items]
       const { onDone } = apollo.remove(
-        "deleteAgnostic",
+        'deleteAgnostic',
         { resource: entity.value.name, ids: temp.map((i: any) => i._id) },
-        fields
-      );
+        fields,
+      )
       onDone(() => {
-        msg.emit(getAlertText("remove_after"));
-        reload();
-        const router = useRouter();
-        router.push({ name: entity.value.routes.list });
-        return;
-      });
-    });
+        msg.emit(getAlertText('remove_after'))
+        reload()
+        const router = useRouter()
+        router.push({ name: entity.value.routes.list })
+      })
+    })
   }
   function getItems(force = false) {
     if (!force && items.value.length != 0) {
-      return;
+      return
     }
     const { onResult } = apollo
       .collectionAgnostic(entity.value.name)
       .then(({ data, networkStatus }) => {
-        if (typeof data == "undefined" && networkStatus == 1) {
-          return;
+        if (typeof data == 'undefined' && networkStatus == 1) {
+          return
         }
-        items.value = data.collectionAgnostic.data.collection;
+        items.value = data.collectionAgnostic.data.collection
       })
-      .catch((error) => {});
+      .catch((error) => {})
 
     // onResult(({ data, networkStatus }) => {
     //     if (typeof data == 'undefined' && networkStatus == 1) {
@@ -208,26 +205,26 @@ export const createStore = <Type>(
   }
   function iniCollection() {
     if (collection.value.columns.length) {
-      getCollection();
-      return;
+      getCollection()
+      return
     }
     apollo
       .query({
-        operation: "columnsMetadataResource",
+        operation: 'columnsMetadataResource',
         variables: { resource: entity.value.name },
-        fields: ["data"],
+        fields: ['data'],
       })
       .then(({ data, networkStatus }) => {
-        if (typeof data == "undefined" && networkStatus == 1) {
-          return;
+        if (typeof data == 'undefined' && networkStatus == 1) {
+          return
         }
         entity.value.setColumns(
-          data.columnsMetadataResource.data.collection.map((v) => v.name)
-        );
-        setColumns(data.columnsMetadataResource.data);
-        getCollection();
+          data.columnsMetadataResource.data.collection.map(v => v.name),
+        )
+        setColumns(data.columnsMetadataResource.data)
+        getCollection()
       })
-      .catch((error) => {});
+      .catch((error) => {})
     // onResult(({ data, networkStatus }) => {s// });
     // watch(
     //     () => loading.value,
@@ -237,71 +234,75 @@ export const createStore = <Type>(
     // );
   }
   function setColumns(data) {
-    collection.value.hasFilter = data.filter as boolean;
+    collection.value.hasFilter = data.filter as boolean
     collection.value.columns = (data.collection as any).map((i) => {
-      let temp: any = useCloned(i).cloned.value;
+      const temp: any = useCloned(i).cloned.value
       if (temp.schema) {
-        const eventbus = `filterinput_${temp.schema.name}_resource`;
-        temp.schema = { ...temp.schema, ...{ eventbus: eventbus } };
-        collection.value.vars[temp.schema.name] = null;
+        const eventbus = `filterinput_${temp.schema.name}_resource`
+        temp.schema = { ...temp.schema, ...{ eventbus } }
+        collection.value.vars[temp.schema.name] = null
 
         msgbus(eventbus).on((v: any) => {
-          collection.value.loading = v;
-        });
+          collection.value.loading = v
+        })
       }
 
-      return temp;
-    });
+      return temp
+    })
   }
   function reload() {
-    getCollection({ fetchPolicy: "network-only" });
+    getCollection({ fetchPolicy: 'network-only' })
   }
   function sortCollection(d: string) {
-    const col = collection.value.columns.find((i) => i.name == d);
-    if (typeof col != "undefined") {
-      d = col.name;
+    const col = collection.value.columns.find(i => i.name == d)
+    if (typeof col != 'undefined') {
+      d = col.name
     }
     if (collection.value.orderField == d) {
-      if (collection.value.orderType == "ASC") {
-        collection.value.orderType = "DESC";
-      } else if (collection.value.orderType == "DESC") {
-        collection.value.orderField = "";
-        collection.value.orderType = "";
+      if (collection.value.orderType == 'ASC') {
+        collection.value.orderType = 'DESC'
       }
-    } else if (d) {
-      collection.value.vars.page = 1;
-      collection.value.orderField = d;
-      collection.value.orderType = "ASC";
-    } else {
-      collection.value.orderField = "";
-      collection.value.orderType = "";
+      else if (collection.value.orderType == 'DESC') {
+        collection.value.orderField = ''
+        collection.value.orderType = ''
+      }
+    }
+    else if (d) {
+      collection.value.vars.page = 1
+      collection.value.orderField = d
+      collection.value.orderType = 'ASC'
+    }
+    else {
+      collection.value.orderField = ''
+      collection.value.orderType = ''
     }
 
     if (!collection.value.orderField) {
-      collection.value.vars.order = [{}];
-    } else {
+      collection.value.vars.order = [{}]
+    }
+    else {
       // const
-      const order = {} as any;
-      order[collection.value.orderField] = collection.value.orderType;
-      collection.value.vars.order = [order];
+      const order = {} as any
+      order[collection.value.orderField] = collection.value.orderType
+      collection.value.vars.order = [order]
     }
   }
   function getCollection(fetchPolicy = {}) {
     apollo
       .collection(collection, entity.value.getColumnsFields(), fetchPolicy)
       .then(({ data, networkStatus }) => {
-        if (typeof data == "undefined" && networkStatus == 1) {
-          return;
+        if (typeof data == 'undefined' && networkStatus == 1) {
+          return
         }
-        const { y: scrollY } = useWindowScroll();
-        scrollY.value = 0;
-        const { collection: collectionResult, paginationInfo } =
-          data[collection.value.query];
-        collection.value.pagination = paginationInfo;
-        collection.value.items = collectionResult;
-        collection.value.loading = false;
+        const { y: scrollY } = useWindowScroll()
+        scrollY.value = 0
+        const { collection: collectionResult, paginationInfo }
+          = data[collection.value.query]
+        collection.value.pagination = paginationInfo
+        collection.value.items = collectionResult
+        collection.value.loading = false
       })
-      .catch((error) => {});
+      .catch((error) => {})
     // onResult(({ data, networkStatus }) => {
     //     if (typeof data == 'undefined' && networkStatus == 1) {
     //         return;
@@ -325,31 +326,31 @@ export const createStore = <Type>(
       operation: entity.value.getMutationOperation(),
       variables: { input: Entity.prepareVariables(entity.value.item) },
       fields: entity.value.getMutationFields(),
-    });
-    gLoading.value = true;
+    })
+    gLoading.value = true
     onDone((data) => {
-      entity.value.item = {} as any;
-      msg.emit(getAlertText("update"));
-      reload();
-      const router = useRouter();
-      router.push({ name: entity.value.routes.list });
-    });
+      entity.value.item = {} as any
+      msg.emit(getAlertText('update'))
+      reload()
+      const router = useRouter()
+      router.push({ name: entity.value.routes.list })
+    })
   }
   watch(
     () => collection.value.items,
     () => {
-      nextTick(() => highlighted(collection));
-    }
-  );
+      nextTick(() => highlighted(collection))
+    },
+  )
   watch(
     () => collection.value.vars,
     () => getCollection(),
-    { deep: true }
-  );
+    { deep: true },
+  )
 
   msgbus(`filterinput_${resource}`).on((v: any) => {
-    collection.value.loading = v;
-  });
+    collection.value.loading = v
+  })
   return {
     collection,
     getItems,
@@ -363,5 +364,5 @@ export const createStore = <Type>(
     sortCollection,
     submit,
     items,
-  };
-};
+  }
+}

@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import type { Role } from "~/types/role";
+import type { Role } from '~/types/role'
+import { defineStore } from 'pinia'
 
 export const useRoleStore = defineStore(
-  "roleStore",
+  'roleStore',
   () => {
     const {
       collection,
@@ -17,9 +17,9 @@ export const useRoleStore = defineStore(
       iniCollection,
       sortCollection,
       submit,
-    } = createStore<Role>("Role");
+    } = createStore<Role>('Role')
 
-    const options = [];
+    const options = []
 
     return {
       collection,
@@ -35,8 +35,8 @@ export const useRoleStore = defineStore(
       iniCollection,
       sortCollection,
       options,
-    };
-  }
+    }
+  },
   // {
   //     persist: {
   //         afterHydrate: (ctx) => {
@@ -47,4 +47,4 @@ export const useRoleStore = defineStore(
   //         }
   //     }
   // }
-);
+)

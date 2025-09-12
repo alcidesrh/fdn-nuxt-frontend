@@ -1,16 +1,7 @@
-<template>
-  <IconField>
-    <InputText :id="props.context.id" v-keyfilter.int v-model="typing" :defaultValue="context._value" @input="keyDown"
-      fluid :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" />
-    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
-  </IconField>
-
-</template>
-
 <script setup>
-import InputText from 'primevue/inputtext';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
+import IconField from 'primevue/iconfield'
+import InputIcon from 'primevue/inputicon'
+import InputText from 'primevue/inputtext'
 
 const props = defineProps({
   context: Object,
@@ -23,7 +14,6 @@ const { start: startError, isPending: isPendingError, stop: stopError } = useTim
   loading.value = false
   msgbus(props.context.eventbus).emit(false)
   merror()
-
 }, 5000, { immediate: false })
 
 const { start, isPending, stop } = useTimeoutFn(() => {
@@ -37,7 +27,6 @@ const { start, isPending, stop } = useTimeoutFn(() => {
   }
   props.context.node.input(value)
   startError()
-
 }, 1000, { immediate: false })
 
 function keyDown() {
@@ -50,11 +39,9 @@ function keyDown() {
   }
 }
 watch(() => props.context.loading, (v) => {
-
   if (!v) {
     if (isPending) {
       stop()
-
     }
     if (isPendingError) {
       stopError()
@@ -65,7 +52,6 @@ watch(() => props.context.loading, (v) => {
       nextTick(() => el.focus())
       inputId.value = 0
     }
-
   }
 })
 
@@ -77,3 +63,13 @@ function reset() {
   props.context.node.input(null)
 }
 </script>
+
+<template>
+  <IconField>
+    <InputText
+      :id="props.context.id" v-model="typing" v-keyfilter.int :default-value="context._value" fluid
+      :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" @input="keyDown"
+    />
+    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
+  </IconField>
+</template>

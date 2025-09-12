@@ -1,4 +1,4 @@
-import { resolveDynamicComponent, ref } from 'vue'
+import { resolveDynamicComponent } from 'vue'
 
 const icons = {
   'header-menu': {},

@@ -1,16 +1,16 @@
-import { defineStore } from "pinia";
-import { Empresa } from "~~/types/empresa";
-import type { SubmissionErrors } from "~~/types/error";
-import { CreateItemData } from "~~/types/api";
+import type { CreateItemData } from '~~/types/api'
+import type { Empresa } from '~~/types/empresa'
+import type { SubmissionErrors } from '~~/types/error'
+import { defineStore } from 'pinia'
 
 interface State {
-  created?: Empresa;
-  isLoading: boolean;
-  error?: string;
-  violations?: SubmissionErrors;
+  created?: Empresa
+  isLoading: boolean
+  error?: string
+  violations?: SubmissionErrors
 }
 
-export const useEmpresaCreateStore = defineStore("empresaCreate", {
+export const useEmpresaCreateStore = defineStore('empresaCreate', {
   state: (): State => ({
     created: undefined,
     isLoading: false,
@@ -25,29 +25,29 @@ export const useEmpresaCreateStore = defineStore("empresaCreate", {
       error,
       violations,
     }: CreateItemData<Empresa>) {
-      this.setCreated(created.value);
-      this.setLoading(isLoading.value);
-      this.setViolations(violations.value);
+      this.setCreated(created.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setCreated(created?: Empresa) {
-      this.created = created;
+      this.created = created
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setError(error: string | undefined) {
-      this.error = error;
+      this.error = error
     },
 
     setViolations(violations: SubmissionErrors | undefined) {
-      this.violations = violations;
+      this.violations = violations
     },
   },
-});
+})

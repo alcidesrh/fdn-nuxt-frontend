@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { FDN } from "~~/types/fdn";
+import type { FDN } from '~~/types/fdn'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: FDN;
-  mercureDeleted?: FDN;
-  isLoading: boolean;
-  error?: string;
+  deleted?: FDN
+  mercureDeleted?: FDN
+  isLoading: boolean
+  error?: string
 }
 
-export const useFDNDeleteStore = defineStore("fdnDelete", {
+export const useFDNDeleteStore = defineStore('fdnDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useFDNDeleteStore = defineStore("fdnDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: FDN) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: FDN | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

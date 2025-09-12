@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Venta } from "~~/types/venta";
+import type { Venta } from '~~/types/venta'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Venta;
-  mercureDeleted?: Venta;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Venta
+  mercureDeleted?: Venta
+  isLoading: boolean
+  error?: string
 }
 
-export const useVentaDeleteStore = defineStore("ventaDelete", {
+export const useVentaDeleteStore = defineStore('ventaDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useVentaDeleteStore = defineStore("ventaDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Venta) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Venta | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

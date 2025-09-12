@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const props = defineProps(['value', 'attrs', 'label', 'icon'])
+
+const tabs = ref([
+  { title: 'Title 1', content: 'Content 1', value: '0' },
+])
+
+const { icon, label } = props.attrs
+</script>
+
 <template>
   <div>
     <Accordion v-bind="attrs" pt:root:class="border-none">
@@ -10,20 +20,8 @@
         </AccordionHeader>
         <AccordionContent>
           <slot v-bind="value" />
-
         </AccordionContent>
       </AccordionPanel>
     </Accordion>
   </div>
 </template>
-
-<script setup lang="ts">
-const tabs = ref([
-  { title: 'Title 1', content: 'Content 1', value: '0' },
-]);
-
-const props = defineProps(['value', 'attrs', 'label', 'icon'])
-
-const { icon, label } = props.attrs
-
-</script>

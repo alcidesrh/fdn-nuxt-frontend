@@ -1,28 +1,14 @@
-<template>
-  <div>
-    <ConfirmDialog>
-      <template #closeicon>
-        <close @close="hidden" />
-
-      </template>
-      <template #message="{ message }">
-        <span v-html="message.message" class="u-text-1"></span>
-      </template>
-    </ConfirmDialog>
-  </div>
-
-</template>
 <script setup lang="ts">
-
-import { useConfirm } from "primevue/useconfirm";
+import { useConfirm } from 'primevue/useconfirm'
 
 const props = defineProps({
   toggle: Boolean,
-  data: Object
+  data: Object,
 })
+const emit = defineEmits(['accept', 'hide'])
+
 const chanel = ref('')
 
-const emit = defineEmits(['accept', 'hide'])
 let unsubscribe
 
 const data = {
@@ -34,15 +20,15 @@ const data = {
     rejectProps: {
       label: 'Cancelar',
       severity: 'secondary',
-      outlined: true
+      outlined: true,
     },
     acceptProps: {
       label: 'Eliminar',
-      severity: 'danger'
+      severity: 'danger',
     },
     accept: () => {
       if (chanel.value) {
-        msgbus(chanel.value).emit(true);
+        msgbus(chanel.value).emit(true)
         msgbus(chanel.value).off(unsubscribe)
       }
       else {
@@ -54,14 +40,15 @@ const data = {
     },
     onHide: () => {
       emit('hide')
-    }
-  }, ...props.data
+    },
+  },
+  ...props.data,
 }
-const confirm = useConfirm();
+const confirm = useConfirm()
 
 watch(() => props.toggle, (v) => {
   if (v) {
-    confirm.require(data);
+    confirm.require(data)
   }
   else {
     confirm.close()
@@ -69,16 +56,27 @@ watch(() => props.toggle, (v) => {
 })
 
 unsubscribe = msgbus(`remove`).on((v: any) => {
-
-  confirm.require({ ...data, ...v, header: 'Eliminar' });
+  confirm.require({ ...data, ...v, header: 'Eliminar' })
 
   if (v.chanel) {
     chanel.value = v.chanel
   }
-});
+})
 
 onUnmounted(() => {
   unsubscribe()
 })
-
 </script>
+
+<template>
+  <div>
+    <ConfirmDialog>
+      <template #closeicon>
+        <close @close="hidden" />
+      </template>
+      <template #message="{ message }">
+        <span class="u-text-1" v-html="message.message" />
+      </template>
+    </ConfirmDialog>
+  </div>
+</template>

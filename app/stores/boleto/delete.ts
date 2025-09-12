@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Boleto } from "~~/types/boleto";
+import type { Boleto } from '~~/types/boleto'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Boleto;
-  mercureDeleted?: Boleto;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Boleto
+  mercureDeleted?: Boleto
+  isLoading: boolean
+  error?: string
 }
 
-export const useBoletoDeleteStore = defineStore("boletoDelete", {
+export const useBoletoDeleteStore = defineStore('boletoDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useBoletoDeleteStore = defineStore("boletoDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Boleto) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Boleto | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

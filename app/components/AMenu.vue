@@ -1,153 +1,160 @@
-<template>
-    <div v-if="root" class="menu-wraper" :class="[mode, clases, position]">
-        <Icon
-            name="icon-park-outline:double-down"
-            @click="toggleMenu"
-            class="toggle-menu"
-            :class="{ open: toggle }"
-            mode="svg"
-            size="25"
-        />
-
-        <ol class="layout-menu">
-            <AMenu :mode="mode" :menu="menu" :position="position" />
-        </ol>
-    </div>
-    <li v-else v-for="(menuitem, index) in menu" :key="`_root${index}`">
-        <div
-            v-if="menuitem.children"
-            @click="menuRootClick(menuitem, $event)"
-            class="menu-root"
-        >
-            <div class="menu-icon">
-                <Icon
-                    :name="menuitem.icon"
-                    mode="svg"
-                    :class="{ root: root }"
-                />
-            </div>
-            <div class="truncate">{{ menuitem.label }}</div>
-            <Icon
-                name="icon-park-outline:down"
-                class="menu-toggle-icon [&>*]:stroke-2"
-                :class="{ open: menuitem.open }"
-                size="24"
-                mode="svg"
-            />
-        </div>
-
-        <a
-            v-if="menuitem.href"
-            :href="menuitem.href"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <div v-if="menuitem.icon" class="menu-icon">
-                <i :class="menuitem.icon"></i>
-            </div>
-            <div>{{ menuitem.label }}</div>
-        </a>
-
-        <NuxtLink
-            v-if="typeof menuitem.to != 'undefined' || menuitem.name"
-            :to="
-                !menuitem.name
-                    ? menuitem.to
-                    : { name: menuitem.name, params: menuitem.params }
-            "
-        >
-            <div class="menu-icon">
-                <Icon :name="menuitem.icon" mode="svg" />
-            </div>
-            <div class="truncate">{{ menuitem.label }}</div>
-        </NuxtLink>
-
-        <span v-if="menuitem.subcategory" class="menu-child-category">{{
-            menuitem.label
-        }}</span>
-
-        <Transition name="layout-submenu">
-            <div
-                v-show="
-                    menuitem.children &&
-                    (isActiveRootmenuItem(menuitem) || menuitem.open)
-                "
-            >
-                <ol>
-                    <AMenu
-                        :mode="mode"
-                        :menu="menuitem.children"
-                        :root="false"
-                        :position="position"
-                    ></AMenu>
-                </ol>
-            </div>
-        </Transition>
-        <!-- <div v-if="menuitem.children && root" class="w-55% mt-0.5rem mb-1rem m-auto border-t border-slate-300" /> -->
-    </li>
-</template>
 <script setup lang="ts">
-// import { Down } from '@icon-park/vue-next';
-const emit = defineEmits(["toggle"]);
 const props = defineProps({
-    menu: {
-        type: Array<any>,
-        default: null,
-    },
-    mode: {
-        type: String,
-        default: "normal",
-    },
-    root: {
-        type: Boolean,
-        default: false,
-    },
-    toggle: {
-        type: Boolean,
-    },
-    clases: {
-        type: String,
-        default: "",
-    },
-    position: {
-        type: String,
-        default: "left",
-    },
-});
-const router = useRouter();
-const toggle = ref(props.toggle);
+  menu: {
+    type: Array<any>,
+    default: null,
+  },
+  mode: {
+    type: String,
+
+    default: 'normal',
+  },
+  root: {
+    type: Boolean,
+    default: false,
+  },
+  toggle: {
+    type: Boolean,
+  },
+  clases: {
+    type: String,
+    default: '',
+  },
+  position: {
+    type: String,
+    default: 'left',
+  },
+})
+// import { Down } from '@icon-park/vue-next';
+const emit = defineEmits(['toggle'])
+const router = useRouter()
+const toggle = ref(props.toggle)
 
 function isActiveRootmenuItem(menuitem) {
-    return menuitem.children.some(
-        (item) =>
-            item.to ===
-                `/${router.currentRoute.value?.label?.replaceAll("-", "/")}` ||
-            (item.children &&
-                item.children.some(
-                    (it) => it.to === `/${router.currentRoute.value.label}`
-                ))
-    );
+  return menuitem.children.some(
+    item =>
+      item.to
+      === `/${router.currentRoute.value?.label?.replaceAll('-', '/')}`
+      || (item.children
+        && item.children.some(
+          it => it.to === `/${router.currentRoute.value.label}`,
+        )),
+  )
 }
 function menuRootClick(e, $event) {
-    $event.preventDefault();
-    e.open = !e.open;
+  $event.preventDefault()
+  e.open = !e.open
 }
 function toggleMenu() {
-    toggle.value = !toggle.value;
-    emit("toggle");
-    const recursv = (pmenu: Array<any>, toggle) => {
-        for (let index = 0; index < pmenu.length; index++) {
-            if (typeof pmenu[index].open != "undefined") {
-                pmenu[index].open = toggle;
-            }
-            if (typeof pmenu[index].children != "undefined") {
-                recursv(pmenu[index].children, toggle);
-            }
-        }
-    };
-    recursv(props.menu, toggle.value);
+  toggle.value = !toggle.value
+  emit('toggle')
+  const recursv = (pmenu: Array<any>, toggle) => {
+    for (let index = 0; index < pmenu.length; index++) {
+      if (typeof pmenu[index].open != 'undefined') {
+        pmenu[index].open = toggle
+      }
+      if (typeof pmenu[index].children != 'undefined') {
+        recursv(pmenu[index].children, toggle)
+      }
+    }
+  }
+  recursv(props.menu, toggle.value)
 }
 </script>
+
+<template>
+  <div v-if="root" class="menu-wraper" :class="[mode, clases, position]">
+    <Icon
+      name="icon-park-outline:double-down"
+      class="toggle-menu"
+      :class="{ open: toggle }"
+      mode="svg"
+      size="25"
+      @click="toggleMenu"
+    />
+
+    <ol class="layout-menu">
+      <AMenu :mode="mode" :menu="menu" :position="position" />
+    </ol>
+  </div>
+  <li v-for="(menuitem, index) in menu" v-else :key="`_root${index}`">
+    <div
+      v-if="menuitem.children"
+      class="menu-root"
+      @click="menuRootClick(menuitem, $event)"
+    >
+      <div class="menu-icon">
+        <Icon
+          :name="menuitem.icon"
+          mode="svg"
+          :class="{ root }"
+        />
+      </div>
+      <div class="truncate">
+        {{ menuitem.label }}
+      </div>
+      <Icon
+        name="icon-park-outline:down"
+        class="menu-toggle-icon [&>*]:stroke-2"
+        :class="{ open: menuitem.open }"
+        size="24"
+        mode="svg"
+      />
+    </div>
+
+    <a
+      v-if="menuitem.href"
+      :href="menuitem.href"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div v-if="menuitem.icon" class="menu-icon">
+        <i :class="menuitem.icon" />
+      </div>
+      <div>{{ menuitem.label }}</div>
+    </a>
+
+    <NuxtLink
+      v-if="typeof menuitem.to != 'undefined' || menuitem.name"
+      :to="
+        !menuitem.name
+          ? menuitem.to
+          : { name: menuitem.name, params: menuitem.params }
+      "
+    >
+      <div class="menu-icon">
+        <Icon :name="menuitem.icon" mode="svg" />
+      </div>
+      <div class="truncate">
+        {{ menuitem.label }}
+      </div>
+    </NuxtLink>
+
+    <span v-if="menuitem.subcategory" class="menu-child-category">{{
+      menuitem.label
+    }}</span>
+
+    <Transition name="layout-submenu">
+      <div
+        v-show="
+          menuitem.children
+            && (isActiveRootmenuItem(menuitem) || menuitem.open)
+        "
+      >
+        <ol>
+          <AMenu
+            :mode="mode"
+            :menu="menuitem.children"
+            :root="false"
+            :position="position"
+          />
+        </ol>
+      </div>
+    </Transition>
+    <!-- <div v-if="menuitem.children && root" class="w-55% mt-0.5rem mb-1rem m-auto border-t border-slate-300" /> -->
+  </li>
+</template>
+
 <style scoped>
 .menu-wraper {
     display: grid;
@@ -159,11 +166,11 @@ function toggleMenu() {
         margin: auto;
         color: var(--p-surface-contrast-500);
         margin-bottom: 10px;
-        position: absolute;
+         position: absolute;
         margin-left: 3px;
         top: 10px;
         left: 15px;
-        & >>> path {
+        & :deep(path)  {
             stroke-width: 3px;
             /* display: none; */
         }

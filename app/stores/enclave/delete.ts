@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Enclave } from "~~/types/enclave";
+import type { Enclave } from '~~/types/enclave'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Enclave;
-  mercureDeleted?: Enclave;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Enclave
+  mercureDeleted?: Enclave
+  isLoading: boolean
+  error?: string
 }
 
-export const useEnclaveDeleteStore = defineStore("enclaveDelete", {
+export const useEnclaveDeleteStore = defineStore('enclaveDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useEnclaveDeleteStore = defineStore("enclaveDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Enclave) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Enclave | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

@@ -1,8 +1,9 @@
-<template>
-    <div>
-        <collection-list :store="store" :field="'username'"></collection-list>
-    </div>
-</template>
 <script setup lang="ts">
-const store = useUserStore();
+const store = useUserStore()
 </script>
+
+<template>
+  <div>
+    <collection-list :store="store" field="username" />
+  </div>
+</template>

@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Salida } from "~~/types/salida";
+import type { Salida } from '~~/types/salida'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Salida;
-  mercureDeleted?: Salida;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Salida
+  mercureDeleted?: Salida
+  isLoading: boolean
+  error?: string
 }
 
-export const useSalidaDeleteStore = defineStore("salidaDelete", {
+export const useSalidaDeleteStore = defineStore('salidaDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useSalidaDeleteStore = defineStore("salidaDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Salida) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Salida | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

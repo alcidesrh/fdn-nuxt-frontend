@@ -1,19 +1,19 @@
-import { defineStore } from "pinia";
-import type { RecorridoAsientoPrecio } from "~~/types/recorridoasientoprecio";
-import type { SubmissionErrors } from "~~/types/error";
-import { FetchItemData, UpdateItemData } from "~~/types/api";
+import type { FetchItemData, UpdateItemData } from '~~/types/api'
+import type { SubmissionErrors } from '~~/types/error'
+import type { RecorridoAsientoPrecio } from '~~/types/recorridoasientoprecio'
+import { defineStore } from 'pinia'
 
 interface State {
-  updated?: RecorridoAsientoPrecio;
-  retrieved?: RecorridoAsientoPrecio;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
-  violations?: SubmissionErrors;
+  updated?: RecorridoAsientoPrecio
+  retrieved?: RecorridoAsientoPrecio
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
+  violations?: SubmissionErrors
 }
 
 export const useRecorridoAsientoPrecioUpdateStore = defineStore(
-  "recorridoasientoprecioUpdate",
+  'recorridoasientoprecioUpdate',
   {
     state: (): State => ({
       updated: undefined,
@@ -31,12 +31,12 @@ export const useRecorridoAsientoPrecioUpdateStore = defineStore(
         error,
         hubUrl,
       }: FetchItemData<RecorridoAsientoPrecio>) {
-        this.setRetrieved(retrieved.value);
-        this.setLoading(isLoading.value);
-        this.setHubUrl(hubUrl.value);
+        this.setRetrieved(retrieved.value)
+        this.setLoading(isLoading.value)
+        this.setHubUrl(hubUrl.value)
 
         if (error.value instanceof Error) {
-          this.setError(error.value?.message);
+          this.setError(error.value?.message)
         }
       },
 
@@ -46,38 +46,38 @@ export const useRecorridoAsientoPrecioUpdateStore = defineStore(
         error,
         violations,
       }: UpdateItemData<RecorridoAsientoPrecio>) {
-        this.setUpdated(updated.value);
-        this.setLoading(isLoading.value);
-        this.setViolations(violations.value);
+        this.setUpdated(updated.value)
+        this.setLoading(isLoading.value)
+        this.setViolations(violations.value)
 
         if (error.value instanceof Error) {
-          this.setError(error.value?.message);
+          this.setError(error.value?.message)
         }
       },
 
       setRetrieved(retrieved?: RecorridoAsientoPrecio) {
-        this.retrieved = retrieved;
+        this.retrieved = retrieved
       },
 
       setUpdated(updated?: RecorridoAsientoPrecio) {
-        this.updated = updated;
+        this.updated = updated
       },
 
       setHubUrl(hubUrl?: URL) {
-        this.hubUrl = hubUrl;
+        this.hubUrl = hubUrl
       },
 
       setLoading(isLoading: boolean) {
-        this.isLoading = isLoading;
+        this.isLoading = isLoading
       },
 
       setError(error?: string) {
-        this.error = error;
+        this.error = error
       },
 
       setViolations(violations?: SubmissionErrors) {
-        this.violations = violations;
+        this.violations = violations
       },
     },
-  }
-);
+  },
+)

@@ -1,15 +1,15 @@
-import { defineStore } from "pinia";
-import type { RecorridoAsientoPrecio } from "~~/types/recorridoasientoprecio";
+import type { RecorridoAsientoPrecio } from '~~/types/recorridoasientoprecio'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: RecorridoAsientoPrecio;
-  mercureDeleted?: RecorridoAsientoPrecio;
-  isLoading: boolean;
-  error?: string;
+  deleted?: RecorridoAsientoPrecio
+  mercureDeleted?: RecorridoAsientoPrecio
+  isLoading: boolean
+  error?: string
 }
 
 export const useRecorridoAsientoPrecioDeleteStore = defineStore(
-  "recorridoasientoprecioDelete",
+  'recorridoasientoprecioDelete',
   {
     state: (): State => ({
       deleted: undefined,
@@ -20,20 +20,20 @@ export const useRecorridoAsientoPrecioDeleteStore = defineStore(
 
     actions: {
       setLoading(isLoading: boolean) {
-        this.isLoading = isLoading;
+        this.isLoading = isLoading
       },
 
       setDeleted(deleted: RecorridoAsientoPrecio) {
-        this.deleted = deleted;
+        this.deleted = deleted
       },
 
       setMercureDeleted(mercureDeleted: RecorridoAsientoPrecio | undefined) {
-        this.mercureDeleted = mercureDeleted;
+        this.mercureDeleted = mercureDeleted
       },
 
       setError(error: string) {
-        this.error = error;
+        this.error = error
       },
     },
-  }
-);
+  },
+)

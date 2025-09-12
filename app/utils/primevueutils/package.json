@@ -1,5 +1,5 @@
 {
-    "main": "./utils.mjs",
-    "module": "./utils.mjs",
-    "types": "./Utils.d.ts"
+  "main": "./utils.mjs",
+  "module": "./utils.mjs",
+  "types": "./Utils.d.ts"
 }

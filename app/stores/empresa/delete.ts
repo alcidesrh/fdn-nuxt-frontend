@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Empresa } from "~~/types/empresa";
+import type { Empresa } from '~~/types/empresa'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Empresa;
-  mercureDeleted?: Empresa;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Empresa
+  mercureDeleted?: Empresa
+  isLoading: boolean
+  error?: string
 }
 
-export const useEmpresaDeleteStore = defineStore("empresaDelete", {
+export const useEmpresaDeleteStore = defineStore('empresaDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useEmpresaDeleteStore = defineStore("empresaDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Empresa) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Empresa | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

@@ -9,6 +9,6 @@ export function assignSealed<
       configurable: false,
 
       value: src[key],
-    });
-  });
+    })
+  })
 }

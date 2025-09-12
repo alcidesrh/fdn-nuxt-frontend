@@ -1,18 +1,18 @@
-import { defineStore } from "pinia";
-import type { BoletoLog } from "~~/types/boletolog";
-import type { SubmissionErrors } from "~~/types/error";
-import { FetchItemData, UpdateItemData } from "~~/types/api";
+import type { FetchItemData, UpdateItemData } from '~~/types/api'
+import type { BoletoLog } from '~~/types/boletolog'
+import type { SubmissionErrors } from '~~/types/error'
+import { defineStore } from 'pinia'
 
 interface State {
-  updated?: BoletoLog;
-  retrieved?: BoletoLog;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
-  violations?: SubmissionErrors;
+  updated?: BoletoLog
+  retrieved?: BoletoLog
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
+  violations?: SubmissionErrors
 }
 
-export const useBoletoLogUpdateStore = defineStore("boletologUpdate", {
+export const useBoletoLogUpdateStore = defineStore('boletologUpdate', {
   state: (): State => ({
     updated: undefined,
     retrieved: undefined,
@@ -24,12 +24,12 @@ export const useBoletoLogUpdateStore = defineStore("boletologUpdate", {
 
   actions: {
     setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<BoletoLog>) {
-      this.setRetrieved(retrieved.value);
-      this.setLoading(isLoading.value);
-      this.setHubUrl(hubUrl.value);
+      this.setRetrieved(retrieved.value)
+      this.setLoading(isLoading.value)
+      this.setHubUrl(hubUrl.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
@@ -39,37 +39,37 @@ export const useBoletoLogUpdateStore = defineStore("boletologUpdate", {
       error,
       violations,
     }: UpdateItemData<BoletoLog>) {
-      this.setUpdated(updated.value);
-      this.setLoading(isLoading.value);
-      this.setViolations(violations.value);
+      this.setUpdated(updated.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setRetrieved(retrieved?: BoletoLog) {
-      this.retrieved = retrieved;
+      this.retrieved = retrieved
     },
 
     setUpdated(updated?: BoletoLog) {
-      this.updated = updated;
+      this.updated = updated
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
 
     setViolations(violations?: SubmissionErrors) {
-      this.violations = violations;
+      this.violations = violations
     },
   },
-});
+})

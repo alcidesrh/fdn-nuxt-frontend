@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Asiento } from "~~/types/asiento";
+import type { Asiento } from '~~/types/asiento'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Asiento;
-  mercureDeleted?: Asiento;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Asiento
+  mercureDeleted?: Asiento
+  isLoading: boolean
+  error?: string
 }
 
-export const useAsientoDeleteStore = defineStore("asientoDelete", {
+export const useAsientoDeleteStore = defineStore('asientoDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useAsientoDeleteStore = defineStore("asientoDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Asiento) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Asiento | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

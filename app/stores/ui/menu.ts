@@ -1,30 +1,30 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export interface Menu {
-    toggle: Ref<boolean>;
-    menu: Ref<Array<any>>;
+  toggle: Ref<boolean>
+  menu: Ref<Array<any>>
 }
 
-const definedStores = new Map<string, ReturnType<typeof createStore>>();
+const definedStores = new Map<string, ReturnType<typeof createStore>>()
 
-const storeFactory = (storeId: string, menu: Array<any>) => {
-    if (!definedStores.has(storeId)) {
-        definedStores.set(storeId, createStore(storeId, menu));
-    }
+function storeFactory(storeId: string, menu: Array<any>) {
+  if (!definedStores.has(storeId)) {
+    definedStores.set(storeId, createStore(storeId, menu))
+  }
 
-    return definedStores.get(storeId) as ReturnType<typeof createStore>;
-};
+  return definedStores.get(storeId) as ReturnType<typeof createStore>
+}
 function createStore(storeId: string, menu: Array<any>) {
-    return defineStore(storeId, {
-        // persist: true,
-        state: (): Menu => {
-            return {
-                toggle: ref(true),
-                menu: ref(menu)
-            };
-        }
-    });
+  return defineStore(storeId, {
+    // persist: true,
+    state: (): Menu => {
+      return {
+        toggle: ref(true),
+        menu: ref(menu),
+      }
+    },
+  })
 }
-export const useMenuStateStore = (storeId: string, menu: Array<any>) => {
-    return storeFactory(storeId, menu)();
-};
+export function useMenuStateStore(storeId: string, menu: Array<any>) {
+  return storeFactory(storeId, menu)()
+}

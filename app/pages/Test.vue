@@ -1,18 +1,3 @@
-<template>
-  <card>
-    <template #content>
-      <div class="relative">
-        <FormKit type="form" :actions="false" v-model="data">
-          <FormKitSchema :schema="schema" :data="data" />
-          <FormKit type="checkbox_fdn" label_fdn="Nombre" />
-        </FormKit>
-        {{ data }}
-      </div>
-    </template>
-  </card>
-</template>
-
-
 <script setup>
 const props = defineProps({
   context: Object,
@@ -25,7 +10,7 @@ const data = ref({
   radio: '',
   textarea: '',
   toggleswitch: '',
-  autoComplete: ''
+  autoComplete: '',
 })
 const schema = [
   {
@@ -38,7 +23,7 @@ const schema = [
     name: 'date',
     help: 'Select your household income',
     selectionMode: 'range',
-    testing: 'sirvio'
+    testing: 'sirvio',
   },
   {
     $formkit: 'text_primevue',
@@ -68,14 +53,14 @@ const schema = [
             },
           },
         ],
-      }
-    }
+      },
+    },
   },
   {
     $formkit: 'texticon_fdn',
     name: 'texticon_fdn',
     icon: 'pi pi-search',
-    iconPosition: 'left'
+    iconPosition: 'left',
   },
   {
     $formkit: 'checkbox_fdn',
@@ -90,8 +75,8 @@ const schema = [
       { name: 'Rome', code: 'RM' },
       { name: 'London', code: 'LDN' },
       { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' }
-    ]
+      { name: 'Paris', code: 'PRS' },
+    ],
   },
   {
     $formkit: 'select_fdn',
@@ -102,8 +87,8 @@ const schema = [
       { name: 'Rome', code: 'RM' },
       { name: 'London', code: 'LDN' },
       { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' }
-    ]
+      { name: 'Paris', code: 'PRS' },
+    ],
   },
   {
     $formkit: 'textarea_fdn',
@@ -115,7 +100,7 @@ const schema = [
   },
   {
     $formkit: 'button_fdn',
-  }
+  },
 ]
 
 const cities = ref([
@@ -123,6 +108,20 @@ const cities = ref([
   { name: 'Rome', code: 'RM' },
   { name: 'London', code: 'LDN' },
   { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
-]);
+  { name: 'Paris', code: 'PRS' },
+])
 </script>
+
+<template>
+  <card>
+    <template #content>
+      <div class="relative">
+        <FormKit v-model="data" type="form" :actions="false">
+          <FormKitSchema :schema="schema" :data="data" />
+          <FormKit type="checkbox_fdn" label_fdn="Nombre" />
+        </FormKit>
+        {{ data }}
+      </div>
+    </template>
+  </card>
+</template>

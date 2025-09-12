@@ -1,12 +1,9 @@
+<script setup lang="ts">
+const store = useRoleStore()
+</script>
+
 <template>
   <div>
-    <collection-list :store="store">
-
-    </collection-list>
+    <collection-list :store="store" />
   </div>
 </template>
-<script setup lang="ts">
-
-const store = useRoleStore()
-
-</script>

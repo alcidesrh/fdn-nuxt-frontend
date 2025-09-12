@@ -1,11 +1,11 @@
-import { defineStore } from "pinia";
-import type { Permiso } from "~/types/permiso";
+import type { Permiso } from '~/types/permiso'
+import { defineStore } from 'pinia'
 
 export const usePermisoStore = defineStore(
-  "permisoStore",
+  'permisoStore',
   () => {
     // const { collection, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, items, getItems, entity, iniCollection, sortCollection, submit } =
-    return createStore<Permiso>("Permiso");
+    return createStore<Permiso>('Permiso')
 
     return {
       collection,
@@ -20,8 +20,8 @@ export const usePermisoStore = defineStore(
       entity,
       iniCollection,
       sortCollection,
-    };
-  }
+    }
+  },
   // {
   //     persist: {
   //         afterHydrate: (ctx) => {
@@ -32,4 +32,4 @@ export const usePermisoStore = defineStore(
   //         }
   //     }
   // }
-);
+)

@@ -1,23 +1,20 @@
 interface ResourceValue {
-  id?: string;
-  title: string;
+  id?: string
+  title: string
 }
 
-type ParsedJsonReplacerResult = ResourceValue | string | null;
+type ParsedJsonReplacerResult = ResourceValue | string | null
 
-const parsedJsonReplacer = (
-  key: string,
-  value: null | ResourceValue,
-): ParsedJsonReplacerResult => {
+function parsedJsonReplacer(key: string, value: null | ResourceValue): ParsedJsonReplacerResult {
   if (
-    ["reference", "embedded"].includes(key) &&
-    typeof value === "object" &&
-    value !== null
+    ['reference', 'embedded'].includes(key)
+    && typeof value === 'object'
+    && value !== null
   ) {
-    return `Object ${value.id || value.title}`;
+    return `Object ${value.id || value.title}`
   }
 
-  return value;
-};
+  return value
+}
 
-export default parsedJsonReplacer;
+export default parsedJsonReplacer

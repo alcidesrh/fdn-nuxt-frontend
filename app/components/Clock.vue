@@ -1,50 +1,53 @@
-<template>
-    <div id="clock">
-        <div class="date-wrap">
-            <div class="time">
-                <span>{{ time }}</span>
-                <span class="text-14px w-15px ml-5px inline-block font-bold">{{
-                    seconds
-                }}</span>
-                <span class="ml-5px">{{ ampm }}</span>
-            </div>
-            <div class="date">{{ date }}</div>
-        </div>
-        <div class="layout-topbar-logo-container">
-            <div class="logo-fdn">
-                <span>F</span>
-                <span>D</span>
-                <span>N</span>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
-let date: Ref = ref(),
-    time: Ref = ref(),
-    ampm: Ref = ref(),
-    seconds: Ref = ref();
+const date: Ref = ref()
+const time: Ref = ref()
+const ampm: Ref = ref()
+const seconds: Ref = ref()
 
 function updateDate() {
-    date.value = ref(
-        useDateFormat(new Date(), "dddd DD/MM/YYYY", { locales: "es-Es" }).value
-    );
-    time.value = ref(
-        useDateFormat(new Date(), "hh:mm", { locales: "es-Es" }).value
-    );
-    ampm.value = ref(
-        useDateFormat(new Date(), "a", { locales: "es-Es" }).value
-    );
+  date.value = ref(
+    useDateFormat(new Date(), 'dddd DD/MM/YYYY', { locales: 'es-Es' }).value,
+  )
+  time.value = ref(
+    useDateFormat(new Date(), 'hh:mm', { locales: 'es-Es' }).value,
+  )
+  ampm.value = ref(
+    useDateFormat(new Date(), 'a', { locales: 'es-Es' }).value,
+  )
 }
-updateDate();
+updateDate()
 useIntervalFn(() => {
-    seconds.value = useDateFormat(new Date(), "ss", { locales: "es-Es" }).value;
-    if (seconds.value == "00") {
-        updateDate();
-    }
-}, 1000);
+  seconds.value = useDateFormat(new Date(), 'ss', { locales: 'es-Es' }).value
+  if (seconds.value == '00') {
+    updateDate()
+  }
+}, 1000)
 </script>
+
+<template>
+  <div id="clock">
+    <div class="date-wrap">
+      <div class="time">
+        <span>{{ time }}</span>
+        <span class="text-14px w-15px ml-5px inline-block font-bold">{{
+          seconds
+        }}</span>
+        <span class="ml-5px">{{ ampm }}</span>
+      </div>
+      <div class="date">
+        {{ date }}
+      </div>
+    </div>
+    <div class="layout-topbar-logo-container">
+      <div class="logo-fdn">
+        <span>F</span>
+        <span>D</span>
+        <span>N</span>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style scoped>
 #clock {
     position: fixed;

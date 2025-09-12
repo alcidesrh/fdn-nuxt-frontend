@@ -2,22 +2,19 @@
 defineProps({
   rows: {
     type: Number,
-    default: 10
+    default: 10,
   },
   columns: {
     type: Number,
-    require: true
-  }
+    require: true,
+  },
 })
 </script>
+
 <template>
-
   <div class="grid  gap-2 gap-x-6  u-m-l" :style="`grid-template-columns: repeat(${columns}, 1fr);`">
-    <skeleton v-for="column, i in Number(columns)" :key="i" class="u-my-s" height="2rem"></skeleton>
+    <skeleton v-for="column, i in Number(columns)" :key="i" class="u-my-s" height="2rem" />
 
-    <Skeleton v-for="column, i in Number(columns * rows)" :key="i" class="u-my-s"></Skeleton>
-
-
+    <Skeleton v-for="column, i in Number(columns * rows)" :key="i" class="u-my-s" />
   </div>
-
 </template>

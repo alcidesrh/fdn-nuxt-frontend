@@ -4,17 +4,17 @@ const html = document.querySelector('html')
 const el = html.getBoundingClientRect()
 
 interface State {
-  x: Number
-  y: Number
-  w: Number
-  h: Number
-  pX: Number
-  pY: Number
-  htmlW: Number
-  htmlH: Number
-  bg: Object
-  colorBorder: String
-  mode: String
+  x: number
+  y: number
+  w: number
+  h: number
+  pX: number
+  pY: number
+  htmlW: number
+  htmlH: number
+  bg: object
+  colorBorder: string
+  mode: string
 }
 export const useFloatWidgetStore = defineStore('FloatWidgetStore', {
   persist: true,

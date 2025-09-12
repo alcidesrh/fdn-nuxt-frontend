@@ -1,3 +1,31 @@
+<script setup lang="ts">
+interface Props {
+  store: any
+  field?: string
+}
+const { field = '_id', store } = defineProps<Props>()
+
+const { collection, entity } = storeToRefs(store)
+store.iniCollection()
+
+const data = ref({ loading: computed(() => collection.value.loading) })
+
+const selected = ref([])
+
+function removeMultiple() {
+  store.removeMultiple(useCloned(selected.value).cloned)
+  selected.value = []
+}
+
+function rowClass(data) {
+  return [{ 'row-mark': selected.value.map(i => i._id).includes(data._id as never) }]
+}
+
+onMounted(() => {
+  nextTick(() => (gLoading.value = false))
+})
+</script>
+
 <template>
   <div>
     <div v-if="collection.columns.length">
@@ -18,24 +46,33 @@
         </div>
       </slot>
 
-      <FormKit type="form" :actions="false" v-model="collection.vars" form-class="block m-auto"
-        :config="{ wrapperClass: 'mb-0!' }">
-
-        <DataTable :rowClass="rowClass" @update:sortField="(i) => store.sortCollection(i)" removableSort
-          tableStyle="min-width:50rem"
-          :sortOrder="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
-          :value="collection.items" :filterDisplay="collection.hasFilter ? 'row' : undefined" scrollable
-          v-model:selection="selected" scrollHeight="700px" :class='{ opacity50: collection.loading }'>
-          <template #loading>... ...buscando... ...</template>
+      <FormKit
+        v-model="collection.vars" type="form" :actions="false" form-class="block m-auto"
+        :config="{ wrapperClass: 'mb-0!' }"
+      >
+        <DataTable
+          v-model:selection="selected" :row-class="rowClass" removable-sort
+          table-style="min-width:50rem"
+          :sort-order="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
+          :value="collection.items" :filter-display="collection.hasFilter ? 'row' : undefined" scrollable
+          scroll-height="700px" :class="{ opacity50: collection.loading }" @update:sort-field="(i) => store.sortCollection(i)"
+        >
+          <template #loading>
+            ... ...buscando... ...
+          </template>
           <template #empty>
-            <h5 class=" m-auto my-5! text-slate-4 font-semibold w-fit">No hay información que mostrar</h5>
+            <h5 class=" m-auto my-5! text-slate-4 font-semibold w-fit">
+              No hay información que mostrar
+            </h5>
           </template>
 
           <div v-for="c, i in collection.columns" :key="i">
-            <Column :header="c.label || c.name" :field="c.name" :showFilterMenu="false" :sortable="!!c.sort"
-              alignFrozen="left" :frozen="c.action" :class="c?.class">
+            <Column
+              :header="c.label || c.name" :field="c.name" :show-filter-menu="false" :sortable="!!c.sort"
+              align-frozen="left" :frozen="c.action" :class="c?.class"
+            >
               <template #filter>
-                <FormKitSchema :schema="c.schema" :data="data" v-if="c.schema" />
+                <FormKitSchema v-if="c.schema" :schema="c.schema" :data="data" />
               </template>
               <template #body="{ data }">
                 <slot :name="c.name" :data="data[c.name]">
@@ -44,11 +81,13 @@
               </template>
             </Column>
           </div>
-          <Column frozen alignFrozen="right" :showFilterMenu="false"
-            :selectionMode="collection.menu == 'selection' ? 'multiple' : 'undefined'" class="text-center action-cell">
+          <Column
+            frozen align-frozen="right" :show-filter-menu="false"
+            :selection-mode="collection.menu == 'selection' ? 'multiple' : 'undefined'" class="text-center action-cell"
+          >
             <template #header>
               <div class="flex justify-center items-center w-full h-full ">
-                <CollectionMenu :collection="collection" :selected="selected.length" @removeMultiple="removeMultiple" />
+                <CollectionMenu :collection="collection" :selected="selected.length" @remove-multiple="removeMultiple" />
               </div>
             </template>
             <template v-if="collection.menu == 'editar'" #body="{ data }">
@@ -61,8 +100,10 @@
 
                   </span>
                   <span class="flex items-center justify-center">
-                    <Icon name="icon-park-outline:delete" class="action delete absolute" mode="svg"
-                      @click="store.remove(data)" />
+                    <Icon
+                      name="icon-park-outline:delete" class="action delete absolute" mode="svg"
+                      @click="store.remove(data)"
+                    />
                   </span>
                 </div>
               </slot>
@@ -70,43 +111,14 @@
           </Column>
         </DataTable>
       </FormKit>
-      <div class="flex justify-center u-mb-l u-mt-s" v-if="collection.pagination?.totalCount">
+      <div v-if="collection.pagination?.totalCount" class="flex justify-center u-mb-l u-mt-s">
         <paginate :collection="collection" />
       </div>
     </div>
     <skeleton-list v-else :columns="7" />
   </div>
-
 </template>
-<script setup lang="ts">
 
-interface Props {
-  store: any;
-  field?: string;
-}
-const { field = '_id', store } = defineProps<Props>()
-
-const { collection, entity } = storeToRefs(store)
-store.iniCollection()
-
-let data = ref({ loading: computed(() => collection.value.loading) })
-
-const selected = ref([])
-
-
-function removeMultiple() {
-  store.removeMultiple(useCloned(selected.value).cloned)
-  selected.value = []
-}
-
-const rowClass = (data) => {
-  return [{ 'row-mark': selected.value.map(i => i['_id']).includes(data['_id'] as never) }];
-};
-
-onMounted(() => {
-  nextTick(() => (gLoading.value = false));
-})
-</script>
 <style scoped>
 ::highlight(highlight-0),
 ::highlight(highlight-1),

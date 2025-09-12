@@ -1,18 +1,18 @@
-import { defineStore } from "pinia";
-import type { Agencia } from "~~/types/agencia";
-import type { SubmissionErrors } from "~~/types/error";
-import { FetchItemData, UpdateItemData } from "~~/types/api";
+import type { Agencia } from '~~/types/agencia'
+import type { FetchItemData, UpdateItemData } from '~~/types/api'
+import type { SubmissionErrors } from '~~/types/error'
+import { defineStore } from 'pinia'
 
 interface State {
-  updated?: Agencia;
-  retrieved?: Agencia;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
-  violations?: SubmissionErrors;
+  updated?: Agencia
+  retrieved?: Agencia
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
+  violations?: SubmissionErrors
 }
 
-export const useAgenciaUpdateStore = defineStore("agenciaUpdate", {
+export const useAgenciaUpdateStore = defineStore('agenciaUpdate', {
   state: (): State => ({
     updated: undefined,
     retrieved: undefined,
@@ -24,12 +24,12 @@ export const useAgenciaUpdateStore = defineStore("agenciaUpdate", {
 
   actions: {
     setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<Agencia>) {
-      this.setRetrieved(retrieved.value);
-      this.setLoading(isLoading.value);
-      this.setHubUrl(hubUrl.value);
+      this.setRetrieved(retrieved.value)
+      this.setLoading(isLoading.value)
+      this.setHubUrl(hubUrl.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
@@ -39,37 +39,37 @@ export const useAgenciaUpdateStore = defineStore("agenciaUpdate", {
       error,
       violations,
     }: UpdateItemData<Agencia>) {
-      this.setUpdated(updated.value);
-      this.setLoading(isLoading.value);
-      this.setViolations(violations.value);
+      this.setUpdated(updated.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setRetrieved(retrieved?: Agencia) {
-      this.retrieved = retrieved;
+      this.retrieved = retrieved
     },
 
     setUpdated(updated?: Agencia) {
-      this.updated = updated;
+      this.updated = updated
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
 
     setViolations(violations?: SubmissionErrors) {
-      this.violations = violations;
+      this.violations = violations
     },
   },
-});
+})

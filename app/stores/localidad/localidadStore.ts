@@ -1,11 +1,11 @@
-import { defineStore } from "pinia";
-import type { Localidad } from "~/types/localidad";
+import type { Localidad } from '~/types/localidad'
+import { defineStore } from 'pinia'
 
 export const useLocalidadStore = defineStore(
-  "localidadStore",
+  'localidadStore',
   () => {
-    return createStore<Localidad>("Localidad");
-  }
+    return createStore<Localidad>('Localidad')
+  },
   // {
   //     persist: {
   //         afterHydrate: (ctx) => {
@@ -16,4 +16,4 @@ export const useLocalidadStore = defineStore(
   //         }
   //     }
   // }
-);
+)

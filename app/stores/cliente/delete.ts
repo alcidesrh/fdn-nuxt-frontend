@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Cliente } from "~~/types/cliente";
+import type { Cliente } from '~~/types/cliente'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Cliente;
-  mercureDeleted?: Cliente;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Cliente
+  mercureDeleted?: Cliente
+  isLoading: boolean
+  error?: string
 }
 
-export const useClienteDeleteStore = defineStore("clienteDelete", {
+export const useClienteDeleteStore = defineStore('clienteDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useClienteDeleteStore = defineStore("clienteDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Cliente) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Cliente | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

@@ -1,10 +1,11 @@
 <script setup>
-import Button from 'primevue/button';
+import Button from 'primevue/button'
 
 const props = defineProps({
-    context: Object
-});
+  context: Object,
+})
 </script>
+
 <template>
-    <Button v-bind="context.attrs.binds" />
+  <Button v-bind="context.attrs.binds" />
 </template>

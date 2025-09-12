@@ -1,18 +1,18 @@
-import { defineStore } from "pinia";
-import type { Parada } from "~~/types/parada";
-import type { SubmissionErrors } from "~~/types/error";
-import { FetchItemData, UpdateItemData } from "~~/types/api";
+import type { FetchItemData, UpdateItemData } from '~~/types/api'
+import type { SubmissionErrors } from '~~/types/error'
+import type { Parada } from '~~/types/parada'
+import { defineStore } from 'pinia'
 
 interface State {
-  updated?: Parada;
-  retrieved?: Parada;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
-  violations?: SubmissionErrors;
+  updated?: Parada
+  retrieved?: Parada
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
+  violations?: SubmissionErrors
 }
 
-export const useParadaUpdateStore = defineStore("paradaUpdate", {
+export const useParadaUpdateStore = defineStore('paradaUpdate', {
   state: (): State => ({
     updated: undefined,
     retrieved: undefined,
@@ -24,12 +24,12 @@ export const useParadaUpdateStore = defineStore("paradaUpdate", {
 
   actions: {
     setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<Parada>) {
-      this.setRetrieved(retrieved.value);
-      this.setLoading(isLoading.value);
-      this.setHubUrl(hubUrl.value);
+      this.setRetrieved(retrieved.value)
+      this.setLoading(isLoading.value)
+      this.setHubUrl(hubUrl.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
@@ -39,37 +39,37 @@ export const useParadaUpdateStore = defineStore("paradaUpdate", {
       error,
       violations,
     }: UpdateItemData<Parada>) {
-      this.setUpdated(updated.value);
-      this.setLoading(isLoading.value);
-      this.setViolations(violations.value);
+      this.setUpdated(updated.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setRetrieved(retrieved?: Parada) {
-      this.retrieved = retrieved;
+      this.retrieved = retrieved
     },
 
     setUpdated(updated?: Parada) {
-      this.updated = updated;
+      this.updated = updated
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
 
     setViolations(violations?: SubmissionErrors) {
-      this.violations = violations;
+      this.violations = violations
     },
   },
-});
+})

@@ -1,196 +1,196 @@
-export interface RequestInitExtended extends Omit<RequestInit, "headers"> {
-  headers?: HeadersInit | (() => HeadersInit);
+export interface RequestInitExtended extends Omit<RequestInit, 'headers'> {
+  headers?: HeadersInit | (() => HeadersInit)
 }
 
-export type IriTemplateMapping = {
-  "@type": "IriTemplateMapping";
-  variable: "string";
-  property: string | null;
-  required: boolean;
-};
+export interface IriTemplateMapping {
+  '@type': 'IriTemplateMapping'
+  'variable': 'string'
+  'property': string | null
+  'required': boolean
+}
 
-export type ExpandedOperation = {
-  "@type": ["http://www.w3.org/ns/hydra/core#Operation"];
-  "http://www.w3.org/2000/01/rdf-schema#label": [
+export interface ExpandedOperation {
+  '@type': ['http://www.w3.org/ns/hydra/core#Operation']
+  'http://www.w3.org/2000/01/rdf-schema#label': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#title": [
+  ]
+  'http://www.w3.org/ns/hydra/core#title': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#expects"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#expects'?: [
     {
-      "@id": string;
+      '@id': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#method": [
+  ]
+  'http://www.w3.org/ns/hydra/core#method': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#returns"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#returns'?: [
     {
-      "@id": string;
+      '@id': string
     },
-  ];
-  "http://www.w3.org/2002/07/owl#deprecated"?: [
+  ]
+  'http://www.w3.org/2002/07/owl#deprecated'?: [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-};
+  ]
+}
 
-export type ExpandedRdfProperty = {
-  "@id": string;
-  "@type": [
-    | "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
-    | "http://www.w3.org/ns/hydra/core#Link",
-  ];
-  "http://www.w3.org/2000/01/rdf-schema#label": [
+export interface ExpandedRdfProperty {
+  '@id': string
+  '@type': [
+    | 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'
+    | 'http://www.w3.org/ns/hydra/core#Link',
+  ]
+  'http://www.w3.org/2000/01/rdf-schema#label': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/2000/01/rdf-schema#domain": [
+  ]
+  'http://www.w3.org/2000/01/rdf-schema#domain': [
     {
-      "@id": string;
+      '@id': string
     },
-  ];
-  "http://www.w3.org/2000/01/rdf-schema#range":
+  ]
+  'http://www.w3.org/2000/01/rdf-schema#range':
     | [
-        {
-          "@id": string;
-        },
-      ]
+      {
+        '@id': string
+      },
+    ]
     | [
-        {
-          "@id": string;
-        },
-        {
-          "http://www.w3.org/2002/07/owl#equivalentClass": [
-            {
-              "http://www.w3.org/2002/07/owl#allValuesFrom": [
-                {
-                  "@id": string;
-                },
-              ];
-              "http://www.w3.org/2002/07/owl#onProperty": [
-                {
-                  "@id": string;
-                },
-              ];
-            },
-          ];
-        },
-      ];
-  "http://www.w3.org/ns/hydra/core#supportedOperation"?: ExpandedOperation[];
-  "http://www.w3.org/2002/07/owl#maxCardinality": [
+      {
+        '@id': string
+      },
+      {
+        'http://www.w3.org/2002/07/owl#equivalentClass': [
+          {
+            'http://www.w3.org/2002/07/owl#allValuesFrom': [
+              {
+                '@id': string
+              },
+            ]
+            'http://www.w3.org/2002/07/owl#onProperty': [
+              {
+                '@id': string
+              },
+            ]
+          },
+        ]
+      },
+    ]
+  'http://www.w3.org/ns/hydra/core#supportedOperation'?: ExpandedOperation[]
+  'http://www.w3.org/2002/07/owl#maxCardinality': [
     {
-      "@value": number;
+      '@value': number
     },
-  ];
-};
+  ]
+}
 
-export type ExpandedSupportedProperty = {
-  "@type": ["http://www.w3.org/ns/hydra/core#SupportedProperty"];
-  "http://www.w3.org/ns/hydra/core#title": [
+export interface ExpandedSupportedProperty {
+  '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty']
+  'http://www.w3.org/ns/hydra/core#title': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#description": [
+  ]
+  'http://www.w3.org/ns/hydra/core#description': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#required"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#required'?: [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#readable": [
+  ]
+  'http://www.w3.org/ns/hydra/core#readable': [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#writeable": [
+  ]
+  'http://www.w3.org/ns/hydra/core#writeable': [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#property": [ExpandedRdfProperty];
-  "http://www.w3.org/2002/07/owl#deprecated"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#property': [ExpandedRdfProperty]
+  'http://www.w3.org/2002/07/owl#deprecated'?: [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-};
+  ]
+}
 
-export type ExpandedClass = {
-  "@id": string;
-  "@type": ["http://www.w3.org/ns/hydra/core#Class"];
-  "http://www.w3.org/2000/01/rdf-schema#label"?: [
+export interface ExpandedClass {
+  '@id': string
+  '@type': ['http://www.w3.org/ns/hydra/core#Class']
+  'http://www.w3.org/2000/01/rdf-schema#label'?: [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/2000/01/rdf-schema#subClassOf"?: [
+  ]
+  'http://www.w3.org/2000/01/rdf-schema#subClassOf'?: [
     {
-      "@id": string;
+      '@id': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#title": [
+  ]
+  'http://www.w3.org/ns/hydra/core#title': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#description"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#description'?: [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#supportedProperty": ExpandedSupportedProperty[];
-  "http://www.w3.org/ns/hydra/core#supportedOperation"?: ExpandedOperation[];
-  "http://www.w3.org/2002/07/owl#deprecated"?: [
+  ]
+  'http://www.w3.org/ns/hydra/core#supportedProperty': ExpandedSupportedProperty[]
+  'http://www.w3.org/ns/hydra/core#supportedOperation'?: ExpandedOperation[]
+  'http://www.w3.org/2002/07/owl#deprecated'?: [
     {
-      "@value": boolean;
+      '@value': boolean
     },
-  ];
-};
+  ]
+}
 
-export type ExpandedDoc = {
-  "@id": string;
-  "@type": ["http://www.w3.org/ns/hydra/core#ApiDocumentation"];
-  "http://www.w3.org/ns/hydra/core#title": [
+export interface ExpandedDoc {
+  '@id': string
+  '@type': ['http://www.w3.org/ns/hydra/core#ApiDocumentation']
+  'http://www.w3.org/ns/hydra/core#title': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#description": [
+  ]
+  'http://www.w3.org/ns/hydra/core#description': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#entrypoint": [
+  ]
+  'http://www.w3.org/ns/hydra/core#entrypoint': [
     {
-      "@value": string;
+      '@value': string
     },
-  ];
-  "http://www.w3.org/ns/hydra/core#supportedClass": ExpandedClass[];
-};
+  ]
+  'http://www.w3.org/ns/hydra/core#supportedClass': ExpandedClass[]
+}
 
-export type Entrypoint = {
-  "@id": string;
-  "@type": [string];
+export interface Entrypoint {
+  '@id': string
+  '@type': [string]
   [key: string]:
     | [
-        {
-          "@id": string;
-        },
-      ]
+      {
+        '@id': string
+      },
+    ]
     | string
-    | [string];
-};
+    | [string]
+}

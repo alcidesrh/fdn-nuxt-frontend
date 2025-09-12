@@ -1,23 +1,23 @@
-import { FetchError } from "ofetch";
-import type { User } from "~/types/user";
-import { useUserSessionStore } from "~/stores/session";
+import type { User } from '~/types/user'
+import { useUserSessionStore } from '~/stores/session'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   {
-    const store = useUserSessionStore();
-    const { user } = store as Ref<Record<"user", User>>;
+    const store = useUserSessionStore()
+    const { user } = store as Ref<Record<'user', User>>
 
-    if (!user?.token && to.name != "Login") {
-      store.authErrorAttempts = 1;
-      store.redirectTo = to.path;
-      return "/login";
-    } else if (
-      user?.token &&
-      !(to.name == "Login" && store.authErrorAttempts)
+    if (!user?.token && to.name != 'Login') {
+      store.authErrorAttempts = 1
+      store.redirectTo = to.path
+      return '/login'
+    }
+    else if (
+      user?.token
+      && !(to.name == 'Login' && store.authErrorAttempts)
     ) {
-      const { breadcrumbReload } = useBreadcrumb();
-      breadcrumbReload(to);
-      return;
+      const { breadcrumbReload } = useBreadcrumb()
+      breadcrumbReload(to)
+
       // let redirect = "";
       // if (typeof API_DEFAULT_OPTIONS.headers?.Authorization === "undefined") {
       //   (API_DEFAULT_OPTIONS.headers as Record<any, any>) = {
@@ -52,4 +52,4 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       // }
     }
   }
-});
+})

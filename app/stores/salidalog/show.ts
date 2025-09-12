@@ -1,46 +1,47 @@
-import { defineStore } from "pinia";
-import type { SalidaLog } from "~~/types/salidalog";
-import { FetchItemData } from "~~/types/api";
+import type { FetchItemData } from '~~/types/api'
+import type { SalidaLog } from '~~/types/salidalog'
+import { defineStore } from 'pinia'
+
 interface State {
-  retrieved?: SalidaLog;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
+  retrieved?: SalidaLog
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
 }
 
-export const useSalidaLogShowStore = defineStore("salidalogShow", {
+export const useSalidaLogShowStore = defineStore('salidalogShow', {
   state: (): State => ({
     retrieved: undefined,
     isLoading: false,
-    error: "",
+    error: '',
     hubUrl: undefined,
   }),
 
   actions: {
     setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<SalidaLog>) {
-      this.setRetrieved(retrieved.value);
-      this.setLoading(isLoading.value);
-      this.setHubUrl(hubUrl.value);
+      this.setRetrieved(retrieved.value)
+      this.setLoading(isLoading.value)
+      this.setHubUrl(hubUrl.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setRetrieved(retrieved?: SalidaLog) {
-      this.retrieved = retrieved;
+      this.retrieved = retrieved
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

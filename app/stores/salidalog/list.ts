@@ -1,17 +1,17 @@
-import { defineStore } from "pinia";
-import { SalidaLog } from "~~/types/salidalog";
-import { View } from "~~/types/view";
-import { FetchAllData } from "~~/types/api";
+import type { FetchAllData } from '~~/types/api'
+import type { SalidaLog } from '~~/types/salidalog'
+import type { View } from '~~/types/view'
+import { defineStore } from 'pinia'
 
 interface State {
-  items: SalidaLog[];
-  hubUrl?: URL;
-  isLoading: boolean;
-  view?: View;
-  error?: string;
+  items: SalidaLog[]
+  hubUrl?: URL
+  isLoading: boolean
+  view?: View
+  error?: string
 }
 
-export const useSalidaLogListStore = defineStore("salidalogList", {
+export const useSalidaLogListStore = defineStore('salidalogList', {
   state: (): State => ({
     items: [],
     isLoading: false,
@@ -28,50 +28,53 @@ export const useSalidaLogListStore = defineStore("salidalogList", {
       error,
       hubUrl,
     }: FetchAllData<SalidaLog>) {
-      this.setItems(items.value);
-      this.setLoading(isLoading.value);
-      if (hubUrl) this.setHubUrl(hubUrl.value);
-      if (view) this.setView(view.value);
+      this.setItems(items.value)
+      this.setLoading(isLoading.value)
+      if (hubUrl)
+        this.setHubUrl(hubUrl.value)
+      if (view)
+        this.setView(view.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setItems(items: SalidaLog[]) {
-      this.items = items;
+      this.items = items
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setView(view?: View) {
-      this.view = view;
+      this.view = view
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
 
     updateItem(updatedItem: SalidaLog) {
       const item: SalidaLog | undefined = this.items.find(
-        (i) => i["@id"] === updatedItem["@id"]
-      );
+        i => i['@id'] === updatedItem['@id'],
+      )
 
-      if (!item) return;
+      if (!item)
+        return
 
-      Object.assign(item, updatedItem);
+      Object.assign(item, updatedItem)
     },
 
     deleteItem(deletedItem: SalidaLog) {
       this.items = this.items.filter((item) => {
-        return item["@id"] !== deletedItem["@id"];
-      });
+        return item['@id'] !== deletedItem['@id']
+      })
     },
   },
-});
+})

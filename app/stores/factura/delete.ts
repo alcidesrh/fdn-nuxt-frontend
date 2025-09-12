@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Factura } from "~~/types/factura";
+import type { Factura } from '~~/types/factura'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Factura;
-  mercureDeleted?: Factura;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Factura
+  mercureDeleted?: Factura
+  isLoading: boolean
+  error?: string
 }
 
-export const useFacturaDeleteStore = defineStore("facturaDelete", {
+export const useFacturaDeleteStore = defineStore('facturaDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useFacturaDeleteStore = defineStore("facturaDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Factura) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Factura | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

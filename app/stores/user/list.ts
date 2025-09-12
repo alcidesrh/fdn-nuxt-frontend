@@ -1,69 +1,72 @@
-import { defineStore } from 'pinia';
-import { User } from '~~/types/user';
-import { View } from '~~/types/view';
-import { FetchAllData } from '~~/types/api';
+import type { FetchAllData } from '~~/types/api'
+import type { User } from '~~/types/user'
+import type { View } from '~~/types/view'
+import { defineStore } from 'pinia'
 
 interface State {
-    items: User[];
-    hubUrl?: URL;
-    isLoading: boolean;
-    view?: View;
-    error?: string;
+  items: User[]
+  hubUrl?: URL
+  isLoading: boolean
+  view?: View
+  error?: string
 }
 
 export const useUserListStore2 = defineStore('userList2 ', {
-    state: (): State => ({
-        items: [],
-        isLoading: false,
-        error: undefined,
-        hubUrl: undefined,
-        view: undefined
-    }),
+  state: (): State => ({
+    items: [],
+    isLoading: false,
+    error: undefined,
+    hubUrl: undefined,
+    view: undefined,
+  }),
 
-    actions: {
-        setData({ items, view, isLoading, error, hubUrl }: FetchAllData<User>) {
-            this.setItems(items.value);
-            this.setLoading(isLoading.value);
-            if (hubUrl) this.setHubUrl(hubUrl.value);
-            if (view) this.setView(view.value);
+  actions: {
+    setData({ items, view, isLoading, error, hubUrl }: FetchAllData<User>) {
+      this.setItems(items.value)
+      this.setLoading(isLoading.value)
+      if (hubUrl)
+        this.setHubUrl(hubUrl.value)
+      if (view)
+        this.setView(view.value)
 
-            if (error.value instanceof Error) {
-                this.setError(error.value?.message);
-            }
-        },
+      if (error.value instanceof Error) {
+        this.setError(error.value?.message)
+      }
+    },
 
-        setLoading(isLoading: boolean) {
-            this.isLoading = isLoading;
-        },
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading
+    },
 
-        setItems(items: User[]) {
-            this.items = items;
-        },
+    setItems(items: User[]) {
+      this.items = items
+    },
 
-        setHubUrl(hubUrl?: URL) {
-            this.hubUrl = hubUrl;
-        },
+    setHubUrl(hubUrl?: URL) {
+      this.hubUrl = hubUrl
+    },
 
-        setView(view?: View) {
-            this.view = view;
-        },
+    setView(view?: View) {
+      this.view = view
+    },
 
-        setError(error?: string) {
-            this.error = error;
-        },
+    setError(error?: string) {
+      this.error = error
+    },
 
-        updateItem(updatedItem: User) {
-            const item: User | undefined = this.items.find((i) => i['@id'] === updatedItem['@id']);
+    updateItem(updatedItem: User) {
+      const item: User | undefined = this.items.find(i => i['@id'] === updatedItem['@id'])
 
-            if (!item) return;
+      if (!item)
+        return
 
-            Object.assign(item, updatedItem);
-        },
+      Object.assign(item, updatedItem)
+    },
 
-        deleteItem(deletedItem: User) {
-            this.items = this.items.filter((item) => {
-                return item['@id'] !== deletedItem['@id'];
-            });
-        }
-    }
-});
+    deleteItem(deletedItem: User) {
+      this.items = this.items.filter((item) => {
+        return item['@id'] !== deletedItem['@id']
+      })
+    },
+  },
+})

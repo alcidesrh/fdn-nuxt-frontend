@@ -1,6 +1,6 @@
-import type { Item } from "./item";
+import type { Item } from './item'
 
 export interface Action extends Item {
-  ruta?: string;
-  icon?: string;
+  ruta?: string
+  icon?: string
 }

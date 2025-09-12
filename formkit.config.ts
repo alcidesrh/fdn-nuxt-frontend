@@ -1,73 +1,73 @@
-import { createAutoAnimatePlugin } from '@formkit/addons';
-import { defineFormKitConfig } from '@formkit/vue';
+import { createAutoAnimatePlugin } from '@formkit/addons'
 // import { genesisIcons } from '@formkit/icons'
-import { es } from '@formkit/i18n';
-import { rootClasses } from './app/form/formkit.theme';
-import * as inputs from './app/form/inputs';
-import { generateClasses } from '@formkit/themes';
+import { es } from '@formkit/i18n'
+import { generateClasses } from '@formkit/themes'
+import { defineFormKitConfig } from '@formkit/vue'
+import { rootClasses } from './app/form/formkit.theme'
+import * as inputs from './app/form/inputs'
 
 export default defineFormKitConfig({
-    locale: 'es',
-    locales: { es },
-    // icons: { ...genesisIcons },
-    config: {
-        rootClasses,
-        classes: generateClasses({
-            global: {
-                label: 'whitespace-nowrap'
-            }
-            // text: simpleInputClasses,
-            // number: simpleInputClasses,
-            // password: simpleInputClasses,
-        })
-    },
-    inputs: inputs,
+  locale: 'es',
+  locales: { es },
+  // icons: { ...genesisIcons },
+  config: {
+    rootClasses,
+    classes: generateClasses({
+      global: {
+        label: 'whitespace-nowrap',
+      },
+      // text: simpleInputClasses,
+      // number: simpleInputClasses,
+      // password: simpleInputClasses,
+    }),
+  },
+  inputs,
 
-    plugins: [
-        createAutoAnimatePlugin(
-            {
-                /* optional AutoAnimate config */
-                // default:
-                duration: 250,
-                easing: 'ease-in-out'
-            },
-            {
-                /* optional animation targets object */
-                // default:
-                global: ['outer', 'inner'],
-                form: ['form'],
-                repeater: ['items']
-            }
-        ),
-        function scrollToErrors(node) {
-            if (node.props.type === 'form') {
-                function scrollTo(node) {
-                    const el = document.getElementById(node.props.id);
-                    if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-                    }
-                }
-
-                function scrollToErrors() {
-                    node.walk((child) => {
-                        // Check if this child has errors
-                        if (child.ledger.value('blocking') || child.ledger.value('errors')) {
-                            // We found an input with validation errors
-                            scrollTo(child);
-                            // Stop searching
-                            return false;
-                        }
-                    }, true);
-                }
-
-                const onSubmitInvalid = node.props.onSubmitInvalid;
-                node.props.onSubmitInvalid = () => {
-                    // onSubmitInvalid(node);
-                    scrollToErrors();
-                };
-                node.on('unsettled:errors', scrollToErrors);
-            }
-            return false;
+  plugins: [
+    createAutoAnimatePlugin(
+      {
+        /* optional AutoAnimate config */
+        // default:
+        duration: 250,
+        easing: 'ease-in-out',
+      },
+      {
+        /* optional animation targets object */
+        // default:
+        global: ['outer', 'inner'],
+        form: ['form'],
+        repeater: ['items'],
+      },
+    ),
+    function scrollToErrors(node) {
+      if (node.props.type === 'form') {
+        function scrollTo(node) {
+          const el = document.getElementById(node.props.id)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+          }
         }
-    ]
-});
+
+        function scrollToErrors() {
+          node.walk((child) => {
+            // Check if this child has errors
+            if (child.ledger.value('blocking') || child.ledger.value('errors')) {
+              // We found an input with validation errors
+              scrollTo(child)
+              // Stop searching
+              return false
+            }
+          }, true)
+        }
+
+        const onSubmitInvalid = node.props.onSubmitInvalid
+        node.props.onSubmitInvalid = () => {
+          // onSubmitInvalid(node);
+          scrollToErrors()
+        }
+        node.on('unsettled:errors', scrollToErrors)
+      }
+      return false
+    },
+  ],
+})

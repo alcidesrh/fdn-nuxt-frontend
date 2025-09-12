@@ -1,32 +1,33 @@
-<template>
-    <div class="breadcrumb-wrap">
-        <Breadcrumb :model="breadcrumb">
-            <template #item="{ item, props }">
-                <NuxtLink v-if="item.path" :to="item.path">
-                    <div class="breadcrumb-item">
-                        <div v-if="item.icon">
-                            <Icon :name="item.icon" class="cursor-pointer" mode="svg" />
-                        </div>
-                        <span class="whitespace-nowrap capitalize">{{ item.label }}</span>
-                    </div>
-                </NuxtLink>
-                <div v-else class="breadcrumb-item">
-                    <div v-if="item.icon">
-                        <Icon :name="item.icon" class="cursor-pointer" mode="svg" />
-                    </div>
-                    <span class="whitespace-nowrap capitalize">{{ item.label }}</span>
-                </div>
-            </template>
-
-            <template #separator>
-                <Icon name="icon-park-outline:right" mode="svg" />
-            </template>
-        </Breadcrumb>
-    </div>
-</template>
 <script setup lang="ts">
-const { breadcrumb } = useBreadcrumb();
+const { breadcrumb } = useBreadcrumb()
 </script>
+
+<template>
+  <div class="breadcrumb-wrap">
+    <Breadcrumb :model="breadcrumb">
+      <template #item="{ item, props }">
+        <NuxtLink v-if="item.path" :to="item.path">
+          <div class="breadcrumb-item">
+            <div v-if="item.icon">
+              <Icon :name="item.icon" class="cursor-pointer" mode="svg" />
+            </div>
+            <span class="whitespace-nowrap capitalize">{{ item.label }}</span>
+          </div>
+        </NuxtLink>
+        <div v-else class="breadcrumb-item">
+          <div v-if="item.icon">
+            <Icon :name="item.icon" class="cursor-pointer" mode="svg" />
+          </div>
+          <span class="whitespace-nowrap capitalize">{{ item.label }}</span>
+        </div>
+      </template>
+
+      <template #separator>
+        <Icon name="icon-park-outline:right" mode="svg" />
+      </template>
+    </Breadcrumb>
+  </div>
+</template>
 
 <style scoped>
 .breadcrumb-wrap {

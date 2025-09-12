@@ -1,18 +1,18 @@
-import { defineStore } from "pinia";
-import type { Cliente } from "~~/types/cliente";
-import type { SubmissionErrors } from "~~/types/error";
-import { FetchItemData, UpdateItemData } from "~~/types/api";
+import type { FetchItemData, UpdateItemData } from '~~/types/api'
+import type { Cliente } from '~~/types/cliente'
+import type { SubmissionErrors } from '~~/types/error'
+import { defineStore } from 'pinia'
 
 interface State {
-  updated?: Cliente;
-  retrieved?: Cliente;
-  isLoading: boolean;
-  error?: string;
-  hubUrl?: URL;
-  violations?: SubmissionErrors;
+  updated?: Cliente
+  retrieved?: Cliente
+  isLoading: boolean
+  error?: string
+  hubUrl?: URL
+  violations?: SubmissionErrors
 }
 
-export const useClienteUpdateStore = defineStore("clienteUpdate", {
+export const useClienteUpdateStore = defineStore('clienteUpdate', {
   state: (): State => ({
     updated: undefined,
     retrieved: undefined,
@@ -24,12 +24,12 @@ export const useClienteUpdateStore = defineStore("clienteUpdate", {
 
   actions: {
     setData({ retrieved, isLoading, error, hubUrl }: FetchItemData<Cliente>) {
-      this.setRetrieved(retrieved.value);
-      this.setLoading(isLoading.value);
-      this.setHubUrl(hubUrl.value);
+      this.setRetrieved(retrieved.value)
+      this.setLoading(isLoading.value)
+      this.setHubUrl(hubUrl.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
@@ -39,37 +39,37 @@ export const useClienteUpdateStore = defineStore("clienteUpdate", {
       error,
       violations,
     }: UpdateItemData<Cliente>) {
-      this.setUpdated(updated.value);
-      this.setLoading(isLoading.value);
-      this.setViolations(violations.value);
+      this.setUpdated(updated.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
       if (error.value instanceof Error) {
-        this.setError(error.value?.message);
+        this.setError(error.value?.message)
       }
     },
 
     setRetrieved(retrieved?: Cliente) {
-      this.retrieved = retrieved;
+      this.retrieved = retrieved
     },
 
     setUpdated(updated?: Cliente) {
-      this.updated = updated;
+      this.updated = updated
     },
 
     setHubUrl(hubUrl?: URL) {
-      this.hubUrl = hubUrl;
+      this.hubUrl = hubUrl
     },
 
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setError(error?: string) {
-      this.error = error;
+      this.error = error
     },
 
     setViolations(violations?: SubmissionErrors) {
-      this.violations = violations;
+      this.violations = violations
     },
   },
-});
+})

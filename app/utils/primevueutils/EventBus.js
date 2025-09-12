@@ -1,32 +1,33 @@
 export default function primebus() {
-    const allHandlers = new Map();
+  const allHandlers = new Map()
 
-    return {
-        on(type, handler) {
-            let handlers = allHandlers.get(type);
+  return {
+    on(type, handler) {
+      let handlers = allHandlers.get(type)
 
-            if (!handlers) handlers = [handler];
-            else handlers.push(handler);
+      if (!handlers)
+        handlers = [handler]
+      else handlers.push(handler)
 
-            allHandlers.set(type, handlers);
-        },
+      allHandlers.set(type, handlers)
+    },
 
-        off(type, handler) {
-            let handlers = allHandlers.get(type);
+    off(type, handler) {
+      const handlers = allHandlers.get(type)
 
-            if (handlers) {
-                handlers.splice(handlers.indexOf(handler) >>> 0, 1);
-            }
-        },
+      if (handlers) {
+        handlers.splice(handlers.indexOf(handler) >>> 0, 1)
+      }
+    },
 
-        emit(type, evt) {
-            let handlers = allHandlers.get(type);
+    emit(type, evt) {
+      const handlers = allHandlers.get(type)
 
-            if (handlers) {
-                handlers.slice().map((handler) => {
-                    handler(evt);
-                });
-            }
-        }
-    };
+      if (handlers) {
+        handlers.slice().map((handler) => {
+          handler(evt)
+        })
+      }
+    },
+  }
 }

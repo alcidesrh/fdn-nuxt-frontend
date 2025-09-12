@@ -5,18 +5,14 @@ import {
   ApolloLink,
   HttpLink,
   InMemoryCache,
-  concat,
-  from,
-  gql,
-} from "@apollo/client";
-// import { ApolloProvider } from '@apollo/client/react';
-// import { provideApolloClient, DefaultApolloClient } from '@vue/apollo-composable';
-import { ErrorLink } from "@apollo/client/link/error";
+} from '@apollo/client'
 import {
   CombinedGraphQLErrors,
   CombinedProtocolErrors,
-  ServerError,
-} from "@apollo/client/errors";
+} from '@apollo/client/errors'
+// import { ApolloProvider } from '@apollo/client/react';
+// import { provideApolloClient, DefaultApolloClient } from '@vue/apollo-composable';
+import { ErrorLink } from '@apollo/client/link/error'
 
 // Log any GraphQL errors, protocol errors, or network error that occurred
 // const errorLink = new ErrorLink(({ error, operation }) => {
@@ -31,28 +27,28 @@ import {
 // });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost/graphql", //ENTRYPOINT_GRAPHQL
+  uri: 'http://localhost/graphql', // ENTRYPOINT_GRAPHQL
   // headers: {
   //     Authorization: `Bearer fdn_be1f5822c20326f313c39af741846b1d4644076d2010ac6d56aa6be9e5f76294`
   // }
-});
+})
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const token =
-    "fdn_be1f5822c20326f313c39af741846b1d4644076d2010ac6d56aa6be9e5f76294";
+  const token
+    = 'fdn_be1f5822c20326f313c39af741846b1d4644076d2010ac6d56aa6be9e5f76294'
   operation.setContext({
     headers: {
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     },
-  });
+  })
   // operation.setContext(({ headers = {} }) => ({
   //     headers: {
   //         ...headers,
   //         authorization: 'Bearer fdn_be1f5822sc20326f313c39af741846b1d4644076d2010ac6d56aa6be9e5f76294' //localStorage.getItem('token') || null
   //     }
   // }));
-  return forward(operation);
-});
+  return forward(operation)
+})
 
 // Log any GraphQL errors, protocol errors, or network error that occurred
 const errorLink = new ErrorLink(({ error, operation }) => {
@@ -61,23 +57,25 @@ const errorLink = new ErrorLink(({ error, operation }) => {
       ({ message, locations, path }) =>
         merror({
           message: `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-        })
+        }),
       //   alert(
       //     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       //   )
-    );
-  } else if (CombinedProtocolErrors.is(error)) {
+    )
+  }
+  else if (CombinedProtocolErrors.is(error)) {
     error.errors.forEach(({ message, extensions }) =>
       alert(
         `[Protocol error]: Message: ${message}, Extensions: ${JSON.stringify(
-          extensions
-        )}`
-      )
-    );
-  } else {
-    console.error(`[Network error]: ${error}`);
+          extensions,
+        )}`,
+      ),
+    )
   }
-});
+  else {
+    console.error(`[Network error]: ${error}`)
+  }
+})
 
 // Create the apollo client
 export const apolloClient = new ApolloClient({
@@ -112,4 +110,4 @@ export const apolloClient = new ApolloClient({
   //         }
   //     }
   // }
-});
+})

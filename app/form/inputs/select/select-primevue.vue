@@ -1,22 +1,23 @@
-<template>
-    <Select @change="handleInput" :options="context.options" optionLabel="label" optionValue="value" :defaultValue="defaultValue" fluid placeholder="Seleccionar" />
-</template>
 <script setup lang="ts">
-import Select from 'primevue/select';
+import Select from 'primevue/select'
 
 const props = defineProps({
-    context: Object
-});
+  context: Object,
+})
 
-const defaultValue = ref(props.context?._value?.id || props.context?._value);
+const defaultValue = ref(props.context?._value?.id || props.context?._value)
 
 watch(
-    () => props.context._value,
-    (v) => {
-        defaultValue.value = props.context?._value?.id || v;
-    }
-);
+  () => props.context._value,
+  (v) => {
+    defaultValue.value = props.context?._value?.id || v
+  },
+)
 function handleInput(e) {
-    props.context.node.input(e.value);
+  props.context.node.input(e.value)
 }
 </script>
+
+<template>
+  <Select :options="context.options" option-label="label" option-value="value" :default-value="defaultValue" fluid placeholder="Seleccionar" @change="handleInput" />
+</template>

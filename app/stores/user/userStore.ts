@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import type { User } from "~/types/user";
+import type { User } from '~/types/user'
+import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore(
-  "userStore",
+  'userStore',
   () => {
     const {
       collection,
@@ -15,17 +15,17 @@ export const useUserStore = defineStore(
       entity,
       iniCollection,
       sortCollection,
-    } = createStore<User>("User");
+    } = createStore<User>('User')
 
-    entity.value.endpoints.get = "getUserByUsernameUser";
+    entity.value.endpoints.get = 'getUserByUsernameUser'
     entity.value.excludeFields = [
-      "password",
-      "password_confirm",
-      "userIdentifier",
-      "validTokenStrings",
-      "legacyId",
-      "fullName",
-    ];
+      'password',
+      'password_confirm',
+      'userIdentifier',
+      'validTokenStrings',
+      'legacyId',
+      'fullName',
+    ]
 
     function submit() {
       // const { onDone, loading } =
@@ -36,14 +36,14 @@ export const useUserStore = defineStore(
           fields: entity.value.getMutationFields(),
         })
         .then(({ data }) => {
-          gLoading.value = false;
-          entity.value.item = data[entity.value.getMutationOperation()]["user"];
-          msg.emit(getAlertText("update"));
+          gLoading.value = false
+          entity.value.item = data[entity.value.getMutationOperation()].user
+          msg.emit(getAlertText('update'))
         })
         .catch((e) => {
-          gLoading.value = false;
-          merror({ message: e, life: false });
-        });
+          gLoading.value = false
+          merror({ message: e, life: false })
+        })
     }
 
     return {
@@ -58,8 +58,8 @@ export const useUserStore = defineStore(
       entity,
       iniCollection,
       sortCollection,
-    };
-  }
+    }
+  },
   // {
   //     persist: {
   //         afterHydrate: (ctx) => {
@@ -71,4 +71,4 @@ export const useUserStore = defineStore(
   //         // omit: ['collection']
   //     }
   // }
-);
+)

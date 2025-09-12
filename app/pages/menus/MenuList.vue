@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const store = useMenuStore()
+</script>
+
 <template>
   <div>
     <collection-expanded-list :store="store">
@@ -7,7 +11,3 @@
     </collection-expanded-list>
   </div>
 </template>
-<script setup lang="ts">
-const store = useMenuStore()
-
-</script>

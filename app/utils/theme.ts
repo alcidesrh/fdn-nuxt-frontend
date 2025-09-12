@@ -1,3 +1,3 @@
-const { width } = useWindowSize();
+const { width } = useWindowSize()
 
-export const isMobil = computed(() => width.value <= 768);
+export const isMobil = computed(() => width.value <= 768)

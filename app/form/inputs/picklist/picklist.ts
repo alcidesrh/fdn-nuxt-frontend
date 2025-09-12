@@ -1,18 +1,18 @@
-import { createInput } from '@formkit/vue';
-import picklistprimevue from './picklist-primevue.vue';
+import { createInput } from '@formkit/vue'
+import picklistprimevue from './picklist-primevue.vue'
 
 const props = {
-    allowItems: {
-        type: Array,
-        default: []
-    },
-    field: {
-        type: String,
-        default: null
-    }
-};
+  allowItems: {
+    type: Array,
+    default: [],
+  },
+  field: {
+    type: String,
+    default: null,
+  },
+}
 const picklist_primevue = createInput(picklistprimevue, {
-    props: props
-});
+  props,
+})
 
-export default picklist_primevue;
+export default picklist_primevue

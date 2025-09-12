@@ -1,40 +1,7 @@
-<template>
-  <div>
-    <PickList v-model="value" dataKey="label" breakpoint="600px" :showTargetControls="false" :showSourceControls="false"
-      scrollHeight="20rem" class="min-h-25em max-w-40em u-mt-s">
-      <template #option="{ option }">
-        <div class="w-full">
-          {{ option.label }}
-          <divider :pt="{ root: 'mb-0 w-full' }" />
-        </div>
-      </template>
-
-      <template #sourceheader="{ header }">
-        <div class="u-text-2  font-medium ">
-          {{ context.sourceText }}
-        </div>
-        <div class="u-pt-xs">
-          <FormKitSchema :schema="schema" :data="data" />
-        </div>
-      </template>
-      <template #targetheader="{ header }">
-        <div class="u-text-1 u-pb-xs ">
-          {{ context.targetText }}
-        </div>
-      </template>
-
-    </PickList>
-  </div>
-</template>
-
 <script setup>
-import { getNode } from '@formkit/core'
-
 const props = defineProps({
   context: Object,
 })
-
-
 
 const schema = ref(
   [{
@@ -44,15 +11,15 @@ const schema = ref(
     ignore: true,
     children: [
       {
-        $formkit: "text_primevue",
+        $formkit: 'text_primevue',
         name: 'term',
-        placeholder: "...buscar...",
+        placeholder: '...buscar...',
         size: 'small',
         icon: 'pi pi-times cursor-pointer',
         outerClass: 'mb-2! min-w-auto! px-0!',
-      }
-    ]
-  }]
+      },
+    ],
+  }],
 )
 const term = ref({})
 const data = ref({
@@ -60,21 +27,19 @@ const data = ref({
 })
 
 const value = ref()
-const options = ref(props.context.attrs.options);
+const options = ref(props.context.attrs.options)
 
 const picklist = computed(() => {
   const noallow = []
   const allow = []
-  options.value.forEach(element => {
+  options.value.forEach((element) => {
     if ((props.context.allowItems && props.context.allowItems.map(v => v?.value || v).includes(element.value))) {
       allow.push(element)
     }
     else if (!term.value?.term || element.label.toLowerCase().includes(term.value.term.toLowerCase())) {
       noallow.push(element)
-
     }
-
-  });
+  })
   return [noallow, allow]
 })
 value.value = picklist.value
@@ -101,6 +66,34 @@ function reset() {
   value.value = null
   props.context.node.input(null)
 }
-
-
 </script>
+
+<template>
+  <div>
+    <PickList
+      v-model="value" data-key="label" breakpoint="600px" :show-target-controls="false" :show-source-controls="false"
+      scroll-height="20rem" class="min-h-25em max-w-40em u-mt-s"
+    >
+      <template #option="{ option }">
+        <div class="w-full">
+          {{ option.label }}
+          <divider :pt="{ root: 'mb-0 w-full' }" />
+        </div>
+      </template>
+
+      <template #sourceheader="{ header }">
+        <div class="u-text-2  font-medium ">
+          {{ context.sourceText }}
+        </div>
+        <div class="u-pt-xs">
+          <FormKitSchema :schema="schema" :data="data" />
+        </div>
+      </template>
+      <template #targetheader="{ header }">
+        <div class="u-text-1 u-pb-xs ">
+          {{ context.targetText }}
+        </div>
+      </template>
+    </PickList>
+  </div>
+</template>

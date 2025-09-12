@@ -1,18 +1,18 @@
-import { defineStore } from "pinia";
-import { RecorridoAsientoPrecio } from "~~/types/recorridoasientoprecio";
-import { View } from "~~/types/view";
-import { FetchAllData } from "~~/types/api";
+import type { FetchAllData } from '~~/types/api'
+import type { RecorridoAsientoPrecio } from '~~/types/recorridoasientoprecio'
+import type { View } from '~~/types/view'
+import { defineStore } from 'pinia'
 
 interface State {
-  items: RecorridoAsientoPrecio[];
-  hubUrl?: URL;
-  isLoading: boolean;
-  view?: View;
-  error?: string;
+  items: RecorridoAsientoPrecio[]
+  hubUrl?: URL
+  isLoading: boolean
+  view?: View
+  error?: string
 }
 
 export const useRecorridoAsientoPrecioListStore = defineStore(
-  "recorridoasientoprecioList",
+  'recorridoasientoprecioList',
   {
     state: (): State => ({
       items: [],
@@ -30,51 +30,54 @@ export const useRecorridoAsientoPrecioListStore = defineStore(
         error,
         hubUrl,
       }: FetchAllData<RecorridoAsientoPrecio>) {
-        this.setItems(items.value);
-        this.setLoading(isLoading.value);
-        if (hubUrl) this.setHubUrl(hubUrl.value);
-        if (view) this.setView(view.value);
+        this.setItems(items.value)
+        this.setLoading(isLoading.value)
+        if (hubUrl)
+          this.setHubUrl(hubUrl.value)
+        if (view)
+          this.setView(view.value)
 
         if (error.value instanceof Error) {
-          this.setError(error.value?.message);
+          this.setError(error.value?.message)
         }
       },
 
       setLoading(isLoading: boolean) {
-        this.isLoading = isLoading;
+        this.isLoading = isLoading
       },
 
       setItems(items: RecorridoAsientoPrecio[]) {
-        this.items = items;
+        this.items = items
       },
 
       setHubUrl(hubUrl?: URL) {
-        this.hubUrl = hubUrl;
+        this.hubUrl = hubUrl
       },
 
       setView(view?: View) {
-        this.view = view;
+        this.view = view
       },
 
       setError(error?: string) {
-        this.error = error;
+        this.error = error
       },
 
       updateItem(updatedItem: RecorridoAsientoPrecio) {
         const item: RecorridoAsientoPrecio | undefined = this.items.find(
-          (i) => i["@id"] === updatedItem["@id"]
-        );
+          i => i['@id'] === updatedItem['@id'],
+        )
 
-        if (!item) return;
+        if (!item)
+          return
 
-        Object.assign(item, updatedItem);
+        Object.assign(item, updatedItem)
       },
 
       deleteItem(deletedItem: RecorridoAsientoPrecio) {
         this.items = this.items.filter((item) => {
-          return item["@id"] !== deletedItem["@id"];
-        });
+          return item['@id'] !== deletedItem['@id']
+        })
       },
     },
-  }
-);
+  },
+)

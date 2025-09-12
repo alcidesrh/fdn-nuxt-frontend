@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import type { SubmissionErrors } from "~/types/error";
+import type { SubmissionErrors } from '~/types/error'
 // import { UserItemData } from '~/types/api';
 // import type { Config } from './Qu                                                ickTypes';
-import type { User } from "~/types/user";
+import type { User } from '~/types/user'
+import { defineStore } from 'pinia'
 
 // export interface setUserSession {
 //     username?: string;
@@ -10,57 +10,57 @@ import type { User } from "~/types/user";
 //     uri?: string;
 // }
 interface State {
-	user?: Ref<User>;
-	isLoading: boolean;
-	redirectTo?: string;
-	error?: string;
-	violations?: SubmissionErrors;
-	// config?: Config;
-	authErrorAttempts: Number;
+  user?: Ref<User>
+  isLoading: boolean
+  redirectTo?: string
+  error?: string
+  violations?: SubmissionErrors
+  // config?: Config;
+  authErrorAttempts: number
 }
 
-export const useUserSessionStore = defineStore("userSession", {
-	persist: true,
-	state: (): State => ({
-		user: ref(),
-		isLoading: false,
-		error: undefined,
-		violations: undefined,
-		authErrorAttempts: 0,
-		config: {
-			sidebar: {
-				h_opened: true,
-				v_opened: true
-			}
-		}
-	}),
+export const useUserSessionStore = defineStore('userSession', {
+  persist: true,
+  state: (): State => ({
+    user: ref(),
+    isLoading: false,
+    error: undefined,
+    violations: undefined,
+    authErrorAttempts: 0,
+    config: {
+      sidebar: {
+        h_opened: true,
+        v_opened: true,
+      },
+    },
+  }),
 
-	actions: {
-		setData({ user, isLoading, error, violations }: UserItemData<User>) {
-			this.setUser(user.value);
-			this.setLoading(isLoading.value);
-			this.setViolations(violations.value);
+  actions: {
+    setData({ user, isLoading, error, violations }: UserItemData<User>) {
+      this.setUser(user.value)
+      this.setLoading(isLoading.value)
+      this.setViolations(violations.value)
 
-			if (error.value instanceof Error) {
-				this.setError(error.value?.message);
-			}
-		},
+      if (error.value instanceof Error) {
+        this.setError(error.value?.message)
+      }
+    },
 
-		setUserSession(user?: User) {
-			this.user = user;
-			this.isLogin = true;
-		},
+    setUserSession(user?: User) {
+      this.user = user
+      this.isLogin = true
+    },
 
-		setLoading(isLoading: boolean) {
-			this.isLoading = isLoading;
-		},
+    setLoading(isLoading: boolean) {
+      this.isLoading = isLoading
+    },
 
-		setError(error: string | undefined) {
-			this.error = error;
-		},
+    setError(error: string | undefined) {
+      this.error = error
+    },
 
-		setViolations(violations: SubmissionErrors | undefined) {
-			this.violations = violations;
-		}
-	}
-});
+    setViolations(violations: SubmissionErrors | undefined) {
+      this.violations = violations
+    },
+  },
+})

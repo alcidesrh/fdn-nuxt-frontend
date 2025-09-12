@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import type { Recorrido } from "~~/types/recorrido";
+import type { Recorrido } from '~~/types/recorrido'
+import { defineStore } from 'pinia'
 
 interface State {
-  deleted?: Recorrido;
-  mercureDeleted?: Recorrido;
-  isLoading: boolean;
-  error?: string;
+  deleted?: Recorrido
+  mercureDeleted?: Recorrido
+  isLoading: boolean
+  error?: string
 }
 
-export const useRecorridoDeleteStore = defineStore("recorridoDelete", {
+export const useRecorridoDeleteStore = defineStore('recorridoDelete', {
   state: (): State => ({
     deleted: undefined,
     mercureDeleted: undefined,
@@ -18,19 +18,19 @@ export const useRecorridoDeleteStore = defineStore("recorridoDelete", {
 
   actions: {
     setLoading(isLoading: boolean) {
-      this.isLoading = isLoading;
+      this.isLoading = isLoading
     },
 
     setDeleted(deleted: Recorrido) {
-      this.deleted = deleted;
+      this.deleted = deleted
     },
 
     setMercureDeleted(mercureDeleted: Recorrido | undefined) {
-      this.mercureDeleted = mercureDeleted;
+      this.mercureDeleted = mercureDeleted
     },
 
     setError(error: string) {
-      this.error = error;
+      this.error = error
     },
   },
-});
+})

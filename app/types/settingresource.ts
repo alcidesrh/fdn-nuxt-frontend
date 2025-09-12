@@ -1,5 +1,5 @@
-import type { Item } from "./item";
+import type { Item } from './item'
 
 export interface SettingResource extends Item {
-  entityPath?: string;
+  entityPath?: string
 }

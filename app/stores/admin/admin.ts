@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
 interface State {
-  entities: Ref<string[]>;
-  openEntityList: Ref<boolean>;
+  entities: Ref<string[]>
+  openEntityList: Ref<boolean>
 }
-export const useAdminStore = defineStore("Admin", {
+export const useAdminStore = defineStore('Admin', {
   persist: {
     afterHydrate: (ctx) => {
       // console.log(`just hydrated '${ctx.store.$id}'`);
@@ -20,19 +20,19 @@ export const useAdminStore = defineStore("Admin", {
   actions: {
     getEntities() {
       const { onResult, loading } = apollo.query({
-        operation: "entitiesSettingResource",
+        operation: 'entitiesSettingResource',
         fields: Entity.prepareField(
-          fdn.value.queries["entitiesSettingResource"]
+          fdn.value.queries.entitiesSettingResource,
         ).entitiesSettingResource,
-      });
+      })
 
       onResult(({ data, networkStatus }) => {
-        if (typeof data == "undefined" && networkStatus == 1) {
-          return;
+        if (typeof data == 'undefined' && networkStatus == 1) {
+          return
         }
         // let temp: any = { name: 'Entidades', children: data.entitiesSettingResource.list.map((v) => ({ name: v, link: 'v.id' })) };
-        this.entities = data.entitiesSettingResource.list;
-      });
+        this.entities = data.entitiesSettingResource.list
+      })
     },
   },
-});
+})
