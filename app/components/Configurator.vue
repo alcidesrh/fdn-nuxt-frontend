@@ -52,20 +52,20 @@ const surfaces = ref([
 <template>
   <div
     :class="[hiddenLocal ? 'hide-animation ' : 'show-animation']"
-    class="config-panel absolute bottom-[3.25rem] md:top-[3.25rem] right-0 w-[20em] h-fit p-4 rounded-md bg-surface-contrast-50  border border-surface-contrast-300 origin-top hidden-transition"
+    class="config-panel bg-surface-contrast-50 border-surface-contrast-300 hidden-transition absolute bottom-[3.25rem] right-0 h-fit w-[20em] origin-top border rounded-md p-4 md:top-[3.25rem]"
   >
     <close @close="hidden" />
 
     <div class="flex flex-col gap-4">
       <div>
-        <div class="text-sm  font-semibold mb-2">
+        <div class="mb-2 text-sm font-semibold">
           Color de Botones
         </div>
-        <div class="pt-2 flex gap-2 flex-wrap  items-center u-mt-3xs">
+        <div class="flex flex-wrap items-center gap-2 pt-2 u-mt-3xs">
           <div v-for="primaryColor of colorPalette" :key="primaryColor.name" class="rounded-full">
             <button
               type="button" :title="primaryColor.name"
-              class="border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1"
+              class="h-5 w-5 cursor-pointer rounded-full border-none p-0 outline-offset-1 outline-none"
               :class="{ 'outline-primary': ui.color === primaryColor.name }"
               :style="{ backgroundColor: `${primaryColor.name === 'noir' ? 'var(--text-color)' : primaryColor.palette['500']}` }"
               @click="ui.updateColors('primary', primaryColor.name)"
@@ -73,21 +73,21 @@ const surfaces = ref([
           </div>
         </div>
       </div>
-      <div class=" u-my-xs">
-        <div class="text-sm text-muted-color font-semibold mb-2">
+      <div class="u-my-xs">
+        <div class="text-muted-color mb-2 text-sm font-semibold">
           Color de Fondo
         </div>
-        <div class="pt-2 flex gap-2 flex-wrap u-mt-3xs m-auto">
+        <div class="m-auto flex flex-wrap gap-2 pt-2 u-mt-3xs">
           <button
             v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
-            class="border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1" :class="[
+            class="h-5 w-5 cursor-pointer rounded-full border-none p-0 outline-offset-1 outline-none" :class="[
               { 'outline-primary': ui.surface ? ui.surface === surface.name : ui.darkTheme ? surface.name === 'zinc' : surface.name === 'slate' },
             ]" :style="{ backgroundColor: `${surface.palette['500']}` }" @click="ui.updateColors('surface', surface.name)"
           />
         </div>
       </div>
       <div class="flex flex-col gap-2">
-        <div class="text-sm text-muted-color font-semibold">
+        <div class="text-muted-color text-sm font-semibold">
           Estilo
         </div>
         <SelectButton
@@ -96,7 +96,7 @@ const surfaces = ref([
         />
       </div>
 
-      <div class="relative flex justify-between mt-3 mb-1">
+      <div class="relative mb-1 mt-3 flex justify-between">
         <Button size="small" label="Reiniciar" outlined @click="ui.reset();" />
         <Button size="small" label="Aceptar" @click="hidden" />
       </div>

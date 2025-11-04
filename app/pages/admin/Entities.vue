@@ -77,21 +77,21 @@ watch(selected, (newValue) => {
   <div>
     <div class="entity-wrap" @click="openEntityList = !openEntityList">
       <div class="flex items-center justify-center">
-        <Icon name="icon-park-outline:down" class="text-surface-600 u-mr-2xs transition-all" :class="{ 'rotate-90': !openEntityList }" />
+        <Icon name="icon-park-outline:down" class="text-surface-600 transition-all u-mr-2xs" :class="{ 'rotate-90': !openEntityList }" />
         <span>Entidades</span>
       </div>
-      <span class="border-1 border-surface-500 mr-2 flex h-5 w-5 items-center justify-center rounded-full">
+      <span class="border-surface-500 mr-2 h-5 w-5 flex items-center justify-center border-1 rounded-full">
         <Icon :name="`icon-park-outline:${!openEntityList ? 'plus' : 'minus'}`" class="text-surface-600 transition-all" :class="{ 'rotate-90': !openEntityList }" />
       </span>
     </div>
     <div class="entity-list" :class="{ open: openEntityList }">
-      <div class="u-pl-s sm: grid h-full overflow-hidden">
+      <div class="sm: grid h-full overflow-hidden u-pl-s">
         <div class="w-full">
           <Listbox v-model="selected" checkmark scroll-height="25rem" fluid :options="items" filter>
             <template #option="slotProps">
               <div class="h-20px flex items-center">
                 <Icon v-if="slotProps.option.icon" :name="slotProps.option.icon" class="text-surface-600" size="16" />
-                <span class="ml-30px absolute">{{ str.chain(slotProps.option.label).snakeCase().replaceAll('_', ' ').titleCase() }}</span>
+                <span class="absolute ml-30px">{{ str.chain(slotProps.option.label).snakeCase().replaceAll('_', ' ').titleCase() }}</span>
               </div>
             </template>
           </Listbox>

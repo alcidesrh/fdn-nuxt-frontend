@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// import LocalStoreManagament from '~/components/LocalStoreManagament.vue'
+
+// onMounted(() => useDialog().open(LocalStoreManagament))
+
 interface Props {
   position?: string
   classes?: string
@@ -146,135 +150,82 @@ const items = ref([
     },
   },
   {
-    label: 'Vue Website',
+    label: 'Limpiar cache',
     icon: 'pi pi-external-link',
     command: () => {
-      window.location.href = 'https://vuejs.org/'
+      useDialog().open(LocalStoreManagament)
     },
   },
 ])
 </script>
-
 <template>
   <div>
-    <div
-      class="toggle-sidebar" :class="[
-        `${sidebarStore.position}`,
-        `${sidebarStore.mode}`,
-        openDialbtn ? 'open-dialbtn' : '',
-      ]"
-      severity="contrast"
-      variant="outlined"
-      raised
-      @mouseover="hoverFloatButton = true"
-      @mouseleave="hoverFloatButton = false"
-    >
-      <SpeedDial
-        :model="items"
-        :radius="120"
-        type="quarter-circle"
-        :direction="
-          sidebarStore.position == 'left' ? 'down-right' : 'down-left'
-        "
-        :tooltip-options="{ position: 'left' }"
-        @show="openDialbtn = true"
-        @hide="openDialbtn = false"
-      >
+    <div class="toggle-sidebar" :class="[
+      sidebarStore.position,
+      sidebarStore.mode,
+      openDialbtn ? 'open-dialbtn' : '',
+    ]" severity="contrast" variant="outlined" raised @mouseover="hoverFloatButton = true"
+      @mouseleave="hoverFloatButton = false">
+      <SpeedDial :model="items" :radius="120" type="quarter-circle" :direction="sidebarStore.position == 'left' ? 'down-right' : 'down-left'
+        " :tooltip-options="{ position: 'left' }" @show="openDialbtn = true" @hide="openDialbtn = false" class="gap-0">
         <template #button="{ toggleCallback }">
-          <div
-            data-pc-name="pcbutton"
-            class="menu-btn"
-            @click="toggleCallback"
-          >
-            <icon
-              :name="
-                sidebarStore.position == 'left'
-                  ? `icon-park-outline:application-menu`
-                  : `icon-park-outline:application-menu`
-              "
-              mode="svg"
-            />
+          <div data-pc-name="pcbutton" class="menu-btn" @click="toggleCallback">
+            <icon name="icon-park-outline:all-application" mode="svg" />
+
           </div>
         </template>
         <template #item="{ item, toggleCallback }">
-          <div
-            v-tooltip.left="item.label"
-            text
-            rounded
-            raised
-            class="menu-btn item"
-            @click="toggleCallback"
-          >
-            <icon
-              :name="
-                sidebarStore.position == 'left'
-                  ? `icon-park-outline:all-application`
-                  : `material-symbols:person-celebrate`
-              "
-              mode="svg"
-            />
+          <div v-tooltip.left="item.label" text raised rounded class="menu-btn item" @click="toggleCallback">
+            <icon :name="sidebarStore.position == 'left'
+              ? `icon-park-outline:all-application`
+              : `material-symbols:person-celebrate`
+              " mode="svg" />
           </div>
         </template>
       </SpeedDial>
     </div>
-    <div
-      v-if="!firstCloseCache"
-      ref="sidebar"
-      class="wrap-sidebar"
-      :class="[sidebarStore.position, sidebarStore.mode, classes]"
-      @mouseover="hoverSidebar = true"
-      @mouseleave="hoverSidebar = false"
-    >
-      <div class="sidebar-control" :class="[sidebarStore.position]">
+    <div v-if="!firstCloseCache" ref="sidebar" class="wrap-sidebar"
+      :class="[sidebarStore.position, sidebarStore.mode, classes]" @mouseover="hoverSidebar = true"
+      @mouseleave="hoverSidebar = false">
+      <div class="sidebar-control" :class="[sidebarStore.position, sidebarStore.mode]">
+        <!-- <close /> -->
+
         <div :class="[sidebarStore.position, sidebarStore.mode]">
-          <div
-            :class="{
-              selected:
-                hoverMode && sidebarStore.mode == modes.close,
-            }"
-            @click="toggleSidebar()"
-          />
-          <div
-            :class="{
-              selected:
-                !hoverMode && sidebarStore.mode == modes.small,
-            }"
-            @click="sidebarStore.mode = modes.small"
-          >
-            <span />
+          <!-- <div :class="{
+            selected:
+              hoverMode && sidebarStore.mode == modes.close,
+          }" @click="toggleSidebar()">
+            <div></div>
+            <div></div>
+          </div> -->
+
+          <div :class="{
+            selected:
+              !hoverMode && sidebarStore.mode == modes.small,
+          }" @click="sidebarStore.mode = modes.small">
           </div>
 
-          <div
-            :class="{
-              selected:
-                !hoverMode && sidebarStore.mode == modes.normal,
-            }"
-            @click="sidebarStore.mode = modes.normal"
-          >
-            <span />
+          <div :class="{
+            selected:
+              !hoverMode && sidebarStore.mode == modes.normal,
+          }" @click="sidebarStore.mode = modes.normal">
           </div>
+
         </div>
+        <Icon name="icon-park-outline:left-two" mode="svg" class="z-50 cursor-pointer" :class="{
+          selected: hoverMode &&
+            sidebarStore.mode == modes.close,
+        }" @click="toggleSidebar()" />
       </div>
-      <aside
-        id="layout-sidebar"
-        ref="sidebar"
-        class="layout-sidebar"
-        :class="[sidebarStore.mode]"
-      >
-        <close
-          v-if="isMobil"
-          @close="sidebarStore.mode = modes.close"
-        />
+      <!-- <divider class="m-auto w-80% my-15px mb-30px" /> -->
+      <aside id="layout-sidebar" ref="sidebar" class="layout-sidebar" :class="[sidebarStore.mode]">
+        <close v-if="isMobil" @close="sidebarStore.mode = modes.close" />
 
         <slot name="content" :data="sidebarStore" />
       </aside>
     </div>
-    <div
-      class="toggle-sidebar-lateral"
-      :class="[sidebarStore.position, sidebarStore.mode]"
-      @mouseover="hoverScreenEdge = true"
-      @mouseleave="hoverScreenEdge = false"
-    />
+    <div class="toggle-sidebar-lateral" :class="[sidebarStore.position, sidebarStore.mode]"
+      @mouseover="hoverScreenEdge = true" @mouseleave="hoverScreenEdge = false" />
   </div>
 </template>
 

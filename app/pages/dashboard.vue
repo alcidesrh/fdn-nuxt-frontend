@@ -112,17 +112,15 @@ watch([color, surface, darkTheme], () => {
       </div>
       <card class="mb-0">
         <template #content>
-          <div class="flex justify-between mb-4">
+          <div class="mb-4 flex justify-between">
             <div>
-              <span class="block text-muted-color font-medium mb-4">Orders</span>
-              <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
+              <span class="text-muted-color mb-4 block font-medium">Orders</span>
+              <div class="text-surface-900 dark:text-surface-0 text-xl font-medium">
                 152
               </div>
             </div>
-            <div
-              class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border"
-              style="width: 2.5rem; height: 2.5rem"
-            >
+            <div class="rounded-border flex items-center justify-center bg-blue-100 dark:bg-blue-400/10"
+              style="width: 2.5rem; height: 2.5rem">
               <i class="pi pi-shopping-cart text-blue-500 !text-xl" />
             </div>
           </div>
@@ -132,19 +130,17 @@ watch([color, surface, darkTheme], () => {
       </card>
     </div>
     <div class="col-span-12 lg:col-span-6 xl:col-span-3">
-      <card class=" mb-0">
+      <card class="mb-0">
         <template #content>
-          <div class="flex justify-between mb-4">
+          <div class="mb-4 flex justify-between">
             <div>
-              <span class="block text-muted-color font-medium mb-4">Revenue</span>
-              <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
+              <span class="text-muted-color mb-4 block font-medium">Revenue</span>
+              <div class="text-surface-900 dark:text-surface-0 text-xl font-medium">
                 $2.100
               </div>
             </div>
-            <div
-              class="flex items-center justify-center bg-orange-100 dark:bg-orange-400/10 rounded-border"
-              style="width: 2.5rem; height: 2.5rem"
-            >
+            <div class="rounded-border flex items-center justify-center bg-orange-100 dark:bg-orange-400/10"
+              style="width: 2.5rem; height: 2.5rem">
               <i class="pi pi-dollar text-orange-500 !text-xl" />
             </div>
           </div>
@@ -154,19 +150,17 @@ watch([color, surface, darkTheme], () => {
       </card>
     </div>
     <div class="col-span-12 lg:col-span-6 xl:col-span-3">
-      <card class=" mb-0">
+      <card class="mb-0">
         <template #content>
-          <div class="flex justify-between mb-4">
+          <div class="mb-4 flex justify-between">
             <div>
-              <span class="block text-muted-color font-medium mb-4">Customers</span>
-              <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
+              <span class="text-muted-color mb-4 block font-medium">Customers</span>
+              <div class="text-surface-900 dark:text-surface-0 text-xl font-medium">
                 28441
               </div>
             </div>
-            <div
-              class="flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10 rounded-border"
-              style="width: 2.5rem; height: 2.5rem"
-            >
+            <div class="rounded-border flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10"
+              style="width: 2.5rem; height: 2.5rem">
               <i class="pi pi-users text-cyan-500 !text-xl" />
             </div>
           </div>
@@ -176,19 +170,17 @@ watch([color, surface, darkTheme], () => {
       </card>
     </div>
     <div class="col-span-12 lg:col-span-6 xl:col-span-3">
-      <card class=" mb-0">
+      <card class="mb-0">
         <template #content>
-          <div class="flex justify-between mb-4">
+          <div class="mb-4 flex justify-between">
             <div>
-              <span class="block text-muted-color font-medium mb-4">Comments</span>
-              <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">
+              <span class="text-muted-color mb-4 block font-medium">Comments</span>
+              <div class="text-surface-900 dark:text-surface-0 text-xl font-medium">
                 152 Unread
               </div>
             </div>
-            <div
-              class="flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-border"
-              style="width: 2.5rem; height: 2.5rem"
-            >
+            <div class="rounded-border flex items-center justify-center bg-purple-100 dark:bg-purple-400/10"
+              style="width: 2.5rem; height: 2.5rem">
               <i class="pi pi-comment text-purple-500 !text-xl" />
             </div>
           </div>
@@ -201,16 +193,14 @@ watch([color, surface, darkTheme], () => {
     <div class="col-span-12 xl:col-span-6">
       <card class="">
         <template #content>
-          <div class="font-semibold text-xl mb-4">
+          <div class="mb-4 text-xl font-semibold">
             Recent Sales
           </div>
           <DataTable :value="products" :rows="5" :paginator="true" responsive-layout="scroll">
             <Column style="width: 15%" header="Image">
               <template #body="slotProps">
-                <img
-                  :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
-                  :alt="slotProps.data.image" width="50" class="shadow"
-                >
+                <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
+                  :alt="slotProps.data.image" width="50" class="shadow">
               </template>
             </Column>
             <Column field="name" header="Name" :sortable="true" style="width: 35%" />
@@ -229,120 +219,106 @@ watch([color, surface, darkTheme], () => {
       </card>
       <card class="">
         <template #content>
-          <div class="flex justify-between items-center mb-6">
-            <div class="font-semibold text-xl">
+          <div class="mb-6 flex items-center justify-between">
+            <div class="text-xl font-semibold">
               Best Selling Products
             </div>
             <div>
-              <Button
-                icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded"
-                @click="$refs.menu2.toggle($event)"
-              />
+              <Button icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded"
+                @click="$refs.menu2.toggle($event)" />
               <Menu ref="menu2" :popup="true" :model="items" class="!min-w-40" />
             </div>
           </div>
-          <ul class="list-none p-0 m-0">
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+          <ul class="m-0 list-none p-0">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Space T-Shirt</span>
-                <div class="mt-1 text-muted-color">
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Space T-Shirt</span>
+                <div class="text-muted-color mt-1">
                   Clothing
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-orange-500 h-full" style="width: 50%" />
+              <div class="mt-2 flex items-center md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-orange-500" style="width: 50%" />
                 </div>
-                <span class="text-orange-500 ml-4 font-medium">%50</span>
+                <span class="ml-4 text-orange-500 font-medium">%50</span>
               </div>
             </li>
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Portal Sticker</span>
-                <div class="mt-1 text-muted-color">
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Portal Sticker</span>
+                <div class="text-muted-color mt-1">
                   Accessories
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 ml-0 md:ml-20 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-cyan-500 h-full" style="width: 16%" />
+              <div class="ml-0 mt-2 flex items-center md:ml-20 md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-cyan-500" style="width: 16%" />
                 </div>
-                <span class="text-cyan-500 ml-4 font-medium">%16</span>
+                <span class="ml-4 text-cyan-500 font-medium">%16</span>
               </div>
             </li>
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Supernova
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Supernova
                   Sticker</span>
-                <div class="mt-1 text-muted-color">
+                <div class="text-muted-color mt-1">
                   Accessories
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 ml-0 md:ml-20 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-pink-500 h-full" style="width: 67%" />
+              <div class="ml-0 mt-2 flex items-center md:ml-20 md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-pink-500" style="width: 67%" />
                 </div>
-                <span class="text-pink-500 ml-4 font-medium">%67</span>
+                <span class="ml-4 text-pink-500 font-medium">%67</span>
               </div>
             </li>
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Wonders Notebook</span>
-                <div class="mt-1 text-muted-color">
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Wonders Notebook</span>
+                <div class="text-muted-color mt-1">
                   Office
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 ml-0 md:ml-20 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-green-500 h-full" style="width: 35%" />
+              <div class="ml-0 mt-2 flex items-center md:ml-20 md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-green-500" style="width: 35%" />
                 </div>
                 <span class="text-primary ml-4 font-medium">%35</span>
               </div>
             </li>
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Mat Black Case</span>
-                <div class="mt-1 text-muted-color">
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Mat Black Case</span>
+                <div class="text-muted-color mt-1">
                   Accessories
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 ml-0 md:ml-20 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-purple-500 h-full" style="width: 75%" />
+              <div class="ml-0 mt-2 flex items-center md:ml-20 md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-purple-500" style="width: 75%" />
                 </div>
-                <span class="text-purple-500 ml-4 font-medium">%75</span>
+                <span class="ml-4 text-purple-500 font-medium">%75</span>
               </div>
             </li>
-            <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+            <li class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">Robots T-Shirt</span>
-                <div class="mt-1 text-muted-color">
+                <span class="text-surface-900 dark:text-surface-0 mb-1 mr-2 font-medium md:mb-0">Robots T-Shirt</span>
+                <div class="text-muted-color mt-1">
                   Clothing
                 </div>
               </div>
-              <div class="mt-2 md:mt-0 ml-0 md:ml-20 flex items-center">
-                <div
-                  class="bg-surface-300 dark:bg-surface-500 rounded-border overflow-hidden w-40 lg:w-24"
-                  style="height: 8px"
-                >
-                  <div class="bg-teal-500 h-full" style="width: 40%" />
+              <div class="ml-0 mt-2 flex items-center md:ml-20 md:mt-0">
+                <div class="bg-surface-300 dark:bg-surface-500 rounded-border w-40 overflow-hidden lg:w-24"
+                  style="height: 8px">
+                  <div class="h-full bg-teal-500" style="width: 40%" />
                 </div>
-                <span class="text-teal-500 ml-4 font-medium">%40</span>
+                <span class="ml-4 text-teal-500 font-medium">%40</span>
               </div>
             </li>
           </ul>
@@ -352,7 +328,7 @@ watch([color, surface, darkTheme], () => {
     <div class="col-span-12 xl:col-span-6">
       <card class="">
         <template #content>
-          <div class="font-semibold text-xl mb-4">
+          <div class="mb-4 text-xl font-semibold">
             Revenue Stream
           </div>
           <Chart type="bar" :data="chartData" :options="chartOptions" class="h-80" />
@@ -360,64 +336,55 @@ watch([color, surface, darkTheme], () => {
       </card>
       <card class="">
         <template #content>
-          <div class="flex items-center justify-between mb-6">
-            <div class="font-semibold text-xl">
+          <div class="mb-6 flex items-center justify-between">
+            <div class="text-xl font-semibold">
               Notifications
             </div>
             <div>
-              <Button
-                icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded"
-                @click="$refs.menu1.toggle($event)"
-              />
+              <Button icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded"
+                @click="$refs.menu1.toggle($event)" />
               <Menu ref="menu1" :popup="true" :model="items" class="!min-w-40" />
             </div>
           </div>
 
-          <span class="block text-muted-color font-medium mb-4">TODAY</span>
-          <ul class="p-0 mx-0 mt-0 mb-6 list-none">
-            <li class="flex items-center py-2 border-b border-surface">
+          <span class="text-muted-color mb-4 block font-medium">TODAY</span>
+          <ul class="mx-0 mb-6 mt-0 list-none p-0">
+            <li class="border-surface flex items-center border-b py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-dollar !text-xl text-blue-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-400/10">
+                <i class="pi pi-dollar text-blue-500 !text-xl" />
               </div>
               <span class="text-surface-900 dark:text-surface-0 leading-normal">Richard Jones
                 <span class="text-surface-700 dark:text-surface-100">has purchased a blue t-shirt for <span
-                  class="text-primary font-bold"
-                >$79.00</span></span>
+                    class="text-primary font-bold">$79.00</span></span>
               </span>
             </li>
             <li class="flex items-center py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-orange-100 dark:bg-orange-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-download !text-xl text-orange-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-400/10">
+                <i class="pi pi-download text-orange-500 !text-xl" />
               </div>
               <span class="text-surface-700 dark:text-surface-100 leading-normal">Your request for withdrawal of <span
-                class="text-primary font-bold"
-              >$2500.00</span> has been initiated.</span>
+                  class="text-primary font-bold">$2500.00</span> has been initiated.</span>
             </li>
           </ul>
 
-          <span class="block text-muted-color font-medium mb-4">YESTERDAY</span>
-          <ul class="p-0 m-0 list-none mb-6">
-            <li class="flex items-center py-2 border-b border-surface">
+          <span class="text-muted-color mb-4 block font-medium">YESTERDAY</span>
+          <ul class="m-0 mb-6 list-none p-0">
+            <li class="border-surface flex items-center border-b py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-dollar !text-xl text-blue-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-400/10">
+                <i class="pi pi-dollar text-blue-500 !text-xl" />
               </div>
               <span class="text-surface-900 dark:text-surface-0 leading-normal">Keyser Wick
                 <span class="text-surface-700 dark:text-surface-100">has purchased a black jacket for <span
-                  class="text-primary font-bold"
-                >$59.00</span></span>
+                    class="text-primary font-bold">$59.00</span></span>
               </span>
             </li>
-            <li class="flex items-center py-2 border-b border-surface">
+            <li class="border-surface flex items-center border-b py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-pink-100 dark:bg-pink-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-question !text-xl text-pink-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-pink-100 dark:bg-pink-400/10">
+                <i class="pi pi-question text-pink-500 !text-xl" />
               </div>
               <span class="text-surface-900 dark:text-surface-0 leading-normal">Jane Davis
                 <span class="text-surface-700 dark:text-surface-100">has posted a new questions about your
@@ -425,27 +392,23 @@ watch([color, surface, darkTheme], () => {
               </span>
             </li>
           </ul>
-          <span class="block text-muted-color font-medium mb-4">LAST WEEK</span>
-          <ul class="p-0 m-0 list-none">
-            <li class="flex items-center py-2 border-b border-surface">
+          <span class="text-muted-color mb-4 block font-medium">LAST WEEK</span>
+          <ul class="m-0 list-none p-0">
+            <li class="border-surface flex items-center border-b py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-green-100 dark:bg-green-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-arrow-up !text-xl text-green-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-400/10">
+                <i class="pi pi-arrow-up text-green-500 !text-xl" />
               </div>
               <span class="text-surface-900 dark:text-surface-0 leading-normal">Your revenue has increased by <span
-                class="text-primary font-bold"
-              >%25</span>.</span>
+                  class="text-primary font-bold">%25</span>.</span>
             </li>
-            <li class="flex items-center py-2 border-b border-surface">
+            <li class="border-surface flex items-center border-b py-2">
               <div
-                class="w-12 h-12 flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-full mr-4 shrink-0"
-              >
-                <i class="pi pi-heart !text-xl text-purple-500" />
+                class="mr-4 h-12 w-12 flex shrink-0 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-400/10">
+                <i class="pi pi-heart text-purple-500 !text-xl" />
               </div>
               <span class="text-surface-900 dark:text-surface-0 leading-normal"><span
-                class="text-primary font-bold"
-              >12</span>
+                  class="text-primary font-bold">12</span>
                 users have added your products to their wishlist.</span>
             </li>
           </ul>

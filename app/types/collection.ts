@@ -1,37 +1,36 @@
-import type { Maybe, Scalars, UserFilter_Order } from '~/graphql/graphql'
+import type { Maybe, Scalars, UserFilter_Order } from '~/graphql/graphql';
 
 export interface Pagination {
-  hasNextPage?: Scalars['Boolean']['output']
-  itemsPerPage?: number
-  totalCount: Scalars['Int']['output']
-  page?: number
+	hasNextPage?: Scalars['Boolean']['output'];
+	itemsPerPage?: number;
+	totalCount: Scalars['Int']['output'];
+	page?: number;
 }
 
 export interface Column {
-  name: string
-  label: string
-  sort: string
-  filter: boolean
-  schema: Record<string, string>
-  style: string
+	name: string;
+	label: string;
+	sort: string;
+	filter: boolean;
+	schema: Record<string, string>;
+	style: string;
 }
 
 export interface CollectionVars {
-  order?: [UserFilter_Order]
-  itemsPerPage: Scalars['Int']['output']
-  page: number
+	order?: [UserFilter_Order];
+	itemsPerPage: Scalars['Int']['output'];
+	page: number;
 }
 
 export interface Collection {
-  menu: string
-  columns: [Column] | []
-  items: Maybe<Array<Maybe<{}>>>
-  pagination: Pagination
-  vars: any
-  orderField: string
-  orderType: string
-  loading: boolean
-  resource: string
-  hasFilter: boolean
-  query: string
+	menu: string;
+	columns: [Column] | [];
+	items: Maybe<Array<Maybe<{}>>>;
+	pagination: Pagination;
+	vars: any;
+	orderField: string;
+	orderType: string;
+	loading: boolean;
+	hasFilter: boolean;
+	query: string;
 }

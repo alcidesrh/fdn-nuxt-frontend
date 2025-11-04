@@ -19,5 +19,6 @@ function handleInput(e) {
 </script>
 
 <template>
-  <Select :options="context.options" option-label="label" option-value="value" :default-value="defaultValue" fluid placeholder="Seleccionar" @change="handleInput" />
+  <Select :options="context.options" option-label="label" option-value="id" :default-value="defaultValue" fluid
+    placeholder="Seleccionar" @change="handleInput" />
 </template>

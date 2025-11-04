@@ -6,36 +6,31 @@ const props = defineProps({
   // options: []
 })
 const value = ref()
-
+const optionValue = ref('id')
 watch(
   () => props.context._value,
   (v) => {
+    cl(v)
     if (typeof v.collection != 'undefined') {
       value.value = v.collection.map(v => v.id)
       // Handle object case
     }
     else {
-      value.value = v
+      // value.value = v
+      value.value = v.map(v => v?.id || v)
     }
   },
 )
 
 function updateValue(event) {
-  props.context.node.input(value.value)
+  cl(event.value)
+
+  props.context.node.input(event.value)
 }
 </script>
 
 <template>
-  <MultiSelect
-    :id="props.context.id"
-    v-model="value"
-    display="chip"
-    :options="context.options"
-    option-label="label"
-    filter
-    fluid
-    placeholder="Seleccionar"
-    option-value="value"
-    @change="(v) => updateValue(v)"
-  />
+  <MultiSelect :id="props.context.id" :default-value="value" display="chip" :options="context.options"
+    option-label="label" fluid filter placeholder="Seleccionar" :option-value="optionValue"
+    @change="(v) => updateValue(v)" />
 </template>

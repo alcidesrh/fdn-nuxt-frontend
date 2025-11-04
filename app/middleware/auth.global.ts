@@ -1,55 +1,22 @@
-import type { User } from '~/types/user'
-import { useUserSessionStore } from '~/stores/session'
+import type { User } from '~/types/user';
+import { useUserSessionStore } from '~/stores/session';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  {
-    const store = useUserSessionStore()
-    const { user } = store as Ref<Record<'user', User>>
+	{
+		const store = useUserSessionStore();
+		const api = useMetadataStore();
 
-    if (!user?.token && to.name != 'Login') {
-      store.authErrorAttempts = 1
-      store.redirectTo = to.path
-      return '/login'
-    }
-    else if (
-      user?.token
-      && !(to.name == 'Login' && store.authErrorAttempts)
-    ) {
-      const { breadcrumbReload } = useBreadcrumb()
-      breadcrumbReload(to)
-
-      // let redirect = "";
-      // if (typeof API_DEFAULT_OPTIONS.headers?.Authorization === "undefined") {
-      //   (API_DEFAULT_OPTIONS.headers as Record<any, any>) = {
-      //     Authorization: `Bearer ${user.token}`,
-      //   };
-      // }
-      // await $fetch("/auth", {
-      //   ...API_DEFAULT_OPTIONS,
-      // })
-      //   .then((resp: any) => {
-      //     if (!resp.token && resp.response && !resp.response.ok) {
-      //       if (resp.statusCode == 401) {
-      //         store.$reset();
-
-      //         store.redirectTo = to.path;
-      //         return "/login";
-      //       }
-      //     } else if (to.name === "Login") {
-      //       store.authErrorAttempts = 0;
-      //       return navigateTo("/", { redirectCode: 301 });
-      //     }
-
-      //     const { breadcrumbReload } = useBreadcrumb();
-      //     breadcrumbReload(to);
-      //   })
-      //   .catch((e: FetchError) => {
-      //     store.$reset();
-      //     redirect = "/login";
-      //   });
-      // if (redirect) {
-      //   return navigateTo(redirect, { redirectCode: 301 });
-      // }
-    }
-  }
-})
+		if (store.user && store.user?.token && api.loaded) {
+			store.authErrorAttempts = 0;
+			const { breadcrumbReload } = useBreadcrumb();
+			breadcrumbReload(to);
+			if (to.name === 'Login') {
+				return navigateTo('/', { redirectCode: 301 });
+			}
+			return true;
+		}
+		store.authErrorAttempts++;
+		store.redirectTo = from.path !== '/login' ? from.path : '/';
+		return to.name === 'Login' ? true : '/login';
+	}
+});

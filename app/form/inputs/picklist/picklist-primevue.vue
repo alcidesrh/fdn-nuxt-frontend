@@ -72,7 +72,7 @@ function reset() {
   <div>
     <PickList
       v-model="value" data-key="label" breakpoint="600px" :show-target-controls="false" :show-source-controls="false"
-      scroll-height="20rem" class="min-h-25em max-w-40em u-mt-s"
+      scroll-height="20rem" class="max-w-40em min-h-25em u-mt-s"
     >
       <template #option="{ option }">
         <div class="w-full">
@@ -82,7 +82,7 @@ function reset() {
       </template>
 
       <template #sourceheader="{ header }">
-        <div class="u-text-2  font-medium ">
+        <div class="font-medium u-text-2">
           {{ context.sourceText }}
         </div>
         <div class="u-pt-xs">
@@ -90,7 +90,7 @@ function reset() {
         </div>
       </template>
       <template #targetheader="{ header }">
-        <div class="u-text-1 u-pb-xs ">
+        <div class="u-pb-xs u-text-1">
           {{ context.targetText }}
         </div>
       </template>

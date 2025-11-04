@@ -5,7 +5,7 @@ interface Props {
 }
 const { field = '_id', store } = defineProps<Props>()
 
-const { collection, entity } = storeToRefs(store)
+const { entity } = storeToRefs(store)
 store.iniCollection()
 
 const data = ref({ loading: computed(() => collection.value.loading) })
@@ -22,7 +22,7 @@ function rowClass(data) {
 }
 
 onMounted(() => {
-  nextTick(() => (gLoading.value = false))
+  nextTick(() => (gloading.value = false))
 })
 </script>
 
@@ -32,45 +32,39 @@ onMounted(() => {
       <slot name="header">
         <div class="flex flex-wrap justify-between u-mb-l">
           <div>
-            <span class="u-text-2 capitalize font-medium surface-contrast-600">{{ entity.name }}</span>
+            <span class="surface-contrast-600 font-medium capitalize u-text-2">{{ entity.name }}</span>
           </div>
 
           <div class="flex flex-wrap gap-5">
             <Button label="Importar" icon="pi pi-download" severity="secondary" outlined size="small" />
             <Button label="Exportar" icon="pi pi-upload" severity="secondary" outlined />
 
-            <NuxtLink :to="{ name: entity.routes.create }">
+            <NuxtLink :to="{ name: entity.endpoints.create }">
               <Button label="Crear" icon="pi pi-plus" severity="secondary" outlined />
             </NuxtLink>
           </div>
         </div>
       </slot>
 
-      <FormKit
-        v-model="collection.vars" type="form" :actions="false" form-class="block m-auto"
-        :config="{ wrapperClass: 'mb-0!' }"
-      >
-        <DataTable
-          v-model:selection="selected" :row-class="rowClass" removable-sort
-          table-style="min-width:50rem"
+      <FormKit v-model="collection.vars" type="form" :actions="false" form-class="block m-auto"
+        :config="{ wrapperClass: 'mb-0!' }">
+        <DataTable v-model:selection="selected" :row-class="rowClass" removable-sort table-style="min-width:50rem"
           :sort-order="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
           :value="collection.items" :filter-display="collection.hasFilter ? 'row' : undefined" scrollable
-          scroll-height="700px" :class="{ opacity50: collection.loading }" @update:sort-field="(i) => store.sortCollection(i)"
-        >
+          scroll-height="700px" :class="{ opacity50: collection.loading }"
+          @update:sort-field="(i) => store.sortCollection(i)">
           <template #loading>
             ... ...buscando... ...
           </template>
           <template #empty>
-            <h5 class=" m-auto my-5! text-slate-4 font-semibold w-fit">
+            <h5 class="m-auto w-fit text-slate-4 font-semibold my-5!">
               No hay información que mostrar
             </h5>
           </template>
 
           <div v-for="c, i in collection.columns" :key="i">
-            <Column
-              :header="c.label || c.name" :field="c.name" :show-filter-menu="false" :sortable="!!c.sort"
-              align-frozen="left" :frozen="c.action" :class="c?.class"
-            >
+            <Column :header="c.label || c.name" :field="c.name" :show-filter-menu="false" :sortable="!!c.sort"
+              align-frozen="left" :frozen="c.action" :class="c?.class">
               <template #filter>
                 <FormKitSchema v-if="c.schema" :schema="c.schema" :data="data" />
               </template>
@@ -81,29 +75,26 @@ onMounted(() => {
               </template>
             </Column>
           </div>
-          <Column
-            frozen align-frozen="right" :show-filter-menu="false"
-            :selection-mode="collection.menu == 'selection' ? 'multiple' : 'undefined'" class="text-center action-cell"
-          >
+          <Column frozen align-frozen="right" :show-filter-menu="false"
+            :selection-mode="collection.menu == 'selection' ? 'multiple' : 'undefined'" class="action-cell text-center">
             <template #header>
-              <div class="flex justify-center items-center w-full h-full ">
-                <CollectionMenu :collection="collection" :selected="selected.length" @remove-multiple="removeMultiple" />
+              <div class="h-full w-full flex items-center justify-center">
+                <CollectionMenu :collection="collection" :selected="selected.length"
+                  @remove-multiple="removeMultiple" />
               </div>
             </template>
             <template v-if="collection.menu == 'editar'" #body="{ data }">
               <slot name="action" :data="data">
-                <div class="collection-action-wrapper flex gap-4 items-center justify-center w-full relative">
+                <div class="collection-action-wrapper relative w-full flex items-center justify-center gap-4">
                   <span class="flex items-center justify-center">
-                    <NuxtLink :to="{ name: entity.routes.edit, params: { id: data[field] } }" class="absolute">
-                      <Icon name="icon-park-outline:pencil" class="action edit " mode="svg" />
+                    <NuxtLink :to="{ name: entity.endpoints.edit, params: { id: data[field] } }" class="absolute">
+                      <Icon name="icon-park-outline:pencil" class="action edit" mode="svg" />
                     </NuxtLink>
 
                   </span>
                   <span class="flex items-center justify-center">
-                    <Icon
-                      name="icon-park-outline:delete" class="action delete absolute" mode="svg"
-                      @click="store.remove(data)"
-                    />
+                    <Icon name="icon-park-outline:delete" class="action delete absolute" mode="svg"
+                      @click="store.remove(data)" />
                   </span>
                 </div>
               </slot>

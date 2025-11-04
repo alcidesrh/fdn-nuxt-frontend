@@ -1,3 +1,10 @@
+<template>
+  <IconField>
+    <InputText :id="context.id" v-model="value" :value="context._value" fluid :placeholder="context.placeholder"
+      :size="context.size" @input="handleInput" />
+    <InputIcon v-if="context.icon && value" class="surface-contrast-500" :class="context.icon" @click="reset" />
+  </IconField>
+</template>
 <script setup>
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
@@ -15,10 +22,3 @@ function reset() {
   props.context.node.input('')
 }
 </script>
-
-<template>
-  <IconField>
-    <InputText :id="context.id" v-model="value" :value="context._value" fluid :placeholder="context.placeholder" :size="context.size" @input="handleInput" />
-    <InputIcon v-if="context.icon && value" class="surface-contrast-500" :class="context.icon" @click="reset" />
-  </IconField>
-</template>

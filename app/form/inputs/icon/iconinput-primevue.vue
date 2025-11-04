@@ -17,7 +17,7 @@ function input() {
 <template>
   <IconField>
     <InputIcon v-if="context.icon">
-      <Icon :name="context.icon" class="text-18px! " />
+      <Icon :name="context.icon" class="text-18px!" />
     </InputIcon>
     <InputText
       :id="props.context.id" v-model="typing" :default-value="context._value" fluid

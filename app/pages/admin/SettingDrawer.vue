@@ -12,7 +12,7 @@ const visible = ref(false)
         <Entities />
       </div>
     </Drawer>
-    <div class="fixed-center-vertical text-slate-6 bg-slate-3">
+    <div class="fixed-center-vertical bg-slate-3 text-slate-6">
       <Icon name="icon-park-outline:setting-two" mode="svg" @click="visible = true" />
     </div>
   </div>

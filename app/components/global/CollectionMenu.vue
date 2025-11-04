@@ -30,7 +30,7 @@ function toggle(event) {
 </script>
 
 <template>
-  <div v-if="!selected" class="card flex justify-center relative z-90">
+  <div v-if="!selected" class="card relative z-90 flex justify-center">
     <Button type="button" text aria-haspopup="true" aria-controls="overlay_menu" class="u-p-sm" @click="toggle">
       <Icon
         name="icon-park-outline:setting-config" mode="svg" aria-haspopup="true" aria-controls="overlay_menu"
@@ -40,7 +40,7 @@ function toggle(event) {
 
     <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="bg-surface-contrast-1">
       <template #item="{ item }">
-        <div class="flex p-3 gap-3 items-center relative cursor-pointer w-full  00">
+        <div class="00 relative w-full flex cursor-pointer items-center gap-3 p-3">
           <Icon
             v-if="item.value == collection.menu" class="absolute" name="icon-park-outline:check" mode="svg"
             aria-haspopup="true" aria-controls="overlay_menu" size="20"

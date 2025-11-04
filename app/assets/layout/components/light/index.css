@@ -1,13 +1,12 @@
-@import "./datatable";
-@import "./select";
-@import "./multiselect";
-@import "./fieldset";
-/* @import "./toast"; */
-@import "./picklist";
-@import "./accordion";
-@import "./dialog";
-
+@import './datatable';
+@import './select';
+@import './multiselect';
+@import './fieldset';
+@import './toast';
+@import './picklist';
+@import './accordion';
+@import './dialog';
 
 .pi.p-confirmdialog-icon {
-  font-size: 2rem;
+	font-size: 2rem;
 }

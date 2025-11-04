@@ -23,7 +23,7 @@ const data = ref({
 <template>
   <CrudForm :data="data" :store="store" :arg="$route.params.id ? { username: $route.params.id } : null">
     <template #left-header="{ user }">
-      <span class="hint--right hint--error hint--bounce u-text-1 font-medium">
+      <span class="hint--right hint--error hint--bounce font-medium u-text-1">
         <span v-if="user">{{ user.nombre }}: {{ user.username }}</span>
         <span v-else>Nuevo usuario</span>
       </span>

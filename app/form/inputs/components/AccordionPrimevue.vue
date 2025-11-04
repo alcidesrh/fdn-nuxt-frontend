@@ -13,9 +13,9 @@ const { icon, label } = props.attrs
     <Accordion v-bind="attrs" pt:root:class="border-none">
       <AccordionPanel v-for="tab in tabs" :key="tab.title" :value="tab.value">
         <AccordionHeader>
-          <div class="flex gap-3 items-center min-w-20em">
+          <div class="min-w-20em flex items-center gap-3">
             <Icon v-if="icon" size="16" :name="icon" mode="svg" />
-            <span class=" capitalize ">{{ label }}</span>
+            <span class="capitalize">{{ label }}</span>
           </div>
         </AccordionHeader>
         <AccordionContent>

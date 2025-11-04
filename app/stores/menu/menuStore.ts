@@ -4,13 +4,7 @@ import { defineStore } from 'pinia'
 export const useMenuStore = defineStore(
   'menuStore',
   () => {
-    const { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit, items } = createStore<Menu>('Menu')
-
-    collection.value.iniCollection2 = function () {
-      if (this.columns.length) {
-        this.getCollection()
-        return
-      }
+    const { collection, getItems, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, entity, iniCollection, sortCollection, submit, items, getCollection } = createStore<Menu>('Menu')
 
       const { onResult, loading } = apollo.query({ endpoint: 'columnsMetadataResource', args: { resource: this.resource } })
 
@@ -39,16 +33,16 @@ export const useMenuStore = defineStore(
         }
       })
     }
-    return { collection, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, getItems, getMenu, entity, iniCollection, sortCollection, items }
+    return { collection, formkitSchema, submit, resource, remove, removeMultiple, setFormkitSchema, getItems, getMenu, entity, iniCollection, sortCollection, items , getCollection}
   },
-  // {
-  //     persist: {
-  //         afterHydrate: (ctx) => {
-  //             console.log(`just hydrated '${ctx.store.$id}'`);
-  //         },
-  //         beforeHydrate: (ctx) => {
-  //             console.log(`about to hydrate '${ctx.store.$id}'`);
-  //         }
-  //     }
-  // }
+  {
+      persist: {
+          afterHydrate: (ctx) => {
+              console.log(`just hydrated '${ctx.store.$id}'`);
+          },
+          beforeHydrate: (ctx) => {
+              console.log(`about to hydrate '${ctx.store.$id}'`);
+          }
+      }
+  }
 )

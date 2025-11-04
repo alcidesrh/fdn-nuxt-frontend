@@ -1,52 +1,77 @@
-@reference '~/assets/styles.css';
+/* @reference '~/assets/styles.css'; */
 
 .p-toast-message .p-toast-close-button,
 .p-toast-message .p-toast-close-button:hover {
-  outline-color: transparent !important;
+	/* outline-color: transparent !important; */
+	background-color: transparent;
 }
 
 .p-toast-message-error,
 .p-toast-message-info,
 .p-toast-message-success {
-  @apply bg-emerald-50/70;
-  backdrop-filter: blur(2px);
-  border-right: 1px solid var(--p-emerald-400);
-  border-top: 1px solid var(--p-emerald-400);
-  border-bottom: 1px solid var(--p-emerald-400);
-  padding: 5px 15px;
-  color: var(--p-emerald-800);
+	background-color: --alpha(var(bg-emerald-50) / 70%);
+	backdrop-filter: blur(2px);
+	border-right: 1px solid var(--p-emerald-400);
+	border-top: 1px solid var(--p-emerald-400);
+	border-bottom: 1px solid var(--p-emerald-400);
+	/* padding: 0px 15px; */
+	color: var(--p-emerald-800);
+	padding: 10px;
 
-  & .p-toast-summary {
-    font-weight: 500;
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
+	& .p-toast-summary {
+		font-weight: 550;
+		font-size: 18px;
+		margin-bottom: 20px;
+	}
 
-  & .p-toast-detail {
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: 600;
-  }
+	& .p-toast-detail {
+		font-size: 1.1rem;
+		color: white;
+		padding: 10px 20px;
+		font-weight: 500;
+	}
 
-  &.p-toast-message-success {
-    & .p-toast-detail {
-      color: var(--p-emerald-900);
-    }
-  }
+	&.p-toast-message-success {
+		background-color: --alpha(var(--p-emerald-50) / 20%);
+		border: 1px solid var(--p-emerald-300);
+		border-left: 10px solid var(--p-emerald-300);
+		color: var(--p-emerald-700);
+		& .p-toast-detail {
+			background-color: var(--p-emerald-50);
+			color: var(--p-emerald-800);
+			border: 1px solid var(--p-emerald-200);
+		}
+	}
 
-  &.p-toast-message-error {
-    @apply bg-red-50/60;
-    border: 1px solid var(--p-red-200);
-    color: var(--p-red-700);
+	&.p-toast-message-error {
+		/* backdrop-filter: blur(2px); */
+		background-color: --alpha(var(--p-red-50) / 20%);
+		border: 1px solid var(--p-red-300);
+		border-left: 10px solid var(--p-red-300);
+		color: var(--p-red-700);
 
-    & .p-toast-detail {
-      color: var(--p-red-800);
-    }
-  }
+		& .p-toast-detail {
+			background-color: var(--p-red-50);
+			border: 1px solid var(--p-red-200);
+			color: var(--p-red-800);
+		}
+	}
 
-  &.p-toast-message-info {
-    @apply bg-sky-50/60;
-    border: 1px solid var(--p-sky-400);
-    color: var(--p-sky-700);
-  }
+	&.p-toast-message-info {
+		backdrop-filter: blur(2px);
+		background-color: --alpha(var(--p-sky-50) / 20%);
+		color: var(--p-sky-700);
+		border: 1px solid var(--p-sky-300);
+		border-left: 10px solid var(--p-sky-300);
+
+		& .p-toast-detail {
+			background-color: var(--p-sky-50);
+			border: 1px solid var(--p-sky-200);
+			color: var(--p-sky-800);
+		}
+	}
+}
+
+.p-toast-message-content {
+	padding: 0.5rem;
 }

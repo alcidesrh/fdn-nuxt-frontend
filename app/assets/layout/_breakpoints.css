@@ -1,25 +1,28 @@
-@media(min-width:431px) {}
+@media (min-width: 431px) {
+}
 
-@media (max-width: 640px) {}
+@media (max-width: 640px) {
+}
 
 @media (max-width: 840px) {
-
-  /* .p-scrolltop {
+	/* .p-scrolltop {
     bottom: 80px;
   } */
 }
 
 @media (max-width: 1024px) {
-  .form-flex {
-    gap: 15px;
-  }
+	.form-flex {
+		gap: 15px;
+	}
 
-  .layout-content:not(.left-normal) {
-    margin-left: 0px !important;
-    max-width: 100% !important;
-  }
+	.layout-content:not(.left-normal) {
+		/* margin-left: 0px !important; */
+		/* max-width: 100% !important; */
+	}
 }
 
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+}
 
-@media (min-width: 1280px) {}
+@media (min-width: 1280px) {
+}

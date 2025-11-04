@@ -1,3 +1,10 @@
+<template>
+  <IconField>
+    <InputText :id="props.context.id" v-model="typing" :default-value="context._value" fluid
+      :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" @input="keyDown" />
+    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
+  </IconField>
+</template>
 <script setup>
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
@@ -18,7 +25,7 @@ const {
   () => {
     loading.value = false
     msgbus(props.context.eventbus).emit(false)
-    merror()
+    // merror()
   },
   5000,
   { immediate: false },
@@ -77,10 +84,3 @@ function reset() {
   props.context.node.input(null)
 }
 </script>
-
-<template>
-  <IconField>
-    <InputText :id="props.context.id" v-model="typing" :default-value="context._value" fluid :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" @input="keyDown" />
-    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
-  </IconField>
-</template>

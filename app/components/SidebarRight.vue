@@ -1,3 +1,13 @@
+<template>
+  <SidebarDrawer store-id="sidebarRight" position="right">
+    <template #content="{ data }">
+      <nav>
+        <AMenu :mode="data.mode" :menu="menuStore.menu" :root="true" :toggle="toggle" position="right"
+          @toggle="toggle = !toggle" />
+      </nav>
+    </template>
+  </SidebarDrawer>
+</template>
 <script setup lang="ts">
 const menu = ref([
   {
@@ -137,13 +147,3 @@ const menu = ref([
 const menuStore = useMenuStateStore('menu-right', menu.value)
 const { toggle } = storeToRefs(menuStore)
 </script>
-
-<template>
-  <SidebarDrawer store-id="sidebarRight" position="right">
-    <template #content="{ data }">
-      <nav>
-        <AMenu :mode="data.mode" :menu="menuStore.menu" :root="true" :toggle="toggle" position="right" @toggle="toggle = !toggle" />
-      </nav>
-    </template>
-  </SidebarDrawer>
-</template>

@@ -3,9 +3,9 @@
 <template>
   <main>
     <div class="layout-wrapper">
-      <div class="flex h-full w-full">
+      <div class="h-full w-full flex">
         <div id="layout-content" class="layout-content">
-          <div class="content u-p-l md: u-p-xl lg:u-p-5xl lg:u-py-l">
+          <div class="content md: u-p-l u-p-xl lg:u-p-5xl lg:u-py-l">
             <slot />
           </div>
         </div>

@@ -1,3 +1,10 @@
+<template>
+  <IconField>
+    <InputText :id="props.context.id" v-model="typing" v-keyfilter.int :default-value="context._value" fluid
+      :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" @input="keyDown" />
+    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
+  </IconField>
+</template>
 <script setup>
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
@@ -13,7 +20,6 @@ const loading = ref(false)
 const { start: startError, isPending: isPendingError, stop: stopError } = useTimeoutFn(() => {
   loading.value = false
   msgbus(props.context.eventbus).emit(false)
-  merror()
 }, 5000, { immediate: false })
 
 const { start, isPending, stop } = useTimeoutFn(() => {
@@ -25,7 +31,7 @@ const { start, isPending, stop } = useTimeoutFn(() => {
   if (props.context.node.name == 'id') {
     value = value ? Number(value) : null
   }
-  props.context.node.input(value)
+  props.context.node.input(value.toString())
   startError()
 }, 1000, { immediate: false })
 
@@ -63,13 +69,3 @@ function reset() {
   props.context.node.input(null)
 }
 </script>
-
-<template>
-  <IconField>
-    <InputText
-      :id="props.context.id" v-model="typing" v-keyfilter.int :default-value="context._value" fluid
-      :class="[context.inputClass]" v-bind="context.attrs" :disabled="loading" @input="keyDown"
-    />
-    <InputIcon class="surface-contrast-500" :class="icon" @click="reset" />
-  </IconField>
-</template>

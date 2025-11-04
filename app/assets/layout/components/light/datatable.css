@@ -1,155 +1,178 @@
 .p-datatable {
-  & .p-datatable-column-header-content {
-    /* display: grid; */
+	& .p-datatable-tbody > tr {
+		background-color: var(--background);
+		& > td:last-child {
+			background-color: white;
+		}
+	}
+	& .p-datatable-column-header-content {
+		/* display: grid; */
 
+		& > .p-checkbox {
+			margin: auto;
+			/* margin-bottom: 15px; */
+		}
+	}
 
+	& .p-datatable-column-title {
+		text-transform: capitalize;
+	}
 
-    &>.p-checkbox {
-      margin: auto;
-      /* margin-bottom: 15px; */
-    }
-  }
+	& .p-datatable-header-cell {
+		padding: 0px 6px;
+		/* border: none; */
+	}
 
-  & .p-datatable-column-title {
-    text-transform: capitalize;
-  }
+	& .p-datatable-thead {
+		background-color: var(--background);
 
-  & .p-datatable-header-cell {
-    padding: 0px 6px;
-    /* border: none; */
-  }
+		& > tr {
+			&:last-child > th {
+				/* background-color: var(--p-surface-contrast-0); */
+				background-color: var(--background);
+				/* background-color: var(--p-surface-contrast-0); */
 
-  & .p-datatable-thead>tr {
+				/* @apply bg-slate-100/80; */
+				/* padding-top: 12px; */
+				/* padding-bottom: 12px; */
+				padding: 0px 10px;
 
-    &:last-child>th {
-      background-color: var(--p-surface-contrast-0);
-      /* @apply bg-slate-100/80; */
-      /* padding-top: 12px; */
-      /* padding-bottom: 12px; */
-      padding: 0px 10px;
+				&:last-child {
+					background-color: var(--background);
 
-      &:last-child {
-        background-color: var(--p-surface-contrast-0);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 62px;
-      }
-    }
+					/* background-color: var(--p-surface-contrast-0); */
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: 62px;
+				}
+			}
 
-    &:first-child>th {
-      padding: 0px 10px;
+			&:first-child > th {
+				padding: 0px 10px;
 
-      &:last-child {
-        background-color: var(--p-surface-contrast-0);
-      }
-    }
+				&:last-child {
+					/* background-color: var(--p-surface-contrast-0); */
+				}
+			}
 
-    &:first-child>th {
-      background-color: transparent
-    }
+			&:first-child > th {
+				background-color: transparent;
+			}
 
-    &:first-child>th {
-      &:last-child {
-        /* width: 80px !important; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 62px;
-      }
-    }
+			&:first-child > th {
+				&:last-child {
+					/* width: 80px !important; */
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: 62px;
+				}
+			}
+		}
+	}
 
-  }
+	& th.action-cell:nth-of-type(1),
+	& td.action-cell {
+		background-color: transparent;
+		width: 80px;
+		/* @apply bg-slate-100/80; */
 
-  & th.action-cell:nth-of-type(1),
-  & td.action-cell {
-    /* background-color: transparent; */
-    width: 80px;
-    /* @apply bg-slate-100/80; */
+		/* border-top: 0.5px solid var(--p-surface-contrast-300); */
+		/* border-left: 1px solid var(--p-surface-contrast-300); */
+		/* border-right: 1px solid var(--p-surface-contrast-200); */
+		/* display: block; */
 
-    /* border-top: 0.5px solid var(--p-surface-contrast-300); */
-    border-left: 1px solid var(--p-surface-contrast-300);
-    /* border-right: 1px solid var(--p-surface-contrast-200); */
-    /* display: block; */
+		&:is(th) {
+			background-color: transparent;
+			border: none;
+		}
+	}
 
-    &:is(th) {
-      background-color: transparent;
-      border: none;
-    }
-  }
+	& .row-mark {
+		background-color: var(--p-surface-contrast-100);
+		/* color: var(--p-surface-contrast-200) */
+	}
 
-  & .row-mark {
-    background-color: var(--p-surface-contrast-100);
-    /* color: var(--p-surface-contrast-200) */
-  }
+	& .collection-action-wrapper {
+		& > span {
+			border-radius: 100%;
+			padding: 10px;
 
-  & .collection-action-wrapper {
-    &>span {
-      border-radius: 100%;
-      padding: 10px;
+			& .action {
+				cursor: pointer;
+				border-radius: 100%;
+				& > *,
+				& > g > path {
+					stroke-width: 3px;
+				}
 
-      & .action {
-        cursor: pointer;
-        border-radius: 100%;
-        background-color: #F4F7FA;
-        padding: 3px;
-        width: 25px;
-        height: 25px;
+				&.edit,
+				&.delete {
+					color: var(--p-surface-contrast-500);
+					font-size: 20px !important;
+				}
+			}
 
-        &>*,
-        &>g>path {
-          stroke-width: 3px;
-        }
+			/* transition: scale 0.2s; */
 
-        &.edit,
-        &.delete {
-          color: var(--p-surface-contrast-600);
-          font-size: 20px !important;
-        }
-      }
+			&:hover {
+				/* transition: scale 0.2s;
+				scale: 1.2; */
+				/* padding: 5px; */
+				/* width: 50px; */
+				/* height: 50px; */
 
-      transition: scale .2s;
+				/* margin-left: -37.5px; */
+				/* background-color: var(--p-surface-contrast-200); */
+				& .action {
+					/* position: absolute; */
+					& > *,
+					& > g > path {
+						/* &:hover { */
+						color: var(--p-surface-contrast-900);
+						/* stroke-width: 5px; */
+						/* } */
+					}
+				}
+			}
+		}
+	}
 
-      &:hover {
-        transition: scale .2s;
-        scale: 1.2;
-      }
-    }
+	& .collection-cell-wrap {
+		max-height: 100px;
+		& > .date > span {
+			margin-left: 5px;
+			letter-spacing: 1px;
+		}
 
-  }
-
-  & .collection-cell-wrap {
-    max-height: 100px;
-
-    /* &>div {
+		/* &>div {
       padding: 5px;
       max-height: 100px;
       overflow: scroll;
 
 
     } */
-  }
+	}
 
-  & .columns-wraper {
-    min-width: 200px;
+	& .columns-wraper {
+		min-width: 200px;
 
-    &.small-column {
-      width: 100px;
-      min-width: 85px;
-      /* max-width: 100px; */
+		&.small-column {
+			width: 100px;
+			min-width: 85px;
+			/* max-width: 100px; */
+		}
 
+		&.medium-column {
+			width: 200px;
+			min-width: 85px;
+			max-width: 200px;
 
-    }
-
-    &.medium-column {
-      width: 200px;
-      min-width: 85px;
-      max-width: 200px;
-
-      & input,
-      & .group {
-        max-width: 180px;
-      }
-    }
-  }
+			& input,
+			& .group {
+				max-width: 180px;
+			}
+		}
+	}
 }

@@ -1,26 +1,33 @@
-import type { Item } from '../types/item'
-import { ENTRYPOINT } from './api-rest'
+import type { Item } from '../types/item';
+// import { ENTRYPOINT } from './api-rest'
 
-export function mercureSubscribe(hubURL: URL, topics: string[], setData: <T extends Item>(data: T) => void): EventSource {
-  const url = new URL(hubURL, ENTRYPOINT)
+export function mercureSubscribe(
+	hubURL: URL,
+	topics: string[],
+	setData: <T extends Item>(data: T) => void
+): EventSource {
+	const url = new URL(hubURL, ENTRYPOINT);
 
-  topics.forEach(topic => url.searchParams.append('topic', new URL(topic, ENTRYPOINT).toString()))
+	topics.forEach((topic) =>
+		url.searchParams.append('topic', new URL(topic, ENTRYPOINT).toString())
+	);
 
-  const eventSource = new EventSource(url.toString())
+	const eventSource = new EventSource(url.toString());
 
-  eventSource.addEventListener('message', (event) => {
-    setData(JSON.parse(event.data))
-  })
+	eventSource.addEventListener('message', (event) => {
+		setData(JSON.parse(event.data));
+	});
 
-  return eventSource
+	return eventSource;
 }
 
 export function extractHubURL(response: Response): URL | undefined {
-  const linkHeader = response.headers.get('Link')
-  if (!linkHeader)
-    return undefined
+	const linkHeader = response.headers.get('Link');
+	if (!linkHeader) return undefined;
 
-  const matches = linkHeader.match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)
+	const matches = linkHeader.match(
+		/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/
+	);
 
-  return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : undefined
+	return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : undefined;
 }
