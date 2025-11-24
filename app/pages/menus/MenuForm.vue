@@ -1,4 +1,15 @@
+<template>
+	<div>
+		<!-- <pre>
+      {{ entity.item }}
+    </pre> -->
+		<CrudForm form-id="menuForm" :data="data" :store="store"
+			:identifier="$route.params.id ? { id: g$route.params.id } : null" @submit="submit" />
+	</div>
+</template>
+
 <script setup lang="ts">
+
 const store = useMenuStore();
 const actionStore = useActionStore();
 
@@ -13,7 +24,7 @@ const parent = computed(() =>
 			entity.value.item.id != v.value &&
 			(entity.value.item?.children
 				? !entity.value.item?.children ||
-				  !entity.value.item?.children.includes(v.value)
+				!entity.value.item?.children.includes(v.value)
 				: true)
 	)
 );
@@ -40,24 +51,9 @@ const data = ref({
 
 // watch(() => entity.value.item, (v) => {
 
-//   const temp = [{ header: 'Model', ...toRaw(entity.value.item) }, { header: 'Data', ...toRaw(unref(useCloned(data.value).cloned.value)) }, { header: 'Formulario', ...toRaw(store.formkitSchema) }]
+//   const temp = [{ header: 'Model', ...toRaw(entity.value.item) }, { header: 'Data', ...toRaw(unref(useCloned(data.value).cloned.value)) }, { header: 'Formulario', ...toRaw(store.schema) }]
 //   const channel = new BroadcastChannel('app-data');
 //   channel.postMessage(temp);
 
 // }, { deep: true })
 </script>
-
-<template>
-	<div>
-		<!-- <pre>
-      {{ entity.item }}
-    </pre> -->
-		<CrudForm
-			form-id="menuForm"
-			:data="data"
-			:store="store"
-			:arg="$route.params.id ? { id: $route.params.id } : null"
-			@submit="submit"
-		/>
-	</div>
-</template>

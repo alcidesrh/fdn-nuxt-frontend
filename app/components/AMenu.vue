@@ -1,11 +1,9 @@
 `<template>
   <div v-if="root" class="menu-wraper relative" :class="[mode, clases, position]">
 
-    <div class="relative ml-auto overflow-visible w-24px h-24px right-.8rem cursor-pointer" @click="toggleMenu">
-      <Icon name="icon-park-outline:up-one"
-        class="menu-toggle-icon  [&>*]:stroke-0 [&>*]:fill-slate-300  absolute -mt-10px " size="35" mode="svg" />
-      <Icon name="icon-park-outline:down-one" class="menu-toggle-icon  [&>*]:stroke-0 [&>*]:fill-slate-300 absolute"
-        size="35" mode="svg" />
+    <div class="relative ml-auto overflow-visible flex justify-center cursor-pointer" @click="toggleMenu">
+      <Icon name="arrow_drop_up" class=" text-slate-400 absolute -mt-10px right-0 -mr-0.5rem" size="40" />
+      <Icon name="arrow_drop_down" class=" text-slate-400 absolute  right-0 -mr-0.5rem" size="40" />
     </div>
 
     <ol class="layout-menu">
@@ -17,16 +15,14 @@
   <li v-for="(menuitem, index) in menu" v-else :key="`_root${index}`">
     <div v-if="menuitem.children" class="menu-root" @click="menuRootClick(menuitem, $event)">
       <div class="menu-icon">
-        <Icon :name="menuitem.icon" mode="svg" :class="{ root }" />
+        <Icon :name="menuitem.icon" :class="{ root }" />
       </div>
       <div class="truncate">
         {{ menuitem.label }}
       </div>
-      <Icon name="icon-park-outline:down" class="menu-toggle-icon [&>*]:stroke-1 text-slate-500 absolute right-2"
-        :class="{ open: menuitem.open }" size="24" mode="svg" />
+      <Icon name="keyboard_arrow_down" class="menu-toggle-icon  text-slate-400 absolute right-2"
+        :class="{ open: menuitem.open }" size="24" />
       <!-- <div class="w-55% mt-0.5rem mb-1rem m-auto border-t border-slate-300" /> -->
-
-
     </div>
 
     <a v-if="menuitem.href" :href="menuitem.href" target="_blank" rel="noopener noreferrer">
@@ -36,12 +32,21 @@
       <div>{{ menuitem.label }}</div>
     </a>
 
-    <NuxtLink v-if="typeof menuitem.to != 'undefined' || menuitem.name" :to="!menuitem.name
+    <div v-else-if="menuitem?.type == 'action'" @click="menuitem.command">
+      <span class="menu-icon">
+        <Icon :name="menuitem.icon" />
+      </span>
+      <span class="truncate">
+        {{ menuitem.label }}
+      </span>
+    </div>
+
+    <NuxtLink v-else-if="typeof menuitem.to != 'undefined' || menuitem.name" :to="!menuitem.name
       ? menuitem.to
       : { name: menuitem.name, params: menuitem.params }
       ">
       <div class="menu-icon">
-        <Icon :name="menuitem.icon" mode="svg" />
+        <Icon :name="menuitem.icon" />
       </div>
       <div class="truncate">
         {{ menuitem.label }}
@@ -50,7 +55,7 @@
 
     <span v-if="menuitem.subcategory" class="menu-child-category">{{
       menuitem.label
-    }}</span>
+      }}</span>
 
     <Transition name="layout-submenu">
       <div v-show="menuitem.children
@@ -134,47 +139,22 @@ function toggleMenu() {
   container-type: inline-size;
   container-name: sidebar;
 
-  &>.toggle-menu {
-    border-radius: 999px;
-    position: relative;
-    margin-left: auto;
-    margin-right: calc(.5rem + 3px);
-    cursor: pointer;
-    font-size: 24px;
-    /* padding: 3px; */
-    /* border: 1px solid var(--p-surface-300); */
-    /* background-color: var(--p-surface-contrast-100); */
-
-    &:deep(path) {
-
-      /* display: none; */
-      /* stroke: var(--p-surface-contrast-400); */
-      stroke-width: 2px;
-      color: var(--p-surface-contrast-400)
-    }
-  }
-
-
-  &.small>.toggle-menu {
-    margin-left: auto;
-    margin-right: auto;
-    left: auto;
-    top: auto;
-  }
 
 
   &.small {
     position: relative;
 
-    &>svg {
-      position: relative;
+    &>div>.fdn-icon {
+      margin-right: auto;
+      margin-left: auto;
+      top: -15px;
     }
 
     &>ol.layout-menu {
-      padding-top: 0.5rem;
+      padding-top: 1rem;
 
       &>li {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
 
         &>div {
           &.menu-root {
@@ -188,27 +168,23 @@ function toggleMenu() {
           }
 
           & .menu-icon {
-            width: 100%;
+            /* width: 100%; */
             display: flex;
             padding: 5px 0px;
             justify-content: center;
             cursor: pointer;
+            margin: auto;
 
-            &+div {
+            &+ {
               margin: auto;
               width: fit-content;
               margin-top: 5px;
             }
 
-            &>svg {
+            /* &>.fdn-icon {
               font-size: 20px;
-              color: var(--p-surface-700);
-
-              &>>>path,
-              &>>>g {
-                stroke-width: 2px;
-              }
-            }
+              color: var(--p-surface-contrast-600);
+            } */
           }
 
           & .menu-toggle-icon {
@@ -226,39 +202,12 @@ function toggleMenu() {
           }
 
           & ol li:not(:first-child) {
-            margin-top: 20px;
+            margin-top: 15px;
 
             &:last-child {
               padding-bottom: 10px;
             }
           }
-
-          /* & .fdn-icon {
-
-            width: 25px;
-            height: 25px;
-
-            color: var(--p-surface-contrast-600);
-
-            &:is(svg) {
-
-              &>*>*,
-              &>* {
-                stroke-width: 3;
-              }
-            }
-
-
-            &:not(.root) {}
-
-            &.menu-toggle-icon {
-
-
-              color: var(--p-surface-contrast-400);
-              width: 24px;
-              height: 24px;
-            }
-          } */
 
           & a.router-link-active.router-link-exact-active {
             &>.menu-icon {
@@ -311,7 +260,7 @@ function toggleMenu() {
 
           &>.fdn-icon.menu-toggle-icon {
             position: absolute;
-            right: 0.5rem;
+            right: 0rem;
           }
         }
 
@@ -330,24 +279,9 @@ function toggleMenu() {
           height: 2rem;
           border-radius: 6px;
 
-          & .fdn-icon {
-            &:is(svg) {
-
-              &>*>*,
-              &>* {
-                stroke-width: 3.5px;
-              }
-            }
-          }
-
-          &>svg {
-            font-size: 18px;
+          &>.fdn-icon {
             color: var(--p-surface-contrast-500);
 
-            &>>>g,
-            &>>>path {
-              stroke-width: 3px;
-            }
           }
         }
 
@@ -362,18 +296,14 @@ function toggleMenu() {
 
             &>div.menu-root,
             &>a {
-              border-left: 1px solid var(--p-surface-contrast-200);
+              border-left: .05px solid var(--p-surface-contrast-200);
               padding: 0.5rem;
               padding-right: 0px;
 
               &:hover {
                 background-color: var(--p-surface-contrast-200);
-                border-left: 1.5px solid var(--p-surface-400);
+                border-left: 2px solid var(--p-surface-400);
                 color: var(--p-surface-contrast-800);
-
-                &>.menu-icon {
-                  border: 1px solid var(--p-surface-400);
-                }
               }
 
               &.router-link-active.router-link-exact-active {
@@ -394,6 +324,7 @@ function toggleMenu() {
     }
   }
 }
+
 
 
 

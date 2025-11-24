@@ -19,20 +19,19 @@ const typing = ref('')
 const loading = ref(false)
 const { start: startError, isPending: isPendingError, stop: stopError } = useTimeoutFn(() => {
   loading.value = false
-  msgbus(props.context.eventbus).emit(false)
 }, 5000, { immediate: false })
 
-const { start, isPending, stop } = useTimeoutFn(() => {
+const { start, isPending, stop } = useTimeoutFn(async () => {
   loading.value = true
   inputId.value = props.context.id
-  msgbus(props.context.eventbus).emit(true)
 
   let value = typing.value
   if (props.context.node.name == 'id') {
     value = value ? Number(value) : null
   }
-  props.context.node.input(value.toString())
+  await props.context.node.input(value.toString())
   startError()
+  msgbus(props.context.eventbus).emit({ collection: 'reload' })
 }, 1000, { immediate: false })
 
 function keyDown() {
@@ -44,7 +43,7 @@ function keyDown() {
     start()
   }
 }
-watch(() => props.context.loading, (v) => {
+watch(() => cloading.value, (v) => {
   if (!v) {
     if (isPending) {
       stop()
@@ -63,9 +62,11 @@ watch(() => props.context.loading, (v) => {
 
 const icon = computed(() => loading.value ? 'pi pi-spin pi-spinner' : (typing.value || props.context._value ? 'pi pi-times cursor-pointer' : 'pi pi-search opacity-70'))
 
-function reset() {
+async function reset() {
   loading.value = false
   typing.value = null
-  props.context.node.input(null)
+  await props.context.node.input(null)
+  msgbus(props.context.eventbus).emit({ collection: 'reload' })
+
 }
 </script>

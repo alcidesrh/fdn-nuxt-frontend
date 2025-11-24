@@ -5,7 +5,7 @@ export const useRoleStore = defineStore(
 	'roleStore',
 	() => {
 		const {
-			formkitSchema,
+			schema,
 			setFormkitSchema,
 			remove,
 			removeMultiple,
@@ -22,7 +22,7 @@ export const useRoleStore = defineStore(
 		const options = [];
 
 		return {
-			formkitSchema,
+			schema,
 			submit,
 			resource,
 			remove,

@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 export const usePermisoStore = defineStore(
 	'permisoStore',
 	() => {
-		// const { collection, formkitSchema, setFormkitSchema, remove, removeMultiple, resource, items, getItems, entity, iniCollection, sortCollection, submit } =
+		// const { collection, schema, setFormkitSchema, remove, removeMultiple, resource, items, getItems, entity, iniCollection, sortCollection, submit } =
 		return createStore<Permiso>('Permiso');
 	},
 	{

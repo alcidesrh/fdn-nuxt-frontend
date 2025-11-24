@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="entity.collection.columns.length">
+    <div v-if="entity.collection.columns.length" class="relative ">
       <slot name="header">
         <div class="flex flex-wrap justify-between u-mb-s ">
-          <span class="surface-contrast-600 font-medium capitalize u-text-2">{{ entity.name }}</span>
+          <span class=" capitalize u-text-3">{{ entity.name }}</span>
 
           <div class="flex flex-wrap gap-5">
             <Button label="Importar" icon="pi pi-download" severity="secondary" outlined size="small" />
@@ -15,13 +15,14 @@
           </div>
         </div>
       </slot>
-      <FormKit v-model="entity.collection.vars" type="form" :actions="false" form-class="block m-auto"
+
+      <FormKit v-model="entity.collection.filters" type="form" :actions="false" form-class="block m-auto"
         :config="{ wrapperClass: 'mb-0!' }">
-        <DataTable v-model:selection="selected" :row-class="rowClass" removable-sort table-style="min-width:50rem"
+        <DataTable stripedRows v-model:selection="selected" :r ow-class="rowClass" removable-sort
+          table-style="min-width:50rem"
           :sort-order="entity.collection.orderType == 'ASC' ? 1 : entity.collection.orderType == 'DESC' ? -1 : 0"
           :value="entity.collection.items" :filter-display="entity.collection.hasFilter ? 'row' : undefined" scrollable
-          scroll-height="700px" :class="{ opacity50: entity.collection.loading }"
-          @update:sort-field="(i) => store.sortCollection(i)">
+          scroll-height="700px" @update:sort-field="(i) => store.sortCollection(i)" :class="{ 'opacity-50': cloading }">
           <template #loading>
             ... ...buscando... ...
           </template>
@@ -30,6 +31,7 @@
               No hay información que mostrar
             </h5>
           </template>
+          <!-- <div v-show="cloading" class="collection-loader"></div> -->
 
           <div v-for="(c, i) in entity.collection.columns" :key="i">
             <Column :header="c.label || c.name" :field="c.name" :show-filter-menu="false" :sortable="!!c.sort"
@@ -48,10 +50,10 @@
             :selection-mode="entity.collection.menu == 'selection' ? 'multiple' : undefined"
             class="action-cell text-center">
             <template #header>
-              <div class="h-full w-full flex items-center justify-center">
-                <CollectionMenu :collection="entity.collection" :selected="selected.length"
-                  @remove-multiple="removeMultiple" />
-              </div>
+              <!-- <div class="h-full w-full flex items-center justify-center"> -->
+              <CollectionMenu :collection="entity.collection" :selected="selected.length"
+                @remove-multiple="removeMultiple" />
+              <!-- </div> -->
             </template>
             <template v-if="entity.collection.menu == 'editar'" #body="{ data }">
               <slot name="action" :data="data">
@@ -59,12 +61,11 @@
                   <span class="flex items-center justify-center">
                     <NuxtLink :to="{ name: entity.endpoints.edit, params: { id: data[field || '_id'] } }"
                       class="absolute">
-                      <Icon name="icon-park-outline:pencil" class="action edit" mode="svg" />
+                      <Icon name="stylus" class="action edit" />
                     </NuxtLink>
                   </span>
                   <span class="flex items-center justify-center">
-                    <Icon name="icon-park-outline:delete" class="action delete absolute" mode="svg"
-                      @click="store.remove(data)" />
+                    <Icon name="delete" class="action delete absolute" @click="store.remove(data)" />
                   </span>
                 </div>
               </slot>
@@ -73,7 +74,7 @@
         </DataTable>
       </FormKit>
       <div v-if="entity.collection.pagination?.totalCount" class="flex justify-center u-mb-l u-mt-s">
-        <paginate :collection="entity.collection" />
+        <paginate :collection="entity.collection" :entity="entity.name" />
       </div>
     </div>
     <skeleton-list v-else :columns="7" />
@@ -88,31 +89,16 @@ interface Props {
 const { field = '_id', store } = defineProps<Props>()
 
 const { entity } = storeToRefs(store)
+const filters = ref({})
 store.iniCollection().then(() => {
 
-  store.getCollection()
-  watch(
-    () => entity.value.collection.vars,
-    (v, o) => {
-      cl(entity.value.collection.vars?.createdAt);
-      if (entity.value.collection.vars?.createdAt) {
-        for (const key in entity.value.collection.vars) {
-          if (key != 'createdAt') {
-            entity.value.collection.vars[key] = undefined;
-          }
-        }
-      }
-      store.getCollection()
+  store.getCollection().then(() => {
 
-      // store.getCollection();
-    }
-    // { deep: true },
-  );
+
+  })
+
 })
-
-
-// const vars = ref(entity.value.collection.var)
-const data = ref({ loading: computed(() => entity.value.collection.loading) })
+const data = ref({})
 
 const selected = ref([])
 
@@ -124,11 +110,6 @@ function removeMultiple() {
 function rowClass(data) {
   return [{ 'row-mark': selected.value.map(i => i._id).includes(data._id as never) }]
 }
-
-
-
-onMounted(() => {
-})
 </script>
 
 <style scoped>

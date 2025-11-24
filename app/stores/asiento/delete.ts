@@ -1,36 +1,36 @@
-import type { Asiento } from '~~/types/asiento'
-import { defineStore } from 'pinia'
+import type { Asiento } from '~/types/asiento';
+import { defineStore } from 'pinia';
 
 interface State {
-  deleted?: Asiento
-  mercureDeleted?: Asiento
-  isLoading: boolean
-  error?: string
+	deleted?: Asiento;
+	mercureDeleted?: Asiento;
+	isLoading: boolean;
+	error?: string;
 }
 
 export const useAsientoDeleteStore = defineStore('asientoDelete', {
-  state: (): State => ({
-    deleted: undefined,
-    mercureDeleted: undefined,
-    isLoading: false,
-    error: undefined,
-  }),
+	state: (): State => ({
+		deleted: undefined,
+		mercureDeleted: undefined,
+		isLoading: false,
+		error: undefined,
+	}),
 
-  actions: {
-    setLoading(isLoading: boolean) {
-      this.isLoading = isLoading
-    },
+	actions: {
+		setLoading(isLoading: boolean) {
+			this.isLoading = isLoading;
+		},
 
-    setDeleted(deleted: Asiento) {
-      this.deleted = deleted
-    },
+		setDeleted(deleted: Asiento) {
+			this.deleted = deleted;
+		},
 
-    setMercureDeleted(mercureDeleted: Asiento | undefined) {
-      this.mercureDeleted = mercureDeleted
-    },
+		setMercureDeleted(mercureDeleted: Asiento | undefined) {
+			this.mercureDeleted = mercureDeleted;
+		},
 
-    setError(error: string) {
-      this.error = error
-    },
-  },
-})
+		setError(error: string) {
+			this.error = error;
+		},
+	},
+});

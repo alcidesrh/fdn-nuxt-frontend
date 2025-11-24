@@ -1,36 +1,36 @@
-import type { Taxon } from '~~/types/taxon'
-import { defineStore } from 'pinia'
+import type { Taxon } from '~/types/taxon';
+import { defineStore } from 'pinia';
 
 interface State {
-  deleted?: Taxon
-  mercureDeleted?: Taxon
-  isLoading: boolean
-  error?: string
+	deleted?: Taxon;
+	mercureDeleted?: Taxon;
+	isLoading: boolean;
+	error?: string;
 }
 
 export const useTaxonDeleteStore = defineStore('taxonDelete', {
-  state: (): State => ({
-    deleted: undefined,
-    mercureDeleted: undefined,
-    isLoading: false,
-    error: undefined,
-  }),
+	state: (): State => ({
+		deleted: undefined,
+		mercureDeleted: undefined,
+		isLoading: false,
+		error: undefined,
+	}),
 
-  actions: {
-    setLoading(isLoading: boolean) {
-      this.isLoading = isLoading
-    },
+	actions: {
+		setLoading(isLoading: boolean) {
+			this.isLoading = isLoading;
+		},
 
-    setDeleted(deleted: Taxon) {
-      this.deleted = deleted
-    },
+		setDeleted(deleted: Taxon) {
+			this.deleted = deleted;
+		},
 
-    setMercureDeleted(mercureDeleted: Taxon | undefined) {
-      this.mercureDeleted = mercureDeleted
-    },
+		setMercureDeleted(mercureDeleted: Taxon | undefined) {
+			this.mercureDeleted = mercureDeleted;
+		},
 
-    setError(error: string) {
-      this.error = error
-    },
-  },
-})
+		setError(error: string) {
+			this.error = error;
+		},
+	},
+});

@@ -6,7 +6,7 @@ export const useUserStore = defineStore(
 	() => {
 		const {
 			getItems,
-			formkitSchema,
+			schema,
 			setFormkitSchema,
 			remove,
 			removeMultiple,
@@ -17,25 +17,24 @@ export const useUserStore = defineStore(
 			getCollection,
 		} = createStore<User>('User');
 
-		// entity.value.endpoints.get = 'getUserByUsernameUser';
+		entity.value.endpoints.get = 'getByUsernameUser';
+
 		entity.value.excludeFormFields = [
-			// 'password',
+			'password',
 			'password_confirm',
 			'userIdentifier',
 			'validTokenStrings',
 			'legacyId',
 			'fullName',
-			// 'roles',
+			'roles',
 		];
-
 		function submit(data) {
 			// const { onDone, loading } =
-			cl(data);
 
 			return apollo
 				.mutate({
 					operation: entity.value.getMutationOperation(),
-					variables: { input: Entity.prepareVariables(data) },
+					variables: Entity.prepareVariables(data),
 					fields: entity.value.getMutationFields(),
 				})
 				.then(({ data }) => {
@@ -43,13 +42,34 @@ export const useUserStore = defineStore(
 					msg.emit(getAlertText('update'));
 				})
 				.catch((e) => {
-					merror({ message: e, life: false });
+					e.errors.forEach(({ message, locations, path, extensions }) => {
+						let temp = {};
+						if (extensions && extensions.debugMessage) {
+							temp = {
+								summary: message,
+								detail: extensions.debugMessage,
+							};
+						} else {
+							temp = {
+								summary: 'GraphQL error from plugin/apollo.ts',
+								detail:
+									message +
+									' ' +
+									(extensions && extensions.debugMessage
+										? extensions.debugMessage
+										: ''),
+								// message: `GraphQL error from plugin/apollo.ts: ${message}, Location: ${locations}, Path: ${path}`,
+							};
+						}
+						merror(temp);
+					});
+					// merror({ message: e, life: false });
 				});
 		}
 
 		return {
 			getItems,
-			formkitSchema,
+			schema,
 			submit,
 			resource,
 			remove,
@@ -62,14 +82,14 @@ export const useUserStore = defineStore(
 		};
 	},
 	{
-		persist: {
-			afterHydrate: (ctx) => {
-				console.log(`just hydrated '${ctx.store.$id}'`);
-			},
-			beforeHydrate: (ctx) => {
-				console.log(`about to hydrate '${ctx.store.$id}'`);
-			},
-			// omit: ['collection']
-		},
+		// persist: {
+		// 	afterHydrate: (ctx) => {
+		// 		console.log(`just hydrated '${ctx.store.$id}'`);
+		// },
+		// 	beforeHydrate: (ctx) => {
+		// 		console.log(`about to hydrate '${ctx.store.$id}'`);
+		// 	},
+		// 	// omit: ['collection']
+		// },
 	},
 );

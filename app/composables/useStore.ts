@@ -11,7 +11,7 @@ export function createStore<Type>(
 	const items: Ref<Array<SelectOption> | []> = ref([]);
 
 	const entity = ref(new Entity<Type>(name));
-	const formkitSchema = ref([]);
+	const schema = ref([]);
 
 	let chanel = '';
 
@@ -20,7 +20,7 @@ export function createStore<Type>(
 	function crud(resource: string | null = null) {
 		entity.value.item = {} as any;
 		(async (params) => {
-			// if (formkitSchema.value.length == 0) {
+			// if (schema.value.length == 0) {
 			await apollo.query(params).then(({ data, networkStatus }) => {
 				if (typeof data == 'undefined' && networkStatus == 1) {
 					return;
@@ -35,44 +35,44 @@ export function createStore<Type>(
 	function setFormkitSchema(id = null) {
 		entity.value.item = {} as any;
 		(async () => {
-			const queries = [
-				{
-					operation: entity.value.endpoints.get,
-					fields: entity.value.getQueryFields(1),
-				},
-			];
-			cl(queries);
-			const variables = { ...id };
-			if (formkitSchema.value.length === 0) {
+			const queries = [];
+			let variables = {};
+
+			if (id) {
+				queries.push([
+					{
+						operation: entity.value.endpoints.get,
+						fields: entity.value.getQueryFields(),
+					},
+				]);
+				variables = { ...id };
+			}
+			if (schema.value.length === 0) {
 				queries.push({
 					operation: entity.value.endpoints.form,
 					fields: ['schema'],
 				});
 				variables.entity = entity.value.name;
 			}
-			apollo.q(queries, variables)?.then(({ data, networkStatus }) => {
+			apollo.query(queries, variables)?.then(({ data, networkStatus }) => {
 				if (typeof data == 'undefined' && networkStatus == 1) {
 					return;
 				}
 
 				if (data[entity.value.endpoints.form]) {
-					formkitSchema.value = useCloned(
+					schema.value = useCloned(
 						data[entity.value.endpoints.form].schema,
 					).cloned.value;
 				}
 
-				entity.value.item = useCloned(
-					data[entity.value.endpoints.get],
-				).cloned.value;
+				if (id) {
+					entity.value.item = useCloned(
+						data[entity.value.endpoints.get],
+					).cloned.value;
+				}
 
 				const { y: scrollY } = useWindowScroll();
 				scrollY.value = 0;
-				// if (typeof entity.value.item.id == 'undefined') {
-				// 	entity.value.item.id = getIriFromId(
-				// 		entity.value.item._id,
-				// 		entity.value.name,
-				// 	);
-				// }
 			});
 		})();
 	}
@@ -163,17 +163,18 @@ export function createStore<Type>(
 			unsubscribeChanel();
 			const fields = {};
 			fields[entity.value.camelCase] = ['id'];
-			const { onDone } = apollo
+			apollo
 				.mutate(
 					entity.value.endpoints.delete,
-					{ id: entity.value.getIriFromId() },
-					fields,
+					{ id: entity.value.getIriFromId(temp) },
+					[fields],
 				)
 				.then(() => {
 					msg.emit(getAlertText('remove_after'));
-					reload();
-					const router = useRouter();
-					router.push({ name: entity.value.routes.list });
+					getCollection('network-only');
+					if (useRoute().meta.action == 'edit') {
+						useRouter().push({ name: entity.value.endpoints.list });
+					}
 				});
 		});
 	}
@@ -181,25 +182,25 @@ export function createStore<Type>(
 		unsubscribeChanel();
 		chanel = random();
 		let text = '';
-
 		text = getAlertText('remove', `${items.value.length} elementos`);
-
 		msgbus('remove').emit({ chanel, message: text });
 		unsubscribe = msgbus(chanel).on((v: any) => {
 			unsubscribeChanel();
 			const fields = { agnostic: ['id'] };
 			const temp = Array.isArray(items.value) ? items.value : [items];
-			const { onDone } = apollo.remove(
-				'deleteAgnostic',
-				{ resource: entity.value.name, ids: temp.map((i: any) => i._id) },
-				fields,
-			);
-			onDone(() => {
-				msg.emit(getAlertText('remove_after'));
-				reload();
-				const router = useRouter();
-				router.push({ name: entity.value.routes.list });
-			});
+			apollo
+				.mutate({
+					operation: 'deleteAgnostic',
+					variables: {
+						resource: entity.value.name,
+						ids: temp.map((i: any) => i._id),
+					},
+					fields: [fields],
+				})
+				.then(() => {
+					msg.emit(getAlertText('remove_after'));
+					getCollection('network-only');
+				});
 		});
 	}
 	function getItems(force = false) {
@@ -207,7 +208,7 @@ export function createStore<Type>(
 			return;
 		}
 		const { onResult } = apollo
-			.q({
+			.query({
 				operation: 'collectionAgnostic',
 				fields: ['data'],
 				variables: { resource: entity.value.name },
@@ -235,7 +236,7 @@ export function createStore<Type>(
 			}
 
 			apollo
-				.q({
+				.query({
 					operation: 'columnsMetadataResource',
 					variables: { resource: entity.value.name },
 					fields: ['data'],
@@ -262,21 +263,13 @@ export function createStore<Type>(
 		collection.columns = (data.collection as any).map((i) => {
 			const temp: any = useCloned(i).cloned.value;
 			if (temp.schema) {
-				const eventbus = `filterinput_${temp.schema.name}_resource`;
+				const eventbus = name;
 				temp.schema = { ...temp.schema, ...{ eventbus } };
-				collection.vars[temp.schema.name] = null;
-
-				msgbus(eventbus).on((v: any) => {
-					collection.loading = v;
-				});
 			}
-
 			return temp;
 		});
 	}
-	function reload() {
-		getCollection({ fetchPolicy: 'network-only' });
-	}
+
 	function sortCollection(d: string) {
 		const collection = entity.value.collection;
 
@@ -292,7 +285,7 @@ export function createStore<Type>(
 				collection.orderType = '';
 			}
 		} else if (d) {
-			collection.vars.page = 1;
+			collection.pagination.page = 1;
 			collection.orderField = d;
 			collection.orderType = 'ASC';
 		} else {
@@ -301,27 +294,32 @@ export function createStore<Type>(
 		}
 
 		if (!collection.orderField) {
-			collection.vars.order = [{}];
+			collection.pagination.order = [{}];
 		} else {
 			// const
 			const order = {} as any;
 			order[collection.orderField] = collection.orderType;
-			collection.vars.order = [order];
+			collection.pagination.order = [order];
 		}
+		getCollection();
 	}
-	function getCollection(fetchPolicy = {}) {
-		apollo.c(entity).then(({ data, networkStatus }) => {
-			if (typeof data == 'undefined' && networkStatus == 1) {
-				return;
-			}
-			const { y: scrollY } = useWindowScroll();
-			scrollY.value = 0;
-			const { collection, paginationInfo } =
-				data[entity.value.collection.query];
-			entity.value.collection.pagination = paginationInfo;
-			entity.value.collection.items = collection;
-			entity.value.collection.loading = false;
-		});
+	function getCollection(fetchPolicy = '') {
+		return apollo
+			.collection(entity, fetchPolicy)
+			.then(({ data, networkStatus }) => {
+				if (typeof data == 'undefined' && networkStatus == 1) {
+					return;
+				}
+				const { y: scrollY } = useWindowScroll();
+				scrollY.value = 0;
+				const { collection, paginationInfo } =
+					data[entity.value.collection.query];
+				entity.value.collection.pagination = {
+					...paginationInfo,
+					page: entity.value.collection.pagination.page,
+				};
+				entity.value.collection.items = collection;
+			});
 		// .catch((error) => {
 
 		// });
@@ -335,7 +333,6 @@ export function createStore<Type>(
 		onDone((data) => {
 			entity.value.item = {} as any;
 			msg.emit(getAlertText('update'));
-			reload();
 			const router = useRouter();
 			router.push({ name: entity.value.routes.list });
 		});
@@ -354,12 +351,14 @@ export function createStore<Type>(
 	// 	{ deep: true },
 	// );
 
-	msgbus(`filterinput_${resource}`).on((v: any) => {
-		entity.value.collection.loading = v;
+	msgbus(name).on((v: any) => {
+		if (!!v.collection) {
+			getCollection();
+		}
 	});
 	return {
 		getItems,
-		formkitSchema,
+		schema,
 		setFormkitSchema,
 		remove,
 		removeMultiple,

@@ -51,8 +51,7 @@ onMounted(() => {
         <DataTable v-model:selection="selected" :row-class="rowClass" removable-sort table-style="min-width:50rem"
           :sort-order="collection.orderType == 'ASC' ? 1 : (collection.orderType == 'DESC' ? -1 : 0)"
           :value="collection.items" :filter-display="collection.hasFilter ? 'row' : undefined" scrollable
-          scroll-height="700px" :class="{ opacity50: collection.loading }"
-          @update:sort-field="(i) => store.sortCollection(i)">
+          scroll-height="700px" @update:sort-field="(i) => store.sortCollection(i)">
           <template #loading>
             ... ...buscando... ...
           </template>

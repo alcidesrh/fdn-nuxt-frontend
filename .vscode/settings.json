@@ -47,14 +47,14 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#064e3b99",
     "titleBar.inactiveForeground": "#e7e7e799",
-    "editor.background": "#F5F5F5", // Light gray background for readability
-    "editor.foreground": "#1A1A1A", // Dark gray for general text
-    "editorLineNumber.foreground": "#6B7280", // Subtle gray for line numbers
-    "editorLineNumber.activeForeground": "#111827", // Darker gray for active line
-    "editorCursor.foreground": "#2563EB", // Blue cursor for visibility
-    // Light gray for similar word highlights
-    "editor.findMatchBackground": "#FBBF2433", // Soft yellow for search matches
-    "editor.findMatchHighlightBackground": "#FBBF2433", // Lighter yellow for all matches
+    // "editor.background": "#F5F5F5", // Light gray background for readability
+    // "editor.foreground": "#1A1A1A", // Dark gray for general text
+    // "editorLineNumber.foreground": "#6B7280", // Subtle gray for line numbers
+    // "editorLineNumber.activeForeground": "#111827", // Darker gray for active line
+    // "editorCursor.foreground": "#2563EB", // Blue cursor for visibility
+    // // Light gray for similar word highlights
+    // "editor.findMatchBackground": "#FBBF2433", // Soft yellow for search matches
+    // "editor.findMatchHighlightBackground": "#FBBF2433", // Lighter yellow for all matches
     // "editor.wordHighlightBackground": "#e2e8f0",
   },
   "files.exclude": {
@@ -63,6 +63,10 @@
   },
   "editor.hover.enabled": false,
   "workbench.tips.enabled": false,
+  "cSpell.words": [
+    "opsz",
+    "wght"
+  ],
   // Syntax highlighting for TypeScript and PHP
   // "editor.tokenColorCustomizations": {
   //   "textMateRules": [

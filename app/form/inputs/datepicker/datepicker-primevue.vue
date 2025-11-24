@@ -1,8 +1,7 @@
 <template>
   <InputGroup>
-    <DatePicker :id="props.context.id" ref="d" v-model="date" date-format="dd/mm"
-      :selection-mode="context.selectionMode || 'single'" fluid :show-time="context.showTime"
-      :hour-format="String(context.hourFormat)" :number-of-months="context.numberOfMonths"
+    <DatePicker v-bind="util.omitKeysContaining(props.context.node.props)" ref="d" v-model="date"
+      :show-time="context.showTime" :hour-format="String(context.hourFormat)" :number-of-months="context.numberOfMonths"
       :hide-on-range-selection="context.hideOnRangeSelection" class="min-w-200px" :class="[context.inputClass]">
       <template #footer>
         <div class="flex justify-between u-my-1">
@@ -26,28 +25,37 @@ const props = defineProps({
 })
 const date = ref()
 const d = ref()
-function save() {
+async function save() {
+
   if (date.value == undefined) {
-    msg.emit({ severity: 'info', summary: 'Debe escoger la fecha', detail: 'Debe escoger la fecha' })
+    msg.emit({ severity: 'info', summary: 'Debe escoger la fecha' })
     return
   }
   if (props.context.selectionMode == 'range') {
+
     if (!date.value[1]) {
       props.context.node.input([{ after: cformat(date.value[0]) }])
       // msg.emit({ detail: 'Debe escoger un rango de días' })
       return
     }
-    props.context.node.input([{ after: cformat(date.value[0]), before: cformat(date.value[1]) }])
+
+    await props.context.node.input([{ after: cformat(date.value[0]), before: cformat(date.value[1]) }])
     d.value.overlayVisible = false
+    msgbus(props.context.eventbus).emit({ collection: 'reload' })
+
   }
   else {
-    props.context.node.input(date.value)
+    await props.context.node.input(date.value)
+    msgbus(props.context.eventbus).emit({ collection: 'reload' })
+
   }
 }
 
-function cancel() {
+async function cancel() {
   d.value.overlayVisible = false
   date.value = null
-  props.context.node.input(null)
+  await props.context.node.input(null)
+  msgbus(props.context.eventbus).emit({ collection: 'reload' })
+
 }
 </script>

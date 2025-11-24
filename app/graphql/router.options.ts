@@ -64,7 +64,7 @@ export default {
 						{
 							name: 'account_edit',
 							path: 'cuenta/:id',
-							component: () => import('~/pages/users/UserData.vue'),
+							component: () => import('~/pages/users/UserAccount.vue'),
 							meta: {
 								label: 'Mi cuenta',
 								icon: 'icon-park-outline:edit',
@@ -85,7 +85,7 @@ export default {
 						{
 							name: 'menu_list',
 							path: '',
-							component: () => import('~/pages/menus/MenuList.vue'),
+							component: () => import('~/pages/menus/MenuCollection.vue'),
 							meta: {
 								type: 'menu',
 								action: 'list',

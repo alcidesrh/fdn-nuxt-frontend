@@ -1,8 +1,8 @@
-import { createResolver } from '@nuxt/kit';
-import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 import tailwindcss from '@tailwindcss/vite';
 import Components from 'unplugin-vue-components/vite';
+import { createResolver } from '@nuxt/kit';
 
 export default defineNuxtConfig({
 	modules: [
@@ -10,14 +10,13 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'pinia-plugin-persistedstate/nuxt',
 		'@unocss/nuxt',
-		'@nuxt/icon',
 		'@formkit/nuxt',
 		'dayjs-nuxt',
 		'@nuxt/fonts',
 	],
 	plugins: ['~/plugins/primevue/primevue.ts'],
 	ssr: false,
-	pages: true,
+	// pages: true,
 	components: {
 		dirs: [
 			{ global: true, path: '~/form/inputs/components' },
@@ -30,10 +29,10 @@ export default defineNuxtConfig({
 	// },
 	imports: {
 		presets: [
-			// {
-			//     from: '@vue/apollo-composable',
-			//     imports: ['useQuery']
-			// },
+			{
+				from: 'voca',
+				imports: ['voca'],
+			},
 			{
 				from: '@formkit/vue',
 				imports: ['FormKitMessages'],
@@ -43,6 +42,9 @@ export default defineNuxtConfig({
 	devtools: { enabled: false },
 	css: ['@/assets/styles.css'],
 	compatibilityDate: '2025-07-15',
+	app: {
+		pageTransition: { name: 'page', mode: 'out-in' },
+	},
 	vite: {
 		plugins: [
 			Components({
@@ -50,16 +52,26 @@ export default defineNuxtConfig({
 			}),
 			tailwindcss(),
 		],
+		define: {
+			'globalThis.__DEV__': JSON.stringify(true),
+		},
+	},
+	// page: true,
+	router: {
+		options: {
+			// hashMode: true,
+			scrollBehaviorType: 'smooth',
+		},
 	},
 	hooks: {
-		'pages:routerOptions': function ({ files }) {
-			const resolver = createResolver(import.meta.url);
-			// add a route
-			files.push({
-				path: '~/graphql/router.options.ts', // resolver.resolve("~/router.options.ts"),
-				// optional: true
-			});
-		},
+		// 'pages:routerOptions': function ({ files }) {
+		// 	const resolver = createResolver(import.meta.url);
+		// 	// add a route
+		// 	files.push({
+		// 		path: '~/graphql/router.options.ts', // resolver.resolve("~/router.options.ts"),
+		// 		// optional: true,
+		// 	});
+		// },
 		'pages:extend': function (pages) {
 			function setMiddleware(pages) {
 				for (const page of pages) {

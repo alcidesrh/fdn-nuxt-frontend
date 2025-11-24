@@ -38,7 +38,7 @@ export const apollo = {
 		return { operation: operation, fields: fields, variables: variables };
 	},
 
-	q(
+	query(
 		params:
 			| (Record<'operation', string> &
 					Record<'variables', TVariables> &
@@ -46,9 +46,12 @@ export const apollo = {
 			| Record<'policy', FetchPolicy>
 			| any,
 	) {
+		if (Array.isArray(arguments[0]) && arguments[0].length == 0) {
+			return;
+		}
 		try {
 			let query;
-			const { operation, fields, variables, policy = 'cache-first' } = params;
+			const { operation, fields, variables, policy = 'network-only' } = params;
 			if (operation && fields) {
 				query = gqlBuilder.query({
 					operation: operation,
@@ -68,54 +71,26 @@ export const apollo = {
 				fetchPolicy: policy,
 			});
 		} catch (e) {
-			alert('e');
+			cl(e, 23232);
+			// alert('e');
 		}
 	},
-	c(entity: Ref<EntityInterface>, fetchPolicy = 'cache-first') {
+
+	collection(entity: Ref<EntityInterface>, fetchPolicy = 'cache-first') {
 		const queryBuild = gqlBuilder.query({
 			operation: entity.value.collection.query,
 			fields: entity.value.getColumnsFields(),
 			variables: getQueryArgs(entity.value.collection.query),
 		});
+		cl(entity.value.getColumnsFields());
 		const query: any = gql`
 			${queryBuild.query}
 		`;
-
 		return this.apolloClient().query({
 			query,
-			variables: entity.value.collection.vars,
+			variables: entity.value.collection.args,
 			fetchPolicy: fetchPolicy,
 		});
-	},
-	query(
-		params:
-			| (Record<'operation', string> &
-					Record<'variables', TVariables> &
-					Record<'fields', [any]>)
-			| Record<'poptions', FetchPolicy>
-			| any,
-	) {
-		const queryBuild = gqlBuilder.query({
-			...params,
-			...{ variables: getQueryArgs(params.operation) },
-		});
-		const query: any = gql`
-			${queryBuild.query}
-		`;
-		return this.apolloClient().query({
-			query,
-			variables: params.variables,
-			fetchPolicy: params.poptions?.fetchPolicy || 'network-only',
-		});
-		// .catch((error) => {
-		// });
-
-		// const { result, loading, onError, refetch, fetchMore, onResult, variables } = useQuery(query, params.variables, params.poptions || {});
-		// onError((e) => {
-		//     gLoading.value = false;
-		//     merror({ message: e });
-		// });
-		// return { result, loading, onResult, refetch, variables, fetchMore };
 	},
 
 	mutate(
@@ -131,17 +106,18 @@ export const apollo = {
 			variables = arguments[1];
 			fields = arguments[2];
 		}
+		const l = getMutationArgs(operation);
 		const queryBuild = gqlBuilder.mutation({
 			operation,
-			variables: getMutationArgs(operation),
-			fields,
+			variables: getMutationArgs(operation), //getMutationArgs(operation),
+			fields: fields,
 		});
 		const query: any = gql`
 			${queryBuild.query}
 		`;
 		return this.apolloClient().mutate({
 			mutation: query,
-			variables: variables,
+			variables: { input: variables },
 		});
 	},
 
@@ -178,13 +154,6 @@ function getQueryArgs(query: string) {
 function getMutationArgs(query: string) {
 	if (typeof fdn.value.mutations[query] != 'undefined') {
 		return getArgs(fdn.value.mutations[query]);
-	} else {
-		if (
-			typeof fdn.value.mutations[useChangeCase(query, 'camelCase').value] !=
-			'undefined'
-		) {
-			return getArgs(fdn.value.mutations[query]);
-		}
 	}
 }
 function getArgs(v: any) {

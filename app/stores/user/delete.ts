@@ -1,36 +1,36 @@
-import type { User } from '~~/types/user'
-import { defineStore } from 'pinia'
+import type { User } from '~/types/user';
+import { defineStore } from 'pinia';
 
 interface State {
-  deleted?: User
-  mercureDeleted?: User
-  isLoading: boolean
-  error?: string
+	deleted?: User;
+	mercureDeleted?: User;
+	isLoading: boolean;
+	error?: string;
 }
 
 export const useUserDeleteStore = defineStore('userDelete', {
-  state: (): State => ({
-    deleted: undefined,
-    mercureDeleted: undefined,
-    isLoading: false,
-    error: undefined,
-  }),
+	state: (): State => ({
+		deleted: undefined,
+		mercureDeleted: undefined,
+		isLoading: false,
+		error: undefined,
+	}),
 
-  actions: {
-    setLoading(isLoading: boolean) {
-      this.isLoading = isLoading
-    },
+	actions: {
+		setLoading(isLoading: boolean) {
+			this.isLoading = isLoading;
+		},
 
-    setDeleted(deleted: User) {
-      this.deleted = deleted
-    },
+		setDeleted(deleted: User) {
+			this.deleted = deleted;
+		},
 
-    setMercureDeleted(mercureDeleted: User | undefined) {
-      this.mercureDeleted = mercureDeleted
-    },
+		setMercureDeleted(mercureDeleted: User | undefined) {
+			this.mercureDeleted = mercureDeleted;
+		},
 
-    setError(error: string) {
-      this.error = error
-    },
-  },
-})
+		setError(error: string) {
+			this.error = error;
+		},
+	},
+});

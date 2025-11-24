@@ -24,24 +24,24 @@ const {
 } = useTimeoutFn(
   () => {
     loading.value = false
-    msgbus(props.context.eventbus).emit(false)
-    // merror()
   },
   5000,
   { immediate: false },
 )
 const { start, isPending, stop } = useTimeoutFn(
-  () => {
+  async () => {
     loading.value = true
+
     inputId.value = props.context.id
-    msgbus(props.context.eventbus).emit(true)
 
     let value = typing.value
     if (props.context.node.name == 'id') {
       value = value ? Number(value) : null
     }
-    props.context.node.input(value)
+    await props.context.node.input(value)
     startError()
+    msgbus(props.context.eventbus).emit({ collection: 'reload' })
+
   },
   1000,
   { immediate: false },
@@ -57,7 +57,7 @@ function keyDown() {
   }
 }
 watch(
-  () => props.context.loading,
+  () => cloading.value,
   (v) => {
     if (!v) {
       if (isPending) {
@@ -78,9 +78,10 @@ watch(
 
 const icon = computed(() => (loading.value ? 'pi pi-spin pi-spinner' : typing.value || props.context._value ? 'pi pi-times cursor-pointer' : 'pi pi-search opacity-70'))
 
-function reset() {
+async function reset() {
   loading.value = false
   typing.value = null
-  props.context.node.input(null)
+  await props.context.node.input(null)
+  msgbus(props.context.eventbus).emit({ collection: 'reload' })
 }
 </script>

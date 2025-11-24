@@ -8,6 +8,7 @@ import {
 import {
 	CombinedGraphQLErrors,
 	CombinedProtocolErrors,
+	ServerParseError,
 } from '@apollo/client/errors';
 import { ErrorLink } from '@apollo/client/link/error';
 import { map } from 'rxjs';
@@ -17,9 +18,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 	const httpLink = new HttpLink({
 		uri: ENTRYPOINT_GRAPHQL,
 	});
-	const mutationFilterLink = new ApolloLink((operation, forward) => {
+	const mutationRelationIriLink = new ApolloLink((operation, forward) => {
 		if (operation.operationType == 'mutation') {
 			const variables = operation.variables.input;
+			const f = Object.keys(variables);
 			Object.keys(variables).forEach((k) => {
 				if (util.isObject(variables[k]) && !!variables[k]?.id) {
 					operation.variables.input[k] = variables[k].id;
@@ -34,11 +36,46 @@ export default defineNuxtPlugin((nuxtApp) => {
 		}
 		return forward(operation);
 	});
+	const queryRelationIriLink = new ApolloLink((operation, forward) => {
+		cl(operation);
+		if (
+			operation.operationType == 'query' &&
+			Object.keys(operation.variables).includes('id')
+		) {
+			const temp = operation.query.definitions[0].selectionSet.selections;
+			const temp2 = temp.filter(
+				(i) => i.arguments.filter((i) => i.name.value == 'id').length,
+			);
+			if (temp2.length) {
+				operation.variables.id = `/api/${temp2[0].name.value}s/${operation.variables.id}`;
+			}
+		}
+		return forward(operation);
+	});
 	const globalLoadingLink = new ApolloLink((operation, forward) => {
-		gloading.value = true;
+		// const temp = operation.variables.common
+		gloading.value++;
+		if (operation.operationType == 'query') {
+			if (operation.variables?.page) {
+				cloading.value++;
+			} else {
+				qloading.value++;
+			}
+		} else if (operation.operationType == 'mutation') {
+			mloading.value++;
+		}
 		return forward(operation).pipe(
 			map((result) => {
-				gloading.value = false;
+				gloading.value--;
+				if (operation.operationType == 'query') {
+					if (operation.variables?.page) {
+						cloading.value--;
+					} else {
+						qloading.value--;
+					}
+				} else if (operation.operationType == 'mutation') {
+					mloading.value--;
+				}
 				return result;
 			}),
 		);
@@ -60,7 +97,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 				router.push({ name: 'Login' });
 			} else if (error.statusCode == 500) {
 				const { status, title, detail } = JSON.parse(error.bodyText);
-				cl(status, title, detail);
 				merror({
 					summary: `Status code: ${status}. GraphQL ServerError from plugin/apollo.ts: ${title}`,
 					detail: detail,
@@ -74,21 +110,34 @@ export default defineNuxtPlugin((nuxtApp) => {
 				);
 			}
 		} else if (CombinedGraphQLErrors.is(error)) {
-			error.errors.forEach(({ message, locations, path }) =>
-				merror({
-					summary: 'GraphQL error from plugin/apollo.ts',
-					detail: message,
-					// message: `GraphQL error from plugin/apollo.ts: ${message}, Location: ${locations}, Path: ${path}`,
-				}),
-			);
-		} else if (CombinedProtocolErrors.is(error)) {
-			error.errors.forEach(({ message, extensions }) =>
-				alert(
-					`[Protocol error]: Message: ${message}, Extensions: ${JSON.stringify(
-						extensions,
-					)}`,
-				),
-			);
+			error.errors.forEach(({ message, locations, path, extensions }) => {
+				let temp = {};
+				if (extensions && extensions.debugMessage) {
+					temp = {
+						summary: message,
+						detail: extensions.debugMessage,
+					};
+				} else {
+					temp = {
+						summary: 'GraphQL error from plugin/apollo.ts',
+						detail:
+							message +
+							' ' +
+							(extensions && extensions.debugMessage
+								? extensions.debugMessage
+								: ''),
+						// message: `GraphQL error from plugin/apollo.ts: ${message}, Location: ${locations}, Path: ${path}`,
+					};
+				}
+				merror(temp);
+			});
+		} else if (ServerParseError.is(error)) {
+			merror({
+				summary: `Failed to parse response from ${error.response.url}`,
+				detail: `${error.bodyText} Status code: ${error.statusCode}`,
+			});
+			// Access the original parse error
+			console.log(`Parse error: ${error.cause}`);
 		} else {
 			alert('error in useApollo');
 
@@ -98,15 +147,19 @@ export default defineNuxtPlugin((nuxtApp) => {
 	const apolloClient = new ApolloClient({
 		link: ApolloLink.from([
 			globalLoadingLink,
-			mutationFilterLink,
+			queryRelationIriLink,
+			mutationRelationIriLink,
 			authLink,
 			errorLink,
 			httpLink,
 		]),
 		cache: new InMemoryCache(),
+		queryDeduplication: false,
+
 		defaultOptions: {
 			watchQuery: {
 				notifyOnNetworkStatusChange: false,
+				fetchPolicy: 'cache-and-network',
 			},
 		},
 	});

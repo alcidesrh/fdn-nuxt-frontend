@@ -1,14 +1,28 @@
 .p-datatable {
 	& .p-datatable-tbody > tr {
-		background-color: var(--background);
-		& > td:last-child {
-			background-color: white;
+		/* background-color: var(--background); */
+		& > td.p-datatable-frozen-column {
+			border-left: var(--border);
+			/* background-color: transparent; */
+			background-color: --alpha(var(--p-primary-contrast-100) / 50%);
+			backdrop-filter: blur(3px);
+
+			/* box-shadow: var(--shadow); */
 		}
 	}
 	& .p-datatable-column-header-content {
 		/* display: grid; */
+		& button > svg {
+			font-size: 24px;
+		}
+		& button > svg > g > path,
+		& button > svg > path {
+			stroke-width: 4px;
+			/* color: var(--p-surface-contrast-700); */
+		}
 
 		& > .p-checkbox {
+			display: none;
 			margin: auto;
 			/* margin-bottom: 15px; */
 		}
@@ -37,6 +51,8 @@
 				/* padding-bottom: 12px; */
 				padding: 0px 10px;
 
+				& > th:last-child {
+				}
 				&:last-child {
 					background-color: var(--background);
 
@@ -52,7 +68,9 @@
 				padding: 0px 10px;
 
 				&:last-child {
-					/* background-color: var(--p-surface-contrast-0); */
+					background-color: --alpha(var(--p-primary-contrast-100) / 50%);
+					z-index: 9;
+					border: var(--border);
 				}
 			}
 
@@ -104,12 +122,12 @@
 				border-radius: 100%;
 				& > *,
 				& > g > path {
-					stroke-width: 3px;
+					stroke-width: 2px;
 				}
 
 				&.edit,
 				&.delete {
-					color: var(--p-surface-contrast-500);
+					color: var(--p-surface-contrast-600);
 					font-size: 20px !important;
 				}
 			}
@@ -168,10 +186,16 @@
 			width: 200px;
 			min-width: 85px;
 			max-width: 200px;
-
+			padding-right: 5px;
 			& input,
 			& .group {
 				max-width: 180px;
+			}
+			& > div.collection-cell-wrap {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				padding-right: 5px;
 			}
 		}
 	}

@@ -1,62 +1,65 @@
-body>div>main {
-  &>.layout-wrapper.mobil {
+body > div > main {
+	& > .layout-wrapper.mobil {
+		& > .layout-content#layout-content {
+			margin-top: 0px;
 
+			& > .content {
+				padding-bottom: calc(var(--topbar) + 60px);
+			}
+		}
 
-    &>.layout-content#layout-content {
-      margin-top: 0px;
+		& > .layout-mask.animate-fadein.active {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: var(--p-surface-contrast-800);
+			top: 0;
+			z-index: 2;
+			opacity: 0.3;
+		}
 
-      &>.content {
-        padding-bottom: calc(var(--topbar) + 60px);
-      }
-    }
+		.wrap-sidebar {
+			z-index: 11;
+			height: fit-content !important;
 
-    &>.layout-mask.animate-fadein.active {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: var(--p-surface-contrast-800);
-      top: 0;
-      z-index: 2;
-      opacity: .3;
-    }
+			& > .layout-sidebar {
+				top: auto !important;
+				bottom: 70px;
+				padding-top: 3rem;
+				border: 1px solid var(--p-surface-border);
+				border-top: none;
+				height: fit-content !important;
+				border-bottom-right-radius: 4px;
 
-    .wrap-sidebar {
-      z-index: 11;
-      height: fit-content !important;
+				&.close {
+					display: none !important;
+				}
+			}
+		}
 
-      &>.layout-sidebar {
-        top: auto !important;
-        bottom: 70px;
-        padding-top: 3rem;
-        border: 1px solid var(--p-surface-border);
-        border-top: none;
-        height: fit-content !important;
-        border-bottom-right-radius: 4px;
+		.layout-topbar {
+			bottom: 0px !important;
+			top: auto;
+			position: fixed;
+			border: var(--border);
+			& > .layout-topbar-inner {
+				& > #clock {
+					display: none;
+				}
+			}
+		}
 
-        &.close {
-          display: none !important;
-        }
-      }
-    }
+		.sidebar-control {
+			display: none !important;
+		}
 
-    .layout-topbar {
-      bottom: 0px !important;
-      top: auto;
-      position: fixed;
-    }
+		.layout-content {
+			margin-top: 0px;
+			/* padding-top: 1rem; */
 
-    .sidebar-control {
-      display: none !important;
-    }
-
-    .layout-content {
-      margin-top: 0px;
-      /* padding-top: 1rem; */
-
-      &.normal:not(.minimode) {
-        margin-left: 0px;
-      }
-    }
-
-  }
+			&.normal:not(.minimode) {
+				margin-left: 0px;
+			}
+		}
+	}
 }

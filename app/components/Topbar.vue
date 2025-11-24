@@ -1,43 +1,41 @@
 <template>
-	<div>
-		<div id="intersectionObservertarget" class="absolute" />
-		<div class="layout-topbar" :class="{ dark: ui.darkTheme }">
-			<div class="layout-topbar-inner z-2">
-				<clock />
-				<BreadCumbCustom />
-				<div class="layout-topbar-actions">
-					<button type="button" class="layout-topbar-action">
-						<i class="pi pi-calendar" />
+	<div class="layout-topbar" :class="{ dark: ui.darkTheme }">
+		<div class="layout-topbar-inner z-2">
+			<clock />
+			<BreadCumbCustom />
+			<div class="layout-topbar-actions">
+				<button type="button" class="layout-topbar-action">
+					<i class="pi pi-calendar" />
+				</button>
+				<button type="button" class="layout-topbar-action">
+					<i class="pi pi-inbox" />
+				</button>
+				<button type="button" class="layout-topbar-action" @click="ui.toggleDarkMode()">
+					<i class="pi" :class="[
+						{
+							'pi-moon': ui.darkTheme,
+							'pi-sun': !ui.darkTheme
+						}
+					]" />
+				</button>
+				<div class="relative">
+					<button type="button" class="layout-topbar-action" @click="hideConfiguration = !hideConfiguration">
+						<i class="pi pi-palette" />
 					</button>
-					<button type="button" class="layout-topbar-action">
-						<i class="pi pi-inbox" />
-					</button>
-					<button type="button" class="layout-topbar-action" @click="ui.toggleDarkMode()">
-						<i class="pi" :class="[
-							{
-								'pi-moon': ui.darkTheme,
-								'pi-sun': !ui.darkTheme
-							}
-						]" />
-					</button>
-					<div class="relative">
-						<button type="button" class="layout-topbar-action" @click="hideConfiguration = !hideConfiguration">
-							<i class="pi pi-palette" />
-						</button>
-						<Configurator v-if="!hideConfiguration" @hidden="hideConfiguration = true" />
-					</div>
-					<!-- <div @click="logout" > -->
-					<Icon class="cursor-pointer" name="icon-park-outline:logout" mode="svg" size="24" @click="logout" />
-					<!-- </div> -->
+					<Configurator v-if="!hideConfiguration" @hidden="hideConfiguration = true" />
 				</div>
+				<!-- <div @click="logout" > -->
+				<Icon class="cursor-pointer" name="logout" @click="logout" />
+				<!-- </div> -->
 			</div>
-			<!-- <a href="/logout" class="btn-logout"> -->
-			<!-- <i class="pi pi-times-circle"></i> -->
-			<!-- <Icon name="icon-park-outline:logout" mode="svg" size="24" /> -->
-			<!-- </a> -->
-			<div class="topbar-bg fixed left-0px top-0px z-1 h-70px w-full" />
 		</div>
+		<!-- <a href="/logout" class="btn-logout"> -->
+		<!-- <i class="pi pi-times-circle"></i> -->
+		<!-- <Icon name="icon-park-outline:logout" mode="svg" size="24" /> -->
+		<!-- </a> -->
+		<div class="topbar-bg fixed left-0px top-0px z-1 h-70px w-full" />
 	</div>
+	<div id="intersectionObservertarget" class="absolute" />
 </template>
 <script setup lang="ts">
 import Configurator from "./Configurator.vue";
@@ -73,7 +71,6 @@ async function logout() {
 		}
 	}).catch(err => {
 		alert('Logout Error')
-		cl(err)
 		useUserSessionStore().clear();
 		navigateTo({ name: "Login" });
 	})

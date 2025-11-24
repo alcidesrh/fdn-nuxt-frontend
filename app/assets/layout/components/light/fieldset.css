@@ -1,35 +1,32 @@
 .p-fieldset {
-  /* background-color: var(--p-surface-contrast-100); */
-  width: 100%;
-  /* float: left; */
-  min-width: 20em;
-  max-width: 25em;
-  overflow: scroll;
-  /* @apply mb-7; */
+	/* background-color: var(--p-surface-contrast-100); */
+	width: 100%;
+	/* float: left; */
+	/* min-width: 20em; */
+	max-width: 25em;
+	overflow: scroll;
+	/* @apply mb-7; */
 
-  & .p-fieldset-legend>.p-fieldset-toggle-button {
-    /* border: 1px solid var(--p-surface-contrast-200); */
+	& .p-fieldset-legend > .p-fieldset-toggle-button {
+		/* border: 1px solid var(--p-surface-contrast-200); */
 
-    &>.p-fieldset-legend-label {
-      text-transform: capitalize;
-      font-weight: 500;
+		& > .p-fieldset-legend-label {
+			text-transform: capitalize;
+			font-weight: 500;
 
-      & svg {
-        color: var(--p-surface-contrast-400);
-      }
-    }
-  }
+			& svg {
+				color: var(--p-surface-contrast-400);
+			}
+		}
+	}
 
-  & .p-fieldset-content>.formkit-outer {
-    /* max-width: fit-content; */
-  }
+	& .p-fieldset-content > .formkit-outer {
+		/* max-width: fit-content; */
+	}
 
-  & .p-fieldset-content {
-    padding: 15px;
-    padding-bottom: 0px;
-    padding-top: 20px;
-  }
-
-
-
+	& .p-fieldset-content {
+		padding: 15px;
+		padding-bottom: 0px;
+		padding-top: 20px;
+	}
 }

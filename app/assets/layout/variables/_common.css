@@ -38,13 +38,14 @@
 	/* --shadow: 0 2px 7px 1px var(--p-surface-contrast-200); */
 	/* 0 0px 5px var(--p-surface-contrast-400), */
 	/* 0px 1px 14px var(--p-surface-contrast-300); */
-	--shadow: 0px 0px 4px 1px var(--p-surface-contrast-300);
+	--shadow: -2px 0px 5px var(--p-surface-contrast-300);
 	/* --shadow: 0px 2px 15px 0px var(--p-surface-contrast-400); */
 	/* --shadow-small: 0px 1px 5px 0px var(--p-surface-contrast-300); */
 	/* 0px 3px 4px var(--p-surface-contrast-200),
         0px 3px 7px var(--p-surface-contrast-600); */
 	--border: 1px solid var(--p-surface-contrast-200);
 	--p-datatable-column-title-font-weight: 500;
+	--p-button-outlined-secondary-border-color: var(--p-surface-contrast-500);
 }
 
 .bg-primary-50 {

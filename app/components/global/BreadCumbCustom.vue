@@ -32,7 +32,7 @@ const { breadcrumb } = useBreadcrumb()
 <style scoped>
 .breadcrumb-wrap {
   /* background-color: var(--p-surface-contrast-400); */
-  z-index: 999;
+  z-index: 899;
   position: fixed;
   left: calc(35px + 1.2rem);
   height: var(--topbar);

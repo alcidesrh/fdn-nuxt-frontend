@@ -1,3 +1,18 @@
 .p-dialog {
-  min-width: 300px;
+	min-width: 300px;
+}
+.p-dialog-header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	& > .p-dialog-title {
+		font-weight: 500;
+	}
+}
+.p-button-danger.p-confirmdialog-accept-button {
+	background-color: var(--color-red-50);
+	color: var(--color-red-600);
+	border-color: var(--color-red-300);
+	& > .p-button-label {
+		font-weight: 400;
+	}
 }

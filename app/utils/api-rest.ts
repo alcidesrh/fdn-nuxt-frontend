@@ -3,7 +3,7 @@ export const API_DEFAULT_OPTIONS: Record<
 	string | Record<string, string>
 > = {
 	baseURL: ENTRYPOINT,
-	method: 'POST',
+	method: 'GET',
 	mode: 'cors',
 	headers: {
 		Accept: 'application/json',

@@ -1,7 +1,7 @@
 import type { Mutation, Query } from '~/graphql/graphql';
 import type { Field as CustomField } from '~/graphql/parse/src';
 import { useChangeCase } from '@vueuse/integrations/useChangeCase';
-import type { Collection } from '~/types/collection';
+import type { Collection, Pagination } from '~/types/collection';
 import type { EntityInterface } from '~/types/entity';
 
 interface props {
@@ -13,35 +13,8 @@ interface props {
 		>
 	>;
 }
-interface ApiResource {
-	MetadataResource: props;
-	Agencia: props;
-	User: props;
-	Permiso: props;
-	Localidad: props;
-	Nacion: props;
-	Asiento: props;
-	Bus: props;
-	Empresa: props;
-	Piloto: props;
-	Boleto: props;
-	Cliente: props;
-	BoletoLog: props;
-	Salida: props;
-	Recorrido: props;
-	Parada: props;
-	Enclave: props;
-	SalidaLog: props;
-	Estacion: props;
-	FDN: props;
-	Factura: props;
-	Venta: props;
-	Menu: props;
-	Taxon: props;
-	RecorridoAsientoPrecio: props;
-	MultipleResource: props;
-}
-interface base {
+
+interface Base {
 	id: string;
 	_id: number;
 }
@@ -53,20 +26,18 @@ export const fdn = ref({
 	payload: {} as any[],
 	input: {} as any[],
 	isReady: computed(() => Object.keys(fdn.value.resources).length),
+	refresh: () => {
+		useMetadataStore().setApiMetadata(true);
+	},
 });
 
-// export function useEntityFactory<Type>(){
-// 	return {
-
-// 	}
-// };
 export class Entity<Type> implements EntityInterface {
 	name: string;
 	camelCase: string;
 	fields: CustomField[];
 	columns: CustomField[];
 	collection: Ref<Collection>;
-	item: Ref<Type & base>;
+	item: Ref<Type & Base>;
 	payload: object;
 	input: object;
 	excludeFormFields: string[];
@@ -93,14 +64,14 @@ export class Entity<Type> implements EntityInterface {
 			this.input[temp2] = fdn.value.input[temp2];
 		});
 
-		this.camelCase = useChangeCase(name, 'camelCase').value;
+		this.camelCase = str.camelCase(name); // useChangeCase(name, 'camelCase').value;
 		const capitalize = useChangeCase(name, 'capitalCase').value;
 
 		this.endpoints = {
-			get: this.name,
+			get: this.camelCase,
 			form: 'getFormResource',
 			crud: 'crudAgnostic',
-			list: `${this.name}s`,
+			list: `${this.camelCase}s`,
 			create: `create${capitalize}`,
 			edit: `update${capitalize}`,
 			delete: `delete${capitalize}`,
@@ -115,21 +86,26 @@ export class Entity<Type> implements EntityInterface {
 		});
 
 		this.collection = ref({
-			resource: name,
 			menu: 'editar',
 			columns: [],
-			pagination: {} as any,
+			pagination: ref({
+				page: 1,
+				itemsPerPage: 15,
+				order: [{ id: 'ASC' }],
+			}) as Ref<Pagination>,
 			items: [],
 			orderField: 'id',
 			orderType: 'ASC',
 			loading: false,
 			hasFilter: false,
-			vars: {
-				page: 1,
-				itemsPerPage: 15,
-				order: [{ id: 'ASC' }],
-			},
+			filters: {},
 			query: `${useChangeCase(name, 'camelCase').value}s`,
+			args: computed(() => {
+				return {
+					...this.collection.value.filters,
+					...this.collection.value.pagination,
+				};
+			}),
 		});
 	}
 
@@ -138,7 +114,9 @@ export class Entity<Type> implements EntityInterface {
 	}
 
 	getColumnsFields(): {}[] {
-		const aux = this.columns.map((v: any) => Entity.prepareField(v));
+		const aux = this.columns.map((v: any) =>
+			Entity.prepareFieldForCollection(v),
+		);
 		return [
 			{ collection: ['_id', ...aux] },
 			{
@@ -178,8 +156,8 @@ export class Entity<Type> implements EntityInterface {
 		return [root]; // root[fdn.value.payload[mutateInfo.type.name].fields.find((v) => v.name != 'clientMutationId').name];
 	}
 
-	getIriFromId(id?: string): string {
-		return `/api/${this.name.toLowerCase()}s/${id || this.item._id}`;
+	getIriFromId(id?: string | Record<'id', string>): string {
+		return id?.id || `/api/${this.name.toLowerCase()}s/${id || this.item._id}`;
 	}
 
 	getMutationOperation(operation = null): string {
@@ -230,6 +208,66 @@ export class Entity<Type> implements EntityInterface {
 					];
 				} else {
 					temp[v.name] = ['id'];
+					// fdn.value.resources[v.type.name].fields
+					// .map((v) => Entity.prepareField(v, deep, loop + 1))
+					// .filter((v) => v);
+				}
+			} else if (v.type.kind == 'LIST') {
+				if (v.type.ofType.kind == 'OBJECT') {
+					temp[v.name] = ['id'];
+					// fdn.value.resources[v.type.ofType.name].fields
+					// .map((v) => Entity.prepareField(v, deep, loop + 1))
+					// .filter((v) => v);
+				}
+			}
+			return temp;
+		}
+	}
+
+	static prepareFieldForCollection(v: any, deep = 2, loop = 1) {
+		if (
+			v.type.kind == 'SCALAR' ||
+			v.type.kind == 'ENUM' ||
+			(v?.type.kind == 'NON_NULL' && v.type?.ofType?.kind == 'SCALAR')
+		) {
+			return v.name;
+		} else if (loop > deep) {
+			return false;
+		} else {
+			let temp = {};
+
+			if (v.type.kind == 'OBJECT' && v.type.name) {
+				if (v.type.name.endsWith('PageConnection')) {
+					const r = fdn.value.resources[v.type.name].fields.find(
+						(v) => v.type.kind == 'LIST',
+					).type.ofType.name;
+					temp[v.name] = [
+						{
+							collection: ['label'],
+							// fdn.value.resources[r].fields
+							// .map((v) => Entity.prepareField(v, deep, loop + 1))
+							// .filter((v) => v),
+						},
+					];
+				} else if (v.type.name.endsWith('CursorConnection')) {
+					const r = fdn.value.resources[v.type.name].fields.find(
+						(v) => v.name == 'edges',
+					).type.ofType.name;
+					const r2 = fdn.value.resources[r].fields.find((v) => v.name == 'node')
+						.type.name;
+					temp[v.name] = [
+						{
+							edges: [
+								{
+									node: fdn.value.resources[r2].fields
+										.map((v) => Entity.prepareField(v, deep, loop + 1))
+										.filter((v) => v),
+								},
+							],
+						},
+					];
+				} else {
+					temp[v.name] = ['id', 'label'];
 					// fdn.value.resources[v.type.name].fields
 					// .map((v) => Entity.prepareField(v, deep, loop + 1))
 					// .filter((v) => v);

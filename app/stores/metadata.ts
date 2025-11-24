@@ -26,7 +26,6 @@ export const useMetadataStore = defineStore('Metadata', {
 			fdn.value.payload = ctx.store.payload;
 			fdn.value.input = ctx.store.input;
 
-			// cl(fdn.value.resources);
 			// return;
 			let item;
 			const routes = [],
@@ -65,7 +64,6 @@ export const useMetadataStore = defineStore('Metadata', {
 						},
 					},
 				];
-			// cl(JSON.stringify(actions));
 			const exclude = [
 				'Edge',
 				'CursorConnection',
@@ -96,7 +94,6 @@ export const useMetadataStore = defineStore('Metadata', {
 				};
 				routes.push(item);
 			}
-			cl(routes);
 		},
 		beforeHydrate: (ctx) => {
 			console.log(
@@ -112,7 +109,7 @@ export const useMetadataStore = defineStore('Metadata', {
 		input: ref([]),
 	}),
 	actions: {
-		async setApiMetadata() {
+		async setApiMetadata(force = false) {
 			const aux = (a: {}, i: number = 0, f: number = -1) => {
 				let c = -1;
 				const o = {};
@@ -127,7 +124,8 @@ export const useMetadataStore = defineStore('Metadata', {
 				}
 				return o;
 			};
-			if (!Object.keys(this.mutations).length) {
+			if (!Object.keys(this.mutations).length || force) {
+				gloading.value = true;
 				return await parseGraphQl(ENTRYPOINT_GRAPHQL).then(
 					({ resources, queries, mutations, payload, input }: any) => {
 						this.mutations = aux(mutations);
@@ -140,8 +138,11 @@ export const useMetadataStore = defineStore('Metadata', {
 						fdn.value.resources = this.resources;
 						fdn.value.payload = this.payload;
 						fdn.value.input = this.input;
+
+						gloading.value = false;
 					},
 				);
+
 				// .catch((e) => {
 				// 	// this.api = getApiResources();
 				// });

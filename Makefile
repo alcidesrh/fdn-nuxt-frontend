@@ -323,4 +323,4 @@ pcl:
 	@$(DOCKER) logs --follow transportesfuentedelnortecom-php-1
 
 client:
-	@$(YARN) create @api-platform/client http://localhost/ . --generator nuxt --resource Estacion
+	@$(YARN) create @api-platform/client http://localhost/ . --generator nuxt

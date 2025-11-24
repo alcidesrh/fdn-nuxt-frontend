@@ -26,8 +26,9 @@ export interface Collection {
 	menu: string;
 	columns: [Column] | [];
 	items: Maybe<Array<Maybe<{}>>>;
-	pagination: Pagination;
-	vars: any;
+	pagination: Ref<Pagination>;
+	filters: any;
+	args: computed<Record>(() => {});
 	orderField: string;
 	orderType: string;
 	loading: boolean;

@@ -1,7 +1,61 @@
-<script setup lang="ts">
-// import LocalStoreManagament from '~/components/LocalStoreManagament.vue'
+<template>
+  <div class="toggle-sidebar" :class="[
+    sidebarStore.position,
+    sidebarStore.mode,
+    openDialbtn ? 'open-dialbtn' : '',
+  ]" severity="contrast" variant="outlined" raised @mouseover="hoverFloatButton = true"
+    @mouseleave="hoverFloatButton = false">
+    <SpeedDial :model="items" :radius="120" type="quarter-circle" :direction="sidebarStore.position == 'left' ? 'down-right' : 'down-left'
+      " :tooltip-options="{ position: 'left' }" @show="openDialbtn = true" @hide="openDialbtn = false" class="gap-0">
+      <template #button="{ toggleCallback }">
+        <div data-pc-name="pcbutton" class="menu-btn" @click="toggleCallback">
+          <icon name="grid_view" fill size="40s" wght="300" />
 
-// onMounted(() => useDialog().open(LocalStoreManagament))
+        </div>
+      </template>
+      <template #item="{ item, toggleCallback }">
+        <div v-tooltip.left="item.label" text raised rounded class="menu-btn item" @click="toggleCallback">
+          <icon fill :name="sidebarStore.position == 'left'
+            ? `grid_view`
+            : `material-symbols:person-celebrate`
+            " />
+        </div>
+      </template>
+    </SpeedDial>
+  </div>
+  <div v-if="!firstCloseCache" ref="sidebar" class="wrap-sidebar"
+    :class="[sidebarStore.position, sidebarStore.mode, classes]" @mouseover="hoverSidebar = true"
+    @mouseleave="hoverSidebar = false">
+    <div class="sidebar-control" :class="[sidebarStore.position, sidebarStore.mode]">
+      <div :class="[sidebarStore.position, sidebarStore.mode]">
+
+        <div :class="{
+          selected:
+            !hoverMode && sidebarStore.mode == modes.small,
+        }" @click="sidebarStore.mode = modes.small">
+        </div>
+        <div :class="{
+          selected:
+            !hoverMode && sidebarStore.mode == modes.normal,
+        }" @click="sidebarStore.mode = modes.normal">
+        </div>
+
+      </div>
+      <icon name="arrow_shape_up" fill size="35" class=" z-50 cursor-pointer absolute left-[1rem] text-slate-3" :class="{
+        selected: hoverMode &&
+          sidebarStore.mode == modes.close,
+      }" @click="toggleSidebar()" />
+    </div>
+    <aside id="layout-sidebar" ref="sidebar" class="layout-sidebar" :class="[sidebarStore.mode]">
+      <close v-if="isMobil" @close="sidebarStore.mode = modes.close" />
+
+      <slot name="content" :data="sidebarStore" />
+    </aside>
+  </div>
+  <div class="toggle-sidebar-lateral" :class="[sidebarStore.position, sidebarStore.mode]"
+    @mouseover="hoverScreenEdge = true" @mouseleave="hoverScreenEdge = false" />
+</template>
+<script setup lang="ts">
 
 interface Props {
   position?: string
@@ -148,85 +202,7 @@ const items = ref([
     command: () => {
       router.push('/fileupload')
     },
-  },
-  {
-    label: 'Limpiar cache',
-    icon: 'pi pi-external-link',
-    command: () => {
-      useDialog().open(LocalStoreManagament)
-    },
-  },
+  }
 ])
 </script>
-<template>
-  <div>
-    <div class="toggle-sidebar" :class="[
-      sidebarStore.position,
-      sidebarStore.mode,
-      openDialbtn ? 'open-dialbtn' : '',
-    ]" severity="contrast" variant="outlined" raised @mouseover="hoverFloatButton = true"
-      @mouseleave="hoverFloatButton = false">
-      <SpeedDial :model="items" :radius="120" type="quarter-circle" :direction="sidebarStore.position == 'left' ? 'down-right' : 'down-left'
-        " :tooltip-options="{ position: 'left' }" @show="openDialbtn = true" @hide="openDialbtn = false" class="gap-0">
-        <template #button="{ toggleCallback }">
-          <div data-pc-name="pcbutton" class="menu-btn" @click="toggleCallback">
-            <icon name="icon-park-outline:all-application" mode="svg" />
-
-          </div>
-        </template>
-        <template #item="{ item, toggleCallback }">
-          <div v-tooltip.left="item.label" text raised rounded class="menu-btn item" @click="toggleCallback">
-            <icon :name="sidebarStore.position == 'left'
-              ? `icon-park-outline:all-application`
-              : `material-symbols:person-celebrate`
-              " mode="svg" />
-          </div>
-        </template>
-      </SpeedDial>
-    </div>
-    <div v-if="!firstCloseCache" ref="sidebar" class="wrap-sidebar"
-      :class="[sidebarStore.position, sidebarStore.mode, classes]" @mouseover="hoverSidebar = true"
-      @mouseleave="hoverSidebar = false">
-      <div class="sidebar-control" :class="[sidebarStore.position, sidebarStore.mode]">
-        <!-- <close /> -->
-
-        <div :class="[sidebarStore.position, sidebarStore.mode]">
-          <!-- <div :class="{
-            selected:
-              hoverMode && sidebarStore.mode == modes.close,
-          }" @click="toggleSidebar()">
-            <div></div>
-            <div></div>
-          </div> -->
-
-          <div :class="{
-            selected:
-              !hoverMode && sidebarStore.mode == modes.small,
-          }" @click="sidebarStore.mode = modes.small">
-          </div>
-
-          <div :class="{
-            selected:
-              !hoverMode && sidebarStore.mode == modes.normal,
-          }" @click="sidebarStore.mode = modes.normal">
-          </div>
-
-        </div>
-        <Icon name="icon-park-outline:left-two" mode="svg" class="z-50 cursor-pointer" :class="{
-          selected: hoverMode &&
-            sidebarStore.mode == modes.close,
-        }" @click="toggleSidebar()" />
-      </div>
-      <!-- <divider class="m-auto w-80% my-15px mb-30px" /> -->
-      <aside id="layout-sidebar" ref="sidebar" class="layout-sidebar" :class="[sidebarStore.mode]">
-        <close v-if="isMobil" @close="sidebarStore.mode = modes.close" />
-
-        <slot name="content" :data="sidebarStore" />
-      </aside>
-    </div>
-    <div class="toggle-sidebar-lateral" :class="[sidebarStore.position, sidebarStore.mode]"
-      @mouseover="hoverScreenEdge = true" @mouseleave="hoverScreenEdge = false" />
-  </div>
-</template>
-
 <style src="~/assets/layout/admin/sidebar.css" />

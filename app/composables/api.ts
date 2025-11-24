@@ -1,10 +1,10 @@
 import type { UseFetchOptions } from '#app';
 import type { Ref } from 'vue';
-import type { FetchAllData, FetchItemData } from '~~/types/api';
-import type { PagedCollection } from '~~/types/collection';
-import type { SubmissionErrors } from '~~/types/error';
-import type { Item } from '~~/types/item';
-import type { View } from '~~/types/view';
+import type { FetchAllData, FetchItemData } from '~/types/api';
+import type { PagedCollection } from '~/types/collection';
+import type { SubmissionErrors } from '~/types/error';
+import type { Item } from '~/types/item';
+import type { View } from '~/types/view';
 
 const MIME_TYPE = 'application/ld+json';
 
@@ -52,7 +52,7 @@ export async function useFetchList<T>(
 	const value = data.value as PagedCollection<T>;
 	items.value = value['hydra:member'];
 	view.value = value['hydra:view'];
-
+	cl(value);
 	return {
 		items,
 		view,

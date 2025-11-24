@@ -1,14 +1,21 @@
 <template>
-	<Toast class="z-999 h-fit" position="top-center">
+	<Toast class="z-898 h-fit" position="top-center">
 		<template #message="slotProps">
 			<div class="p-toast-message-text" data-p="error" data-pc-section="messagetext">
 				<div class="flex items-start gap-5">
 					<!-- <i class="pi pi-exclamation-triangle mt-2px" /> -->
 					<div class="grid">
 						<span v-if="slotProps.message.summary" class="p-toast-summary u-mb-xs" data-p="error"
-							data-pc-section="summary">{{ slotProps.message.summary }}</span>
-						<div v-if="slotProps.message.detail" class="p-toast-detail font-normal" data-p="error"
-							data-pc-section="detail" v-html="slotProps.message.detail" />
+							data-pc-section="summary">
+							<i :class="[icon]" class="absolute" style="font-size: 1rem"></i>
+							<span class="ml-25px font-medium">{{ slotProps.message.summary }}</span>
+						</span>
+						<div v-if="slotProps.message.detail" class="flex items-center">
+							<i v-if="!slotProps.message.summary" :class="[icon]" class="absolute" style="font-size: 1rem"></i>
+							<div class="p-toast-detail font-normal ml-5px" data-p="error" data-pc-section="detail"
+								v-html="slotProps.message.detail" />
+						</div>
+
 					</div>
 				</div>
 
@@ -36,14 +43,18 @@ import { createEditor } from "lexical";
 const toast = useToast();
 const bus = useEventBus("msg");
 const error = useEventBus("error");
+const type = ref('')
+
 bus.on((msg: Record<'detail' | 'severity' | 'summary', string>) => {
 	const lifetime = msg?.life === false ? {} : { life: 5000 }; // life: 5000
-	toast.add({
-		...lifetime,
-		detail: msg?.detail || "",
-		severity: msg?.severity || "success",
-		summary: msg.summary || null
-	});
+
+	type.value = msg?.severity || "success",
+		toast.add({
+			...lifetime,
+			detail: msg?.detail || (util.isString(msg) ? msg : null),
+			severity: type.value,
+			summary: msg.summary || null
+		});
 });
 
 error.on((e: any) => {
@@ -72,26 +83,48 @@ error.on((e: any) => {
 	}
 
 	const lifetime = msg?.life === false ? {} : { life: 0 }; // life: 5000
+	type.value = 'error'
+	cl({
+		...lifetime,
+		...(typeof msg == "object" ? msg : { detail: msg }),
+		severity: "error",
+		summary: msg?.summary || msg || "Error:",
+		file: msg?.file,
+		line: msg?.line,
+	})
 	toast.add({
 		...lifetime,
 		...(typeof msg == "object" ? msg : { detail: msg }),
 		severity: "error",
 		summary: msg?.summary || msg || "Error:",
 		file: msg?.file,
-		line: msg?.line
+		line: msg?.line,
 	});
 });
 
-const config = {
-	namespace: "MyEditor"
-};
+const icon = computed(() => {
 
-const editor = createEditor(config);
-const contentEditableElement = document.getElementById("editor");
+	if (type.value == 'error') {
+		return 'pi pi-thumbs-down-fill text-red-500 '
+	}
+	else if (type.value == 'info') {
+		return 'pi pi-info-circle  text-blue-500'
+	}
+	else if (type.value == 'success') {
+		return 'pi pi-thumbs-up-fill text-emerald-500 '
+	}
 
-editor.setRootElement(contentEditableElement);
+})
+// const config = {
+// 	namespace: "MyEditor"
+// };
+
+// const editor = createEditor(config);
+// const contentEditableElement = document.getElementById("editor");
+
+// editor.setRootElement(contentEditableElement);
 </script>
-<style scope>
+<!-- <style scope>
 #editor {
 	border: 1px solid red;
 	position: absolute;
@@ -100,4 +133,4 @@ editor.setRootElement(contentEditableElement);
 	padding: 20px;
 	size: 100px 700px;
 }
-</style>
+</style> -->

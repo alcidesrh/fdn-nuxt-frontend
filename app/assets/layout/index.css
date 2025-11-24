@@ -1,13 +1,14 @@
+@import 'material-symbols';
 @import './lib/hint.min';
 @import './lib/toast.css';
 @import 'animate.css';
 @import 'primeicons/primeicons.css';
 
-@import "./_fonts";
-@import "./components/dark/index";
+@import './_fonts';
+@import './components/dark/index';
 @import './components/light/index';
 
-@import "./_utopia";
+@import './_utopia';
 @import './variables/_common';
 @import './variables/_light';
 @import './variables/_dark';
@@ -15,12 +16,11 @@
 
 /* @import './admin/_drawer'; */
 
-
-@import './_preloading';
+/* @import './_preloading'; */
 @import './_layout';
 
-@import './_style';
-@import "./_topbar";
-@import "./_sidebar";
+/* @import './_style'; */
+@import './_topbar';
+@import './_sidebar';
 @import './_mobil';
 @import './_breakpoints';

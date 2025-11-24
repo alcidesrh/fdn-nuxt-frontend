@@ -6,11 +6,10 @@ export const str = voca;
 export function random(number = false, length = 5) {
 	return Array.from({ length }, () => Math.floor(Math.random() * 256)).join('');
 }
-
 export function getAlertText(type: string, target: {} | null = null) {
 	switch (type) {
 		case 'update':
-			return `Actualizado correctamente.`;
+			return `Guardado`;
 		case 'remove':
 			return `Se eliminará: <b>${target}</b>.`;
 		case 'remove_after':
@@ -29,7 +28,6 @@ export function highlighted(collection: Collection): void {
 	if (!CSS.highlights) {
 		return;
 	}
-
 	CSS.highlights.clear();
 
 	const properties: any = [];
@@ -62,7 +60,7 @@ export function highlighted(collection: Collection): void {
 	});
 	Object.keys(properties).forEach((i, index) => {
 		if (properties[i].length) {
-			const str = collection.vars[i]?.toString().trim().toLowerCase();
+			const str = collection.filters[i]?.toString().trim().toLowerCase();
 			if (!str) {
 				return;
 			}
@@ -120,7 +118,13 @@ export function treeKey(items: {}[], l = 0, key = '') {
 	return data;
 }
 
-export const gloading = ref(false);
+export const gloading = ref(0);
+
+export const qloading = ref(0);
+
+export const mloading = ref(0);
+
+export const cloading = ref(0);
 
 export const util = {
 	equals(obj1, obj2, field) {
@@ -543,5 +547,37 @@ export const util = {
 					.replace(/ !/g, '!')
 					.replace(/: /g, ':')
 			: css;
+	},
+	omitKeysContaining(
+		obj,
+		searchInput = [
+			'_',
+			'actions',
+			'initial',
+			'attrs',
+			'iconHandler',
+			'parsedRules',
+			'definition',
+		],
+		caseSensitive = false,
+	) {
+		if (typeof searchInput !== 'string' && !Array.isArray(searchInput)) {
+			throw new Error(
+				'El segundo parámetro debe ser un string o un array de strings',
+			);
+		}
+		const searches = Array.isArray(searchInput) ? searchInput : [searchInput];
+		const normalizedSearches = searches.map((str) =>
+			caseSensitive ? str : str.toLowerCase(),
+		);
+
+		return Object.fromEntries(
+			Object.entries(obj).filter(([key]) => {
+				const keyToCheck = caseSensitive ? key : key.toLowerCase();
+				return !normalizedSearches.some((search) =>
+					keyToCheck.includes(search),
+				);
+			}),
+		);
 	},
 };

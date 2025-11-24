@@ -1,53 +1,46 @@
 <template>
 	<div class="h-full w-full @container">
-		<div v-if="formkitSchema.length" class="grid">
-			<div class="fdn-form-header">
-				<div class="grid w-full items-start @md:flex @md:justify-between">
-					<slot name="left-header" :user="entity.item">
-						<span aria-label="yeeee"
-							class="hint--right hint--error hint--bounce surface-contrast-600 font-semibold u-text-2">{{
+		<div v-if="schema.length" class="form-wrapper" :class="{ 'opacity-50': qloading || mloading }">
+			<FormKit type="form" @submit="store.submit" v-model="defaultValue" :actions="false">
+				<FormKitSchema :schema="schema" :data="data" :library="library">
+					<template #header>
+						<slot name="left-header" :user="entity.item">
+							<span class="surface-contrast-600 font-semibold u-text-2">{{
 								entity.item?.id ? 'Editar ' : 'Nuevo ' }}
-							{{ entity.name }}</span>
-					</slot>
-
-					<div class="flex items-end justify-end u-mt-l @md:mt-0">
-						<slot name="right-header">
+								{{ entity.name }}</span>
 						</slot>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-wrapper">
-				<FormKitSchema :schema="formkitSchema" :data="data">
+					</template>
 					<template #crudBtn>
-						<slot name="CrudButton">
-							<div class="flex flex-wrap justify-end gap-5 align-middle u-mb-m">
+						<div class="flex flex-wrap justify-end gap-5 align-middle">
+							<slot name="CrudButton">
+
 								<CrudButton :edit="!!entity.item?.id" @delete="store.remove()" @cancel="
 									$router.push({
 										name: entity.endpoints.list
 									})
 									" />
-							</div>
-						</slot>
+							</slot>
+						</div>
 					</template>
 				</FormKitSchema>
-			</div>
+			</FormKit>
 		</div>
 		<div v-else class="w-full opacity-[0.5]">
 			<div class="right-2rem h-fit w-full flex justify-end gap-5 @4xl:justify-end @2xl:justify-center">
 				<SkeletonButton :columns="columns" class="" />
 			</div>
-			<div class="row-float-left">
-				<SkeletonForm :columns="3" :rows="10" />
+			<div class="flex justify-center gap-4">
+				<SkeletonForm :columns="2" :rows="10" />
 				<!-- <SkeletonForm />
                 <SkeletonForm /> -->
 			</div>
 		</div>
 	</div>
 </template>
-
 <script setup lang="ts">
 import type { Store } from 'pinia';
+import { FormKitMessages } from '@formkit/vue';
+import { markRaw } from 'vue'
 
 interface Props {
 	store: Store;
@@ -55,11 +48,20 @@ interface Props {
 	columns?: number;
 	data?: any;
 	formId?: string;
-}id
-const { columns = 3, store, id, data } = defineProps<Props>();
+	identifier?: string | object
+}
+const { columns = 3, store, identifier, data } = defineProps<Props>();
+const library = markRaw({
+	FormKitMessages: FormKitMessages
+})
 
-const { formkitSchema, entity } = storeToRefs(store) as any;
-store.setFormkitSchema(id);
+const { schema, entity } = storeToRefs(store) as any;
+store.setFormkitSchema(identifier);
+
+const defaultValue = ref({})
+watch(() => entity.value.item, (v) => {
+	defaultValue.value = v
+})
 
 // onBeforeMount(() => {
 // 	const eventSource = new EventSource(
@@ -67,7 +69,7 @@ store.setFormkitSchema(id);
 // 	);
 
 // 	eventSource.onmessage = (event) => {
-// 		formkitSchema2.value = [JSON.parse(event.data).schema];
+// 		schema2.value = [JSON.parse(event.data).schema];
 // 	};
 
 // 	const eventSource2 = new EventSource(
@@ -75,6 +77,6 @@ store.setFormkitSchema(id);
 // 	);
 
 // 	eventSource.onmessage = (event) => {
-// 		formkitSchema2.value = [JSON.parse(event.data).schema];
+// 		schema2.value = [JSON.parse(event.data).schema];
 // 	}; });
 </script>

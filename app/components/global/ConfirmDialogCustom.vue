@@ -1,3 +1,15 @@
+<template>
+  <div>
+    <ConfirmDialog>
+      <template #message="slotProps">
+        <div class="flex  items-center w-full gap-2 ">
+          <i :class="[slotProps.message.icon, action == 'remove' ? 'text-red-500' : '']" class="text-l "></i>
+          <p v-html="slotProps.message.message"></p>
+        </div>
+      </template>
+    </ConfirmDialog>
+  </div>
+</template>
 <script setup lang="ts">
 import { useConfirm } from 'primevue/useconfirm'
 
@@ -8,6 +20,8 @@ const props = defineProps({
 const emit = defineEmits(['accept', 'hide'])
 
 const chanel = ref('')
+
+const action = ref()
 
 let unsubscribe
 
@@ -25,6 +39,7 @@ const data = {
     acceptProps: {
       label: 'Eliminar',
       severity: 'danger',
+      icon: 'pi pi-info-circle',
     },
     accept: () => {
       if (chanel.value) {
@@ -56,7 +71,13 @@ watch(() => props.toggle, (v) => {
 })
 
 unsubscribe = msgbus(`remove`).on((v: any) => {
-  confirm.require({ ...data, ...v, header: 'Eliminar' })
+  action.value = 'remove'
+  const acceptProps = {
+    label: 'Eliminar',
+    severity: 'danger',
+    icon: 'pi pi-trash',
+  }
+  confirm.require({ ...data, ...v, icon: 'pi pi-trash', header: 'Eliminar', acceptProps: acceptProps })
 
   if (v.chanel) {
     chanel.value = v.chanel
@@ -67,16 +88,3 @@ onUnmounted(() => {
   unsubscribe()
 })
 </script>
-
-<template>
-  <div>
-    <ConfirmDialog>
-      <template #closeicon>
-        <close @close="hidden" />
-      </template>
-      <template #message="{ message }">
-        <span class="u-text-1" v-html="message.message" />
-      </template>
-    </ConfirmDialog>
-  </div>
-</template>
